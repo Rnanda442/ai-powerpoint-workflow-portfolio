@@ -1,4 +1,5 @@
 from pathlib import Path
+from html import escape
 from urllib.parse import quote
 
 import pandas as pd
@@ -106,6 +107,33 @@ EXPERT_INSIGHTS = [
     (
         "Scientific communication",
         "Next strength: make each project end with an actionable decision: what to inspect, model, validate, or collect next.",
+    ),
+]
+
+VISUAL_STORYBOARD_IDEAS = [
+    (
+        "Node movement timeline",
+        "Dots move from raw files to variables to model output. Best for REE graph, Handshake workflows, and seismic notebooks.",
+    ),
+    (
+        "Before / after pair",
+        "Left: messy screenshot, notebook, or table. Right: cleaned graph, map, dashboard, or ranked output.",
+    ),
+    (
+        "Evidence stack",
+        "Layer screenshots, code, source files, and output images so people see how AI connected the pieces.",
+    ),
+    (
+        "Model decision card",
+        "Show one predicted label or ranked target with the features that influenced it.",
+    ),
+    (
+        "Human review loop",
+        "Show where you approve, reject, relabel, or ask AI for the next step.",
+    ),
+    (
+        "Industry bottleneck card",
+        "One diagram per project: why people have not solved it yet, then the AI lever that changes the cost.",
     ),
 ]
 
@@ -384,9 +412,160 @@ st.markdown(
         font-size: 0.9rem;
         line-height: 1.42;
     }
+    .visual-flow {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        padding: 0.95rem;
+        margin: 0.65rem 0 1rem 0;
+    }
+    .visual-flow-title {
+        color: #111827;
+        font-weight: 850;
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    .node-lane {
+        display: grid;
+        grid-template-columns: 1fr 0.72fr 1fr;
+        gap: 0.8rem;
+        align-items: stretch;
+    }
+    .movement-rail {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.45rem;
+        align-items: start;
+        margin-bottom: 0.85rem;
+    }
+    .rail-step {
+        position: relative;
+        padding-top: 1.4rem;
+        color: #334155;
+        font-size: 0.82rem;
+        font-weight: 750;
+        text-align: center;
+    }
+    .rail-step::before {
+        content: "";
+        position: absolute;
+        top: 0.28rem;
+        left: 50%;
+        width: 0.78rem;
+        height: 0.78rem;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: #0f766e;
+        box-shadow: 0 0 0 4px #ccfbf1;
+        z-index: 2;
+    }
+    .rail-step::after {
+        content: "";
+        position: absolute;
+        top: 0.62rem;
+        left: 50%;
+        width: 100%;
+        border-top: 3px dotted #94a3b8;
+        z-index: 1;
+    }
+    .rail-step:last-child::after { display: none; }
+    .node-cluster {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.75rem;
+        min-height: 188px;
+    }
+    .node-cluster h4 {
+        margin: 0 0 0.55rem 0;
+        color: #334155;
+        font-size: 0.86rem;
+        text-transform: uppercase;
+    }
+    .node-pill {
+        display: inline-block;
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #1f2937;
+        padding: 0.34rem 0.55rem;
+        margin: 0.18rem;
+        font-size: 0.82rem;
+        line-height: 1.2;
+    }
+    .node-pill.input { border-color: #99f6e4; background: #f0fdfa; }
+    .node-pill.feature { border-color: #bfdbfe; background: #eff6ff; }
+    .node-pill.output { border-color: #fde68a; background: #fffbeb; }
+    .model-core {
+        border: 1px solid #0f766e;
+        border-radius: 8px;
+        background: #0f766e;
+        color: #ffffff;
+        padding: 0.75rem;
+        min-height: 188px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+    }
+    .model-core::before,
+    .model-core::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 0.8rem;
+        border-top: 3px dotted #0f766e;
+    }
+    .model-core::before { left: -0.8rem; }
+    .model-core::after { right: -0.8rem; }
+    .model-core strong {
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 0.45rem;
+    }
+    .model-core span {
+        font-size: 0.86rem;
+        line-height: 1.3;
+        color: #dcfce7;
+    }
+    .bottleneck-chip {
+        border-left: 4px solid #ef4444;
+        background: #fff7ed;
+        padding: 0.62rem 0.75rem;
+        color: #7c2d12;
+        font-size: 0.94rem;
+        margin-top: 0.75rem;
+    }
+    .storyboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+        margin: 0.75rem 0 1rem 0;
+    }
+    .storyboard-card {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.85rem;
+        min-height: 175px;
+    }
+    .storyboard-card strong {
+        display: block;
+        color: #111827;
+        margin-bottom: 0.4rem;
+    }
+    .storyboard-card span {
+        display: block;
+        color: #475569;
+        font-size: 0.92rem;
+        line-height: 1.35;
+    }
     @media (max-width: 900px) {
-        .ml-strip, .future-timeline { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid { grid-template-columns: 1fr; }
         .ml-stage { min-height: auto; }
+        .model-core::before, .model-core::after { display: none; }
+        .movement-rail { grid-template-columns: repeat(4, minmax(4rem, 1fr)); overflow-x: auto; }
     }
 </style>
     """,
@@ -519,6 +698,59 @@ def render_future_timeline(row: pd.Series) -> None:
     <span>12 to 24 months</span>
     <strong>{row['next_24_months']}</strong>
   </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def split_terms(value: str, limit: int = 5) -> list[str]:
+    if not valid_text(value):
+        return []
+    terms = [part.strip() for part in value.split(";") if part.strip()]
+    return terms[:limit]
+
+
+def pill_html(terms: list[str], class_name: str) -> str:
+    if not terms:
+        return "<span class='node-pill'>define next</span>"
+    return "".join(
+        f"<span class='node-pill {class_name}'>{escape(term)}</span>"
+        for term in terms
+    )
+
+
+def render_node_movement(row: pd.Series, title: str = "What moves through the ML system") -> None:
+    inputs = split_terms(row["input_data"], 5)
+    features = split_terms(row["features_or_variables"], 6)
+    outputs = split_terms(row["output"], 4)
+    model = escape(str(row["model_or_method"]).split(";")[0].strip())
+    st.markdown(
+        f"""
+<div class="visual-flow">
+  <div class="visual-flow-title">{escape(title)}</div>
+  <div class="movement-rail">
+    <div class="rail-step">raw evidence</div>
+    <div class="rail-step">variables</div>
+    <div class="rail-step">ML system</div>
+    <div class="rail-step">decision output</div>
+  </div>
+  <div class="node-lane">
+    <div class="node-cluster">
+      <h4>Project evidence</h4>
+      {pill_html(inputs, "input")}
+    </div>
+    <div class="model-core">
+      <strong>{model}</strong>
+      <span>AI/ML layer turns messy project artifacts into reviewable structure.</span>
+    </div>
+    <div class="node-cluster">
+      <h4>Actionable output</h4>
+      {pill_html(features[:3], "feature")}
+      {pill_html(outputs, "output")}
+    </div>
+  </div>
+  <div class="bottleneck-chip"><strong>Bottleneck:</strong> {escape(str(row["bottleneck"]))}</div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -791,11 +1023,15 @@ elif section == "Project Rooms":
         unsafe_allow_html=True,
     )
 
-    st.caption("Jump to a project room")
-    jump_cols = st.columns(4)
-    for idx, room in enumerate(TOPIC_ROOMS):
-        with jump_cols[idx % 4]:
-            st.link_button(room["title"], topic_url(room["slug"]))
+    topic_roadmap = roadmap_row(topic["project_key"])
+    with st.expander("Switch project room"):
+        jump_cols = st.columns(4)
+        for idx, room in enumerate(TOPIC_ROOMS):
+            with jump_cols[idx % 4]:
+                st.link_button(room["title"], topic_url(room["slug"]))
+
+    if topic_roadmap is not None:
+        render_node_movement(topic_roadmap, title="Project evidence -> ML output")
 
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
@@ -820,34 +1056,29 @@ elif section == "Project Rooms":
         else:
             st.warning("Hero image not found.")
     with hero_cols[1]:
-        st.subheader("Industry bottleneck")
-        st.write(topic["bottleneck"])
-        st.subheader("Why it has not been solved cleanly")
-        st.write(topic["why_not_done"])
+        st.subheader("Project signal")
+        st.info(topic["bottleneck"])
+        st.caption(topic["why_not_done"])
 
-    topic_roadmap = roadmap_row(topic["project_key"])
     if topic_roadmap is not None:
-        st.subheader("ML future path")
-        st.write(topic_roadmap["one_liner"])
-        render_ml_strip(topic_roadmap, compact=True)
-        st.markdown(f"**Bottleneck to solve:** {topic_roadmap['bottleneck']}")
+        st.subheader("ML timeline")
+        render_future_timeline(topic_roadmap)
 
     st.subheader("AI implementation logic")
     implementation_cols = st.columns(3)
     with implementation_cols[0]:
         with st.container(border=True):
-            st.markdown("**How AI was used here**")
-            st.write(topic["ai_used"])
+            st.markdown("**Used now**")
+            st.caption(topic["ai_used"])
     with implementation_cols[1]:
         with st.container(border=True):
-            st.markdown("**How newer AI tools can push it further**")
-            st.write(topic["future_ai"])
+            st.markdown("**Build next**")
+            st.caption(topic["future_ai"])
     with implementation_cols[2]:
         with st.container(border=True):
-            st.markdown("**Why it matters**")
-            st.write(topic["why_it_matters"])
-            st.markdown("**Expert-facing question**")
-            st.write(topic["question"])
+            st.markdown("**Why care**")
+            st.caption(topic["why_it_matters"])
+            st.markdown(f"<p class='small-note'><strong>Ask:</strong> {topic['question']}</p>", unsafe_allow_html=True)
 
     st.subheader("Proof to show")
     proof_cols = st.columns(min(4, len(topic["proof"])))
@@ -1008,6 +1239,22 @@ elif section == "Machine Learning Future":
         "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
     )
 
+    st.subheader("Visuals worth building")
+    storyboard_cards = []
+    for title, body in VISUAL_STORYBOARD_IDEAS:
+        storyboard_cards.append(
+            f"""
+<div class="storyboard-card">
+  <strong>{escape(title)}</strong>
+  <span>{escape(body)}</span>
+</div>
+            """
+        )
+    st.markdown(
+        f"<div class='storyboard-grid'>{''.join(storyboard_cards)}</div>",
+        unsafe_allow_html=True,
+    )
+
     for row in ml_roadmap.itertuples(index=False):
         with st.container(border=True):
             top_cols = st.columns([1.4, 1])
@@ -1016,7 +1263,7 @@ elif section == "Machine Learning Future":
                 st.write(row.one_liner)
             with top_cols[1]:
                 st.markdown(f"**Bottleneck:** {row.bottleneck}")
-            render_ml_strip(pd.Series(row._asdict()), compact=True)
+            render_node_movement(pd.Series(row._asdict()), title="Artifact movement")
             render_future_timeline(pd.Series(row._asdict()))
             st.markdown(f"**Why it matters:** {row.why_important}")
 
