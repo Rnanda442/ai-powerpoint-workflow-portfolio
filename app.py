@@ -4,6 +4,7 @@ from urllib.parse import quote
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
@@ -16,6 +17,7 @@ LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
+NORTH_SLOPE_3D_HTML = ROOT / "assets" / "interactive" / "north_slope_plotly_advanced.html"
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -1041,11 +1043,30 @@ elif section == "Project Rooms":
 
     if topic_roadmap is not None:
         render_node_movement(topic_roadmap, title="Project evidence -> ML output")
+        early_slide_visuals = project_visuals[
+            (project_visuals["project_key"].fillna("") == topic["project_key"])
+            & project_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
+        ].sort_values("sort_order")
+        if not early_slide_visuals.empty:
+            st.subheader("Featured slide exports")
+            early_cols = st.columns(2)
+            for idx, visual in enumerate(early_slide_visuals.head(2).itertuples(index=False)):
+                with early_cols[idx % 2]:
+                    visual_path = project_asset(visual.asset_path)
+                    if visual_path.exists():
+                        st.image(str(visual_path), caption=visual.title, use_container_width=True)
 
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
         hero_path = project_asset(topic["hero"])
-        if topic["slug"] == "processing_earthquake":
+        if topic["slug"] == "north_slope" and NORTH_SLOPE_3D_HTML.exists():
+            components.html(
+                NORTH_SLOPE_3D_HTML.read_text(encoding="utf-8", errors="ignore"),
+                height=500,
+                scrolling=True,
+            )
+            st.caption("Updated interactive North Slope 3D map from the current Streamlit/Plotly export.")
+        elif topic["slug"] == "processing_earthquake":
             processing_room_video = evidence_path_by_key("processing_earthquake")
             if processing_room_video is not None:
                 st.video(str(processing_room_video))
@@ -1167,11 +1188,28 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
         organized_folders["project_key"].fillna("") == topic["project_key"]
     ]
 
+    slide_visuals = related_visuals[
+        related_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
+    ]
+    non_slide_visuals = related_visuals.drop(slide_visuals.index)
+
+    if not slide_visuals.empty:
+        st.subheader("PowerPoint / LinkedIn slide evidence")
+        slide_cols = st.columns(2)
+        for idx, visual in enumerate(slide_visuals.itertuples(index=False)):
+            with slide_cols[idx % 2]:
+                visual_path = project_asset(visual.asset_path)
+                with st.container(border=True):
+                    st.markdown(f"**{visual.title}**")
+                    if visual_path.exists():
+                        st.image(str(visual_path), use_container_width=True)
+                    st.caption(visual.caption)
+
     st.subheader("Visual evidence")
     visual_cols = st.columns(3)
-    if related_visuals.empty:
+    if non_slide_visuals.empty:
         st.info("No extra visual has been selected for this topic yet.")
-    for idx, visual in enumerate(related_visuals.itertuples(index=False)):
+    for idx, visual in enumerate(non_slide_visuals.itertuples(index=False)):
         with visual_cols[idx % 3]:
             visual_path = project_asset(visual.asset_path)
             with st.container(border=True):
