@@ -108,6 +108,86 @@ EXPERT_INSIGHTS = [
     ),
 ]
 
+TOPIC_ROOMS = [
+    {
+        "slug": "ai_workflow",
+        "title": "AI Workflow And Handshake",
+        "tagline": "How screenshots, task recordings, and rubric checks become supervised examples for future scientific software agents.",
+        "project_key": "arcgis_raster_ml",
+        "hero": "assets/project_visuals/workflow_qgis_handshake_ai_01.png",
+        "theme": "Human demonstrations + Codex file access + geospatial software evaluation.",
+        "why_it_matters": "This is the clearest bridge to AI professionals: the work is not only using AI, it is producing examples of how AI systems should learn technical software workflows.",
+        "proof": ["Handshake AI profile evidence", "QGIS workflow screenshots", "LinkedIn profile text", "Organized profile/Handshake folder"],
+        "question": "How much expert-labeled workflow data is needed before agents can perform GIS and visualization tasks reliably?",
+    },
+    {
+        "slug": "thesis_graph",
+        "title": "REE Thesis Knowledge Graph",
+        "tagline": "Mountain Pass and Bayan Obo framed through graph data, Gephi exports, and a narrated research video.",
+        "project_key": "thesis_knowledge_graph",
+        "hero": "assets/project_visuals/thesis_host_context_clean.png",
+        "theme": "Source synthesis -> graph schema -> visual explanation -> presentation.",
+        "why_it_matters": "Knowledge graphs make research structure visible: minerals, host rocks, paragenesis, evidence, and deposit architecture become inspectable relationships.",
+        "proof": ["Embedded thesis walkthrough video", "Thesis Ch.1 deck", "GraphML file", "Gephi node/edge CSVs"],
+        "question": "What graph schema and evidence weights would make this useful for expert review or ML feature generation?",
+    },
+    {
+        "slug": "processing_earthquake",
+        "title": "First AI Visualization: Earthquake Globe",
+        "tagline": "A Processing-era earthquake visualization and sonification video, used as the origin story for later geoscience dashboards.",
+        "project_key": "processing_visuals",
+        "hero": "assets/project_visuals/seismology_skill_building_workshop.png",
+        "theme": "Creative coding + USGS earthquake data + visual/sound encoding.",
+        "why_it_matters": "Even without the original source code, the LinkedIn video shows the first attempt to use AI and coding to make geoscience data felt visually and sonically.",
+        "proof": ["Embedded Processing video", "Processing geophysical methods sketch", "EarthScope seismology context"],
+        "question": "How should early creative visualizations be rebuilt as reproducible, inspectable scientific tools?",
+    },
+    {
+        "slug": "seismic",
+        "title": "Seismic Notebooks And Pondicherry",
+        "tagline": "Notebook-driven seismic velocity analysis, waveform interpretation visuals, and seismology training evidence.",
+        "project_key": "pondicherry",
+        "hero": "assets/project_visuals/pondicherry_near_offset_reannotated.png",
+        "theme": "Catalog search -> waveform processing -> interpretation figures -> portfolio explanation.",
+        "why_it_matters": "This is where AI can help turn exploratory notebooks into workflows with clearer uncertainty, validation, and reproducible outputs.",
+        "proof": ["VelocityAnalysisPalkStraight notebook", "Seismic annotated panels", "EarthScope SSBW evidence"],
+        "question": "Where should ML assist: event triage, arrival picking, waveform QA, or uncertainty reporting?",
+    },
+    {
+        "slug": "north_slope",
+        "title": "North Slope Gas Hydrate Atlas",
+        "tagline": "A GIS and source-library workflow for turning public geoscience material into a dashboard and ML planning scaffold.",
+        "project_key": "north_slope",
+        "hero": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
+        "theme": "Public sources + GIS layers + Streamlit atlas + hydrate ML planning.",
+        "why_it_matters": "For DOE-style audiences, this is the strongest energy/subsurface thread: logs, geologic context, source provenance, and ML screening can become one pipeline.",
+        "proof": ["North Slope map", "Wireline ML scaffold deck", "Gas hydrate source library", "Streamlit app structure"],
+        "question": "What feature table would an expert trust for hydrate interval screening and uncertainty ranking?",
+    },
+    {
+        "slug": "rock_classification",
+        "title": "Rock Classification And Geochemistry",
+        "tagline": "Chemical classification visuals, thin-section decks, formation tables, and graph outputs as future ML training material.",
+        "project_key": "rock_classification",
+        "hero": "assets/project_visuals/rock_chemical_classification_reference.jpg",
+        "theme": "Petrography + geochemistry diagrams + labeled examples + classification tasks.",
+        "why_it_matters": "This connects visual geology to supervised ML: labeled thin sections, rock classes, spider diagrams, and geochemical features can become structured examples.",
+        "proof": ["Chemical classification image", "Thin-section PowerPoint", "Formation classification CSV", "Gephi exports"],
+        "question": "What labels, metadata, and validation examples would turn this into a useful training dataset?",
+    },
+    {
+        "slug": "valles",
+        "title": "SAGE / Valles Caldera Geophysics",
+        "tagline": "Field geophysics, gravity maps, crustal structure visuals, and SAGE presentation evidence.",
+        "project_key": "valles_caldera",
+        "hero": "assets/project_visuals/valles_bouguer.png",
+        "theme": "Field acquisition + geophysical maps + subsurface interpretation + presentation.",
+        "why_it_matters": "This grounds the AI story in field science: instruments, terrain, real constraints, and interpretation decisions.",
+        "proof": ["SAGE presentation deck", "Bouguer/free-air/Moho maps", "Valles project files"],
+        "question": "How should AI help compare map products without flattening field uncertainty and geologic judgment?",
+    },
+]
+
 CODE_SNIPPETS = {
     "pondicherry": """from obspy.clients.fdsn import Client
 from obspy import UTCDateTime
@@ -254,6 +334,17 @@ def existing_path(path_text: str) -> Path | None:
     return None
 
 
+def topic_url(slug: str) -> str:
+    return f"?section=Project%20Rooms&topic={quote(slug)}"
+
+
+def topic_by_slug(slug: str) -> dict:
+    for topic in TOPIC_ROOMS:
+        if topic["slug"] == slug:
+            return topic
+    return TOPIC_ROOMS[0]
+
+
 inventory = load_current_csv(INVENTORY_PATH)
 drive_inventory = load_current_csv(DRIVE_INVENTORY_PATH)
 notebook_inventory = load_current_csv(NOTEBOOK_INVENTORY_PATH)
@@ -266,6 +357,7 @@ organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 SECTIONS = [
     "Overview",
     "Presentation View",
+    "Project Rooms",
     "Case Studies",
     "LinkedIn Evidence",
     "Code And Architecture",
@@ -294,11 +386,10 @@ with st.sidebar:
 
 
 if section == "Overview":
-    st.title("AI as a Research Operating System for Geoscience")
+    st.title("AI Geoscience Workflow Portfolio")
     st.write(
-        "This site is built for a technical AI/geoscience audience: it shows how AI was used "
-        "as a working partner for research planning, screenshots, code review, file discovery, "
-        "notebooks, GIS, visualization, writing, and presentation assembly."
+        "Choose a project room. Each room has its own visual evidence, AI workflow angle, "
+        "expert-facing question, and links back to the source files."
     )
 
     cols = st.columns(5)
@@ -308,46 +399,25 @@ if section == "Overview":
     cols[3].metric("High-priority sources", int((inventory["priority"] == "high").sum()))
     cols[4].metric("Visual assets", len(project_visuals))
 
-    st.subheader("What AI actually did")
-    ai_cols = st.columns(4)
-    ai_steps = [
-        ("Goal steering", "Screenshots, files, and messy questions were repeatedly brought to AI with the practical question: what is the next useful step?"),
-        ("File access", "Codex in VS Code can inspect notebooks, CSVs, PDFs, decks, screenshots, folders, and app code so AI can reason over the actual project state."),
-        ("Pipeline building", "Notebook experiments become Streamlit pages, evidence manifests, reusable folders, code snippets, and PowerPoint-ready sections."),
-        ("Human supervision", "The Handshake/Vagon work shows why human demonstrations and rubric checks still matter for training reliable software-use agents."),
-    ]
-    for col, (label, body) in zip(ai_cols, ai_steps):
-        with col:
-            st.markdown(f"**{label}**")
-            st.write(body)
+    st.subheader("Start here")
+    hub_cols = st.columns(3)
+    for idx, topic in enumerate(TOPIC_ROOMS):
+        with hub_cols[idx % 3]:
+            with st.container(border=True):
+                hero_path = project_asset(topic["hero"])
+                if hero_path.exists():
+                    st.image(str(hero_path), use_container_width=True)
+                st.markdown(f"**{topic['title']}**")
+                st.write(topic["tagline"])
+                st.caption(topic["theme"])
+                st.link_button("Open project room", topic_url(topic["slug"]))
 
-    st.subheader("Why Codex, VS Code, and GitHub matter")
-    tool_cols = st.columns(3)
-    with tool_cols[0]:
-        st.markdown("**VS Code + Codex**")
-        st.write("AI can work inside the project folder, inspect code, organize files, update Streamlit, and verify changes in the browser.")
-    with tool_cols[1]:
-        st.markdown("**GitHub-ready workflow**")
-        st.write("Once organized, the same app/data structure can become versioned, reviewed, shared, and extended as future projects grow.")
-    with tool_cols[2]:
-        st.markdown("**More file types for AI**")
-        st.write("The workflow spans notebooks, PowerPoints, videos, screenshots, PDFs, GraphML, Gephi CSVs, QGIS/ArcGIS files, and manuscript drafts.")
-
-    st.subheader("Geoscience background")
-    bg_cols = st.columns([1.4, 1])
-    with bg_cols[0]:
-        for point in BACKGROUND_POINTS:
-            st.write(f"- {point}")
-    with bg_cols[1]:
-        resume_path = Path("C:\\Users\\gargi\\Downloads\\AI_powerpoint_project_evidence\\01_profile_handshake_ai\\resume_geoscience_ai_onegeo.pdf")
-        profile_path = Path("C:\\Users\\gargi\\Downloads\\AI_powerpoint_project_evidence\\01_profile_handshake_ai\\profile_rohan_nanda.pdf")
-        if resume_path.exists():
-            st.link_button("Open resume", local_file_uri(str(resume_path)))
-        if profile_path.exists():
-            st.link_button("Open LinkedIn profile PDF", local_file_uri(str(profile_path)))
-
-    st.subheader("Machine learning value by project")
-    st.dataframe(pd.DataFrame(ML_FUTURE_POINTS), hide_index=True, use_container_width=True)
+    st.subheader("Fast presentation links")
+    fast_cols = st.columns(4)
+    fast_cols[0].link_button("Presentation View", "?section=Presentation%20View")
+    fast_cols[1].link_button("Embedded Videos", "?section=LinkedIn%20Evidence")
+    fast_cols[2].link_button("Visual Gallery", "?section=Visual%20Gallery")
+    fast_cols[3].link_button("All Case Studies", "?section=Case%20Studies")
 
     st.subheader("Strong links to start with")
     link_cols = st.columns(2)
@@ -479,6 +549,107 @@ elif section == "Presentation View":
     st.subheader("Organized evidence folders")
     folder_display = organized_folders[["title", "contents", "folder"]]
     st.dataframe(folder_display, hide_index=True, use_container_width=True)
+
+
+elif section == "Project Rooms":
+    topic_param = st.query_params.get("topic", TOPIC_ROOMS[0]["slug"])
+    topic = topic_by_slug(topic_param)
+
+    st.markdown(
+        f"""
+<div class="talk-hero">
+  <div class="talk-kicker">Project room</div>
+  <h2>{topic['title']}</h2>
+  <p>{topic['tagline']}</p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    room_tabs = st.tabs([item["title"] for item in TOPIC_ROOMS])
+    for tab_item, room in zip(room_tabs, TOPIC_ROOMS):
+        with tab_item:
+            st.link_button("Open this room as a direct link", topic_url(room["slug"]))
+
+    hero_cols = st.columns([1.35, 1])
+    with hero_cols[0]:
+        hero_path = project_asset(topic["hero"])
+        if hero_path.exists():
+            st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
+        else:
+            st.warning("Hero image not found.")
+    with hero_cols[1]:
+        st.subheader("Why this matters")
+        st.write(topic["why_it_matters"])
+        st.subheader("Expert-facing question")
+        st.write(topic["question"])
+        st.subheader("Proof to show")
+        for proof in topic["proof"]:
+            st.write(f"- {proof}")
+
+    related_visuals = project_visuals[
+        project_visuals["project_key"].fillna("") == topic["project_key"]
+    ].sort_values("sort_order")
+    related_evidence = linkedin_evidence[
+        linkedin_evidence["project_key"].fillna("") == topic["project_key"]
+    ]
+    related_folders = organized_folders[
+        organized_folders["project_key"].fillna("") == topic["project_key"]
+    ]
+
+    st.subheader("Visual evidence")
+    visual_cols = st.columns(3)
+    if related_visuals.empty:
+        st.info("No extra visual has been selected for this topic yet.")
+    for idx, visual in enumerate(related_visuals.itertuples(index=False)):
+        with visual_cols[idx % 3]:
+            visual_path = project_asset(visual.asset_path)
+            with st.container(border=True):
+                st.markdown(f"**{visual.title}**")
+                if visual_path.exists():
+                    st.image(str(visual_path), use_container_width=True)
+                st.caption(visual.caption)
+
+    st.subheader("Embedded or linked evidence")
+    if related_evidence.empty:
+        st.info("No direct LinkedIn/evidence manifest rows are attached to this topic yet.")
+    else:
+        evidence_cols = st.columns(2)
+        for idx, evidence in enumerate(related_evidence.itertuples(index=False)):
+            with evidence_cols[idx % 2]:
+                evidence_path = existing_path(evidence.local_path)
+                with st.container(border=True):
+                    st.markdown(f"**{evidence.title}**")
+                    st.write(evidence.linkedin_signal)
+                    if evidence_path is not None:
+                        suffix = evidence_path.suffix.lower()
+                        if suffix in {".png", ".jpg", ".jpeg", ".webp"}:
+                            st.image(str(evidence_path), use_container_width=True)
+                        elif suffix in {".mp4", ".mov", ".m4v"}:
+                            st.video(str(evidence_path))
+                        elif suffix in {".pde", ".py", ".js", ".java"}:
+                            st.code(
+                                "\n".join(evidence_path.read_text(errors="ignore").splitlines()[:80]),
+                                language="java",
+                            )
+                        else:
+                            st.info(f"{suffix.upper().lstrip('.')} opens from the local source button.")
+                        st.link_button("Open local source", local_file_uri(str(evidence_path)))
+                    if valid_text(evidence.linkedin_url):
+                        st.link_button("Open LinkedIn source", evidence.linkedin_url)
+
+    st.subheader("Folder and source access")
+    folder_cols = st.columns(2)
+    if related_folders.empty:
+        st.info("No organized folder has been attached to this exact topic key yet.")
+    for idx, folder in enumerate(related_folders.itertuples(index=False)):
+        with folder_cols[idx % 2]:
+            folder_path = Path(folder.folder)
+            with st.container(border=True):
+                st.markdown(f"**{folder.title}**")
+                st.write(folder.contents)
+                if folder_path.exists():
+                    st.link_button("Open organized folder", local_file_uri(str(folder_path)))
 
 
 elif section == "Case Studies":
