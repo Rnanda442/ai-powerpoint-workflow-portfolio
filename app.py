@@ -15,6 +15,7 @@ PROJECT_VISUALS_PATH = ROOT / "data" / "project_visuals.csv"
 LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
+DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -797,6 +798,14 @@ with st.sidebar:
     )
     st.divider()
     st.caption("Local + Drive evidence for a website or PowerPoint story.")
+    if DOWNLOAD_PACKAGE_PATH.exists():
+        with DOWNLOAD_PACKAGE_PATH.open("rb") as package_file:
+            st.download_button(
+                "Download email package",
+                package_file,
+                file_name=DOWNLOAD_PACKAGE_PATH.name,
+                mime="application/zip",
+            )
 
 
 if section == "Overview":
