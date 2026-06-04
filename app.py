@@ -116,6 +116,10 @@ TOPIC_ROOMS = [
         "project_key": "arcgis_raster_ml",
         "hero": "assets/project_visuals/workflow_qgis_handshake_ai_01.png",
         "theme": "Human demonstrations + Codex file access + geospatial software evaluation.",
+        "bottleneck": "Scientific software tasks are still hard for AI agents because the work is visual, multi-step, file-dependent, and judged by domain-specific output quality.",
+        "why_not_done": "Most training data captures final answers, not the messy human process: opening files, choosing tools, recovering from errors, checking map layers, and deciding whether an output is scientifically acceptable.",
+        "ai_used": "AI was used as a task partner and evaluator: screenshots, QGIS/Vagon workflows, rubric checks, prompt refinement, and repeated next-step guidance turned hands-on software work into structured examples.",
+        "future_ai": "A stronger implementation would convert recordings into step-by-step action traces, label failure points, connect them to source files, and use Codex-style agents to replay and validate workflows inside real project folders.",
         "why_it_matters": "This is the clearest bridge to AI professionals: the work is not only using AI, it is producing examples of how AI systems should learn technical software workflows.",
         "proof": ["Handshake AI profile evidence", "QGIS workflow screenshots", "LinkedIn profile text", "Organized profile/Handshake folder"],
         "question": "How much expert-labeled workflow data is needed before agents can perform GIS and visualization tasks reliably?",
@@ -127,6 +131,10 @@ TOPIC_ROOMS = [
         "project_key": "thesis_knowledge_graph",
         "hero": "assets/project_visuals/thesis_host_context_clean.png",
         "theme": "Source synthesis -> graph schema -> visual explanation -> presentation.",
+        "bottleneck": "Research synthesis often fails because hundreds of pages of literature, notes, diagrams, and claims remain trapped in prose instead of becoming queryable structure.",
+        "why_not_done": "Building useful knowledge graphs is labor-intensive: entities must be named consistently, relationships need evidence, and domain experts must decide which links are geologically meaningful.",
+        "ai_used": "AI helped turn thesis notes, references, Gephi exports, and presentation material into an explainable narrative around Mountain Pass and Bayan Obo.",
+        "future_ai": "Newer AI tools could extract candidate entities/relations from PDFs, let an expert approve edges, assign evidence weights, and generate graph-backed slides or literature-review sections.",
         "why_it_matters": "Knowledge graphs make research structure visible: minerals, host rocks, paragenesis, evidence, and deposit architecture become inspectable relationships.",
         "proof": ["Embedded thesis walkthrough video", "Thesis Ch.1 deck", "GraphML file", "Gephi node/edge CSVs"],
         "question": "What graph schema and evidence weights would make this useful for expert review or ML feature generation?",
@@ -138,6 +146,10 @@ TOPIC_ROOMS = [
         "project_key": "processing_visuals",
         "hero": "assets/project_visuals/seismology_skill_building_workshop.png",
         "theme": "Creative coding + USGS earthquake data + visual/sound encoding.",
+        "bottleneck": "Geoscience data can be technically correct but hard to feel, inspect, or communicate, especially when spatial, temporal, magnitude, and depth signals all matter at once.",
+        "why_not_done": "Creative scientific visualization takes coding, design, domain knowledge, and data cleanup; many early prototypes never become reproducible tools.",
+        "ai_used": "This was the first AI-assisted data visualization experiment: using Processing, USGS earthquake data, 3D markers, color/size encoding, and sound to make seismic patterns visible.",
+        "future_ai": "A modern version could rebuild the concept in Streamlit or Three.js, keep the data pipeline transparent, add filters/uncertainty, and use AI to explain what viewers are seeing.",
         "why_it_matters": "Even without the original source code, the LinkedIn video shows the first attempt to use AI and coding to make geoscience data felt visually and sonically.",
         "proof": ["Embedded Processing video", "Processing geophysical methods sketch", "EarthScope seismology context"],
         "question": "How should early creative visualizations be rebuilt as reproducible, inspectable scientific tools?",
@@ -149,6 +161,10 @@ TOPIC_ROOMS = [
         "project_key": "pondicherry",
         "hero": "assets/project_visuals/pondicherry_near_offset_reannotated.png",
         "theme": "Catalog search -> waveform processing -> interpretation figures -> portfolio explanation.",
+        "bottleneck": "Small seismic studies can get stuck between exploratory notebooks and defensible analysis: waveform access, station geometry, arrival picking, and interpretation all need careful QA.",
+        "why_not_done": "The tooling exists, but turning a notebook into a reproducible workflow requires data provenance, uncertainty tracking, validation events, and clear visual outputs.",
+        "ai_used": "AI helped interpret notebook logic, identify what outputs were presentation-worthy, connect waveform/seismic visuals to the research story, and organize the evidence.",
+        "future_ai": "A stronger version would use AI-assisted arrival picking, automatic QA flags, reproducible ObsPy pipelines, and report generation that preserves assumptions and uncertainty.",
         "why_it_matters": "This is where AI can help turn exploratory notebooks into workflows with clearer uncertainty, validation, and reproducible outputs.",
         "proof": ["VelocityAnalysisPalkStraight notebook", "Seismic annotated panels", "EarthScope SSBW evidence"],
         "question": "Where should ML assist: event triage, arrival picking, waveform QA, or uncertainty reporting?",
@@ -160,6 +176,10 @@ TOPIC_ROOMS = [
         "project_key": "north_slope",
         "hero": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
         "theme": "Public sources + GIS layers + Streamlit atlas + hydrate ML planning.",
+        "bottleneck": "Subsurface energy projects often have fragmented public data: maps, papers, well-log concepts, stratigraphy, and ML ideas are spread across many formats.",
+        "why_not_done": "Integrating geologic context with machine-learning-ready features is slow because provenance, scale, coordinate systems, and domain assumptions have to be reconciled before modeling.",
+        "ai_used": "AI helped organize the source library, build a Streamlit atlas structure, summarize hydrate/geomechanics material, and frame a wireline ML presentation scaffold.",
+        "future_ai": "Next implementation should build a feature table from logs, depth, stratigraphy, thermal context, and source confidence, then use AI to audit provenance before any model is trained.",
         "why_it_matters": "For DOE-style audiences, this is the strongest energy/subsurface thread: logs, geologic context, source provenance, and ML screening can become one pipeline.",
         "proof": ["North Slope map", "Wireline ML scaffold deck", "Gas hydrate source library", "Streamlit app structure"],
         "question": "What feature table would an expert trust for hydrate interval screening and uncertainty ranking?",
@@ -171,6 +191,10 @@ TOPIC_ROOMS = [
         "project_key": "rock_classification",
         "hero": "assets/project_visuals/rock_chemical_classification_reference.jpg",
         "theme": "Petrography + geochemistry diagrams + labeled examples + classification tasks.",
+        "bottleneck": "Rock and mineral classification is visually rich but difficult to scale because labels, thin-section context, geochemical diagrams, and expert reasoning are rarely stored together.",
+        "why_not_done": "Useful ML needs curated examples, consistent labels, metadata, petrographic context, and validation from experts; a folder of images or plots alone is not enough.",
+        "ai_used": "AI helped identify the classification materials, organize the deck/image/CSV evidence, and frame them as potential training examples rather than isolated class assignments.",
+        "future_ai": "A future workflow could pair thin-section images, chemical classification diagrams, spider plots, and formation tables with expert labels, then test image/text/tabular models together.",
         "why_it_matters": "This connects visual geology to supervised ML: labeled thin sections, rock classes, spider diagrams, and geochemical features can become structured examples.",
         "proof": ["Chemical classification image", "Thin-section PowerPoint", "Formation classification CSV", "Gephi exports"],
         "question": "What labels, metadata, and validation examples would turn this into a useful training dataset?",
@@ -182,6 +206,10 @@ TOPIC_ROOMS = [
         "project_key": "valles_caldera",
         "hero": "assets/project_visuals/valles_bouguer.png",
         "theme": "Field acquisition + geophysical maps + subsurface interpretation + presentation.",
+        "bottleneck": "Field geophysics produces multiple imperfect views of the subsurface, and teams must compare gravity, EM/TEM/ERT, seismic, maps, and geology without losing uncertainty.",
+        "why_not_done": "The bottleneck is not only computation; it is interpretation across instruments, terrain constraints, noisy data, and project-specific geologic context.",
+        "ai_used": "AI was used to organize SAGE/Valles evidence, connect field background to map outputs, and frame the project as more than a standalone presentation.",
+        "future_ai": "A stronger implementation could create a field-data evidence dashboard that compares map products, stores assumptions, links figures to source files, and highlights where expert review is needed.",
         "why_it_matters": "This grounds the AI story in field science: instruments, terrain, real constraints, and interpretation decisions.",
         "proof": ["SAGE presentation deck", "Bouguer/free-air/Moho maps", "Valles project files"],
         "question": "How should AI help compare map products without flattening field uncertainty and geologic judgment?",
@@ -409,7 +437,8 @@ if section == "Overview":
                     st.image(str(hero_path), use_container_width=True)
                 st.markdown(f"**{topic['title']}**")
                 st.write(topic["tagline"])
-                st.caption(topic["theme"])
+                st.markdown(f"**Bottleneck:** {topic['bottleneck']}")
+                st.caption(f"AI angle: {topic['theme']}")
                 st.link_button("Open project room", topic_url(topic["slug"]))
 
     st.subheader("Fast presentation links")
@@ -459,6 +488,13 @@ elif section == "Presentation View":
             with st.container(border=True):
                 st.markdown(f"**{title}**")
                 st.write(body)
+
+    st.subheader("How to read every project")
+    st.write(
+        "Each topic should be evaluated with the same four-part lens: "
+        "what bottleneck is being addressed, why it has persisted, how AI was actually used in the current example, "
+        "and what a modern AI/ML implementation would need to make it trustworthy."
+    )
 
     st.subheader("Workflow architecture")
     pipeline_cols = st.columns(len(WORKFLOW_STAGES))
@@ -579,13 +615,33 @@ elif section == "Project Rooms":
         else:
             st.warning("Hero image not found.")
     with hero_cols[1]:
-        st.subheader("Why this matters")
-        st.write(topic["why_it_matters"])
-        st.subheader("Expert-facing question")
-        st.write(topic["question"])
-        st.subheader("Proof to show")
-        for proof in topic["proof"]:
-            st.write(f"- {proof}")
+        st.subheader("Industry bottleneck")
+        st.write(topic["bottleneck"])
+        st.subheader("Why it has not been solved cleanly")
+        st.write(topic["why_not_done"])
+
+    st.subheader("AI implementation logic")
+    implementation_cols = st.columns(3)
+    with implementation_cols[0]:
+        with st.container(border=True):
+            st.markdown("**How AI was used here**")
+            st.write(topic["ai_used"])
+    with implementation_cols[1]:
+        with st.container(border=True):
+            st.markdown("**How newer AI tools can push it further**")
+            st.write(topic["future_ai"])
+    with implementation_cols[2]:
+        with st.container(border=True):
+            st.markdown("**Why it matters**")
+            st.write(topic["why_it_matters"])
+            st.markdown("**Expert-facing question**")
+            st.write(topic["question"])
+
+    st.subheader("Proof to show")
+    proof_cols = st.columns(min(4, len(topic["proof"])))
+    for idx, proof in enumerate(topic["proof"]):
+        with proof_cols[idx % len(proof_cols)]:
+            st.info(proof)
 
     related_visuals = project_visuals[
         project_visuals["project_key"].fillna("") == topic["project_key"]
