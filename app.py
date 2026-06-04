@@ -13,6 +13,7 @@ CASE_STUDY_PATH = ROOT / "data" / "case_studies.csv"
 PROJECT_VISUALS_PATH = ROOT / "data" / "project_visuals.csv"
 LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
+ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -305,6 +306,88 @@ st.markdown(
         background: #f9fafb;
         min-height: 112px;
     }
+    .ml-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 0.85rem 0 0.75rem 0;
+        position: relative;
+    }
+    .ml-stage {
+        border: 1px solid #dbe3ea;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.75rem 0.8rem 0.85rem 0.8rem;
+        min-height: 150px;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+    }
+    .ml-strip.compact .ml-stage { min-height: 120px; }
+    .ml-dot {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #0f766e;
+        box-shadow: 0 0 0 4px #ccfbf1;
+        margin-bottom: 0.55rem;
+    }
+    .ml-label {
+        font-weight: 800;
+        color: #111827;
+        font-size: 0.92rem;
+        margin-bottom: 0.3rem;
+        text-transform: uppercase;
+    }
+    .ml-body {
+        color: #475569;
+        font-size: 0.92rem;
+        line-height: 1.35;
+    }
+    .future-timeline {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 0.8rem 0;
+    }
+    .future-timeline div {
+        border-left: 4px solid #2563eb;
+        background: #eff6ff;
+        padding: 0.75rem 0.85rem;
+        min-height: 112px;
+    }
+    .future-timeline span {
+        display: block;
+        color: #1d4ed8;
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+    }
+    .future-timeline strong {
+        color: #1e293b;
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
+    .compare-panel {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.95rem 1rem;
+        min-height: 230px;
+    }
+    .prompt-box {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #111827;
+        color: #f9fafb;
+        padding: 0.85rem 0.95rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.9rem;
+        line-height: 1.42;
+    }
+    @media (max-width: 900px) {
+        .ml-strip, .future-timeline { grid-template-columns: 1fr; }
+        .ml-stage { min-height: auto; }
+    }
 </style>
     """,
     unsafe_allow_html=True,
@@ -380,6 +463,68 @@ def evidence_path_by_key(key: str) -> Path | None:
     return existing_path(match.iloc[0]["local_path"])
 
 
+def roadmap_row(project_key: str) -> pd.Series | None:
+    match = ml_roadmap[ml_roadmap["project_key"] == project_key]
+    if match.empty:
+        return None
+    return match.iloc[0]
+
+
+def stage_items(row: pd.Series) -> list[tuple[str, str]]:
+    return [
+        ("Input data", row["input_data"]),
+        ("Variables", row["features_or_variables"]),
+        ("Model / method", row["model_or_method"]),
+        ("Output", row["output"]),
+    ]
+
+
+def render_ml_strip(row: pd.Series, compact: bool = False) -> None:
+    stages = stage_items(row)
+    css_class = "ml-strip compact" if compact else "ml-strip"
+    cards = []
+    for label, body in stages:
+        cards.append(
+            f"""
+<div class="ml-stage">
+  <div class="ml-dot"></div>
+  <div class="ml-label">{label}</div>
+  <div class="ml-body">{body}</div>
+</div>
+            """
+        )
+    st.markdown(
+        f"""
+<div class="{css_class}">
+  {''.join(cards)}
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_future_timeline(row: pd.Series) -> None:
+    st.markdown(
+        f"""
+<div class="future-timeline">
+  <div>
+    <span>Now to 6 months</span>
+    <strong>{row['next_6_months']}</strong>
+  </div>
+  <div>
+    <span>6 to 12 months</span>
+    <strong>{row['next_12_months']}</strong>
+  </div>
+  <div>
+    <span>12 to 24 months</span>
+    <strong>{row['next_24_months']}</strong>
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 inventory = load_current_csv(INVENTORY_PATH)
 drive_inventory = load_current_csv(DRIVE_INVENTORY_PATH)
 notebook_inventory = load_current_csv(NOTEBOOK_INVENTORY_PATH)
@@ -387,12 +532,14 @@ case_studies = load_current_csv(CASE_STUDY_PATH)
 project_visuals = load_current_csv(PROJECT_VISUALS_PATH)
 linkedin_evidence = load_current_csv(LINKEDIN_EVIDENCE_PATH)
 organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
+ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 
 
 SECTIONS = [
     "Overview",
     "Presentation View",
     "Project Rooms",
+    "Machine Learning Future",
     "Case Studies",
     "LinkedIn Evidence",
     "Code And Architecture",
@@ -483,11 +630,12 @@ if section == "Overview":
                 st.link_button("Open project room", topic_url(topic["slug"]))
 
     st.subheader("Fast presentation links")
-    fast_cols = st.columns(4)
+    fast_cols = st.columns(5)
     fast_cols[0].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[1].link_button("Embedded Videos", "?section=LinkedIn%20Evidence")
-    fast_cols[2].link_button("Visual Gallery", "?section=Visual%20Gallery")
-    fast_cols[3].link_button("All Case Studies", "?section=Case%20Studies")
+    fast_cols[1].link_button("ML Future", "?section=Machine%20Learning%20Future")
+    fast_cols[2].link_button("Embedded Videos", "?section=LinkedIn%20Evidence")
+    fast_cols[3].link_button("Visual Gallery", "?section=Visual%20Gallery")
+    fast_cols[4].link_button("All Case Studies", "?section=Case%20Studies")
 
     st.subheader("Strong links to start with")
     link_cols = st.columns(2)
@@ -643,10 +791,11 @@ elif section == "Project Rooms":
         unsafe_allow_html=True,
     )
 
-    room_tabs = st.tabs([item["title"] for item in TOPIC_ROOMS])
-    for tab_item, room in zip(room_tabs, TOPIC_ROOMS):
-        with tab_item:
-            st.link_button("Open this room as a direct link", topic_url(room["slug"]))
+    st.caption("Jump to a project room")
+    jump_cols = st.columns(4)
+    for idx, room in enumerate(TOPIC_ROOMS):
+        with jump_cols[idx % 4]:
+            st.link_button(room["title"], topic_url(room["slug"]))
 
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
@@ -676,6 +825,13 @@ elif section == "Project Rooms":
         st.subheader("Why it has not been solved cleanly")
         st.write(topic["why_not_done"])
 
+    topic_roadmap = roadmap_row(topic["project_key"])
+    if topic_roadmap is not None:
+        st.subheader("ML future path")
+        st.write(topic_roadmap["one_liner"])
+        render_ml_strip(topic_roadmap, compact=True)
+        st.markdown(f"**Bottleneck to solve:** {topic_roadmap['bottleneck']}")
+
     st.subheader("AI implementation logic")
     implementation_cols = st.columns(3)
     with implementation_cols[0]:
@@ -698,6 +854,68 @@ elif section == "Project Rooms":
     for idx, proof in enumerate(topic["proof"]):
         with proof_cols[idx % len(proof_cols)]:
             st.info(proof)
+
+    if topic["slug"] == "thesis_graph":
+        st.subheader("How the graph was made")
+        graph_cols = st.columns([1.1, 1])
+        nodes_path = Path(
+            "C:\\Users\\gargi\\Downloads\\AI_powerpoint_project_evidence\\02_thesis_knowledge_graph\\gephi_nodes_full_multiclass_context.csv"
+        )
+        edges_path = Path(
+            "C:\\Users\\gargi\\Downloads\\AI_powerpoint_project_evidence\\02_thesis_knowledge_graph\\gephi_edges_full_multiclass_context.csv"
+        )
+        with graph_cols[0]:
+            st.markdown(
+                """
+<div class="prompt-box">
+Prompt pattern:<br>
+Given these REE thesis notes, suggest node categories, edge types, evidence fields,
+and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewable.
+</div>
+                """,
+                unsafe_allow_html=True,
+            )
+            st.caption(
+                "This is the AI-assisted spreadsheet step: make the entities and relationships explicit before Gephi or Neo4j."
+            )
+        with graph_cols[1]:
+            st.markdown("**Spreadsheet evidence**")
+            if nodes_path.exists() and edges_path.exists():
+                nodes_preview = pd.read_csv(nodes_path, nrows=5)
+                edges_preview = pd.read_csv(edges_path, nrows=5)
+                st.metric("Node rows", f"{sum(1 for _ in nodes_path.open(errors='ignore')) - 1:,}")
+                st.metric("Edge rows", f"{sum(1 for _ in edges_path.open(errors='ignore')) - 1:,}")
+                with st.expander("Preview node table"):
+                    st.dataframe(
+                        nodes_preview[
+                            [
+                                "id",
+                                "label",
+                                "type",
+                                "deposit_clean",
+                                "hostcontext_clean",
+                                "reebehavior_grouped",
+                            ]
+                        ],
+                        hide_index=True,
+                        use_container_width=True,
+                    )
+                with st.expander("Preview edge table"):
+                    st.dataframe(
+                        edges_preview[
+                            [
+                                "source",
+                                "target",
+                                "relationship_type",
+                                "property_column",
+                                "property_value",
+                            ]
+                        ],
+                        hide_index=True,
+                        use_container_width=True,
+                    )
+            else:
+                st.info("Node/edge CSVs were not found in the organized evidence folder.")
 
     related_visuals = project_visuals[
         project_visuals["project_key"].fillna("") == topic["project_key"]
@@ -766,6 +984,78 @@ elif section == "Project Rooms":
                 st.write(folder.contents)
                 if folder_path.exists():
                     st.link_button("Open organized folder", local_file_uri(str(folder_path)))
+
+
+elif section == "Machine Learning Future":
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Machine learning future</div>
+  <h2>From project artifacts to trainable geoscience workflows</h2>
+  <p>
+    The direction is not "AI did my homework." The direction is: each project produces
+    inputs, labels, features, validation examples, and expert review points that can
+    become stronger ML systems.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("How every project becomes a pipeline")
+    st.write(
+        "Use this page as the high-level map: the same structure appears under each project room, "
+        "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
+    )
+
+    for row in ml_roadmap.itertuples(index=False):
+        with st.container(border=True):
+            top_cols = st.columns([1.4, 1])
+            with top_cols[0]:
+                st.subheader(row.title)
+                st.write(row.one_liner)
+            with top_cols[1]:
+                st.markdown(f"**Bottleneck:** {row.bottleneck}")
+            render_ml_strip(pd.Series(row._asdict()), compact=True)
+            render_future_timeline(pd.Series(row._asdict()))
+            st.markdown(f"**Why it matters:** {row.why_important}")
+
+    st.subheader("Neo4j versus Gephi")
+    compare_cols = st.columns(2)
+    with compare_cols[0]:
+        st.markdown(
+            """
+<div class="compare-panel">
+  <h4>Neo4j</h4>
+  <p><strong>Best for:</strong> queryable graph databases, repeatable pipelines, Cypher queries, app integration, and graph data science.</p>
+  <p><strong>Why it changes the REE project:</strong> the node/edge spreadsheet can become a living database where each relationship has evidence, source links, weights, and model-ready features.</p>
+  <p><strong>Tradeoff:</strong> more setup and schema discipline than a desktop visualization tool.</p>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with compare_cols[1]:
+        st.markdown(
+            """
+<div class="compare-panel">
+  <h4>Gephi</h4>
+  <p><strong>Best for:</strong> visual exploration, graph layout, community detection demos, posters, and communication graphics.</p>
+  <p><strong>Why it was useful here:</strong> it made the REE structure visible after the AI-assisted spreadsheet step, especially for explaining deposits, minerals, and host contexts.</p>
+  <p><strong>Tradeoff:</strong> it is not the strongest place to maintain a growing queryable research database.</p>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.subheader("The expert-review loop")
+    st.markdown(
+        """
+1. Capture files, screenshots, notebooks, and source tables.
+2. Ask AI to propose structure, but keep expert review visible.
+3. Convert the approved structure into rows, graphs, features, or demonstrations.
+4. Use ML only after the inputs, labels, uncertainty, and validation target are clear.
+        """
+    )
 
 
 elif section == "Case Studies":
