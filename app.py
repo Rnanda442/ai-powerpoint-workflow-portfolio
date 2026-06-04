@@ -144,14 +144,14 @@ TOPIC_ROOMS = [
         "title": "First AI Visualization: Earthquake Globe",
         "tagline": "A Processing-era earthquake visualization and sonification video, used as the origin story for later geoscience dashboards.",
         "project_key": "processing_visuals",
-        "hero": "assets/project_visuals/seismology_skill_building_workshop.png",
+        "hero": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
         "theme": "Creative coding + USGS earthquake data + visual/sound encoding.",
         "bottleneck": "Geoscience data can be technically correct but hard to feel, inspect, or communicate, especially when spatial, temporal, magnitude, and depth signals all matter at once.",
         "why_not_done": "Creative scientific visualization takes coding, design, domain knowledge, and data cleanup; many early prototypes never become reproducible tools.",
-        "ai_used": "This was the first AI-assisted data visualization experiment: using Processing, USGS earthquake data, 3D markers, color/size encoding, and sound to make seismic patterns visible.",
-        "future_ai": "A modern version could rebuild the concept in Streamlit or Three.js, keep the data pipeline transparent, add filters/uncertainty, and use AI to explain what viewers are seeing.",
-        "why_it_matters": "Even without the original source code, the LinkedIn video shows the first attempt to use AI and coding to make geoscience data felt visually and sonically.",
-        "proof": ["Embedded Processing video", "Processing geophysical methods sketch", "EarthScope seismology context"],
+        "ai_used": "This was the first AI-assisted data visualization experiment: using Processing, USGS earthquake data, 3D globe markers, color/size/depth encoding, and sound to make seismic patterns visible.",
+        "future_ai": "A modern version could rebuild the concept in Streamlit or Three.js, keep the data pipeline transparent, add filters/uncertainty, and use AI to explain what viewers are seeing. First step: export the correct 54-second LinkedIn video or recover the original Processing capture.",
+        "why_it_matters": "The verified LinkedIn post shows the first attempt to use AI and coding to make geoscience data felt visually and sonically; the local original video still needs to be added before embedding.",
+        "proof": ["Verified LinkedIn video post", "LinkedIn poster frame", "Processing geophysical methods sketch", "EarthScope seismology context"],
         "question": "How should early creative visualizations be rebuilt as reproducible, inspectable scientific tools?",
     },
     {
@@ -444,7 +444,14 @@ if section == "Overview":
                 "Processing earthquake globe / sonification video. This is better than a GIF here because the sound is part of the project."
             )
         else:
-            st.warning("Processing video file not found in the organized evidence folder.")
+            poster_path = project_asset("assets/project_visuals/processing_earthquake_linkedin_poster.jpg")
+            if poster_path.exists():
+                st.image(
+                    str(poster_path),
+                    caption="Verified LinkedIn poster frame. The actual 54-second video needs to be exported before local embedding.",
+                    use_container_width=True,
+                )
+            st.info("The LinkedIn earthquake video is verified, but the local file previously used here was the wrong video. Add the correct export to embed it with sound.")
     with motion_cols[1]:
         st.markdown("**Why show this first?**")
         st.write(
@@ -650,7 +657,15 @@ elif section == "Project Rooms":
                 st.video(str(processing_room_video))
                 st.caption("Embedded local Processing video with sound from the organized evidence folder.")
             elif hero_path.exists():
-                st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
+                st.image(
+                    str(hero_path),
+                    caption="Verified LinkedIn poster frame. Correct local video export is still needed before embedding with sound.",
+                    use_container_width=True,
+                )
+                st.info(
+                    "Correction: the previous local `Video.mov` candidate was not verified as the earthquake visualization. "
+                    "The LinkedIn post itself is verified; the correct 54-second media file needs to be exported/downloaded and added here."
+                )
         elif hero_path.exists():
             st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
         else:
