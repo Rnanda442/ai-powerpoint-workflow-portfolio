@@ -373,6 +373,13 @@ def topic_by_slug(slug: str) -> dict:
     return TOPIC_ROOMS[0]
 
 
+def evidence_path_by_key(key: str) -> Path | None:
+    match = linkedin_evidence[linkedin_evidence["key"] == key]
+    if match.empty:
+        return None
+    return existing_path(match.iloc[0]["local_path"])
+
+
 inventory = load_current_csv(INVENTORY_PATH)
 drive_inventory = load_current_csv(DRIVE_INVENTORY_PATH)
 notebook_inventory = load_current_csv(NOTEBOOK_INVENTORY_PATH)
@@ -427,13 +434,40 @@ if section == "Overview":
     cols[3].metric("High-priority sources", int((inventory["priority"] == "high").sum()))
     cols[4].metric("Visual assets", len(project_visuals))
 
+    st.subheader("Motion evidence")
+    motion_cols = st.columns([1.15, 1])
+    with motion_cols[0]:
+        processing_video = evidence_path_by_key("processing_earthquake")
+        if processing_video is not None:
+            st.video(str(processing_video))
+            st.caption(
+                "Processing earthquake globe / sonification video. This is better than a GIF here because the sound is part of the project."
+            )
+        else:
+            st.warning("Processing video file not found in the organized evidence folder.")
+    with motion_cols[1]:
+        st.markdown("**Why show this first?**")
+        st.write(
+            "This makes the site feel like an actual demonstration instead of a file index. "
+            "The project started as AI-assisted scientific visualization: USGS earthquake data, 3D spatial encoding, magnitude/depth styling, and sound."
+        )
+        st.write(
+            "The modern question is how to rebuild this as a reproducible web visualization with filters, uncertainty, source provenance, and explainable AI narration."
+        )
+
     st.subheader("Start here")
     hub_cols = st.columns(3)
     for idx, topic in enumerate(TOPIC_ROOMS):
         with hub_cols[idx % 3]:
             with st.container(border=True):
                 hero_path = project_asset(topic["hero"])
-                if hero_path.exists():
+                if topic["slug"] == "processing_earthquake":
+                    processing_preview = evidence_path_by_key("processing_earthquake")
+                    if processing_preview is not None:
+                        st.video(str(processing_preview))
+                    elif hero_path.exists():
+                        st.image(str(hero_path), use_container_width=True)
+                elif hero_path.exists():
                     st.image(str(hero_path), use_container_width=True)
                 st.markdown(f"**{topic['title']}**")
                 st.write(topic["tagline"])
@@ -610,7 +644,14 @@ elif section == "Project Rooms":
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
         hero_path = project_asset(topic["hero"])
-        if hero_path.exists():
+        if topic["slug"] == "processing_earthquake":
+            processing_room_video = evidence_path_by_key("processing_earthquake")
+            if processing_room_video is not None:
+                st.video(str(processing_room_video))
+                st.caption("Embedded local Processing video with sound from the organized evidence folder.")
+            elif hero_path.exists():
+                st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
+        elif hero_path.exists():
             st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
         else:
             st.warning("Hero image not found.")
@@ -690,9 +731,13 @@ elif section == "Project Rooms":
                             )
                         else:
                             st.info(f"{suffix.upper().lstrip('.')} opens from the local source button.")
-                        st.link_button("Open local source", local_file_uri(str(evidence_path)))
-                    if valid_text(evidence.linkedin_url):
-                        st.link_button("Open LinkedIn source", evidence.linkedin_url)
+                        with st.expander("Source access"):
+                            st.link_button("Open local source", local_file_uri(str(evidence_path)))
+                            if valid_text(evidence.linkedin_url):
+                                st.link_button("Open LinkedIn source", evidence.linkedin_url)
+                    elif valid_text(evidence.linkedin_url):
+                        with st.expander("Source access"):
+                            st.link_button("Open LinkedIn source", evidence.linkedin_url)
 
     st.subheader("Folder and source access")
     folder_cols = st.columns(2)
