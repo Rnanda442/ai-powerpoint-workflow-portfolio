@@ -760,6 +760,20 @@ def render_node_movement(row: pd.Series, title: str = "What moves through the ML
     )
 
 
+def render_visual_wall(title: str, visual_rows: pd.DataFrame, limit: int = 4) -> None:
+    if visual_rows.empty:
+        return
+    st.subheader(title)
+    wall_cols = st.columns(2)
+    for idx, visual in enumerate(visual_rows.head(limit).itertuples(index=False)):
+        with wall_cols[idx % 2]:
+            visual_path = project_asset(visual.asset_path)
+            if visual_path.exists():
+                st.image(str(visual_path), caption=visual.title, use_container_width=True)
+            else:
+                st.warning(f"Missing visual: {visual.title}")
+
+
 inventory = load_current_csv(INVENTORY_PATH)
 drive_inventory = load_current_csv(DRIVE_INVENTORY_PATH)
 notebook_inventory = load_current_csv(NOTEBOOK_INVENTORY_PATH)
@@ -1041,6 +1055,20 @@ elif section == "Project Rooms":
             with jump_cols[idx % 4]:
                 st.link_button(room["title"], topic_url(room["slug"]))
 
+    current_visuals = project_visuals[
+        project_visuals["project_key"].fillna("") == topic["project_key"]
+    ].sort_values("sort_order")
+    if topic["slug"] == "thesis_graph":
+        ree_wall = current_visuals[
+            current_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
+        ]
+        render_visual_wall("REE accumulation slides from Adobe / LinkedIn", ree_wall, limit=4)
+    elif topic["slug"] == "rock_classification":
+        rock_wall = current_visuals[
+            current_visuals["visual_type"].fillna("").str.contains("slide|PowerPoint|presentation", case=False, regex=True)
+        ]
+        render_visual_wall("Rock classification charts and slide visuals", rock_wall, limit=4)
+
     if topic_roadmap is not None:
         render_node_movement(topic_roadmap, title="Project evidence -> ML output")
         early_slide_visuals = project_visuals[
@@ -1178,9 +1206,7 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
             else:
                 st.info("Node/edge CSVs were not found in the organized evidence folder.")
 
-    related_visuals = project_visuals[
-        project_visuals["project_key"].fillna("") == topic["project_key"]
-    ].sort_values("sort_order")
+    related_visuals = current_visuals
     related_evidence = linkedin_evidence[
         linkedin_evidence["project_key"].fillna("") == topic["project_key"]
     ]
