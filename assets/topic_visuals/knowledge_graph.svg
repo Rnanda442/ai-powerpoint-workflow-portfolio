@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Prompt to drawing to knowledge graph">
+  <rect width="720" height="300" rx="18" fill="#fff7ed"/>
+  <rect x="32" y="42" width="150" height="190" rx="12" fill="#ffffff" stroke="#fdba74" stroke-width="3"/>
+  <text x="54" y="78" font-family="Arial" font-size="20" font-weight="700" fill="#7c2d12">prompt</text>
+  <path d="M54 112h94M54 142h74M54 172h104" stroke="#fb923c" stroke-width="8" stroke-linecap="round"/>
+  <path d="M204 134h68" stroke="#a8a29e" stroke-width="5" stroke-dasharray="9 8"/>
+  <polygon points="272,134 254,124 254,144" fill="#a8a29e"/>
+  <path d="M300 214c28-82 80-122 122-122 40 0 52 50 94 50 28 0 48-16 72-42" fill="none" stroke="#7c2d12" stroke-width="7" stroke-linecap="round"/>
+  <path d="M312 220c56-26 94-28 148-8 40 14 76 12 120-8" fill="none" stroke="#f97316" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="420" cy="94" r="18" fill="#2563eb"/>
+  <circle cx="516" cy="142" r="16" fill="#0f766e"/>
+  <circle cx="588" cy="100" r="14" fill="#f97316"/>
+  <circle cx="474" cy="212" r="15" fill="#64748b"/>
+  <path d="M420 94l96 48 72-42M516 142l-42 70M420 94l54 118" stroke="#475569" stroke-width="4"/>
+  <text x="314" y="58" font-family="Arial" font-size="20" font-weight="700" fill="#7c2d12">Adobe sketch + graph</text>
+  <text x="302" y="260" font-family="Arial" font-size="18" font-weight="700" fill="#7c2d12">CSV nodes -> Gephi -> Neo4j</text>
+</svg>

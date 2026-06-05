@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Codex app building pipeline with GitHub and model risk check">
+  <rect width="720" height="300" rx="18" fill="#f8fafc"/>
+  <rect x="36" y="54" width="134" height="138" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <path d="M58 92h86M58 126h64M58 160h98" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+  <text x="54" y="232" font-family="Arial" font-size="18" font-weight="700" fill="#334155">downloads</text>
+  <path d="M190 126h72" stroke="#94a3b8" stroke-width="5" stroke-dasharray="9 8"/><polygon points="262,126 244,116 244,136" fill="#94a3b8"/>
+  <rect x="282" y="54" width="138" height="138" rx="14" fill="#111827"/>
+  <text x="318" y="118" font-family="Arial" font-size="26" font-weight="700" fill="#7dd3fc">Codex</text>
+  <text x="306" y="150" font-family="Arial" font-size="14" fill="#cbd5e1">organize + build</text>
+  <path d="M440 126h72" stroke="#94a3b8" stroke-width="5" stroke-dasharray="9 8"/><polygon points="512,126 494,116 494,136" fill="#94a3b8"/>
+  <rect x="532" y="54" width="142" height="138" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+  <path d="M556 142h94M556 112h70M556 82h84" stroke="#16a34a" stroke-width="7" stroke-linecap="round"/>
+  <text x="554" y="232" font-family="Arial" font-size="18" font-weight="700" fill="#14532d">GitHub + app</text>
+  <rect x="282" y="220" width="150" height="36" rx="18" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+  <text x="304" y="244" font-family="Arial" font-size="16" font-weight="700" fill="#9a3412">leakage check</text>
+</svg>

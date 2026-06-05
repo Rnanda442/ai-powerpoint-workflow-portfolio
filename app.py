@@ -143,7 +143,7 @@ VISUAL_STORYBOARD_IDEAS = [
 TOPIC_ROOMS = [
     {
         "slug": "ai_workflow",
-        "title": "AI Workflow And Handshake",
+        "title": "How AI Agents Learn Scientific Software",
         "tagline": "How screenshots, task recordings, and rubric checks become supervised examples for future scientific software agents.",
         "project_key": "arcgis_raster_ml",
         "hero": "assets/project_visuals/workflow_qgis_handshake_ai_01.png",
@@ -158,10 +158,10 @@ TOPIC_ROOMS = [
     },
     {
         "slug": "thesis_graph",
-        "title": "REE Thesis Knowledge Graph",
+        "title": "AI + Knowledge Graphs For Critical Minerals",
         "tagline": "Mountain Pass and Bayan Obo framed through graph data, Gephi exports, and a narrated research video.",
         "project_key": "thesis_knowledge_graph",
-        "hero": "assets/project_visuals/thesis_host_context_clean.png",
+        "hero": "assets/project_visuals/ree_bayan_obo_main.png",
         "theme": "Source synthesis -> graph schema -> visual explanation -> presentation.",
         "bottleneck": "Research synthesis often fails because hundreds of pages of literature, notes, diagrams, and claims remain trapped in prose instead of becoming queryable structure.",
         "why_not_done": "Building useful knowledge graphs is labor-intensive: entities must be named consistently, relationships need evidence, and domain experts must decide which links are geologically meaningful.",
@@ -203,25 +203,25 @@ TOPIC_ROOMS = [
     },
     {
         "slug": "north_slope",
-        "title": "North Slope Gas Hydrate Atlas",
+        "title": "AI For Energy Screening Workflows",
         "tagline": "A GIS and source-library workflow for turning public geoscience material into a dashboard and ML planning scaffold.",
         "project_key": "north_slope",
-        "hero": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
+        "hero": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
         "theme": "Public sources + GIS layers + Streamlit atlas + hydrate ML planning.",
         "bottleneck": "Subsurface energy projects often have fragmented public data: maps, papers, well-log concepts, stratigraphy, and ML ideas are spread across many formats.",
         "why_not_done": "Integrating geologic context with machine-learning-ready features is slow because provenance, scale, coordinate systems, and domain assumptions have to be reconciled before modeling.",
-        "ai_used": "AI helped organize the source library, build a Streamlit atlas structure, summarize hydrate/geomechanics material, and frame a wireline ML presentation scaffold.",
-        "future_ai": "Next implementation should build a feature table from logs, depth, stratigraphy, thermal context, and source confidence, then use AI to audit provenance before any model is trained.",
-        "why_it_matters": "For DOE-style audiences, this is the strongest energy/subsurface thread: logs, geologic context, source provenance, and ML screening can become one pipeline.",
+        "ai_used": "AI helped organize public Alaska geology sources, GIS shapefiles, gas-hydrate/wireline ideas, Open Science Lab/GitHub workflow pieces, and Streamlit/Plotly structure. The useful part was not that AI knew the answer; it helped make a big messy energy-data idea easier to move around.",
+        "future_ai": "Next implementation should connect public data pulls, shapefiles, wells, cross sections, geologic labels, wireline variables, and hydrate indicators into a feature table that can support expert-reviewed screening instead of just a pretty map.",
+        "why_it_matters": "For DOE and industry, the money and public-value question is direct: can AI/ML make energy screening faster, cheaper, clearer, and more useful for deciding where to investigate next?",
         "proof": ["North Slope map", "Wireline ML scaffold deck", "Gas hydrate source library", "Streamlit app structure"],
         "question": "What feature table would an expert trust for hydrate interval screening and uncertainty ranking?",
     },
     {
         "slug": "rock_classification",
-        "title": "Rock Classification And Geochemistry",
+        "title": "AI For Visual Geoscience Classification",
         "tagline": "Chemical classification visuals, thin-section decks, formation tables, and graph outputs as future ML training material.",
         "project_key": "rock_classification",
-        "hero": "assets/project_visuals/rock_chemical_classification_reference.jpg",
+        "hero": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
         "theme": "Petrography + geochemistry diagrams + labeled examples + classification tasks.",
         "bottleneck": "Rock and mineral classification is visually rich but difficult to scale because labels, thin-section context, geochemical diagrams, and expert reasoning are rarely stored together.",
         "why_not_done": "Useful ML needs curated examples, consistent labels, metadata, petrographic context, and validation from experts; a folder of images or plots alone is not enough.",
@@ -246,6 +246,36 @@ TOPIC_ROOMS = [
         "proof": ["SAGE presentation deck", "Bouguer/free-air/Moho maps", "Valles project files"],
         "question": "How should AI help compare map products without flattening field uncertainty and geologic judgment?",
     },
+    {
+        "slug": "moho_ml",
+        "title": "Supervised ML For Moho Depth Mapping",
+        "tagline": "A real class project example: train on gravity/Moho relationships in Australia, then test whether the learned pattern transfers to the USA.",
+        "project_key": "moho_ml",
+        "hero": "assets/project_visuals/valles_moho.png",
+        "theme": "Supervised ML + gravity variables + transfer testing + geoscience validation.",
+        "bottleneck": "Geophysical ML can look impressive when tested on familiar data, but the real question is whether a model transfers to a new region without fooling itself.",
+        "why_not_done": "Good models need clean variables, honest train/test boundaries, uncertainty, and domain review. Otherwise a high score can hide leakage or a biased evaluation.",
+        "ai_used": "This project predates the current Codex workflow, but it is the clearest example of actual supervised ML: gravity/Moho inputs in Australia, an ANN-style model, and transfer to U.S. Moho depth mapping.",
+        "future_ai": "A current version would use Codex to recover the notebook, document variables, compare model families, check leakage, visualize residuals, and turn the workflow into a reproducible geoscience ML demo.",
+        "why_it_matters": "This is the bridge between prompting and real ML: AI can help organize the workflow, but the model still needs honest data splits, geoscience reasoning, and transfer tests.",
+        "proof": ["aus.moho.ipynb", "australian.moho", "australian.py", "machinelearningreport.docx"],
+        "question": "How do we know a geoscience ML model learned a transferable pattern instead of memorizing one region?",
+    },
+    {
+        "slug": "stock_workflow",
+        "title": "AI-Assisted App Building And Data Pipelines",
+        "tagline": "A stock dashboard example for discussing Codex, GitHub, cloud workflows, automation, and how young people think about AI-driven opportunity.",
+        "project_key": "stock_dashboard",
+        "hero": "assets/project_visuals/stock_all_tickers_chart.svg",
+        "theme": "Codex + local files + GitHub + Streamlit + model-evaluation honesty.",
+        "bottleneck": "People can build useful tools faster now, but AI can also make confident mistakes unless the user understands testing, leakage, and what the model is allowed to know.",
+        "why_not_done": "Before Codex, building an app from notebook screenshots meant repetitive copying, local debugging, and scattered files. The new workflow can organize existing work, track changes, and push more of the build into GitHub/cloud-style systems.",
+        "ai_used": "Codex organized local downloads, inspected existing notebook/app outputs, built Streamlit structure, helped debug charts, and made the workflow feel less like copy-paste and more like a system.",
+        "future_ai": "A future version would separate training and unseen evaluation data, keep GitHub-tracked pipelines, automate refreshes, and use cloud/virtual desktop workflows so local storage and CPU are less of a bottleneck.",
+        "why_it_matters": "This opens a bigger discussion: if jobs and markets are changing, what practical AI skills help young people build tools, test ideas, and maybe create value without pretending the model is magic?",
+        "proof": ["stockprediction2025 dashboard", "GitHub Actions pipeline", "Streamlit charts", "model-baseline notes"],
+        "question": "How can Codex-style tools help people build real apps without hiding model risk or data leakage?",
+    },
 ]
 
 MOBILE_TOPIC_SLUGS = [
@@ -255,6 +285,338 @@ MOBILE_TOPIC_SLUGS = [
     "seismic",
     "rock_classification",
 ]
+
+TOPIC_FRAMES = {
+    "ai_workflow": {
+        "question": "Will Codex replace screenshots, or will screenshots teach the next agents?",
+        "example": "Handshake/QGIS/Vagon work is the example.",
+        "raise": "Raise your hand if you want to talk about how AI is being trained to do technical grunt work.",
+        "pattern": ["prompt", "screen", "rubric", "agent"],
+    },
+    "thesis_graph": {
+        "question": "Can a knowledge graph help AI move from organizing research to finding better questions?",
+        "example": "REE, Bayan Obo, Mountain Pass, Adobe drawings, CSV nodes, and Gephi are the example.",
+        "raise": "Raise your hand if you want to talk about why graph workflows can beat flat tables for messy science.",
+        "pattern": ["prompt", "drawing", "csv", "graph"],
+    },
+    "processing_earthquake": {
+        "question": "Can AI make geoscience data something people can see, hear, and discuss?",
+        "example": "The Processing earthquake globe is the origin-story example.",
+        "raise": "Raise your hand if you want to talk about creative visualization before everything became dashboards.",
+        "pattern": ["data", "globe", "sound", "web"],
+    },
+    "seismic": {
+        "question": "What parts of seismic processing should AI simplify first?",
+        "example": "Pondicherry notebooks and 2D seismic visuals are the example.",
+        "raise": "Raise your hand if you want to talk about waveform QA, picking, or fast interpretation.",
+        "pattern": ["wave", "pick", "qa", "map"],
+    },
+    "north_slope": {
+        "question": "How far can AI take public energy data before the expert has to step in?",
+        "example": "The Alaska North Slope hydrate atlas is the example.",
+        "raise": "Raise your hand if you want to talk about profit, public energy value, and hydrate screening.",
+        "pattern": ["open data", "GIS", "3D map", "screen"],
+    },
+    "rock_classification": {
+        "question": "Could AI turn rock properties and instrument surveys into resource maps?",
+        "example": "Rock classification grids, geochemistry ranges, ArcGIS, and formation labels are the example.",
+        "raise": "Raise your hand if you want to talk about instrument properties becoming rock properties.",
+        "pattern": ["ranges", "grid", "overlay", "3D"],
+    },
+    "valles": {
+        "question": "How should AI compare imperfect geophysical surveys without flattening uncertainty?",
+        "example": "SAGE/Valles maps are the field-geophysics example.",
+        "raise": "Raise your hand if you want to talk about field data, uncertainty, and map fusion.",
+        "pattern": ["field", "gravity", "EM", "review"],
+    },
+    "moho_ml": {
+        "question": "How do we know a geoscience ML model actually transfers?",
+        "example": "The Australia-to-USA gravity/Moho supervised ML project is the example.",
+        "raise": "Raise your hand if you want to talk about leakage, transfer tests, and honest model scoring.",
+        "pattern": ["train", "test", "transfer", "residual"],
+    },
+    "stock_workflow": {
+        "question": "Can Codex help young people build useful apps without fooling themselves?",
+        "example": "The stock dashboard and GitHub/cloud workflow are the example.",
+        "raise": "Raise your hand if you want to talk about AI, money, app building, and model risk.",
+        "pattern": ["files", "Codex", "GitHub", "app"],
+    },
+}
+
+TOPIC_VISUALS = {
+    "ai_workflow": "assets/topic_visuals/agent_training.svg",
+    "thesis_graph": "assets/topic_visuals/knowledge_graph.svg",
+    "processing_earthquake": "assets/topic_visuals/earthquake_globe.svg",
+    "seismic": "assets/topic_visuals/seismic_processing.svg",
+    "north_slope": "assets/topic_visuals/north_slope_energy.svg",
+    "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
+    "valles": "assets/topic_visuals/field_geophysics.svg",
+    "moho_ml": "assets/topic_visuals/moho_transfer.svg",
+    "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+}
+
+WORKFLOW_BLUEPRINTS = {
+    "ai_workflow": {
+        "title": "human demo -> agent training",
+        "steps": [
+            ("Prompt", "task goal"),
+            ("Record", "screen + clicks"),
+            ("Rubric", "pass/fail logic"),
+            ("Review", "human judgement"),
+            ("Agent", "future replay"),
+        ],
+        "outcome": "Less grunt work in QGIS, ParaView, Vagon, and other scientific software.",
+    },
+    "thesis_graph": {
+        "title": "prompt -> drawing -> graph",
+        "steps": [
+            ("Prompt page", "what connects?"),
+            ("Adobe sketch", "subsurface idea"),
+            ("CSV nodes", "entities + children"),
+            ("Gephi", "visual clusters"),
+            ("Neo4j", "future graph ML"),
+        ],
+        "outcome": "A way to discuss critical-mineral systems visually instead of only through prose.",
+    },
+    "processing_earthquake": {
+        "title": "creative coding -> reproducible science",
+        "steps": [
+            ("USGS events", "lat/lon/depth"),
+            ("Processing", "3D globe"),
+            ("Sound", "pattern feeling"),
+            ("Streamlit/Three.js", "future rebuild"),
+            ("Explain", "AI narration"),
+        ],
+        "outcome": "Geoscience data becomes easier to see, hear, and question.",
+    },
+    "seismic": {
+        "title": "notebook -> fast interpretation",
+        "steps": [
+            ("Catalog", "events + stations"),
+            ("Waveform", "ObsPy flow"),
+            ("Pick", "arrival timing"),
+            ("QA", "uncertainty"),
+            ("Dashboard", "future review"),
+        ],
+        "outcome": "Less manual friction between seismic data and a defensible interpretation.",
+    },
+    "north_slope": {
+        "title": "public data -> energy screen",
+        "steps": [
+            ("Open data", "maps + papers"),
+            ("GIS files", "big shapefiles"),
+            ("3D atlas", "wells + geology"),
+            ("Features", "logs + context"),
+            ("Screen", "hydrate targets"),
+        ],
+        "outcome": "Industry/government can ask where to investigate next with clearer evidence.",
+    },
+    "rock_classification": {
+        "title": "instrument signal -> rock property map",
+        "steps": [
+            ("Ranges", "rock/mineral data"),
+            ("Grids", "shapefile variables"),
+            ("Overlap", "color classes"),
+            ("3D GIS", "subsurface view"),
+            ("ML", "future labels"),
+        ],
+        "outcome": "Surveys become visual resource maps tied back to rock properties.",
+    },
+    "valles": {
+        "title": "field methods -> uncertainty board",
+        "steps": [
+            ("Gravity", "density clues"),
+            ("EM/ERT/TEM", "conductivity"),
+            ("Seismic", "velocity"),
+            ("Compare", "method limits"),
+            ("Review", "expert call"),
+        ],
+        "outcome": "AI helps compare imperfect surveys without pretending they are perfect.",
+    },
+    "moho_ml": {
+        "title": "train region -> transfer test",
+        "steps": [
+            ("Australia", "training data"),
+            ("Gravity", "features"),
+            ("ANN", "baseline model"),
+            ("USA", "transfer test"),
+            ("Residuals", "honest score"),
+        ],
+        "outcome": "A model is useful only if it survives new geography and expert review.",
+    },
+    "stock_workflow": {
+        "title": "local notebook -> tracked app",
+        "steps": [
+            ("Downloads", "messy outputs"),
+            ("Codex", "organize/build"),
+            ("GitHub", "track changes"),
+            ("Streamlit", "visual app"),
+            ("Risk check", "leakage"),
+        ],
+        "outcome": "Young builders can make useful tools faster without trusting fake model scores.",
+    },
+}
+
+DISCUSSION_PROMPTS = {
+    "ai_workflow": [
+        "What parts of scientific software should agents learn first?",
+        "What would count as a reliable rubric for QGIS or ParaView?",
+        "How much human demonstration data is enough?",
+    ],
+    "thesis_graph": [
+        "Where does a graph beat a spreadsheet?",
+        "How could graph ML suggest a new critical-mineral question?",
+        "What geologic claims should stay human-reviewed?",
+    ],
+    "processing_earthquake": [
+        "What makes a scientific visual worth rebuilding?",
+        "Should data sonification be more common in geoscience?",
+        "What would make this reproducible instead of just cool?",
+    ],
+    "seismic": [
+        "Which seismic steps are repetitive enough for AI?",
+        "Where would an expert still need to overrule the model?",
+        "How should uncertainty be shown visually?",
+    ],
+    "north_slope": [
+        "How far can public data go before private industry data is needed?",
+        "Where is the money play: faster screening, better maps, or fewer bad targets?",
+        "What would make a hydrate interval ranking trustworthy?",
+    ],
+    "rock_classification": [
+        "Can instrument properties become rock-property maps?",
+        "What labels would make this a real ML dataset?",
+        "How would this change resource mapping in ArcGIS or 3D GIS?",
+    ],
+    "valles": [
+        "How should AI compare survey types with different uncertainties?",
+        "What would a field geophysicist want to see first?",
+        "Where does map fusion become misleading?",
+    ],
+    "moho_ml": [
+        "What is the cleanest way to test regional transfer?",
+        "Which model family would you try before an ANN today?",
+        "How should residual maps guide geology review?",
+    ],
+    "stock_workflow": [
+        "What AI skills help young people build practical tools?",
+        "How do we keep model testing honest?",
+        "What belongs in GitHub/cloud instead of a laptop folder?",
+    ],
+}
+
+EVIDENCE_LEADS = {
+    "thesis_graph": [
+        ("REE source Excel", "C:\\Users\\gargi\\Downloads\\bayan_obo_childDerived_cleaned.xlsx"),
+        ("Gephi full nodes", "C:\\Users\\gargi\\Downloads\\gephi_nodes_full_multiclass_context.csv"),
+        ("Gephi full edges", "C:\\Users\\gargi\\Downloads\\gephi_edges_full_multiclass_context.csv"),
+        ("GraphML export", "C:\\Users\\gargi\\Downloads\\mp_bayanobo_knowledge_graph.graphml"),
+    ],
+    "moho_ml": [
+        ("Moho notebook", "C:\\Users\\gargi\\Downloads\\aus.moho.ipynb"),
+        ("Moho data file", "C:\\Users\\gargi\\Downloads\\australian.moho"),
+        ("Model script", "C:\\Users\\gargi\\Downloads\\australian.py"),
+        ("ML report", "C:\\Users\\gargi\\OneDrive\\Documents\\machinelearningreport.docx"),
+    ],
+    "rock_classification": [
+        ("Formation range table", "C:\\Users\\gargi\\Downloads\\FormationRanges_Normalized.csv"),
+        ("Classified formations", "C:\\Users\\gargi\\Downloads\\Classified_Formations_Output.xlsx"),
+        ("Formation properties", "C:\\Users\\gargi\\Downloads\\Full_Formation_Property_Table.csv"),
+        ("Mineral ion table", "C:\\Users\\gargi\\Downloads\\Mineral_Ion_EM_Table.docx"),
+    ],
+    "north_slope": [
+        ("Directional survey", "C:\\Users\\gargi\\Downloads\\alaska_directional_survey_6_wells.csv"),
+        ("Wireline equation map", "C:\\Users\\gargi\\Downloads\\hydrate_wireline_equation_map.docx"),
+        ("Gas hydrate preservation doc", "C:\\Users\\gargi\\Downloads\\gas_hydrate_master_preservation_first_combined.docx"),
+    ],
+    "stock_workflow": [
+        ("Stock dashboard folder", "C:\\Users\\gargi\\Downloads\\stockprediction2025"),
+    ],
+}
+
+AI_WORKFLOW_EVIDENCE = {
+    "ai_workflow": {
+        "description": "Supervised software-use case study for scientific desktop workflows.",
+        "chips": ["QGIS/Vagon screens", "Rubric checks", "Agent demos"],
+        "where": "Codex/ChatGPT helped inspect screenshots, organize task evidence, and turn workflow recordings into evaluation-ready examples.",
+        "gave": "Screen recordings, QGIS/ParaView/Vagon task context, pass/fail rubrics, screenshots, and expected output descriptions.",
+        "produced": "A clearer workflow story, project-room structure, evidence panels, and future agent-evaluation framing.",
+        "validated": "Whether the software output was actually usable: layer state, CRS, map quality, task completion, and domain-specific acceptance criteria.",
+        "future": "Future agents would learn from human demonstrations, replay steps in real software, and explain where a workflow failed.",
+    },
+    "thesis_graph": {
+        "description": "REE thesis notes become graph structure and visual research communication.",
+        "chips": ["Node/edge tables", "Adobe REE visuals", "Gephi/Neo4j path"],
+        "where": "AI helped translate literature notes and thesis structure into graph categories, relationship types, and presentation-ready visual language.",
+        "gave": "Thesis slides, REE notes, Gephi exports, literature concepts, manual spreadsheet rows, and Bayan Obo/Mountain Pass comparison goals.",
+        "produced": "Node/edge schema ideas, cleaned story order, Adobe-style graph visuals, and a future Neo4j/graph-ML pipeline.",
+        "validated": "Entity names, deposit interpretation, inferred versus observed relationships, and whether graph edges made geologic sense.",
+        "future": "Manual spreadsheet -> AI-assisted graph schema -> Gephi/Adobe visualization -> Neo4j graph database -> graph ML relationship ranking.",
+    },
+    "processing_earthquake": {
+        "description": "Origin story: first AI-assisted creative geoscience visualization.",
+        "chips": ["USGS events", "3D globe poster", "Sonification"],
+        "where": "AI helped frame the Processing sketch as a scientific visualization workflow rather than a standalone creative code artifact.",
+        "gave": "USGS earthquake attributes, Processing visualization intent, LinkedIn poster evidence, and the need to recover the correct video.",
+        "produced": "A verified poster-first presentation and a rebuild plan for a reproducible web visualization.",
+        "validated": "The local video candidate was not the correct earthquake export; only the LinkedIn poster/video evidence is verified for now.",
+        "future": "A future version would rebuild the globe in Streamlit or Three.js with reproducible data pulls, filters, uncertainty, and narration.",
+    },
+    "seismic": {
+        "description": "Notebook outputs become a reproducible seismic interpretation workflow.",
+        "chips": ["ObsPy notebook", "Waveform QA", "Velocity maps"],
+        "where": "AI helped explain notebook cells, choose presentation-worthy outputs, and connect seismic figures to an ML-ready workflow.",
+        "gave": "Waveform notebooks, station/event context, annotated seismic panels, training slides, and velocity-analysis goals.",
+        "produced": "Cleaner notebook narrative, visual evidence selection, and a roadmap for arrival picking and uncertainty reporting.",
+        "validated": "Arrival picks, station geometry assumptions, waveform quality, geologic interpretation, and hydrogeologic relevance.",
+        "future": "A future model would assist with arrival picks, QA flags, event triage, and reproducible uncertainty summaries.",
+    },
+    "north_slope": {
+        "description": "Public geoscience sources become an interactive hydrate-screening atlas.",
+        "chips": ["3D Plotly map", "Source library", "Wireline ML scaffold"],
+        "where": "AI helped organize public Alaska geoscience sources, large GIS shapefiles, hydrate/wireline ideas, Open Science Lab/GitHub workflow context, and Streamlit app structure.",
+        "gave": "Open Science Lab/GitHub context, geology shapefiles, gas-hydrate papers, wireline-variable notes, map ideas, cross-section goals, and screenshots.",
+        "produced": "A current interactive atlas, static screenshot thumbnails, ML presentation scaffold, and a clearer discussion of how public energy data could become screening infrastructure.",
+        "validated": "Layer meaning, geologic plausibility, source provenance, hydrate assumptions, and what features an expert would trust.",
+        "future": "A future ML screen would connect wells, depths, hydrate indicators, stratigraphy, wireline curves, synclines, rock types, and source confidence into expert-reviewed energy target ranking.",
+    },
+    "rock_classification": {
+        "description": "Rock, petrography, and geochemistry visuals become labeled ML examples.",
+        "chips": ["Classification maps", "Thin sections", "Geochemical charts"],
+        "where": "AI helped organize rock-property ranges, overlap charts, classification outputs, and the idea of mapping instrument properties to rock properties.",
+        "gave": "Chemical ranges, mineral/rock labels, thin-section slides, formation maps, shapefile-derived grids, raster outputs, and geochemical interpretation goals.",
+        "produced": "Classification visuals, overlap/range reasoning, embedded map panels, dataset framing, and an ArcGIS/3D resource-mapping roadmap.",
+        "validated": "Rock labels, formation context, petrographic interpretation, chart reading, and which examples are reliable enough for training.",
+        "future": "A future workflow could combine seismic, EM, MT, gravity, geochemistry, formation labels, and expert review to build surface and subsurface resource maps.",
+    },
+    "valles": {
+        "description": "Field geophysics figures become an AI-assisted interpretation review loop.",
+        "chips": ["Gravity maps", "SAGE slides", "Uncertainty review"],
+        "where": "AI helped organize field/project evidence and connect map outputs to cross-method interpretation questions.",
+        "gave": "Gravity, free-air, Moho, SAGE deck images, field context, and geophysical interpretation goals.",
+        "produced": "A visual case-study room and a roadmap for a future field-data comparison dashboard.",
+        "validated": "Instrument limits, anomaly interpretation, terrain constraints, uncertainty, and whether map comparisons were geologically defensible.",
+        "future": "A future system would compare geophysical products side by side while preserving method uncertainty and expert comments.",
+    },
+    "moho_ml": {
+        "description": "A real supervised ML example becomes a discussion about transfer, leakage, and reproducibility.",
+        "chips": ["Gravity inputs", "ANN-style model", "Transfer test"],
+        "where": "AI can now help recover, explain, document, and stress-test a past machine-learning project instead of leaving it as a hidden class notebook.",
+        "gave": "aus.moho.ipynb, australian.moho, australian.py, machinelearningreport.docx, gravity/Moho variables, and the Australia-to-USA transfer goal.",
+        "produced": "A new topic room that separates actual past ML from future speculative AI workflows.",
+        "validated": "Train/test boundaries, model leakage, whether R2 means anything on unseen geography, and whether the prediction makes geologic sense.",
+        "future": "A current version would compare ANN, tree ensembles, Gaussian/process-style uncertainty, spatial cross-validation, and residual maps before claiming it works.",
+    },
+    "stock_workflow": {
+        "description": "Codex turns scattered local analysis into a tracked app-building workflow.",
+        "chips": ["Local files", "GitHub/cloud", "Model risk"],
+        "where": "Codex helped organize local downloads, inspect existing notebook outputs, build Streamlit views, debug charts, and make GitHub/cloud workflow ideas feel reachable.",
+        "gave": "Downloads folders, notebook outputs, chart goals, app ideas, pipeline files, and questions about model testing and evaluation leakage.",
+        "produced": "A working app/pipeline example and a discussion topic about AI, money, young builders, and honest model evaluation.",
+        "validated": "Whether model tests use truly unseen data, whether results are biased by leakage, and whether the app is a tool rather than a financial claim.",
+        "future": "A future version would run tracked pipelines through GitHub/cloud or virtual desktops, separate training/evaluation windows, and keep model claims honest.",
+    },
+}
 
 CODE_SNIPPETS = {
     "pondicherry": """from obspy.clients.fdsn import Client
@@ -307,7 +669,7 @@ cols[3].metric("Shortlist picks", health.get("latest_shortlist_rows", "0"))""",
 
 
 st.set_page_config(
-    page_title="AI Research Workflow Portfolio",
+    page_title="AI Workflow Think Tank",
     page_icon="AI",
     layout="wide",
 )
@@ -548,6 +910,296 @@ st.markdown(
         font-size: 0.94rem;
         margin-top: 0.75rem;
     }
+    .think-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin: 1rem 0;
+    }
+    .think-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.85rem;
+        min-height: 335px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+    .topic-signal {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background:
+            radial-gradient(circle at 16% 28%, #0f766e 0 8px, transparent 9px),
+            radial-gradient(circle at 40% 54%, #2563eb 0 7px, transparent 8px),
+            radial-gradient(circle at 68% 32%, #f97316 0 8px, transparent 9px),
+            radial-gradient(circle at 86% 68%, #64748b 0 7px, transparent 8px),
+            linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+        min-height: 118px;
+        position: relative;
+        overflow: hidden;
+    }
+    .topic-poster {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: #ffffff;
+        overflow: hidden;
+        min-height: 118px;
+    }
+    .topic-poster svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .topic-signal::before {
+        content: "";
+        position: absolute;
+        left: 14%;
+        top: 50%;
+        width: 72%;
+        border-top: 3px dotted #94a3b8;
+        transform: rotate(-6deg);
+    }
+    .topic-signal::after {
+        content: "AI workflow";
+        position: absolute;
+        right: 0.7rem;
+        bottom: 0.55rem;
+        color: #334155;
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+    .topic-pattern {
+        position: absolute;
+        left: 0.65rem;
+        bottom: 0.55rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.28rem;
+        max-width: 70%;
+    }
+    .topic-pattern span {
+        background: rgba(255,255,255,0.82);
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        padding: 0.2rem 0.42rem;
+        color: #0f172a;
+        font-size: 0.72rem;
+        font-weight: 750;
+    }
+    .think-question {
+        font-size: 1.05rem;
+        line-height: 1.25;
+        color: #111827;
+        font-weight: 850;
+        margin: 0;
+    }
+    .think-example {
+        color: #475569;
+        font-size: 0.92rem;
+        line-height: 1.34;
+        margin: 0;
+    }
+    .think-raise {
+        border-left: 4px solid #0f766e;
+        background: #f0fdfa;
+        color: #134e4a;
+        padding: 0.55rem 0.65rem;
+        font-size: 0.9rem;
+        line-height: 1.3;
+        margin-top: auto;
+    }
+    .unfinished-note {
+        border: 1px solid #fed7aa;
+        border-left: 5px solid #f97316;
+        border-radius: 8px;
+        background: #fff7ed;
+        color: #7c2d12;
+        padding: 0.75rem 0.9rem;
+        margin: 0.9rem 0 1rem 0;
+        font-size: 0.96rem;
+        line-height: 1.35;
+    }
+    .blueprint {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem;
+        margin: 0.8rem 0 1rem 0;
+    }
+    .blueprint h3 {
+        margin: 0 0 0.75rem 0;
+        color: #111827;
+        font-size: 1.05rem;
+    }
+    .blueprint-steps {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.6rem;
+        align-items: stretch;
+    }
+    .blue-step {
+        border: 1px solid #dbe3ea;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.7rem;
+        min-height: 118px;
+        position: relative;
+    }
+    .blue-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -0.55rem;
+        width: 0.55rem;
+        border-top: 3px dotted #64748b;
+    }
+    .blue-index {
+        width: 1.35rem;
+        height: 1.35rem;
+        border-radius: 50%;
+        background: #0f766e;
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 850;
+        margin-bottom: 0.45rem;
+    }
+    .blue-step strong {
+        display: block;
+        color: #111827;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+    .blue-step span {
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.28;
+    }
+    .blue-outcome {
+        border-left: 4px solid #2563eb;
+        background: #eff6ff;
+        color: #1e3a8a;
+        padding: 0.62rem 0.75rem;
+        margin-top: 0.75rem;
+        font-size: 0.92rem;
+        line-height: 1.32;
+    }
+    .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin: 0.75rem 0;
+    }
+    .prompt-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.7rem;
+        color: #334155;
+        min-height: 92px;
+        font-size: 0.92rem;
+        line-height: 1.32;
+    }
+    .source-chip-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5rem;
+        margin: 0.7rem 0;
+    }
+    .source-chip {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.55rem;
+        color: #334155;
+        font-size: 0.86rem;
+        line-height: 1.25;
+    }
+    .source-chip strong {
+        display: block;
+        color: #111827;
+        margin-bottom: 0.2rem;
+    }
+    .ai-case-brief {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem;
+        margin: 0.75rem 0 1rem 0;
+    }
+    .ai-case-top {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 0.8rem;
+        align-items: start;
+        margin-bottom: 0.75rem;
+    }
+    .ai-case-top h3 {
+        margin: 0 0 0.35rem 0;
+        font-size: 1.05rem;
+        color: #111827;
+    }
+    .ai-case-top p {
+        margin: 0;
+        color: #475569;
+        line-height: 1.35;
+    }
+    .ai-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        justify-content: flex-end;
+    }
+    .ai-chip {
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        padding: 0.32rem 0.55rem;
+        font-size: 0.82rem;
+        font-weight: 750;
+    }
+    .ai-evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.65rem;
+    }
+    .ai-evidence-cell {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.72rem;
+        min-height: 138px;
+    }
+    .ai-evidence-cell strong {
+        display: block;
+        color: #0f172a;
+        font-size: 0.86rem;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+    }
+    .ai-evidence-cell span {
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.32;
+    }
+    .ai-evidence-cell.validation {
+        background: #fff7ed;
+        border-color: #fed7aa;
+    }
+    .ai-future-line {
+        border-left: 4px solid #2563eb;
+        background: #eff6ff;
+        color: #1e3a8a;
+        padding: 0.62rem 0.75rem;
+        margin-top: 0.72rem;
+        font-size: 0.92rem;
+        line-height: 1.32;
+    }
     .storyboard-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -582,9 +1234,11 @@ st.markdown(
         .talk-hero {
             padding: 1rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid { grid-template-columns: 1fr; }
         .ml-stage { min-height: auto; }
+        .ai-chip-row { justify-content: flex-start; }
         .model-core::before, .model-core::after { display: none; }
+        .blue-step::after { display: none; }
         .movement-rail { grid-template-columns: repeat(4, minmax(4rem, 1fr)); overflow-x: auto; }
         div[data-testid="stMetric"] {
             padding: 0.55rem 0.65rem;
@@ -652,7 +1306,7 @@ def existing_path(path_text: str) -> Path | None:
 
 
 def topic_url(slug: str) -> str:
-    return f"?section=Project%20Rooms&topic={quote(slug)}"
+    return f"?section=Think%20Tank%20Topics&topic={quote(slug)}"
 
 
 def topic_by_slug(slug: str) -> dict:
@@ -784,6 +1438,150 @@ def render_node_movement(row: pd.Series, title: str = "What moves through the ML
     )
 
 
+def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
+    evidence = AI_WORKFLOW_EVIDENCE.get(topic["slug"])
+    if evidence is None:
+        return
+    chips = "".join(
+        f"<span class='ai-chip'>{escape(chip)}</span>"
+        for chip in evidence["chips"]
+    )
+    title = "AI workflow evidence" if not compact else "Workflow evidence"
+    st.markdown(
+        f"""
+<div class="ai-case-brief">
+  <div class="ai-case-top">
+    <div>
+      <h3>{title}</h3>
+      <p>{escape(evidence["description"])}</p>
+    </div>
+    <div class="ai-chip-row">{chips}</div>
+  </div>
+  <div class="ai-evidence-grid">
+    <div class="ai-evidence-cell">
+      <strong>Where AI helped</strong>
+      <span>{escape(evidence["where"])}</span>
+    </div>
+    <div class="ai-evidence-cell">
+      <strong>What I gave AI</strong>
+      <span>{escape(evidence["gave"])}</span>
+    </div>
+    <div class="ai-evidence-cell">
+      <strong>What AI produced</strong>
+      <span>{escape(evidence["produced"])}</span>
+    </div>
+    <div class="ai-evidence-cell validation">
+      <strong>Human validation</strong>
+      <span>{escape(evidence["validated"])}</span>
+    </div>
+  </div>
+  <div class="ai-future-line"><strong>Future ML version:</strong> {escape(evidence["future"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_topic_signal(topic: dict) -> str:
+    visual_path_text = TOPIC_VISUALS.get(topic["slug"])
+    if visual_path_text:
+        visual_path = project_asset(visual_path_text)
+        if visual_path.exists():
+            return f"<div class='topic-poster'>{visual_path.read_text(encoding='utf-8', errors='ignore')}</div>"
+    frame = TOPIC_FRAMES.get(topic["slug"], {})
+    pattern = frame.get("pattern", ["input", "AI", "output", "review"])
+    chips = "".join(f"<span>{escape(term)}</span>" for term in pattern)
+    return f"""
+<div class="topic-signal">
+  <div class="topic-pattern">{chips}</div>
+</div>
+    """
+
+
+def render_think_card(topic: dict) -> str:
+    frame = TOPIC_FRAMES.get(topic["slug"], {})
+    workflow = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
+    question = frame.get("question", topic["question"])
+    example = frame.get("example", workflow.get("description", topic["tagline"]))
+    raise_line = frame.get("raise", f"Raise your hand if you want to talk about {topic['theme']}.")
+    why = topic["why_it_matters"]
+    return f"""
+<div class="think-card">
+  {render_topic_signal(topic)}
+  <p class="think-question">{escape(question)}</p>
+  <p class="think-example">{escape(example)}</p>
+  <div class="ai-chip-row" style="justify-content:flex-start;">
+    {''.join(f"<span class='ai-chip'>{escape(chip)}</span>" for chip in workflow.get("chips", []))}
+  </div>
+  <p class="think-example"><strong>Bottleneck:</strong> {escape(topic["bottleneck"])}</p>
+  <div class="think-raise">{escape(raise_line)}</div>
+</div>
+    """
+
+
+def render_workflow_blueprint(topic: dict) -> None:
+    blueprint = WORKFLOW_BLUEPRINTS.get(topic["slug"])
+    if blueprint is None:
+        return
+    step_html = []
+    for idx, (label, detail) in enumerate(blueprint["steps"], start=1):
+        step_html.append(
+            f"""
+<div class="blue-step">
+  <div class="blue-index">{idx}</div>
+  <strong>{escape(label)}</strong>
+  <span>{escape(detail)}</span>
+</div>
+            """
+        )
+    st.markdown(
+        f"""
+<div class="blueprint">
+  <h3>{escape(blueprint["title"])}</h3>
+  <div class="blueprint-steps">{''.join(step_html)}</div>
+  <div class="blue-outcome"><strong>End product idea:</strong> {escape(blueprint["outcome"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_discussion_prompts(topic: dict) -> None:
+    prompts = DISCUSSION_PROMPTS.get(topic["slug"], [])
+    if not prompts:
+        return
+    st.subheader("Discussion prompts")
+    st.markdown(
+        "<div class='prompt-grid'>"
+        + "".join(f"<div class='prompt-card'>{escape(prompt)}</div>" for prompt in prompts)
+        + "</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_evidence_leads(topic: dict) -> None:
+    leads = EVIDENCE_LEADS.get(topic["slug"], [])
+    if not leads:
+        return
+    chips = []
+    for label, path_text in leads:
+        path = Path(path_text)
+        status = "found" if path.exists() else "missing"
+        chips.append(
+            f"""
+<div class="source-chip">
+  <strong>{escape(label)}</strong>
+  <span>{escape(status)} | {escape(path.name)}</span>
+</div>
+            """
+        )
+    st.subheader("Evidence leads")
+    st.markdown(
+        f"<div class='source-chip-grid'>{''.join(chips)}</div>",
+        unsafe_allow_html=True,
+    )
+
+
 def render_visual_wall(title: str, visual_rows: pd.DataFrame, limit: int = 4) -> None:
     if visual_rows.empty:
         return
@@ -812,7 +1610,7 @@ SECTIONS = [
     "Overview",
     "Mobile View",
     "Presentation View",
-    "Project Rooms",
+    "Think Tank Topics",
     "Machine Learning Future",
     "Case Studies",
     "LinkedIn Evidence",
@@ -820,17 +1618,20 @@ SECTIONS = [
     "Notebook Explorer",
     "Evidence Library",
     "Visual Gallery",
+    "Contact / Ideas",
     "Build Plan",
 ]
 query_section = st.query_params.get("section", "Overview")
 if query_section == "Visual Contact Sheets":
     query_section = "Visual Gallery"
+if query_section == "Project Rooms":
+    query_section = "Think Tank Topics"
 if query_section not in SECTIONS:
     query_section = "Overview"
 
 
 with st.sidebar:
-    st.title("AI Workflow")
+    st.title("AI Think Tank")
     section = st.radio(
         "View",
         SECTIONS,
@@ -838,7 +1639,7 @@ with st.sidebar:
         label_visibility="collapsed",
     )
     st.divider()
-    st.caption("Local + Drive evidence for a website or PowerPoint story.")
+    st.caption("Pick a topic. The projects are examples, not finished products.")
     if DOWNLOAD_PACKAGE_PATH.exists():
         with DOWNLOAD_PACKAGE_PATH.open("rb") as package_file:
             st.download_button(
@@ -850,66 +1651,44 @@ with st.sidebar:
 
 
 if section == "Overview":
-    st.title("AI Geoscience Workflow Portfolio")
+    st.title("AI Workflow Think Tank")
     st.write(
-        "Choose a project room. Each room has its own visual evidence, AI workflow angle, "
-        "expert-facing question, and links back to the source files."
+        "Pick a topic, let's talk. These are unfinished school, research, coding, and creative projects used as examples of a bigger question: "
+        "if AI is mostly a tool, how does the user's workflow, domain knowledge, and curiosity decide how useful that tool becomes?"
     )
 
     cols = st.columns(5)
-    cols[0].metric("Case studies", len(case_studies))
+    cols[0].metric("Think tank topics", len(TOPIC_ROOMS))
     cols[1].metric("Notebooks indexed", len(notebook_inventory))
     cols[2].metric("Drive links", len(drive_inventory))
     cols[3].metric("High-priority sources", int((inventory["priority"] == "high").sum()))
     cols[4].metric("Visual assets", len(project_visuals))
 
-    st.subheader("Motion evidence")
-    motion_cols = st.columns([1.15, 1])
-    with motion_cols[0]:
-        processing_video = evidence_path_by_key("processing_earthquake")
-        if processing_video is not None:
-            st.video(str(processing_video))
-            st.caption(
-                "Processing earthquake globe / sonification video. This is better than a GIF here because the sound is part of the project."
-            )
-        else:
-            poster_path = project_asset("assets/project_visuals/processing_earthquake_linkedin_poster.jpg")
-            if poster_path.exists():
-                st.image(
-                    str(poster_path),
-                    caption="Verified LinkedIn poster frame. The actual 54-second video needs to be exported before local embedding.",
-                    use_container_width=True,
-                )
-            st.info("The LinkedIn earthquake video is verified, but the local file previously used here was the wrong video. Add the correct export to embed it with sound.")
-    with motion_cols[1]:
-        st.markdown("**Why show this first?**")
-        st.write(
-            "This makes the site feel like an actual demonstration instead of a file index. "
-            "The project started as AI-assisted scientific visualization: USGS earthquake data, 3D spatial encoding, magnitude/depth styling, and sound."
-        )
-        st.write(
-            "The modern question is how to rebuild this as a reproducible web visualization with filters, uncertainty, source provenance, and explainable AI narration."
-        )
+    st.markdown(
+        """
+<div class="unfinished-note">
+  These are unfinished examples. The point is not that every project is complete or production-ready.
+  The point is how prompting, screenshots, Codex, GitHub, notebooks, maps, and domain knowledge can push an idea further.
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    st.subheader("Start here")
-    hub_cols = st.columns(3)
+    st.subheader("Pick a topic")
+    st.caption(
+        "The project is just the handle. The real conversation is the workflow: prompts, screenshots, Codex, GitHub, maps, graphs, model risk, and what experts would do next. "
+        "These mini-posters are static SVG concepts for now; the next visual layer can be Processing sketches, GIFs, or map/shape-file animations."
+    )
+    st.markdown(
+        f"<div class='think-grid'>{''.join(render_think_card(topic) for topic in TOPIC_ROOMS)}</div>",
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Open a topic room")
+    topic_link_cols = st.columns(3)
     for idx, topic in enumerate(TOPIC_ROOMS):
-        with hub_cols[idx % 3]:
-            with st.container(border=True):
-                hero_path = project_asset(topic["hero"])
-                if topic["slug"] == "processing_earthquake":
-                    processing_preview = evidence_path_by_key("processing_earthquake")
-                    if processing_preview is not None:
-                        st.video(str(processing_preview))
-                    elif hero_path.exists():
-                        st.image(str(hero_path), use_container_width=True)
-                elif hero_path.exists():
-                    st.image(str(hero_path), use_container_width=True)
-                st.markdown(f"**{topic['title']}**")
-                st.write(topic["tagline"])
-                st.markdown(f"**Bottleneck:** {topic['bottleneck']}")
-                st.caption(f"AI angle: {topic['theme']}")
-                st.link_button("Open project room", topic_url(topic["slug"]))
+        with topic_link_cols[idx % 3]:
+            st.link_button(TOPIC_FRAMES.get(topic["slug"], {}).get("question", topic["title"]), topic_url(topic["slug"]))
 
     st.subheader("Fast presentation links")
     fast_cols = st.columns(5)
@@ -930,9 +1709,14 @@ if section == "Overview":
 
     st.subheader("Why this is not just a file list")
     st.write(
-        "The argument is that AI becomes most useful when it is connected to durable project context: "
-        "source folders, code, screenshots, notebooks, GIS outputs, graph exports, and presentation artifacts. "
-        "The files are evidence; the workflow is the scalable research system."
+        "The argument is not that the projects are finished or that AI automatically knows what to do. "
+        "The argument is that a curious user with domain context can use prompting, screenshots, Codex, GitHub, notebooks, maps, and visual tools to push unfinished ideas much further than before."
+    )
+
+    st.subheader("Small about note")
+    st.write(
+        "I am early in this, and that is kind of the point. I like cafes, conversations, geoscience, coding, markets, and asking people how they are using AI. "
+        "I have been prompting since ChatGPT came out, but Codex plus GitHub/Open Science Lab style workflows made me realize how much manual work can become a system."
     )
 
 
@@ -1090,44 +1874,52 @@ elif section == "Presentation View":
     st.dataframe(folder_display, hide_index=True, use_container_width=True)
 
 
-elif section == "Project Rooms":
+elif section == "Think Tank Topics":
     topic_param = st.query_params.get("topic", TOPIC_ROOMS[0]["slug"])
     topic = topic_by_slug(topic_param)
+    topic_frame = TOPIC_FRAMES.get(topic["slug"], {})
 
     st.markdown(
         f"""
 <div class="talk-hero">
-  <div class="talk-kicker">Project room</div>
+  <div class="talk-kicker">Think tank topic</div>
   <h2>{topic['title']}</h2>
-  <p>{topic['tagline']}</p>
+  <p>{escape(topic_frame.get('question', topic['tagline']))}</p>
 </div>
         """,
         unsafe_allow_html=True,
     )
 
     topic_roadmap = roadmap_row(topic["project_key"])
-    with st.expander("Switch project room"):
+    st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+    st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
+    render_workflow_blueprint(topic)
+
+    with st.expander("Switch think tank topic"):
         jump_cols = st.columns(4)
         for idx, room in enumerate(TOPIC_ROOMS):
             with jump_cols[idx % 4]:
-                st.link_button(room["title"], topic_url(room["slug"]))
+                st.link_button(TOPIC_FRAMES.get(room["slug"], {}).get("question", room["title"]), topic_url(room["slug"]))
+
+    with st.expander("How AI helped in this example", expanded=True):
+        render_ai_workflow_panel(topic)
 
     current_visuals = project_visuals[
         project_visuals["project_key"].fillna("") == topic["project_key"]
     ].sort_values("sort_order")
     if topic["slug"] == "thesis_graph":
         ree_wall = current_visuals[
-            current_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
+            current_visuals["visual_type"].fillna("").str.contains("Adobe|REE visualization|PowerPoint", case=False, regex=True)
         ]
-        render_visual_wall("REE accumulation slides from Adobe / LinkedIn", ree_wall, limit=4)
+        render_visual_wall("REE Adobe / Bayan Obo slide wall", ree_wall, limit=6)
     elif topic["slug"] == "rock_classification":
         rock_wall = current_visuals[
-            current_visuals["visual_type"].fillna("").str.contains("slide|PowerPoint|presentation", case=False, regex=True)
+            current_visuals["visual_type"].fillna("").str.contains("slide|PowerPoint|presentation|classification|chart", case=False, regex=True)
         ]
-        render_visual_wall("Rock classification charts and slide visuals", rock_wall, limit=4)
+        render_visual_wall("Rock classification maps and charts", rock_wall, limit=6)
 
     if topic_roadmap is not None:
-        render_node_movement(topic_roadmap, title="Project evidence -> ML output")
+        render_node_movement(topic_roadmap, title="Inputs -> variables -> AI/ML -> output")
         early_slide_visuals = project_visuals[
             (project_visuals["project_key"].fillna("") == topic["project_key"])
             & project_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
@@ -1148,7 +1940,7 @@ elif section == "Project Rooms":
             if hero_path.exists():
                 st.image(
                     str(hero_path),
-                    caption="North Slope geology and well-map overview.",
+                    caption="Static fallback thumbnail captured from the current North Slope Streamlit/Plotly map.",
                     use_container_width=True,
                 )
             load_3d_map = st.toggle(
@@ -1183,35 +1975,38 @@ elif section == "Project Rooms":
         else:
             st.warning("Hero image not found.")
     with hero_cols[1]:
-        st.subheader("Project signal")
+        st.subheader("Example bottleneck")
         st.info(topic["bottleneck"])
         st.caption(topic["why_not_done"])
 
     if topic_roadmap is not None:
-        st.subheader("ML timeline")
+        st.subheader("Future use-case timeline")
         render_future_timeline(topic_roadmap)
 
-    st.subheader("AI implementation logic")
-    implementation_cols = st.columns(3)
-    with implementation_cols[0]:
-        with st.container(border=True):
-            st.markdown("**Used now**")
-            st.caption(topic["ai_used"])
-    with implementation_cols[1]:
-        with st.container(border=True):
-            st.markdown("**Build next**")
-            st.caption(topic["future_ai"])
-    with implementation_cols[2]:
-        with st.container(border=True):
-            st.markdown("**Why care**")
-            st.caption(topic["why_it_matters"])
-            st.markdown(f"<p class='small-note'><strong>Ask:</strong> {topic['question']}</p>", unsafe_allow_html=True)
+    with st.expander("Technical notes for people who want to go deeper"):
+        implementation_cols = st.columns(3)
+        with implementation_cols[0]:
+            with st.container(border=True):
+                st.markdown("**Used now**")
+                st.caption(topic["ai_used"])
+        with implementation_cols[1]:
+            with st.container(border=True):
+                st.markdown("**Build next**")
+                st.caption(topic["future_ai"])
+        with implementation_cols[2]:
+            with st.container(border=True):
+                st.markdown("**Why care**")
+                st.caption(topic["why_it_matters"])
+                st.markdown(f"<p class='small-note'><strong>Ask:</strong> {topic['question']}</p>", unsafe_allow_html=True)
 
-    st.subheader("Proof to show")
-    proof_cols = st.columns(min(4, len(topic["proof"])))
-    for idx, proof in enumerate(topic["proof"]):
-        with proof_cols[idx % len(proof_cols)]:
-            st.info(proof)
+    render_discussion_prompts(topic)
+    render_evidence_leads(topic)
+
+    with st.expander("Proof to show"):
+        proof_cols = st.columns(min(4, len(topic["proof"])))
+        for idx, proof in enumerate(topic["proof"]):
+            with proof_cols[idx % len(proof_cols)]:
+                st.info(proof)
 
     if topic["slug"] == "thesis_graph":
         st.subheader("How the graph was made")
@@ -1377,7 +2172,7 @@ elif section == "Machine Learning Future":
 
     st.subheader("How every project becomes a pipeline")
     st.write(
-        "Use this page as the high-level map: the same structure appears under each project room, "
+        "Use this page as the high-level map: the same structure appears under each think tank topic, "
         "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
     )
 
@@ -1788,10 +2583,9 @@ elif section == "Evidence Library":
 
 
 elif section == "Visual Gallery":
-    st.title("Visual Gallery")
+    st.title("Workflow Visual Gallery")
     st.write(
-        "Selected screenshots and code outputs are now tied directly to projects. "
-        "This gives the website a visual proof layer instead of only file links."
+        "Visuals are grouped by the kind of AI workflow they help discuss: screenshots, maps, graphs, ML models, apps, and creative visualization."
     )
 
     chart_cols = st.columns(3)
@@ -1838,16 +2632,22 @@ elif section == "Visual Gallery":
         use_container_width=True,
     )
 
-    st.subheader("Project visuals")
-    project_options = case_studies["title"].tolist()
-    selected_title = st.selectbox("Project", project_options)
-    selected_case = case_studies[case_studies["title"] == selected_title].iloc[0]
+    st.subheader("Visuals by workflow type")
+    workflow_groups = {
+        "AI + screenshots / agents": ["arcgis_raster_ml", "portfolio_profile"],
+        "AI + maps / energy": ["north_slope", "valles_caldera", "moho_ml"],
+        "AI + graphs / critical minerals": ["thesis_knowledge_graph"],
+        "AI + classification": ["rock_classification"],
+        "AI + app building": ["stock_dashboard", "stock_notebook"],
+        "AI + creative visualization": ["processing_visuals", "pondicherry"],
+    }
+    selected_group = st.selectbox("Workflow type", list(workflow_groups.keys()))
     selected_visuals = project_visuals[
-        project_visuals["project_key"].fillna("") == selected_case["key"]
-    ].sort_values("sort_order")
+        project_visuals["project_key"].fillna("").isin(workflow_groups[selected_group])
+    ].sort_values(["project_key", "sort_order"])
 
     if selected_visuals.empty:
-        st.info("No individual visual has been selected for this project yet. Use the contact sheets below to pick one.")
+        st.info("No individual visual has been selected for this workflow type yet.")
     else:
         gallery_cols = st.columns(2)
         for idx, visual in enumerate(selected_visuals.itertuples(index=False)):
@@ -1870,6 +2670,48 @@ elif section == "Visual Gallery":
             st.image(str(image_path), caption=image_path.name, use_container_width=True)
         else:
             st.warning(f"Missing copied contact sheet: {image_path}")
+
+
+elif section == "Contact / Ideas":
+    st.title("Contact / Ideas")
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Why I am showing this</div>
+  <h2>I am early in this, and I want the conversation.</h2>
+  <p>
+    I have been prompting since ChatGPT came out, but Codex, GitHub, screenshots,
+    and Open Science Lab style workflows made me realize that a lot of manual project work
+    can become a system. I am not trying to say these projects are finished. I am trying
+    to learn how people with more experience would push them further.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.subheader("The ask")
+    st.write(
+        "I would love to hear your opinion, what you have seen work in industry or government, "
+        "and how your experience changes these ideas. The best outcome is not applause; it is a better question."
+    )
+    idea_cols = st.columns(3)
+    with idea_cols[0]:
+        with st.container(border=True):
+            st.markdown("**Tell me what breaks**")
+            st.caption("Where would this workflow fail in a real organization, dataset, basin, or software environment?")
+    with idea_cols[1]:
+        with st.container(border=True):
+            st.markdown("**Tell me what to learn**")
+            st.caption("Neo4j, cloud hosting, Linux sandboxes, agents, model validation, data engineering, or something older that still matters.")
+    with idea_cols[2]:
+        with st.container(border=True):
+            st.markdown("**Tell me what is useful**")
+            st.caption("Which topic could actually help energy, geoscience, finance, or scientific software work if it was built correctly?")
+    st.subheader("A little me")
+    st.write(
+        "I like cafes, geoscience, coding, art, markets, and conversations about how people are using AI. "
+        "My projects are examples I can point to while asking bigger questions about workflows."
+    )
 
 
 elif section == "Build Plan":

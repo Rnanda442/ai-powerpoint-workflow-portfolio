@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Moho machine learning transfer from Australia to USA">
+  <rect width="720" height="300" rx="18" fill="#f8fafc"/>
+  <path d="M74 148c34-56 94-70 144-34 34 24 32 74-18 96-50 20-116-4-126-62z" fill="#fde68a" stroke="#f59e0b" stroke-width="4"/>
+  <text x="94" y="242" font-family="Arial" font-size="20" font-weight="700" fill="#92400e">Australia train</text>
+  <g transform="translate(308 72)">
+    <circle cx="0" cy="24" r="10" fill="#2563eb"/><circle cx="0" cy="76" r="10" fill="#2563eb"/><circle cx="0" cy="128" r="10" fill="#2563eb"/>
+    <circle cx="74" cy="50" r="10" fill="#0f766e"/><circle cx="74" cy="102" r="10" fill="#0f766e"/>
+    <circle cx="148" cy="76" r="10" fill="#ef4444"/>
+    <path d="M10 24l54 26M10 24l54 78M10 76l54-26M10 76l54 26M10 128l54-26M84 50l54 26M84 102l54-26" stroke="#64748b" stroke-width="4"/>
+  </g>
+  <path d="M526 118c36-24 94-26 126 2 22 20 8 56-28 70-56 22-116-8-118-46-1-10 6-20 20-26z" fill="#bfdbfe" stroke="#2563eb" stroke-width="4"/>
+  <text x="540" y="242" font-family="Arial" font-size="20" font-weight="700" fill="#1e3a8a">USA transfer</text>
+  <rect x="258" y="250" width="210" height="20" rx="10" fill="url(#grad)"/>
+  <defs><linearGradient id="grad"><stop offset="0" stop-color="#2563eb"/><stop offset="0.5" stop-color="#f8fafc"/><stop offset="1" stop-color="#ef4444"/></linearGradient></defs>
+  <text x="292" y="288" font-family="Arial" font-size="17" font-weight="700" fill="#334155">residual / error map</text>
+</svg>

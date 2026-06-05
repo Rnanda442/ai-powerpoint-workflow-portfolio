@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="North Slope public data to energy screening">
+  <rect width="720" height="300" rx="18" fill="#eef2ff"/>
+  <path d="M56 176c74-70 146-88 230-60 64 22 114 20 182-4 58-20 108-12 174 40v78H56z" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <path d="M154 178v-74M224 182V82M328 168V66M450 156V96M562 176v-60" stroke="#ef4444" stroke-width="5"/>
+  <circle cx="154" cy="104" r="8" fill="#ef4444"/><circle cx="224" cy="82" r="8" fill="#f97316"/><circle cx="328" cy="66" r="8" fill="#ef4444"/><circle cx="450" cy="96" r="8" fill="#f97316"/><circle cx="562" cy="116" r="8" fill="#ef4444"/>
+  <path d="M112 204c124-20 250-14 430 10" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M132 226c126-6 252-4 408 10" fill="none" stroke="#0f766e" stroke-width="6" stroke-linecap="round"/>
+  <rect x="478" y="36" width="184" height="78" rx="12" fill="#ffffff" stroke="#93c5fd" stroke-width="3"/>
+  <text x="498" y="70" font-family="Arial" font-size="18" font-weight="700" fill="#1e3a8a">screening queue</text>
+  <text x="498" y="96" font-family="Arial" font-size="15" fill="#475569">logs + geology + hydrate</text>
+  <text x="72" y="52" font-family="Arial" font-size="22" font-weight="700" fill="#1e3a8a">open data -> GIS -> 3D atlas</text>
+</svg>

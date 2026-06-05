@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Seismic waveform picking and quality assurance">
+  <rect width="720" height="300" rx="18" fill="#f8fafc"/>
+  <rect x="32" y="44" width="250" height="180" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
+  <path d="M50 126c12-32 22 44 34 0s22-46 36 0 24 50 38 0 24-44 38 0 22 42 34 0" fill="none" stroke="#334155" stroke-width="5"/>
+  <path d="M52 168c14-20 22 30 34 0s22-32 36 0 24 36 38 0 24-34 38 0 22 28 34 0" fill="none" stroke="#94a3b8" stroke-width="4"/>
+  <line x1="160" y1="72" x2="160" y2="210" stroke="#ef4444" stroke-width="5"/>
+  <rect x="146" y="72" width="30" height="138" fill="#ef4444" opacity="0.12"/>
+  <path d="M304 134h82" stroke="#94a3b8" stroke-width="5" stroke-dasharray="9 8"/>
+  <polygon points="386,134 368,124 368,144" fill="#94a3b8"/>
+  <rect x="408" y="44" width="252" height="180" rx="12" fill="#ecfeff" stroke="#67e8f9" stroke-width="3"/>
+  <path d="M430 178c44-46 84-72 126-80 32-6 58 4 82-14" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round"/>
+  <path d="M430 196c52-28 98-42 152-34 30 4 48 18 58 28" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="556" cy="98" r="10" fill="#ef4444"/>
+  <text x="60" y="254" font-family="Arial" font-size="20" font-weight="700" fill="#334155">waveform + P-pick</text>
+  <text x="430" y="254" font-family="Arial" font-size="20" font-weight="700" fill="#334155">QA map + interpretation</text>
+</svg>
