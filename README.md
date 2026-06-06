@@ -26,6 +26,20 @@ python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
+For a compact phone layout, open:
+
+```text
+http://localhost:8501/?section=Mobile%20View
+```
+
+`localhost` is only reachable from the computer running Streamlit. To view the
+site from another laptop or phone, deploy this repository to Streamlit Community
+Cloud and use the public `streamlit.app` URL.
+
+Processing is not required to run this portfolio. It is only needed if the
+original earthquake visualization sketches are recovered and rebuilt. The site
+currently uses a poster image until the correct 54-second video is added.
+
 ## Project Files
 
 - `app.py`: Streamlit storyboard site.
@@ -41,3 +55,7 @@ streamlit run app.py
 Do not copy credential files, tokens, `.env` files, private account data, or
 controlled research data into this project. The current inventory references
 source paths but does not embed sensitive runtime files.
+
+Windows paths under `C:\Users\gargi\...` describe source files from the laptop.
+Those links are unavailable on this desktop and in cloud deployments unless the
+needed public-safe assets are copied into the repository or linked from Drive.

@@ -248,6 +248,14 @@ TOPIC_ROOMS = [
     },
 ]
 
+MOBILE_TOPIC_SLUGS = [
+    "ai_workflow",
+    "thesis_graph",
+    "north_slope",
+    "seismic",
+    "rock_classification",
+]
+
 CODE_SNIPPETS = {
     "pondicherry": """from obspy.clients.fdsn import Client
 from obspy import UTCDateTime
@@ -565,10 +573,26 @@ st.markdown(
         line-height: 1.35;
     }
     @media (max-width: 900px) {
+        .block-container {
+            padding: 1rem 0.85rem 2rem;
+        }
+        h1 { font-size: 1.85rem !important; }
+        h2 { font-size: 1.45rem !important; }
+        h3 { font-size: 1.2rem !important; }
+        .talk-hero {
+            padding: 1rem;
+        }
         .ml-strip, .future-timeline, .node-lane, .storyboard-grid { grid-template-columns: 1fr; }
         .ml-stage { min-height: auto; }
         .model-core::before, .model-core::after { display: none; }
         .movement-rail { grid-template-columns: repeat(4, minmax(4rem, 1fr)); overflow-x: auto; }
+        div[data-testid="stMetric"] {
+            padding: 0.55rem 0.65rem;
+        }
+        div[data-testid="stButton"] button,
+        div[data-testid="stLinkButton"] a {
+            width: 100%;
+        }
     }
 </style>
     """,
@@ -786,6 +810,7 @@ ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 
 SECTIONS = [
     "Overview",
+    "Mobile View",
     "Presentation View",
     "Project Rooms",
     "Machine Learning Future",
@@ -909,6 +934,38 @@ if section == "Overview":
         "source folders, code, screenshots, notebooks, GIS outputs, graph exports, and presentation artifacts. "
         "The files are evidence; the workflow is the scalable research system."
     )
+
+
+elif section == "Mobile View":
+    st.title("AI Geoscience Portfolio")
+    st.write(
+        "A compact version for phones: selected projects, one strong visual each, "
+        "and direct links to the full project rooms."
+    )
+
+    st.info(
+        "This portfolio connects geoscience, AI-assisted research, GIS, notebooks, "
+        "scientific visualization, and presentation design."
+    )
+
+    mobile_topics = [
+        topic for topic in TOPIC_ROOMS if topic["slug"] in MOBILE_TOPIC_SLUGS
+    ]
+    for topic in mobile_topics:
+        with st.container(border=True):
+            hero_path = project_asset(topic["hero"])
+            if hero_path.exists():
+                st.image(str(hero_path), use_container_width=True)
+            st.subheader(topic["title"])
+            st.write(topic["tagline"])
+            st.caption(f"AI workflow: {topic['theme']}")
+            st.link_button("View full project", topic_url(topic["slug"]))
+
+    st.subheader("Portfolio sections")
+    st.link_button("Presentation story", "?section=Presentation%20View")
+    st.link_button("Machine learning roadmap", "?section=Machine%20Learning%20Future")
+    st.link_button("All case studies", "?section=Case%20Studies")
+    st.link_button("Visual gallery", "?section=Visual%20Gallery")
 
 
 elif section == "Presentation View":
@@ -1088,12 +1145,24 @@ elif section == "Project Rooms":
     with hero_cols[0]:
         hero_path = project_asset(topic["hero"])
         if topic["slug"] == "north_slope" and NORTH_SLOPE_3D_HTML.exists():
-            components.html(
-                NORTH_SLOPE_3D_HTML.read_text(encoding="utf-8", errors="ignore"),
-                height=500,
-                scrolling=True,
+            if hero_path.exists():
+                st.image(
+                    str(hero_path),
+                    caption="North Slope geology and well-map overview.",
+                    use_container_width=True,
+                )
+            load_3d_map = st.toggle(
+                "Load interactive 3D map",
+                value=False,
+                help="The interactive export is about 16 MB. Leave it off on slower or mobile connections.",
             )
-            st.caption("Updated interactive North Slope 3D map from the current Streamlit/Plotly export.")
+            if load_3d_map:
+                components.html(
+                    NORTH_SLOPE_3D_HTML.read_text(encoding="utf-8", errors="ignore"),
+                    height=500,
+                    scrolling=True,
+                )
+                st.caption("Interactive North Slope 3D map from the current Streamlit/Plotly export.")
         elif topic["slug"] == "processing_earthquake":
             processing_room_video = evidence_path_by_key("processing_earthquake")
             if processing_room_video is not None:
