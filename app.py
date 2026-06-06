@@ -534,6 +534,226 @@ EVIDENCE_LEADS = {
     ],
 }
 
+PROCESSING_SKETCH_PLANS = {
+    "ai_workflow": {
+        "sketch": "action_trace_rubric_loop",
+        "visual": "Random action dots drift across a desktop field. A cursor-like path collects only useful actions, then rubric nodes light up green or red.",
+        "motion": ["wandering dots", "path capture", "checkmark pulse", "agent replay trail"],
+        "conclusion": "Agents need more than final answers; they need human demonstrations, output rubrics, and domain review.",
+        "future_ml": "Imitation learning, workflow trace classification, and agent evaluation harnesses for scientific software.",
+        "processing_notes": "Use PVector particles, one bezier path, and timed state changes from messy actions to reviewed workflow.",
+    },
+    "thesis_graph": {
+        "sketch": "ree_graph_organizer_loop",
+        "visual": "Scattered entity dots pulse outward from a prompt node, snap into mineral/host/fluid/stage clusters, and grow edges into a graph.",
+        "motion": ["prompt pulse", "cluster sorting", "edge growth", "question-edge glow"],
+        "conclusion": "Knowledge graphs make research relationships visible so AI has structure to reason with instead of loose notes.",
+        "future_ml": "GraphRAG, Neo4j, relation extraction, graph embeddings, and graph ML for critical-mineral questions.",
+        "processing_notes": "Use spring-like attraction to cluster nodes by type, then draw edges with alpha fades and a few highlighted unknowns.",
+    },
+    "processing_earthquake": {
+        "sketch": "sensory_event_globe_loop",
+        "visual": "A dark circular globe field receives event dots. Bigger dots pulse wider rings while depth shifts color and sound-wave rings expand.",
+        "motion": ["event pulse", "depth color shift", "ring expansion", "orbiting timeline"],
+        "conclusion": "Creative visual systems can make geoscience data easier to feel, inspect, and discuss.",
+        "future_ml": "Event clustering, anomaly detection, and AI narration for seismic patterns.",
+        "processing_notes": "No real earthquake data needed at first: generate synthetic lat/lon-like positions and magnitude-driven pulses.",
+    },
+    "seismic": {
+        "sketch": "waveform_pick_uncertainty_loop",
+        "visual": "Noisy waveform traces scroll left. A pick line appears, uncertainty bands breathe, and acceptable picks turn green while weak picks stay yellow.",
+        "motion": ["trace scroll", "pick scan", "uncertainty band", "QA color change"],
+        "conclusion": "AI can speed repetitive seismic review, but uncertainty and expert override must stay visible.",
+        "future_ml": "Arrival picking, waveform QA classifiers, seismic foundation models, and promptable geobody interpretation.",
+        "processing_notes": "Generate sine/noise traces, animate a vertical scanner, and mark confidence with transparent bands.",
+    },
+    "north_slope": {
+        "sketch": "energy_screening_funnel_loop",
+        "visual": "Messy data layers float in: papers, GIS, wells, logs, geology. They stack into a block, then flow into review/investigate/ignore paths.",
+        "motion": ["layer drift", "stacking", "well drops", "decision funnel"],
+        "conclusion": "AI can make public energy data easier to screen, but experts decide which targets deserve investigation.",
+        "future_ml": "Explainable hydrate interval ranking from well logs, stratigraphy, structural context, and provenance confidence.",
+        "processing_notes": "Represent layers as translucent planes, wells as vertical lines, and target confidence as pulsing dots.",
+    },
+    "rock_classification": {
+        "sketch": "property_cluster_map_loop",
+        "visual": "Colored particles for density, velocity, resistivity, chemistry, and formation labels pass through filters, overlap, then become map cells.",
+        "motion": ["range filters", "particle sorting", "cluster formation", "grid coloring"],
+        "conclusion": "AI can help translate instrument properties into rock-property maps and eventually 3D resource models.",
+        "future_ml": "Multimodal classifiers, GNN lithology models, spatial feature fusion, and expert label auditing.",
+        "processing_notes": "Use colored particles moving through threshold gates, then snap accepted particles into a tiled map grid.",
+    },
+    "valles": {
+        "sketch": "uncertainty_layer_fusion_loop",
+        "visual": "Three translucent fields slide together: gravity waves, EM blobs, seismic lines. Overlap glows, uncertainty remains gray.",
+        "motion": ["field drift", "overlap glow", "uncertainty shimmer", "expert marker"],
+        "conclusion": "AI can help compare methods, but it should preserve uncertainty instead of flattening all maps into one false answer.",
+        "future_ml": "Data fusion, anomaly segmentation, uncertainty tagging, and map-comparison assistants.",
+        "processing_notes": "Use alpha-blended fields and noise-based gray regions that never fully resolve.",
+    },
+    "moho_ml": {
+        "sketch": "transfer_residual_loop",
+        "visual": "A training cluster on the left feeds a neural-node chain. Predictions land on a new region, then residual dots flash where transfer fails.",
+        "motion": ["train pulse", "network propagation", "test-region reveal", "residual flash"],
+        "conclusion": "A high ML score is not enough; the model has to transfer honestly to new geography.",
+        "future_ml": "Spatial cross-validation, transfer learning, residual mapping, uncertainty estimates, and model-family comparison.",
+        "processing_notes": "Use two point clouds, a simple node network, and red/blue residual particles after prediction.",
+    },
+    "stock_workflow": {
+        "sketch": "codex_pipeline_risk_gate_loop",
+        "visual": "Chaotic file dots fall into a Codex node, split into GitHub branches and dashboard panels, then pass through a leakage-check gate.",
+        "motion": ["file rain", "pipeline sorting", "branch split", "risk gate"],
+        "conclusion": "AI helps people build tools quickly, but useful apps need honest model testing and visible risk checks.",
+        "future_ml": "Pipeline automation, model monitoring, leakage detection, cloud refreshes, and human-reviewed decision support.",
+        "processing_notes": "Animate falling particles into lanes, branch lines, mini dashboard rectangles, and a red gate that blocks bad scores.",
+    },
+}
+
+RESEARCH_SOURCES = [
+    ("USGS Earth MRI", "https://www.usgs.gov/special-topics/earth-mri"),
+    ("DOE AI for Energy report", "https://www.energy.gov/sites/default/files/2024-04/AI%20EO%20Report%20Section%205.2g%28i%29_043024.pdf"),
+    ("Geoscience knowledge graph pipeline", "https://www.mdpi.com/2075-163X/14/12/1296"),
+    ("Critical minerals GraphRAG", "https://www.sciencedirect.com/science/article/pii/S0098300426000944"),
+    ("GNN mineral prospectivity mapping", "https://www.sciencedirect.com/science/article/pii/S0169136824003482"),
+    ("SeisLM seismic waveform foundation model", "https://arxiv.org/abs/2410.15765"),
+    ("Seismic foundation model", "https://pubs.geoscienceworld.org/geophysics/article/90/2/IM59/652505/Seismic-foundation-model-A-next-generation-deep"),
+    ("Promptable seismic geobody model", "https://arxiv.org/abs/2409.04962"),
+    ("Physics-informed ML for subsurface energy", "https://www.sciencedirect.com/science/article/pii/S2949891024003087"),
+    ("Gas hydrate well-log ML", "https://www.mdpi.com/2077-1312/13/7/1208"),
+    ("Spatial cross-validation for GeoAI", "https://www.acsu.buffalo.edu/~yhu42/papers/2023_GeoAIHandbook_SpatialCV.pdf"),
+    ("GUI agents survey", "https://aclanthology.org/2025.findings-acl.1158.pdf"),
+    ("ADEPT scientific workflow agents", "https://www.osti.gov/biblio/3006464"),
+]
+
+DETAILED_TOPIC_PLANS = {
+    "ai_workflow": {
+        "title": "Teaching AI Agents Scientific Software",
+        "question": "Can screenshots, traces, and rubrics teach agents to use scientific tools responsibly?",
+        "anchor": "Handshake/QGIS/ParaView/Vagon work becomes an example of human demonstration plus output checking.",
+        "conclusion": "Agents need demonstrations, task traces, and domain rubrics before they are useful in scientific software.",
+        "techniques": ["GUI agents", "imitation learning", "rubric-based workflow evaluation"],
+        "inputs": ["screenshots", "click paths", "prompts", "terminal logs", "expected outputs", "expert rubrics"],
+        "outputs": ["replayable workflows", "success/failure labels", "agent scorecards"],
+        "bottleneck": "Repetitive scientific software work is hard to automate because success is visual, file-dependent, and domain-specific.",
+        "validate": "A human still checks layer state, CRS, scientific output quality, and whether the task was actually solved.",
+        "storyboard": ["random action dots drift", "a cursor trail captures useful steps", "rubric gates light up", "agent replay trail completes"],
+        "labels": ["demo", "trace", "rubric", "replay", "verify"],
+        "do_not_claim": "Do not claim Codex can already replace trained GIS or visualization users.",
+    },
+    "thesis_graph": {
+        "title": "Critical Minerals Knowledge Graphs",
+        "question": "Can AI move from organizing mineral research to helping ask better questions?",
+        "anchor": "REE thesis, Adobe paragenesis drawings, CSV nodes/children, Gephi, and future Neo4j/GraphRAG are the example path.",
+        "conclusion": "AI can structure research, but novelty depends on better schemas, evidence, and geologic judgment.",
+        "techniques": ["GraphRAG", "relation extraction", "graph embeddings/GNNs"],
+        "inputs": ["papers", "deposit names", "mineral phases", "host rocks", "fluid stages", "geochemistry", "evidence links"],
+        "outputs": ["queryable graph", "candidate links", "evidence-backed questions"],
+        "bottleneck": "Critical-mineral knowledge is scattered across papers, maps, slides, tables, and expert memory.",
+        "validate": "A human still checks entity names, paragenesis, deposit analogs, inferred links, and source support.",
+        "storyboard": ["scattered mineral/entity dots", "prompt pulse sorts clusters", "edges grow between evidence nodes", "unknown future-question edges glow"],
+        "labels": ["paper", "mineral", "stage", "evidence", "unknown"],
+        "do_not_claim": "Do not claim GraphRAG discovers deposits by itself.",
+    },
+    "processing_earthquake": {
+        "title": "Earthquake Globe As Scientific Visualization",
+        "question": "Can AI help geoscience data become something people can see, hear, and discuss?",
+        "anchor": "The Processing earthquake globe video/poster is the first AI-assisted visualization example.",
+        "conclusion": "Visualization can make scientific patterns discussable before they become formal analysis.",
+        "techniques": ["event clustering", "anomaly detection", "AI narration/summarization"],
+        "inputs": ["event time", "latitude/longitude", "depth", "magnitude", "region metadata"],
+        "outputs": ["clusters", "unusual-event flags", "narrated visual summaries"],
+        "bottleneck": "Geoscience catalogs can be correct but hard for non-specialists to inspect or care about.",
+        "validate": "A human still checks tectonic interpretation and whether the visual emphasis distorts risk.",
+        "storyboard": ["empty dark globe", "synthetic event dots appear", "rings pulse by magnitude", "timeline orbit sweeps"],
+        "labels": ["event", "depth", "magnitude", "cluster", "story"],
+        "do_not_claim": "Do not claim seismic forecasting or hazard prediction.",
+    },
+    "seismic": {
+        "title": "Seismic Processing With Visible Uncertainty",
+        "question": "What should AI simplify first in seismic workflows without hiding uncertainty?",
+        "anchor": "Pondicherry notebooks and waveform/2D seismic visuals anchor the example.",
+        "conclusion": "AI should reduce repetitive picking and QA while keeping weak signals visible.",
+        "techniques": ["phase-picking models", "seismic foundation models", "uncertainty calibration"],
+        "inputs": ["waveforms", "picks", "station geometry", "labels", "noisy examples", "analyst corrections"],
+        "outputs": ["suggested picks", "confidence bands", "QA flags"],
+        "bottleneck": "Manual seismic review is slow, repetitive, and easy to make less reproducible than intended.",
+        "validate": "A human still checks arrivals, processing parameters, event context, and geological plausibility.",
+        "storyboard": ["noisy wave traces scroll", "vertical scanner passes", "green/yellow/red picks appear", "clean interpretation path emerges"],
+        "labels": ["noise", "pick", "confidence", "QA", "override"],
+        "do_not_claim": "Do not claim fully automated seismic interpretation.",
+    },
+    "north_slope": {
+        "title": "AI Energy Screening From Public Data",
+        "question": "How far can AI take public energy data before experts must step in?",
+        "anchor": "Alaska North Slope hydrate atlas, shapefiles, Open Science Lab, GitHub, and Streamlit/Plotly 3D map ideas anchor the example.",
+        "conclusion": "AI can organize screening, but trusted energy decisions require provenance, physics, and expert review.",
+        "techniques": ["well-log classification", "explainable interval ranking", "physics-informed ML"],
+        "inputs": ["wells", "logs", "hydrate intervals", "shapefiles", "papers", "formations", "depth references"],
+        "outputs": ["ranked intervals", "map layers", "provenance-backed review targets"],
+        "bottleneck": "Early energy screening is slowed by public data scattered across reports, GIS layers, logs, and assumptions.",
+        "validate": "A human still checks hydrate indicators, stratigraphy, economic relevance, source provenance, and uncertainty.",
+        "storyboard": ["messy source layers float in", "layers stack into a 3D block", "wells drop vertically", "decision funnel sorts targets"],
+        "labels": ["GIS", "logs", "hydrate", "provenance", "review"],
+        "do_not_claim": "Do not claim investment-grade resource assessment.",
+    },
+    "rock_classification": {
+        "title": "Visual Geoscience Classification To Resource Maps",
+        "question": "Could AI connect rock properties, surveys, and labels into better resource maps?",
+        "anchor": "Rock classification ranges, geochemistry plots, shapefile grids, ArcGIS, and 3D resource mapping ideas anchor the example.",
+        "conclusion": "AI can help combine variables, but classification only matters if labels and geologic context are trustworthy.",
+        "techniques": ["multimodal classification", "spatial feature fusion", "GNN lithology/prospectivity models"],
+        "inputs": ["density", "velocity", "resistivity", "chemistry", "formations", "survey grids", "expert labels"],
+        "outputs": ["class probabilities", "overlap maps", "candidate resource zones"],
+        "bottleneck": "Many survey and property variables are hard to combine into one map that experts can audit.",
+        "validate": "A human still checks training labels, thresholds, false positives, and geologic feasibility.",
+        "storyboard": ["colored property particles move", "range gates filter variables", "overlap clusters form", "clusters snap into an extruded grid"],
+        "labels": ["density", "velocity", "chemistry", "overlap", "map"],
+        "do_not_claim": "Do not claim automated mineral discovery.",
+    },
+    "valles": {
+        "title": "Comparing Imperfect Geophysical Surveys",
+        "question": "How should AI compare surveys without flattening uncertainty?",
+        "anchor": "SAGE/Valles Caldera gravity, EM/TEM/ERT, seismic, and field geophysics anchor the example.",
+        "conclusion": "AI can help align methods, but unresolved zones should stay unresolved.",
+        "techniques": ["data fusion", "anomaly segmentation", "uncertainty tagging"],
+        "inputs": ["gravity grids", "EM/ERT responses", "seismic lines", "station spacing", "metadata", "field notes"],
+        "outputs": ["overlap zones", "conflict zones", "confidence masks"],
+        "bottleneck": "Teams must compare instruments with different resolution, sensitivity, noise, and field constraints.",
+        "validate": "A human still checks whether overlaps are real geology or acquisition/processing artifacts.",
+        "storyboard": ["separate translucent fields", "fields slide together", "agreement zones pulse", "gray unresolved zones remain"],
+        "labels": ["gravity", "EM", "seismic", "agree", "uncertain"],
+        "do_not_claim": "Do not claim one unified true subsurface model.",
+    },
+    "moho_ml": {
+        "title": "Honest Transfer Testing For Moho ML",
+        "question": "How do we know a geoscience ML model actually transfers?",
+        "anchor": "The supervised ML class project trained on Australia gravity/Moho data and applied it to the USA.",
+        "conclusion": "This is the bridge from prompting to real ML: high R-squared is not enough without leakage and spatial transfer checks.",
+        "techniques": ["spatial cross-validation", "transfer learning", "residual/error mapping"],
+        "inputs": ["gravity features", "Moho labels", "coordinates", "region IDs", "train/test masks", "baseline models"],
+        "outputs": ["predictions", "residual maps", "transfer scores", "leakage warnings"],
+        "bottleneck": "Geoscience ML can look strong on familiar regions while failing on new geography.",
+        "validate": "A human still checks split design, feature leakage, baselines, residual patterns, and geological plausibility.",
+        "storyboard": ["left training dots pulse", "model-node chain activates", "right test-region dots appear", "red residual dots flash"],
+        "labels": ["train", "test region", "R2?", "residual", "leakage check"],
+        "do_not_claim": "Do not claim strong generalization unless spatial validation supports it.",
+    },
+    "stock_workflow": {
+        "title": "Codex, Pipelines, And Honest App Building",
+        "question": "Can Codex help young builders make useful apps without fooling themselves?",
+        "anchor": "The stock dashboard, local downloads, GitHub/cloud workflow, Streamlit, and leakage correction anchor the example.",
+        "conclusion": "AI speeds app building, but human ML judgment is needed to block fake performance.",
+        "techniques": ["automated pipelines", "model monitoring", "leakage detection"],
+        "inputs": ["notebooks", "CSVs", "commit history", "train/test dates", "model metrics", "refresh logs"],
+        "outputs": ["reproducible app", "pipeline status", "flagged evaluation risks"],
+        "bottleneck": "It is now easy to ship an app and also easy to make the model evaluation look better than it is.",
+        "validate": "A human still checks evaluation design, metric meaning, data splits, and deployment claims.",
+        "storyboard": ["chaotic files rain into Codex", "GitHub branches split", "Streamlit panels appear", "red leakage gate blocks bad scores"],
+        "labels": ["files", "Codex", "GitHub", "dashboard", "leakage gate"],
+        "do_not_claim": "Do not claim reliable prediction just because the dashboard runs.",
+    },
+}
+
 AI_WORKFLOW_EVIDENCE = {
     "ai_workflow": {
         "description": "Supervised software-use case study for scientific desktop workflows.",
@@ -1124,6 +1344,64 @@ st.markdown(
         color: #111827;
         margin-bottom: 0.2rem;
     }
+    .sketch-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem;
+        margin: 0.8rem 0 1rem 0;
+    }
+    .sketch-card h3 {
+        margin: 0 0 0.55rem 0;
+        color: #111827;
+        font-size: 1.05rem;
+    }
+    .sketch-body {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 0.8rem;
+        align-items: stretch;
+    }
+    .motion-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin: 0.55rem 0;
+    }
+    .motion-pill {
+        border: 1px solid #c4b5fd;
+        border-radius: 999px;
+        background: #f5f3ff;
+        color: #4c1d95;
+        padding: 0.3rem 0.48rem;
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+    .sketch-panel {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.68rem;
+        min-height: 118px;
+    }
+    .sketch-panel strong {
+        display: block;
+        color: #0f172a;
+        margin-bottom: 0.3rem;
+        font-size: 0.86rem;
+        text-transform: uppercase;
+    }
+    .sketch-panel span {
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.32;
+    }
+    .sketch-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 0.85rem 0;
+    }
     .ai-case-brief {
         border: 1px solid #d8dee8;
         border-radius: 8px;
@@ -1224,6 +1502,111 @@ st.markdown(
         font-size: 0.92rem;
         line-height: 1.35;
     }
+    .research-source-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin: 0.75rem 0 1rem 0;
+    }
+    .research-source-grid a {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #f8fafc;
+        color: #0f172a;
+        padding: 0.58rem 0.65rem;
+        text-decoration: none;
+        font-weight: 750;
+        font-size: 0.86rem;
+        line-height: 1.25;
+    }
+    .detail-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.92rem;
+        margin: 0.85rem 0 1.05rem 0;
+    }
+    .detail-card h3 {
+        margin: 0 0 0.35rem 0;
+        color: #111827;
+        font-size: 1.08rem;
+    }
+    .detail-question {
+        color: #0f766e;
+        font-weight: 850;
+        line-height: 1.3;
+        margin-bottom: 0.65rem;
+    }
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin-top: 0.65rem;
+    }
+    .detail-cell {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.7rem;
+        min-height: 122px;
+    }
+    .detail-cell strong {
+        display: block;
+        color: #0f172a;
+        font-size: 0.82rem;
+        margin-bottom: 0.32rem;
+        text-transform: uppercase;
+    }
+    .detail-cell span {
+        display: block;
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.32;
+    }
+    .detail-pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.32rem;
+    }
+    .detail-pill {
+        border: 1px solid #bae6fd;
+        border-radius: 999px;
+        background: #f0f9ff;
+        color: #075985;
+        padding: 0.26rem 0.46rem;
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+    .story-frames {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.55rem;
+    }
+    .story-frame {
+        border: 1px dashed #94a3b8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.52rem;
+        min-height: 82px;
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.28;
+    }
+    .story-frame b {
+        display: block;
+        color: #111827;
+        margin-bottom: 0.22rem;
+    }
+    .honesty-box {
+        border-left: 4px solid #dc2626;
+        background: #fef2f2;
+        color: #7f1d1d;
+        padding: 0.62rem 0.72rem;
+        margin-top: 0.65rem;
+        font-size: 0.9rem;
+        line-height: 1.32;
+    }
     @media (max-width: 900px) {
         .block-container {
             padding: 1rem 0.85rem 2rem;
@@ -1234,7 +1617,7 @@ st.markdown(
         .talk-hero {
             padding: 1rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
         .ml-stage { min-height: auto; }
         .ai-chip-row { justify-content: flex-start; }
         .model-core::before, .model-core::after { display: none; }
@@ -1438,6 +1821,85 @@ def render_node_movement(row: pd.Series, title: str = "What moves through the ML
     )
 
 
+def detail_pills(items: list[str]) -> str:
+    return "".join(f"<span class='detail-pill'>{escape(item)}</span>" for item in items)
+
+
+def detail_text(items: list[str]) -> str:
+    return "; ".join(items)
+
+
+def render_research_sources() -> None:
+    links = "".join(
+        f"<a href='{escape(url)}' target='_blank'>{escape(title)}</a>"
+        for title, url in RESEARCH_SOURCES
+    )
+    st.markdown(
+        f"<div class='research-source-grid'>{links}</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_detailed_topic_plan(topic: dict, compact: bool = False) -> None:
+    plan = DETAILED_TOPIC_PLANS.get(topic["slug"])
+    if plan is None:
+        return
+    frames = "".join(
+        f"<div class='story-frame'><b>Frame {idx}</b>{escape(frame)}</div>"
+        for idx, frame in enumerate(plan["storyboard"], start=1)
+    )
+    title = plan["title"] if not compact else topic["title"]
+    st.markdown(
+        f"""
+<div class="detail-card">
+  <h3>{escape(title)}</h3>
+  <div class="detail-question">{escape(plan["question"])}</div>
+  <div class="detail-grid">
+    <div class="detail-cell">
+      <strong>Project anchor</strong>
+      <span>{escape(plan["anchor"])}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Conclusion</strong>
+      <span>{escape(plan["conclusion"])}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Modern ML/AI</strong>
+      <div class="detail-pill-row">{detail_pills(plan["techniques"])}</div>
+    </div>
+    <div class="detail-cell">
+      <strong>Data inputs</strong>
+      <span>{escape(detail_text(plan["inputs"]))}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Outputs</strong>
+      <span>{escape(detail_text(plan["outputs"]))}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Bottleneck</strong>
+      <span>{escape(plan["bottleneck"])}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Expert validates</strong>
+      <span>{escape(plan["validate"])}</span>
+    </div>
+    <div class="detail-cell">
+      <strong>Animation labels</strong>
+      <div class="detail-pill-row">{detail_pills(plan["labels"])}</div>
+    </div>
+    <div class="detail-cell">
+      <strong>Abstract animation</strong>
+      <span>{escape(PROCESSING_SKETCH_PLANS.get(topic["slug"], {}).get("visual", ""))}</span>
+    </div>
+  </div>
+  <div class="story-frames">{frames}</div>
+  <div class="honesty-box"><strong>Do not claim:</strong> {escape(plan["do_not_claim"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
     evidence = AI_WORKFLOW_EVIDENCE.get(topic["slug"])
     if evidence is None:
@@ -1582,6 +2044,48 @@ def render_evidence_leads(topic: dict) -> None:
     )
 
 
+def render_processing_sketch_plan(topic: dict, compact: bool = False) -> None:
+    plan = PROCESSING_SKETCH_PLANS.get(topic["slug"])
+    if plan is None:
+        return
+    motion = "".join(
+        f"<span class='motion-pill'>{escape(item)}</span>"
+        for item in plan["motion"]
+    )
+    heading = "Processing abstract sketch" if not compact else topic["title"]
+    st.markdown(
+        f"""
+<div class="sketch-card">
+  <h3>{escape(heading)} <span class="small-note">/ {escape(plan["sketch"])}</span></h3>
+  <div class="sketch-body">
+    <div>
+      <div class="sketch-panel">
+        <strong>Visual concept</strong>
+        <span>{escape(plan["visual"])}</span>
+      </div>
+      <div class="motion-strip">{motion}</div>
+      <div class="sketch-panel">
+        <strong>Processing build note</strong>
+        <span>{escape(plan["processing_notes"])}</span>
+      </div>
+    </div>
+    <div>
+      <div class="sketch-panel">
+        <strong>Conclusion it supports</strong>
+        <span>{escape(plan["conclusion"])}</span>
+      </div>
+      <div class="sketch-panel" style="margin-top:0.55rem;">
+        <strong>Future ML case</strong>
+        <span>{escape(plan["future_ml"])}</span>
+      </div>
+    </div>
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_visual_wall(title: str, visual_rows: pd.DataFrame, limit: int = 4) -> None:
     if visual_rows.empty:
         return
@@ -1611,6 +2115,7 @@ SECTIONS = [
     "Mobile View",
     "Presentation View",
     "Think Tank Topics",
+    "Processing Visual Lab",
     "Machine Learning Future",
     "Case Studies",
     "LinkedIn Evidence",
@@ -1693,10 +2198,10 @@ if section == "Overview":
     st.subheader("Fast presentation links")
     fast_cols = st.columns(5)
     fast_cols[0].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[1].link_button("ML Future", "?section=Machine%20Learning%20Future")
+    fast_cols[1].link_button("Processing Lab", "?section=Processing%20Visual%20Lab")
     fast_cols[2].link_button("Embedded Videos", "?section=LinkedIn%20Evidence")
     fast_cols[3].link_button("Visual Gallery", "?section=Visual%20Gallery")
-    fast_cols[4].link_button("All Case Studies", "?section=Case%20Studies")
+    fast_cols[4].link_button("ML Future", "?section=Machine%20Learning%20Future")
 
     st.subheader("Strong links to start with")
     link_cols = st.columns(2)
@@ -1894,6 +2399,8 @@ elif section == "Think Tank Topics":
     st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
     render_workflow_blueprint(topic)
+    render_processing_sketch_plan(topic)
+    render_detailed_topic_plan(topic)
 
     with st.expander("Switch think tank topic"):
         jump_cols = st.columns(4)
@@ -2154,6 +2661,68 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
                     st.link_button("Open organized folder", local_file_uri(str(folder_path)))
 
 
+elif section == "Processing Visual Lab":
+    st.title("Processing Visual Lab")
+    st.write(
+        "This is the abstract visual layer for the think tank. The sketches should not recreate screenshots or PowerPoints. "
+        "They should use dots, arrows, waves, clusters, fields, gates, and pulses to make the workflow idea easy to understand."
+    )
+    st.markdown(
+        """
+<div class="unfinished-note">
+  Processing becomes the concept animation lab: static SVG mini-posters today, short looping sketches/GIFs next.
+  The point is to visualize the idea behind each topic, not to prove the project is finished.
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Visual language")
+    language_cols = st.columns(4)
+    language_items = [
+        ("dots", "files, examples, events, labels"),
+        ("arrows", "workflow movement or AI transformation"),
+        ("pulses", "attention, signal, confidence, activity"),
+        ("gray clouds", "uncertainty or unresolved expert review"),
+        ("grids", "maps, rasters, spatial data"),
+        ("rings", "waves, time, depth, or spread"),
+        ("color shifts", "classification or confidence"),
+        ("gates", "validation, leakage checks, rubrics"),
+    ]
+    for idx, (label, meaning) in enumerate(language_items):
+        with language_cols[idx % 4]:
+            with st.container(border=True):
+                st.markdown(f"**{label}**")
+                st.caption(meaning)
+
+    with st.expander("Research backbone for the visual lab"):
+        st.write(
+            "These sources support the direction of the sketches: knowledge graphs and GraphRAG for critical minerals, "
+            "foundation models and uncertainty-aware workflows for seismic data, physics-informed ML for subsurface energy, "
+            "spatial validation for geoscience ML, and agent evaluation for scientific software workflows."
+        )
+        render_research_sources()
+
+    st.subheader("Best first build order")
+    order_cols = st.columns(5)
+    for col, slug in zip(order_cols, ["thesis_graph", "north_slope", "moho_ml", "ai_workflow", "rock_classification"]):
+        topic = topic_by_slug(slug)
+        with col:
+            st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+            st.caption(topic["title"])
+
+    st.subheader("Sketch plans by topic")
+    sketch_cols = st.columns(3)
+    for idx, topic in enumerate(TOPIC_ROOMS):
+        with sketch_cols[idx % 3]:
+            render_processing_sketch_plan(topic, compact=True)
+
+    st.subheader("Four-frame animation storyboards")
+    for topic in TOPIC_ROOMS:
+        with st.expander(DETAILED_TOPIC_PLANS.get(topic["slug"], {}).get("title", topic["title"])):
+            render_detailed_topic_plan(topic, compact=True)
+
+
 elif section == "Machine Learning Future":
     st.markdown(
         """
@@ -2175,6 +2744,13 @@ elif section == "Machine Learning Future":
         "Use this page as the high-level map: the same structure appears under each think tank topic, "
         "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
     )
+
+    with st.expander("Research backbone for this roadmap", expanded=True):
+        st.write(
+            "The roadmap is intentionally exploratory. The sources below are included as direction markers, "
+            "not proof that these prototypes are finished ML systems."
+        )
+        render_research_sources()
 
     st.subheader("Visuals worth building")
     storyboard_cards = []
@@ -2203,6 +2779,13 @@ elif section == "Machine Learning Future":
             render_node_movement(pd.Series(row._asdict()), title="Artifact movement")
             render_future_timeline(pd.Series(row._asdict()))
             st.markdown(f"**Why it matters:** {row.why_important}")
+            topic_match = next(
+                (topic for topic in TOPIC_ROOMS if topic["project_key"] == row.project_key),
+                None,
+            )
+            if topic_match is not None:
+                with st.expander("Detailed think-tank plan"):
+                    render_detailed_topic_plan(topic_match)
 
     st.subheader("Neo4j versus Gephi")
     compare_cols = st.columns(2)
