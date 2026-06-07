@@ -4,7 +4,6 @@ from urllib.parse import quote
 
 import pandas as pd
 import streamlit as st
-import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
@@ -17,7 +16,12 @@ LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
-NORTH_SLOPE_3D_HTML = ROOT / "assets" / "interactive" / "north_slope_plotly_advanced.html"
+NORTH_SLOPE_ATLAS_URL = (
+    "https://north-slope-gas-hydrates-vj67xkke9ksfzveon8ld2.streamlit.app"
+)
+NORTH_SLOPE_STRUCTURAL_URL = (
+    f"{NORTH_SLOPE_ATLAS_URL}/?page=Structural%20Explorer"
+)
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -281,6 +285,7 @@ TOPIC_ROOMS = [
 MOBILE_TOPIC_SLUGS = [
     "ai_workflow",
     "thesis_graph",
+    "processing_earthquake",
     "north_slope",
     "seismic",
     "rock_classification",
@@ -1146,6 +1151,20 @@ st.markdown(
         flex-direction: column;
         gap: 0.65rem;
     }
+    .think-card-link {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+    }
+    .think-card-link:hover .think-card,
+    .think-card-link:focus .think-card {
+        border-color: #0f766e;
+        box-shadow: 0 8px 24px rgba(15, 118, 110, 0.12);
+        transform: translateY(-2px);
+    }
+    .think-card {
+        transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+    }
     .topic-signal {
         border: 1px solid #e2e8f0;
         border-radius: 8px;
@@ -1965,9 +1984,9 @@ def render_think_card(topic: dict) -> str:
     workflow = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
     question = frame.get("question", topic["question"])
     example = frame.get("example", workflow.get("description", topic["tagline"]))
-    raise_line = frame.get("raise", f"Raise your hand if you want to talk about {topic['theme']}.")
-    why = topic["why_it_matters"]
+    url = topic_url(topic["slug"]).replace("&", "&amp;")
     return f"""
+<a class="think-card-link" href="{url}" aria-label="Open {escape(topic['title'])}">
 <div class="think-card">
   {render_topic_signal(topic)}
   <p class="think-question">{escape(question)}</p>
@@ -1975,9 +1994,9 @@ def render_think_card(topic: dict) -> str:
   <div class="ai-chip-row" style="justify-content:flex-start;">
     {''.join(f"<span class='ai-chip'>{escape(chip)}</span>" for chip in workflow.get("chips", []))}
   </div>
-  <p class="think-example"><strong>Bottleneck:</strong> {escape(topic["bottleneck"])}</p>
-  <div class="think-raise">{escape(raise_line)}</div>
+  <div class="think-raise">Open topic</div>
 </div>
+</a>
     """
 
 
@@ -2158,102 +2177,61 @@ with st.sidebar:
 if section == "Overview":
     st.title("AI Workflow Think Tank")
     st.write(
-        "Pick a topic, let's talk. These are unfinished school, research, coding, and creative projects used as examples of a bigger question: "
-        "if AI is mostly a tool, how does the user's workflow, domain knowledge, and curiosity decide how useful that tool becomes?"
+        "Pick a visual to open a project. Each one shows how AI, code, and geoscience "
+        "move an unfinished idea toward something testable."
     )
 
-    cols = st.columns(5)
+    cols = st.columns(3)
     cols[0].metric("Think tank topics", len(TOPIC_ROOMS))
-    cols[1].metric("Notebooks indexed", len(notebook_inventory))
-    cols[2].metric("Drive links", len(drive_inventory))
-    cols[3].metric("High-priority sources", int((inventory["priority"] == "high").sum()))
-    cols[4].metric("Visual assets", len(project_visuals))
-
-    st.markdown(
-        """
-<div class="unfinished-note">
-  These are unfinished examples. The point is not that every project is complete or production-ready.
-  The point is how prompting, screenshots, Codex, GitHub, notebooks, maps, and domain knowledge can push an idea further.
-</div>
-        """,
-        unsafe_allow_html=True,
-    )
+    cols[1].metric("Visual assets", len(project_visuals))
+    cols[2].metric("Notebooks indexed", len(notebook_inventory))
 
     st.subheader("Pick a topic")
-    st.caption(
-        "The project is just the handle. The real conversation is the workflow: prompts, screenshots, Codex, GitHub, maps, graphs, model risk, and what experts would do next. "
-        "These mini-posters are static SVG concepts for now; the next visual layer can be Processing sketches, GIFs, or map/shape-file animations."
-    )
+    st.caption("Click any poster. Processing-style motion studies and real project evidence continue inside.")
     st.markdown(
         f"<div class='think-grid'>{''.join(render_think_card(topic) for topic in TOPIC_ROOMS)}</div>",
         unsafe_allow_html=True,
     )
 
-    st.subheader("Open a topic room")
-    topic_link_cols = st.columns(3)
-    for idx, topic in enumerate(TOPIC_ROOMS):
-        with topic_link_cols[idx % 3]:
-            st.link_button(TOPIC_FRAMES.get(topic["slug"], {}).get("question", topic["title"]), topic_url(topic["slug"]))
-
-    st.subheader("Fast presentation links")
-    fast_cols = st.columns(5)
+    st.subheader("Explore")
+    fast_cols = st.columns(4)
     fast_cols[0].link_button("Presentation View", "?section=Presentation%20View")
     fast_cols[1].link_button("Processing Lab", "?section=Processing%20Visual%20Lab")
-    fast_cols[2].link_button("Embedded Videos", "?section=LinkedIn%20Evidence")
-    fast_cols[3].link_button("Visual Gallery", "?section=Visual%20Gallery")
-    fast_cols[4].link_button("ML Future", "?section=Machine%20Learning%20Future")
+    fast_cols[2].link_button("Visual Gallery", "?section=Visual%20Gallery")
+    fast_cols[3].link_button("ML Future", "?section=Machine%20Learning%20Future")
 
-    st.subheader("Strong links to start with")
-    link_cols = st.columns(2)
-    thesis = drive_row("Thesis Ch.1 Presentation")
-    advgis = drive_row("ADVGIS Final")
-    if thesis is not None:
-        link_cols[0].link_button("Open Thesis Ch.1 Presentation", thesis["url"])
-    if advgis is not None:
-        link_cols[1].link_button("Open ADVGIS Final", advgis["url"])
-
-    st.subheader("Why this is not just a file list")
-    st.write(
-        "The argument is not that the projects are finished or that AI automatically knows what to do. "
-        "The argument is that a curious user with domain context can use prompting, screenshots, Codex, GitHub, notebooks, maps, and visual tools to push unfinished ideas much further than before."
-    )
-
-    st.subheader("Small about note")
-    st.write(
-        "I am early in this, and that is kind of the point. I like cafes, conversations, geoscience, coding, markets, and asking people how they are using AI. "
-        "I have been prompting since ChatGPT came out, but Codex plus GitHub/Open Science Lab style workflows made me realize how much manual work can become a system."
-    )
+    with st.expander("About this portfolio"):
+        st.write(
+            "These are evolving research, school, coding, and creative projects. "
+            "The portfolio keeps the evidence visible while separating working prototypes "
+            "from ideas that still need expert validation."
+        )
 
 
 elif section == "Mobile View":
-    st.title("AI Geoscience Portfolio")
-    st.write(
-        "A compact version for phones: selected projects, one strong visual each, "
-        "and direct links to the full project rooms."
-    )
-
-    st.info(
-        "This portfolio connects geoscience, AI-assisted research, GIS, notebooks, "
-        "scientific visualization, and presentation design."
-    )
+    st.title("AI Workflow Portfolio")
+    st.caption("Tap a visual to open the full project.")
 
     mobile_topics = [
         topic for topic in TOPIC_ROOMS if topic["slug"] in MOBILE_TOPIC_SLUGS
     ]
     for topic in mobile_topics:
         with st.container(border=True):
+            poster_path_text = TOPIC_VISUALS.get(topic["slug"])
+            poster_path = project_asset(poster_path_text) if poster_path_text else None
             hero_path = project_asset(topic["hero"])
-            if hero_path.exists():
+            if poster_path is not None and poster_path.exists():
+                st.image(str(poster_path), use_container_width=True)
+            elif hero_path.exists():
                 st.image(str(hero_path), use_container_width=True)
             st.subheader(topic["title"])
-            st.write(topic["tagline"])
-            st.caption(f"AI workflow: {topic['theme']}")
+            st.caption(TOPIC_FRAMES.get(topic["slug"], {}).get("question", topic["tagline"]))
             st.link_button("View full project", topic_url(topic["slug"]))
+            if topic["slug"] == "north_slope":
+                st.link_button("Open live Structural Explorer", NORTH_SLOPE_STRUCTURAL_URL)
 
     st.subheader("Portfolio sections")
-    st.link_button("Presentation story", "?section=Presentation%20View")
-    st.link_button("Machine learning roadmap", "?section=Machine%20Learning%20Future")
-    st.link_button("All case studies", "?section=Case%20Studies")
+    st.link_button("Processing Visual Lab", "?section=Processing%20Visual%20Lab")
     st.link_button("Visual gallery", "?section=Visual%20Gallery")
 
 
@@ -2397,10 +2375,7 @@ elif section == "Think Tank Topics":
 
     topic_roadmap = roadmap_row(topic["project_key"])
     st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
-    st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
     render_workflow_blueprint(topic)
-    render_processing_sketch_plan(topic)
-    render_detailed_topic_plan(topic)
 
     with st.expander("Switch think tank topic"):
         jump_cols = st.columns(4)
@@ -2408,8 +2383,12 @@ elif section == "Think Tank Topics":
             with jump_cols[idx % 4]:
                 st.link_button(TOPIC_FRAMES.get(room["slug"], {}).get("question", room["title"]), topic_url(room["slug"]))
 
-    with st.expander("How AI helped in this example", expanded=True):
+    with st.expander("How AI helped in this example"):
         render_ai_workflow_panel(topic)
+
+    with st.expander("Processing concept and research plan"):
+        render_processing_sketch_plan(topic)
+        render_detailed_topic_plan(topic)
 
     current_visuals = project_visuals[
         project_visuals["project_key"].fillna("") == topic["project_key"]
@@ -2443,25 +2422,18 @@ elif section == "Think Tank Topics":
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
         hero_path = project_asset(topic["hero"])
-        if topic["slug"] == "north_slope" and NORTH_SLOPE_3D_HTML.exists():
+        if topic["slug"] == "north_slope":
             if hero_path.exists():
                 st.image(
                     str(hero_path),
-                    caption="Static fallback thumbnail captured from the current North Slope Streamlit/Plotly map.",
+                    caption="Current North Slope Streamlit/Plotly structural preview.",
                     use_container_width=True,
                 )
-            load_3d_map = st.toggle(
-                "Load interactive 3D map",
-                value=False,
-                help="The interactive export is about 16 MB. Leave it off on slower or mobile connections.",
+            st.link_button("Open current live Structural Explorer", NORTH_SLOPE_STRUCTURAL_URL)
+            st.caption(
+                "The live atlas renders selectable geographic horizons and context overlays. "
+                "The older embedded HTML scene is no longer used here."
             )
-            if load_3d_map:
-                components.html(
-                    NORTH_SLOPE_3D_HTML.read_text(encoding="utf-8", errors="ignore"),
-                    height=500,
-                    scrolling=True,
-                )
-                st.caption("Interactive North Slope 3D map from the current Streamlit/Plotly export.")
         elif topic["slug"] == "processing_earthquake":
             processing_room_video = evidence_path_by_key("processing_earthquake")
             if processing_room_video is not None:
@@ -2703,11 +2675,10 @@ elif section == "Processing Visual Lab":
         )
         render_research_sources()
 
-    st.subheader("Best first build order")
-    order_cols = st.columns(5)
-    for col, slug in zip(order_cols, ["thesis_graph", "north_slope", "moho_ml", "ai_workflow", "rock_classification"]):
-        topic = topic_by_slug(slug)
-        with col:
+    st.subheader("Visual studies")
+    visual_cols = st.columns(3)
+    for idx, topic in enumerate(TOPIC_ROOMS):
+        with visual_cols[idx % 3]:
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
             st.caption(topic["title"])
 
