@@ -16,12 +16,6 @@ LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
-NORTH_SLOPE_ATLAS_URL = (
-    "https://north-slope-gas-hydrates-vj67xkke9ksfzveon8ld2.streamlit.app"
-)
-NORTH_SLOPE_STRUCTURAL_URL = (
-    f"{NORTH_SLOPE_ATLAS_URL}/?page=Structural%20Explorer"
-)
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -2227,8 +2221,6 @@ elif section == "Mobile View":
             st.subheader(topic["title"])
             st.caption(TOPIC_FRAMES.get(topic["slug"], {}).get("question", topic["tagline"]))
             st.link_button("View full project", topic_url(topic["slug"]))
-            if topic["slug"] == "north_slope":
-                st.link_button("Open live Structural Explorer", NORTH_SLOPE_STRUCTURAL_URL)
 
     st.subheader("Portfolio sections")
     st.link_button("Processing Visual Lab", "?section=Processing%20Visual%20Lab")
@@ -2429,10 +2421,9 @@ elif section == "Think Tank Topics":
                     caption="Current North Slope Streamlit/Plotly structural preview.",
                     use_container_width=True,
                 )
-            st.link_button("Open current live Structural Explorer", NORTH_SLOPE_STRUCTURAL_URL)
             st.caption(
-                "The live atlas renders selectable geographic horizons and context overlays. "
-                "The older embedded HTML scene is no longer used here."
+                "Current structural preview. The separate atlas contains the selectable "
+                "geographic horizons and context overlays; its Streamlit deployment needs reactivation."
             )
         elif topic["slug"] == "processing_earthquake":
             processing_room_video = evidence_path_by_key("processing_earthquake")
