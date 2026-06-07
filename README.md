@@ -3,6 +3,12 @@
 This project is a working folder for turning local AI-assisted work artifacts into
 either a PowerPoint deck or a small website.
 
+## Start Here
+
+Read [`PROJECT_CHARTER.md`](PROJECT_CHARTER.md) before making substantial
+changes. It is the durable source of truth for the project's goals, fixed
+principles, evolving vision, design rules, constraints, and priorities.
+
 The current first pass focuses on a Streamlit storyboard site that can later be
 expanded into:
 
@@ -43,6 +49,7 @@ currently uses a poster image until the correct 54-second video is added.
 ## Project Files
 
 - `app.py`: Streamlit storyboard site.
+- `PROJECT_CHARTER.md`: Project goals, vision, decisions, and working rules.
 - `data/source_inventory.csv`: First-pass source inventory.
 - `data/google_drive_inventory.csv`: First-pass Google Drive pull list with live links.
 - `data/notebook_inventory.csv`: Local Jupyter notebook inventory with lightweight tags.
