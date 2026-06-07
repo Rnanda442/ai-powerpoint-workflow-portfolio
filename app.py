@@ -3,6 +3,7 @@ from html import escape
 from urllib.parse import quote
 
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
 
@@ -16,6 +17,10 @@ LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
+VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
+STRUCTURAL_DATA_DIR = ROOT / "assets" / "structural_data"
+MASTER_3D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_3d_surfaces.parquet"
+MASTER_2D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_2d_layers.parquet"
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -284,6 +289,35 @@ MOBILE_TOPIC_SLUGS = [
     "seismic",
     "rock_classification",
 ]
+
+STRUCTURAL_HORIZONS = ["NStopo", "NSLCU", "NSshublik", "NSbasement"]
+STRUCTURAL_OVERLAYS = [
+    "North Slope study-area boundary",
+    "Assessment-unit outlines",
+    "North Slope public wells",
+]
+SURFACE_CATALOG = {
+    "NStopo": {
+        "label": "Topographic reference",
+        "description": "Near-surface reference used to orient the structural stack.",
+        "color": "#4daf4a",
+    },
+    "NSLCU": {
+        "label": "Lower Cretaceous unconformity",
+        "description": "Regional unconformity used as a subsurface structural reference.",
+        "color": "#377eb8",
+    },
+    "NSshublik": {
+        "label": "Shublik surface",
+        "description": "Deeper regional horizon used for petroleum-system context.",
+        "color": "#ff7f00",
+    },
+    "NSbasement": {
+        "label": "Basement surface",
+        "description": "Deep structural reference showing regional basin geometry.",
+        "color": "#984ea3",
+    },
+}
 
 TOPIC_FRAMES = {
     "ai_workflow": {
@@ -2113,6 +2147,185 @@ def render_visual_wall(title: str, visual_rows: pd.DataFrame, limit: int = 4) ->
                 st.warning(f"Missing visual: {visual.title}")
 
 
+@st.cache_data
+def load_structural_surfaces() -> pd.DataFrame:
+    return pd.read_parquet(
+        MASTER_3D_PATH,
+        columns=["x_3338", "y_3338", "lon", "lat", "depth_m", "surface_name"],
+    )
+
+
+@st.cache_data
+def load_structural_context() -> pd.DataFrame:
+    layers = pd.read_parquet(
+        MASTER_2D_PATH,
+        columns=[
+            "layer_name",
+            "feature_id",
+            "vertex_order",
+            "lon",
+            "lat",
+            "depth_m",
+            "au_name",
+        ],
+    )
+    return layers[
+        layers["layer_name"].isin(["extent", "assessment_units", "wells"])
+    ].copy()
+
+
+def sample_structural_rows(df: pd.DataFrame, max_rows: int) -> pd.DataFrame:
+    if len(df) <= max_rows:
+        return df
+    step = max(1, len(df) // max_rows)
+    return df.iloc[::step].head(max_rows)
+
+
+def grid_structural_surface(
+    surface: pd.DataFrame,
+    max_cells: int,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    stride = max(1, round((len(surface) / max_cells) ** 0.5))
+    lon = surface.pivot(
+        index="y_3338",
+        columns="x_3338",
+        values="lon",
+    ).iloc[::stride, ::stride]
+    lat = surface.pivot(
+        index="y_3338",
+        columns="x_3338",
+        values="lat",
+    ).iloc[::stride, ::stride]
+    depth = surface.pivot(
+        index="y_3338",
+        columns="x_3338",
+        values="depth_m",
+    ).iloc[::stride, ::stride]
+    return lon, lat, depth
+
+
+def add_structural_context_line(
+    figure: go.Figure,
+    rows: pd.DataFrame,
+    name: str,
+    color: str,
+    width: int,
+    showlegend: bool = True,
+) -> None:
+    figure.add_trace(
+        go.Scatter3d(
+            x=rows["lon"],
+            y=rows["lat"],
+            z=[0] * len(rows),
+            mode="lines",
+            name=name,
+            showlegend=showlegend,
+            line={"color": color, "width": width},
+            hovertemplate=(
+                f"<b>{name}</b><br>Longitude: %{{x:.2f}}"
+                "<br>Latitude: %{y:.2f}<extra></extra>"
+            ),
+        )
+    )
+
+
+def build_structural_figure(
+    selected_surfaces: list[str],
+    cells_per_surface: int,
+    selected_overlays: list[str],
+) -> go.Figure:
+    surfaces = load_structural_surfaces()
+    figure = go.Figure()
+
+    for surface_name in selected_surfaces:
+        surface = surfaces[surfaces["surface_name"] == surface_name]
+        lon, lat, depth = grid_structural_surface(surface, cells_per_surface)
+        metadata = SURFACE_CATALOG[surface_name]
+        figure.add_trace(
+            go.Surface(
+                x=lon,
+                y=lat,
+                z=depth,
+                name=metadata["label"],
+                colorscale=[[0, metadata["color"]], [1, metadata["color"]]],
+                opacity=0.72,
+                showscale=False,
+                showlegend=True,
+                hovertemplate=(
+                    f"<b>{metadata['label']}</b><br>"
+                    "Longitude: %{x:.2f}<br>"
+                    "Latitude: %{y:.2f}<br>"
+                    "Depth: %{z:,.0f} m<extra></extra>"
+                ),
+            )
+        )
+
+    context = load_structural_context()
+    if "North Slope study-area boundary" in selected_overlays:
+        extent = context[context["layer_name"] == "extent"].sort_values(
+            "vertex_order"
+        )
+        add_structural_context_line(
+            figure,
+            extent,
+            "North Slope study-area boundary",
+            "#111827",
+            8,
+        )
+
+    if "Assessment-unit outlines" in selected_overlays:
+        units = context[context["layer_name"] == "assessment_units"]
+        for index, (_, rows) in enumerate(units.groupby("feature_id")):
+            rows = sample_structural_rows(rows.sort_values("vertex_order"), 400)
+            add_structural_context_line(
+                figure,
+                rows,
+                "Assessment-unit outlines",
+                "#f97316",
+                4,
+                showlegend=index == 0,
+            )
+
+    if "North Slope public wells" in selected_overlays:
+        extent = context[context["layer_name"] == "extent"]
+        wells = context[context["layer_name"] == "wells"].copy()
+        wells = wells[
+            wells["lon"].between(extent["lon"].min(), extent["lon"].max())
+            & wells["lat"].between(extent["lat"].min(), extent["lat"].max())
+        ]
+        wells = sample_structural_rows(wells, 1400)
+        figure.add_trace(
+            go.Scatter3d(
+                x=wells["lon"],
+                y=wells["lat"],
+                z=wells["depth_m"],
+                mode="markers",
+                name="North Slope public wells",
+                marker={"size": 2.7, "color": "#111827", "opacity": 0.62},
+                hovertemplate=(
+                    "<b>Public well</b><br>Longitude: %{x:.2f}"
+                    "<br>Latitude: %{y:.2f}<extra></extra>"
+                ),
+            )
+        )
+
+    figure.update_layout(
+        height=680,
+        margin={"l": 0, "r": 0, "t": 44, "b": 0},
+        legend={"orientation": "h", "y": 1.04, "x": 0},
+        scene={
+            "xaxis_title": "Longitude",
+            "yaxis_title": "Latitude",
+            "zaxis_title": "Depth (m)",
+            "zaxis": {"autorange": "reversed"},
+            "aspectmode": "manual",
+            "aspectratio": {"x": 1.8, "y": 1, "z": 0.55},
+            "camera": {"eye": {"x": 1.55, "y": -1.75, "z": 1.05}},
+        },
+    )
+    return figure
+
+
 inventory = load_current_csv(INVENTORY_PATH)
 drive_inventory = load_current_csv(DRIVE_INVENTORY_PATH)
 notebook_inventory = load_current_csv(NOTEBOOK_INVENTORY_PATH)
@@ -2126,6 +2339,7 @@ ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 SECTIONS = [
     "Overview",
     "Mobile View",
+    "Structural Explorer",
     "Presentation View",
     "Think Tank Topics",
     "Processing Visual Lab",
@@ -2221,10 +2435,75 @@ elif section == "Mobile View":
             st.subheader(topic["title"])
             st.caption(TOPIC_FRAMES.get(topic["slug"], {}).get("question", topic["tagline"]))
             st.link_button("View full project", topic_url(topic["slug"]))
+            if topic["slug"] == "north_slope":
+                st.link_button(
+                    "Open interactive Structural Explorer",
+                    "?section=Structural%20Explorer",
+                )
 
     st.subheader("Portfolio sections")
     st.link_button("Processing Visual Lab", "?section=Processing%20Visual%20Lab")
     st.link_button("Visual gallery", "?section=Visual%20Gallery")
+
+
+elif section == "Structural Explorer":
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Interactive project example</div>
+  <h2>North Slope Structural Explorer</h2>
+  <p>Select regional horizons, add public-data context, and rotate the basin in 3D.</p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    control_cols = st.columns([2, 1])
+    selected_surfaces = control_cols[0].multiselect(
+        "Visible horizons",
+        STRUCTURAL_HORIZONS,
+        default=["NStopo", "NSLCU", "NSshublik", "NSbasement"],
+        format_func=lambda name: f"{name} - {SURFACE_CATALOG[name]['label']}",
+    )
+    cells_per_surface = control_cols[1].select_slider(
+        "Surface detail",
+        options=[1500, 3000, 6000],
+        value=3000,
+        format_func=lambda cells: f"{cells:,} cells / horizon",
+    )
+    selected_overlays = st.multiselect(
+        "Context overlays",
+        STRUCTURAL_OVERLAYS,
+        default=[
+            "North Slope study-area boundary",
+            "Assessment-unit outlines",
+        ],
+    )
+
+    if selected_surfaces:
+        st.plotly_chart(
+            build_structural_figure(
+                selected_surfaces,
+                cells_per_surface,
+                selected_overlays,
+            ),
+            use_container_width=True,
+        )
+    else:
+        st.info("Select at least one horizon.")
+
+    label_cols = st.columns(2)
+    for index, (code, metadata) in enumerate(SURFACE_CATALOG.items()):
+        with label_cols[index % 2]:
+            st.markdown(f"**{metadata['label']}**")
+            st.caption(metadata["description"])
+
+    with st.expander("Why this belongs in the portfolio"):
+        st.write(
+            "This is a stronger example than a static screenshot because the viewer "
+            "can change structural layers, inspect depth, and connect the model to "
+            "public wells and assessment units."
+        )
 
 
 elif section == "Presentation View":
@@ -2421,9 +2700,13 @@ elif section == "Think Tank Topics":
                     caption="Current North Slope Streamlit/Plotly structural preview.",
                     use_container_width=True,
                 )
+            st.link_button(
+                "Open interactive Structural Explorer",
+                "?section=Structural%20Explorer",
+            )
             st.caption(
-                "Current structural preview. The separate atlas contains the selectable "
-                "geographic horizons and context overlays; its Streamlit deployment needs reactivation."
+                "The embedded explorer uses the current selectable geographic horizons, "
+                "public wells, study boundary, and assessment-unit overlays."
             )
         elif topic["slug"] == "processing_earthquake":
             processing_room_video = evidence_path_by_key("processing_earthquake")
@@ -2630,6 +2913,27 @@ elif section == "Processing Visual Lab":
         "This is the abstract visual layer for the think tank. The sketches should not recreate screenshots or PowerPoints. "
         "They should use dots, arrows, waves, clusters, fields, gates, and pulses to make the workflow idea easy to understand."
     )
+    with st.expander("Visual redesign checklist", expanded=True):
+        st.markdown(
+            """
+1. **North Slope:** real four-horizon perspective, wells, assessment context, screening disclaimer.
+2. **Earthquake globe:** depth legend, time arc, magnitude-driven pulses, sound response.
+3. **Knowledge graph:** larger graph, three node types, one labeled relationship.
+4. **Seismic:** dominant P-pick, confidence band, direct station/event output.
+5. **Agent training:** larger final agent, visible failure example, animated action trace.
+6. **Rock mapping:** connect input ranges to classified zones and uncertainty overlap.
+7. **Field geophysics:** add a combined interpretation panel and uncertainty bars.
+8. **Moho ML:** emphasize geographic transfer, leakage gate, and residual map.
+9. **App pipeline:** put validation in the main path and loop results back to Codex.
+            """
+        )
+        if VISUAL_DESIGN_SPEC_PATH.exists():
+            st.download_button(
+                "Download full visual design specification",
+                VISUAL_DESIGN_SPEC_PATH.read_text(encoding="utf-8"),
+                file_name=VISUAL_DESIGN_SPEC_PATH.name,
+                mime="text/markdown",
+            )
     st.markdown(
         """
 <div class="unfinished-note">
