@@ -8,14 +8,14 @@ Last updated: June 8, 2026
 
 ## Project In One Sentence
 
-Build a visual, interactive portfolio that uses real geoscience, coding,
-research, and creative projects to show how AI helps move unfinished work toward
-testable systems, while keeping human expertise and uncertainty visible.
+Build a visual AI think tank where unfinished geoscience, coding, research, and
+creative projects serve as evidence for discussing how prompting, domain
+knowledge, emerging ML workflows, and human review can create useful systems.
 
 ## Core Thesis
 
-The portfolio is not mainly about "using ChatGPT" and it is not a collection of
-finished products presented as flawless work.
+The site is not mainly a finished-project portfolio, recruiting site, or a
+collection of products presented as flawless work.
 
 The larger argument is:
 
@@ -45,12 +45,14 @@ The larger argument is:
 
 The site should be understandable to:
 
-- AI and software professionals.
-- Geoscientists and energy researchers.
-- GIS, visualization, and data professionals.
-- Recruiters or collaborators evaluating practical capability.
-- Curious non-specialists who should be able to understand the main idea
-  without reading every technical detail.
+- DOE and energy managers working near the front of AI integration.
+- AI, ML, software, and scientific-workflow professionals.
+- Geoscientists, GIS specialists, visualization experts, and energy researchers.
+- Experienced practitioners who can challenge, correct, or extend the ideas.
+- Curious builders looking for workflows they can adapt to their own projects.
+
+The site is not optimized for recruiter conversion. Its primary outcome is
+discussion, learning, collaboration, and useful disagreement.
 
 ## Desired Visitor Experience
 

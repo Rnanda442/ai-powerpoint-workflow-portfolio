@@ -25,6 +25,7 @@ ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
 VISUAL_AUDIT_PATH = ROOT / "data" / "visual_audit.csv"
 VISION_BOARD_PATH = ROOT / "data" / "vision_board.csv"
+WEBSITE_CHANGE_IDEAS_PATH = ROOT / "data" / "website_change_ideas.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
 ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
@@ -443,6 +444,43 @@ WORKFLOW_NODE_ICONS = {
     "Features": "LOGS",
     "Screen": "RANK",
 }
+
+def workflow_icon_svg(label: str, index: int) -> str:
+    value = label.lower()
+    if any(term in value for term in ["data", "csv", "catalog", "events", "files"]):
+        drawing = """
+<ellipse cx="20" cy="10" rx="11" ry="5"/><path d="M9 10v16c0 3 5 5 11 5s11-2 11-5V10"/>
+<path d="M9 18c0 3 5 5 11 5s11-2 11-5"/>
+        """
+    elif any(term in value for term in ["gis", "map", "atlas", "gephi", "neo4j"]):
+        drawing = """
+<path d="M7 9l9-4 9 4 8-4v25l-8 4-9-4-9 4z"/><path d="M16 5v25M25 9v25"/>
+        """
+    elif any(term in value for term in ["prompt", "ask", "explain", "review", "rubric", "qa"]):
+        drawing = """
+<path d="M8 7h24v18H19l-7 7v-7H8z"/><path d="M14 14h12M14 19h8"/>
+        """
+    elif any(term in value for term in ["model", "ann", "agent", "screen", "class", "features"]):
+        drawing = """
+<circle cx="9" cy="12" r="3"/><circle cx="9" cy="28" r="3"/>
+<circle cx="21" cy="20" r="3"/><circle cx="33" cy="12" r="3"/><circle cx="33" cy="28" r="3"/>
+<path d="M12 12l6 6M12 28l6-6M24 18l6-5M24 22l6 5"/>
+        """
+    elif any(term in value for term in ["3d", "grid", "output", "dashboard", "streamlit"]):
+        drawing = """
+<path d="M7 12l13-7 13 7-13 7z"/><path d="M7 12v15l13 8 13-8V12"/>
+<path d="M20 19v16"/>
+        """
+    else:
+        drawing = """
+<circle cx="20" cy="20" r="13"/><path d="M13 20l5 5 10-11"/>
+        """
+    return (
+        "<svg viewBox='0 0 40 40' aria-hidden='true' "
+        "fill='none' stroke='currentColor' stroke-width='2.4' "
+        "stroke-linecap='round' stroke-linejoin='round'>"
+        f"{drawing}</svg>"
+    )
 
 WORKFLOW_BLUEPRINTS = {
     "ai_workflow": {
@@ -1657,16 +1695,18 @@ st.markdown(
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 3rem;
-        height: 2rem;
-        border-radius: 999px;
-        background: #172033;
-        color: #ffffff;
-        font-size: 0.68rem;
-        font-weight: 900;
-        letter-spacing: 0.04em;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: #e2e8f0;
+        color: #172033;
         margin-bottom: 0.45rem;
-        padding: 0 0.55rem;
+        padding: 0.55rem;
+    }
+    .workflow-icon svg {
+        display: block;
+        width: 100%;
+        height: 100%;
     }
     .workflow-node strong {
         display: block;
@@ -2247,8 +2287,24 @@ def render_mobile_system_map(mode: str, project_status: pd.DataFrame) -> None:
     padding: 14px 15px;
     margin: 0;
     background: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   .mobile-system-stage.validation { border-left-color: #dc2626; }
+  .mobile-system-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #172033;
+  }
+  .mobile-system-icon svg { width: 25px; height: 25px; }
+  .mobile-system-copy { min-width: 0; }
   .mobile-system-stage strong { display: block; color: #172033; font-size: 1rem; }
   .mobile-system-stage span { color: #475569; font-size: 0.9rem; line-height: 1.4; }
   .mobile-system-arrow {
@@ -2269,8 +2325,11 @@ def render_mobile_system_map(mode: str, project_status: pd.DataFrame) -> None:
             st.markdown(
                 f"""
 <div class="mobile-system-stage{validation_class}">
-  <strong>{index + 1}. {escape(title)}</strong>
-  <span>{escape(body)}</span>
+  <div class="mobile-system-icon">{workflow_icon_svg(title, index)}</div>
+  <div class="mobile-system-copy">
+    <strong>{index + 1}. {escape(title)}</strong>
+    <span>{escape(body)}</span>
+  </div>
 </div>
                 """,
                 unsafe_allow_html=True,
@@ -2364,24 +2423,24 @@ def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
   const definitions = {{
     'Research Flow': {{
       nodes: [
-        ['sources', 'Existing work', 0.09, 0.48, 'PDFs, GIS, notebooks, screenshots, code, and videos.'],
-        ['capture', 'Source capture', 0.27, 0.30, 'Manifests and evidence preserve provenance and context.'],
-        ['build', 'Codex + notebooks', 0.46, 0.48, 'Files become code, analysis, schemas, and reusable workflows.'],
-        ['visual', 'Maps + explanations', 0.64, 0.30, 'Scientific outputs become inspectable visual evidence.'],
-        ['review', 'Expert validation', 0.78, 0.58, 'Claims, uncertainty, leakage, and scientific plausibility are reviewed.'],
-        ['publish', 'Site + deck', 0.92, 0.30, 'Validated work becomes Streamlit, a paper, or PowerPoint.']
+        ['sources', 'Existing work', 0.09, 0.48, 'PDFs, GIS, notebooks, screenshots, code, and videos.', 'files'],
+        ['capture', 'Source capture', 0.27, 0.30, 'Manifests and evidence preserve provenance and context.', 'capture'],
+        ['build', 'Codex + notebooks', 0.46, 0.48, 'Files become code, analysis, schemas, and reusable workflows.', 'code'],
+        ['visual', 'Maps + explanations', 0.64, 0.30, 'Scientific outputs become inspectable visual evidence.', 'map'],
+        ['review', 'Expert validation', 0.78, 0.58, 'Claims, uncertainty, leakage, and scientific plausibility are reviewed.', 'gate'],
+        ['publish', 'Site + deck', 0.92, 0.30, 'Validated work becomes Streamlit, a paper, or PowerPoint.', 'screen']
       ],
       edges: [['sources','capture'], ['capture','build'], ['build','visual'], ['visual','review'], ['review','publish'], ['review','build']]
     }},
     'Application Architecture': {{
       nodes: [
-        ['manifest', 'CSV manifests', 0.10, 0.25, 'Structured inventories, roadmaps, visuals, and project status.'],
-        ['assets', 'Visual assets', 0.10, 0.68, 'Project evidence, SVG topics, videos, and contact sheets.'],
-        ['parquet', 'Parquet surfaces', 0.32, 0.68, 'Large structural datasets used by the North Slope explorer.'],
-        ['app', 'Streamlit app', 0.44, 0.40, 'Current routing, content, data access, and rendering entry point.'],
-        ['plotly', 'Plotly explorer', 0.68, 0.68, 'Interactive scientific 3D surfaces and overlays.'],
-        ['p5', 'p5 visual layer', 0.68, 0.22, 'Processing-style motion for workflows, uncertainty, and progress.'],
-        ['visitor', 'Visitor views', 0.91, 0.40, 'Topic rooms, evidence, architecture, presentation, and mobile views.']
+        ['manifest', 'CSV manifests', 0.10, 0.25, 'Structured inventories, roadmaps, visuals, and project status.', 'table'],
+        ['assets', 'Visual assets', 0.10, 0.68, 'Project evidence, SVG topics, videos, and contact sheets.', 'image'],
+        ['parquet', 'Parquet surfaces', 0.32, 0.68, 'Large structural datasets used by the North Slope explorer.', 'layers'],
+        ['app', 'Streamlit app', 0.44, 0.40, 'Current routing, content, data access, and rendering entry point.', 'app'],
+        ['plotly', 'Plotly explorer', 0.68, 0.68, 'Interactive scientific 3D surfaces and overlays.', 'cube'],
+        ['p5', 'p5 visual layer', 0.68, 0.22, 'Processing-style motion for workflows, uncertainty, and progress.', 'motion'],
+        ['visitor', 'Visitor views', 0.91, 0.40, 'Topic rooms, evidence, architecture, presentation, and mobile views.', 'people']
       ],
       edges: [['manifest','app'], ['assets','app'], ['parquet','app'], ['app','plotly'], ['app','p5'], ['plotly','visitor'], ['p5','visitor']]
     }}
@@ -2400,13 +2459,14 @@ def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
         xRatio: mobileLayout ? 0.26 + (index % 2) * 0.48 : 0.12 + (index % 3) * 0.38,
         yRatio: mobileLayout ? 0.13 + Math.floor(index / 2) * 0.19 : 0.20 + Math.floor(index / 3) * 0.31,
         detail: Math.round(project.progress * 100) + '% through evidence, prototype, interaction, validation, and publication. Next: ' + project.next,
-        progress: project.progress
+        progress: project.progress,
+        icon: projectIcon(project.id)
       }}));
       edges = [];
     }} else {{
       const selected = definitions[config.mode];
       nodes = selected.nodes.map((item, index) => ({{
-        id: item[0], label: item[1], xRatio: item[2], yRatio: item[3], detail: item[4], progress: null
+        id: item[0], label: item[1], xRatio: item[2], yRatio: item[3], detail: item[4], progress: null, icon: item[5]
       }}));
       if (mobileLayout) {{
         const spacing = config.mode === 'Application Architecture' ? 0.13 : 0.15;
@@ -2443,6 +2503,84 @@ def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
 
   function nodePosition(node) {{
     return {{ x: node.xRatio * width, y: node.yRatio * height }};
+  }}
+
+  function projectIcon(id) {{
+    if (id.includes('north') || id.includes('valles')) return 'map';
+    if (id.includes('thesis') || id.includes('rock')) return 'graph';
+    if (id.includes('processing')) return 'globe';
+    if (id.includes('pondicherry') || id.includes('moho')) return 'waveform';
+    if (id.includes('stock')) return 'app';
+    if (id.includes('arcgis')) return 'capture';
+    return 'progress';
+  }}
+
+  function drawNodeIcon(icon, x, y, size, active, gate) {{
+    const half = size / 2;
+    const ink = gate ? palette.red : palette.ink;
+    stroke(ink);
+    strokeWeight(active ? 3 : 2);
+    fill(active ? '#eff6ff' : '#ffffff');
+    rectMode(CENTER);
+    rect(x, y, size, size, 12);
+    rectMode(CORNER);
+
+    push();
+    translate(x, y);
+    stroke(ink);
+    strokeWeight(2);
+    noFill();
+
+    if (icon === 'files') {{
+      rect(-17, -13, 25, 29, 3);
+      rect(-9, -18, 25, 29, 3);
+      line(-3, -8, 10, -8); line(-3, -2, 10, -2); line(-3, 4, 7, 4);
+    }} else if (icon === 'capture' || icon === 'image') {{
+      rect(-19, -15, 38, 30, 4);
+      circle(10, -7, 5);
+      beginShape(); vertex(-15, 10); vertex(-6, 0); vertex(0, 6); vertex(7, -2); vertex(16, 10); endShape();
+      if (icon === 'capture') {{ line(-24, -19, -14, -19); line(-24, -19, -24, -9); line(24, 19, 14, 19); line(24, 19, 24, 9); }}
+    }} else if (icon === 'code' || icon === 'app') {{
+      rect(-20, -16, 40, 32, 4);
+      line(-20, -7, 20, -7);
+      circle(-13, -12, 3); circle(-7, -12, 3);
+      if (icon === 'code') {{ line(-10, 3, -4, 8); line(-10, 3, -4, -2); line(10, 3, 4, 8); line(10, 3, 4, -2); }}
+      else {{ rect(-13, -1, 9, 10, 2); line(1, 0, 13, 0); line(1, 6, 10, 6); }}
+    }} else if (icon === 'map') {{
+      beginShape(); vertex(-20, -14); vertex(-7, -19); vertex(7, -14); vertex(20, -19); vertex(20, 14); vertex(7, 19); vertex(-7, 14); vertex(-20, 19); endShape(CLOSE);
+      line(-7, -19, -7, 14); line(7, -14, 7, 19);
+      circle(4, -1, 6); line(4, 2, 4, 9);
+    }} else if (icon === 'gate') {{
+      line(-14, -19, -14, 19); line(14, -19, 14, 19); line(-14, -12, 14, -12);
+      line(-7, 3, -1, 9); line(-1, 9, 10, -5);
+    }} else if (icon === 'screen') {{
+      rect(-21, -16, 42, 29, 4); line(-8, 19, 8, 19); line(0, 13, 0, 19);
+      line(-12, -6, 11, -6); line(-12, 0, 6, 0); line(-12, 6, 13, 6);
+    }} else if (icon === 'table') {{
+      rect(-19, -17, 38, 34, 3);
+      line(-19, -6, 19, -6); line(-19, 5, 19, 5); line(-6, -17, -6, 17); line(7, -17, 7, 17);
+    }} else if (icon === 'layers') {{
+      beginShape(); vertex(0, -18); vertex(21, -8); vertex(0, 2); vertex(-21, -8); endShape(CLOSE);
+      beginShape(); vertex(-21, 1); vertex(0, 11); vertex(21, 1); endShape();
+      beginShape(); vertex(-21, 10); vertex(0, 20); vertex(21, 10); endShape();
+    }} else if (icon === 'cube') {{
+      beginShape(); vertex(0, -20); vertex(18, -10); vertex(18, 11); vertex(0, 21); vertex(-18, 11); vertex(-18, -10); endShape(CLOSE);
+      line(0, 0, 0, 21); line(0, 0, 18, -10); line(0, 0, -18, -10);
+    }} else if (icon === 'motion' || icon === 'globe') {{
+      circle(0, 0, 36); ellipse(0, 0, 15, 36); line(-18, 0, 18, 0);
+      if (icon === 'motion') {{ circle(18, 0, 5); circle(-10, -15, 5); }}
+    }} else if (icon === 'people') {{
+      circle(-12, -8, 9); circle(12, -8, 9); circle(0, -13, 10);
+      arc(-12, 12, 18, 20, PI, TWO_PI); arc(12, 12, 18, 20, PI, TWO_PI); arc(0, 10, 22, 24, PI, TWO_PI);
+    }} else if (icon === 'graph') {{
+      line(-16, 12, -5, -7); line(-5, -7, 7, 2); line(7, 2, 17, -14);
+      circle(-16, 12, 6); circle(-5, -7, 6); circle(7, 2, 6); circle(17, -14, 6);
+    }} else if (icon === 'waveform') {{
+      beginShape(); vertex(-22, 2); vertex(-15, 2); vertex(-10, -10); vertex(-4, 15); vertex(3, -17); vertex(9, 9); vertex(15, 2); vertex(22, 2); endShape();
+    }} else {{
+      rect(-18, -14, 10, 28, 3); rect(-5, -5, 10, 19, 3); rect(8, -19, 10, 33, 3);
+    }}
+    pop();
   }}
 
   function drawConnection(from, to, feedback) {{
@@ -2492,34 +2630,30 @@ def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
       const isHover = dist(mouseX, mouseY, p.x, p.y) < touchRadius;
       if (isHover) hovered = node;
       const isGate = node.id === 'review';
-      const radius = isHover || heldNode === node
-        ? (mobileLayout ? 43 : 54)
-        : (mobileLayout ? 38 : 47);
-      stroke(isGate ? palette.red : (node.progress !== null ? palette.teal : palette.ink));
-      strokeWeight(isHover ? 4 : 2);
-      fill('#ffffff');
-      circle(p.x, p.y, radius * 2);
+      const active = isHover || heldNode === node;
+      const tileSize = active ? (mobileLayout ? 62 : 72) : (mobileLayout ? 56 : 66);
+      drawNodeIcon(node.icon || 'progress', p.x, p.y, tileSize, active, isGate);
 
       if (node.progress !== null) {{
-        noFill();
-        stroke(node.progress > 0.68 ? palette.green : node.progress > 0.45 ? palette.yellow : palette.gray);
-        strokeWeight(7);
-        arc(p.x, p.y, radius * 1.72, radius * 1.72, -HALF_PI, -HALF_PI + TWO_PI * node.progress);
+        const barWidth = mobileLayout ? 54 : 64;
+        noStroke(); fill('#e2e8f0'); rect(p.x - barWidth / 2, p.y + tileSize / 2 + 30, barWidth, 5, 3);
+        fill(node.progress > 0.68 ? palette.green : node.progress > 0.45 ? palette.yellow : palette.gray);
+        rect(p.x - barWidth / 2, p.y + tileSize / 2 + 30, barWidth * node.progress, 5, 3);
       }}
 
       noStroke();
       fill(palette.ink);
-      textAlign(CENTER, CENTER);
-      textSize(mobileLayout ? 11 : 13);
+      textAlign(CENTER, TOP);
+      textSize(mobileLayout ? 10 : 12);
       textStyle(BOLD);
       const label = node.label.length > 24 ? node.label.replace(' And ', '\\n').replace(' For ', '\\n') : node.label;
-      const labelWidth = mobileLayout ? 68 : 84;
-      text(label, p.x - labelWidth / 2, p.y - 22, labelWidth, 44);
+      const labelWidth = mobileLayout ? 84 : 108;
+      text(label, p.x - labelWidth / 2, p.y + tileSize / 2 + 7, labelWidth, 32);
       textStyle(NORMAL);
       if (node.progress !== null) {{
         fill(palette.quiet);
         textSize(mobileLayout ? 10 : 11);
-        text(Math.round(node.progress * 100) + '%', p.x, p.y + (mobileLayout ? 27 : 31));
+        text(Math.round(node.progress * 100) + '%', p.x, p.y + tileSize / 2 + 37);
       }}
     }});
 
@@ -2788,11 +2922,10 @@ def render_workflow_blueprint(topic: dict) -> None:
         return
     step_html = []
     for idx, (label, detail) in enumerate(blueprint["steps"], start=1):
-        icon = WORKFLOW_NODE_ICONS.get(label, f"STEP {idx}")
         step_html.append(
             f"""
 <div class="workflow-node">
-  <div class="workflow-icon">{escape(icon)}</div>
+  <div class="workflow-icon">{workflow_icon_svg(label, idx)}</div>
   <strong>{escape(label)}</strong>
   <span>{escape(detail)}</span>
 </div>
@@ -3093,6 +3226,7 @@ ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 project_status = load_current_csv(PROJECT_STATUS_PATH)
 visual_audit = load_current_csv(VISUAL_AUDIT_PATH)
 vision_board = load_current_csv(VISION_BOARD_PATH)
+website_change_ideas = load_current_csv(WEBSITE_CHANGE_IDEAS_PATH)
 project_status_by_key = {
     row["project_key"]: row
     for _, row in project_status.iterrows()
@@ -3377,10 +3511,74 @@ elif section == "Vision Board":
         hide_index=True,
         use_container_width=True,
     )
+
+    st.subheader("Page-specific visual change plan")
+    st.caption(
+        "These concepts come from the 63-question interview and 55 follow-up "
+        "answers. Each one records what the section looks like now, what should "
+        "replace it, and why."
+    )
+    change_filters = st.columns(3)
+    change_section = change_filters[0].selectbox(
+        "Website section",
+        ["All"] + sorted(website_change_ideas["section"].unique().tolist()),
+        key="vision_change_section",
+    )
+    change_priority = change_filters[1].selectbox(
+        "Change priority",
+        ["All", "P0", "P1", "P2"],
+        key="vision_change_priority",
+    )
+    change_status = change_filters[2].selectbox(
+        "Change status",
+        ["All"] + sorted(website_change_ideas["status"].unique().tolist()),
+        key="vision_change_status",
+    )
+    filtered_changes = website_change_ideas.copy()
+    if change_section != "All":
+        filtered_changes = filtered_changes[
+            filtered_changes["section"] == change_section
+        ]
+    if change_priority != "All":
+        filtered_changes = filtered_changes[
+            filtered_changes["priority"] == change_priority
+        ]
+    if change_status != "All":
+        filtered_changes = filtered_changes[
+            filtered_changes["status"] == change_status
+        ]
+
+    priority_rank = {"P0": 0, "P1": 1, "P2": 2}
+    filtered_changes = filtered_changes.assign(
+        priority_rank=filtered_changes["priority"].map(priority_rank).fillna(9)
+    ).sort_values(["priority_rank", "section", "change_id"])
+    change_cols = st.columns(2)
+    for index, change in enumerate(filtered_changes.itertuples(index=False)):
+        with change_cols[index % 2]:
+            with st.container(border=True):
+                st.caption(
+                    f"{change.priority} · {change.section} · "
+                    f"{str(change.status).replace('_', ' ')}"
+                )
+                st.markdown(f"**{str(change.change_id).replace('_', ' ').title()}**")
+                st.markdown("**Current**")
+                st.write(change.current_state)
+                st.markdown("**Proposed visual**")
+                st.write(change.proposed_visual)
+                st.info(change.minimal_copy)
+                st.markdown("**Why this change**")
+                st.caption(change.why)
+
     st.download_button(
         "Download vision board CSV",
         vision_board.to_csv(index=False),
         file_name=VISION_BOARD_PATH.name,
+        mime="text/csv",
+    )
+    st.download_button(
+        "Download website change plan",
+        website_change_ideas.to_csv(index=False),
+        file_name=WEBSITE_CHANGE_IDEAS_PATH.name,
         mime="text/csv",
     )
     st.subheader("Questions for the next review")

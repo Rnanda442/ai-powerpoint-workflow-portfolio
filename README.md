@@ -56,6 +56,8 @@ currently uses a poster image until the correct 54-second video is added.
 
 - `app.py`: Streamlit storyboard site.
 - `PROJECT_CHARTER.md`: Project goals, vision, decisions, and working rules.
+- `docs/PROJECT_VISION_AND_GOALS.md`: Consolidated constraints from the 63-question and 55-follow-up owner interview.
+- `data/website_change_ideas.csv`: Page-specific current-state, proposed-visual, minimal-copy, and rationale plan.
 - `docs/ARCHITECTURE.md`: Current runtime, research flow, and target code structure.
 - `data/project_status.csv`: Evidence-to-publication progress used by the System Map.
 - `data/vision_board.csv`: Living Now / Next / Later direction and delivery queue.
