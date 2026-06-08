@@ -4,7 +4,7 @@ This file is the durable source of truth for the project's goals, vision,
 design direction, constraints, and current priorities. Read this before making
 substantial changes to the website, visuals, PowerPoint, or repository.
 
-Last updated: June 7, 2026
+Last updated: June 8, 2026
 
 ## Project In One Sentence
 
@@ -174,6 +174,9 @@ The shared visual system should use:
 - One dominant accent color per visual, with supporting elements quieter.
 
 Refer to `docs/VISUAL_DESIGN_SPEC.md` for specific changes to each poster.
+Use `data/visual_audit.csv` to track visual purpose, evidence quality,
+desktop/mobile presentation, scientific review, motion opportunities, priority,
+and implementation status.
 
 ## Typography And Composition
 

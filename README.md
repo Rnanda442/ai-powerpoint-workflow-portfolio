@@ -58,6 +58,7 @@ currently uses a poster image until the correct 54-second video is added.
 - `PROJECT_CHARTER.md`: Project goals, vision, decisions, and working rules.
 - `docs/ARCHITECTURE.md`: Current runtime, research flow, and target code structure.
 - `data/project_status.csv`: Evidence-to-publication progress used by the System Map.
+- `data/visual_audit.csv`: Prioritized visual-by-visual QA and improvement tracker.
 - `data/source_inventory.csv`: First-pass source inventory.
 - `data/google_drive_inventory.csv`: First-pass Google Drive pull list with live links.
 - `data/notebook_inventory.csv`: Local Jupyter notebook inventory with lightweight tags.

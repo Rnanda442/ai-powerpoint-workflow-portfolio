@@ -20,6 +20,7 @@ LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
+VISUAL_AUDIT_PATH = ROOT / "data" / "visual_audit.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
 ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
@@ -1018,6 +1019,29 @@ st.markdown(
         color: #64748b;
         font-size: 0.88rem;
     }
+    .audit-summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 1rem 0 1.5rem;
+    }
+    .audit-summary div {
+        border: 1px solid #dbe3ea;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.8rem 0.9rem;
+    }
+    .audit-summary span {
+        display: block;
+        color: #64748b;
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+    .audit-summary strong {
+        color: #172033;
+        font-size: 1.65rem;
+        line-height: 1;
+    }
     .pipeline-step {
         border-left: 4px solid #0f766e;
         padding: 0.55rem 0.75rem;
@@ -1757,7 +1781,7 @@ st.markdown(
     }
     @media (max-width: 900px) {
         .block-container {
-            padding: 1rem 0.85rem 2rem;
+            padding: 2.75rem 0.85rem 2rem;
         }
         h1 { font-size: 1.85rem !important; }
         h2 { font-size: 1.45rem !important; }
@@ -1775,6 +1799,10 @@ st.markdown(
             align-items: flex-start;
             flex-direction: column;
             gap: 0.15rem;
+        }
+        .audit-summary {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.55rem;
         }
         .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
         .think-card,
@@ -2813,6 +2841,7 @@ linkedin_evidence = load_current_csv(LINKEDIN_EVIDENCE_PATH)
 organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 project_status = load_current_csv(PROJECT_STATUS_PATH)
+visual_audit = load_current_csv(VISUAL_AUDIT_PATH)
 project_status_by_key = {
     row["project_key"]: row
     for _, row in project_status.iterrows()
@@ -2834,6 +2863,7 @@ SECTIONS = [
     "Notebook Explorer",
     "Evidence Library",
     "Visual Gallery",
+    "Visual Audit",
     "Contact / Ideas",
     "Build Plan",
 ]
@@ -2947,11 +2977,12 @@ if section == "Overview":
     )
 
     st.subheader("Explore the system")
-    fast_cols = st.columns(4)
+    fast_cols = st.columns(5)
     fast_cols[0].link_button("System Map", "?section=System%20Map")
     fast_cols[1].link_button("Structural Explorer", "?section=Structural%20Explorer")
     fast_cols[2].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[3].link_button("Phone View", "?section=Mobile%20View")
+    fast_cols[3].link_button("Visual Audit", "?section=Visual%20Audit")
+    fast_cols[4].link_button("Phone View", "?section=Mobile%20View")
 
     with st.expander("About this portfolio"):
         st.write(
@@ -4154,6 +4185,118 @@ elif section == "Visual Gallery":
             st.image(str(image_path), caption=image_path.name, use_container_width=True)
         else:
             st.warning(f"Missing copied contact sheet: {image_path}")
+
+
+elif section == "Visual Audit":
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Visual quality and roadmap</div>
+  <h2>Review every visual against the portfolio vision</h2>
+  <p>
+    The audit connects each important visual to its purpose, evidence quality,
+    mobile presentation, scientific review needs, and next design decision.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    open_audit = visual_audit[~visual_audit["status"].isin(["complete", "done"])]
+    st.markdown(
+        f"""
+<div class="audit-summary">
+  <div><span>Audited surfaces</span><strong>{len(visual_audit)}</strong></div>
+  <div><span>P0 decisions</span><strong>{int((visual_audit["priority"] == "P0").sum())}</strong></div>
+  <div><span>Mobile needs work</span><strong>{int((visual_audit["mobile_status"] == "needs_work").sum())}</strong></div>
+  <div><span>Source blockers</span><strong>{int((visual_audit["status"] == "blocked_source").sum())}</strong></div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Next visual decisions")
+    priority_order = {"P0": 0, "P1": 1, "P2": 2}
+    status_order = {"in_progress": 0, "planned": 1, "blocked_source": 2}
+    decision_queue = open_audit.copy()
+    decision_queue["priority_order"] = decision_queue["priority"].map(priority_order).fillna(9)
+    decision_queue["status_order"] = decision_queue["status"].map(status_order).fillna(9)
+    decision_queue = decision_queue.sort_values(
+        ["priority_order", "status_order", "visual_title"]
+    ).head(6)
+
+    decision_cols = st.columns(2)
+    for index, item in enumerate(decision_queue.itertuples(index=False)):
+        with decision_cols[index % 2]:
+            with st.container(border=True):
+                st.caption(f"{item.priority} · {item.page} · {item.status.replace('_', ' ')}")
+                st.markdown(f"**{item.visual_title}**")
+                st.write(item.current_issue)
+                st.markdown(f"**Next change:** {item.recommended_change}")
+                if valid_text(item.asset_path):
+                    audit_asset = project_asset(item.asset_path)
+                    if audit_asset.exists() and audit_asset.suffix.lower() in {
+                        ".png",
+                        ".jpg",
+                        ".jpeg",
+                        ".webp",
+                        ".svg",
+                    }:
+                        st.image(str(audit_asset), use_container_width=True)
+
+    st.subheader("Full audit")
+    audit_filters = st.columns(3)
+    selected_priority = audit_filters[0].selectbox(
+        "Priority",
+        ["All"] + sorted(visual_audit["priority"].dropna().unique().tolist()),
+    )
+    selected_status = audit_filters[1].selectbox(
+        "Status",
+        ["All"] + sorted(visual_audit["status"].dropna().unique().tolist()),
+    )
+    selected_project = audit_filters[2].selectbox(
+        "Project",
+        ["All"] + sorted(visual_audit["project_key"].dropna().unique().tolist()),
+    )
+
+    filtered_audit = visual_audit.copy()
+    if selected_priority != "All":
+        filtered_audit = filtered_audit[
+            filtered_audit["priority"] == selected_priority
+        ]
+    if selected_status != "All":
+        filtered_audit = filtered_audit[filtered_audit["status"] == selected_status]
+    if selected_project != "All":
+        filtered_audit = filtered_audit[
+            filtered_audit["project_key"] == selected_project
+        ]
+
+    st.dataframe(
+        filtered_audit[
+            [
+                "priority",
+                "status",
+                "page",
+                "visual_title",
+                "evidence_type",
+                "desktop_status",
+                "mobile_status",
+                "scientific_review",
+                "motion_opportunity",
+                "current_issue",
+                "recommended_change",
+            ]
+        ],
+        hide_index=True,
+        use_container_width=True,
+    )
+
+    st.download_button(
+        "Download visual audit CSV",
+        visual_audit.to_csv(index=False),
+        file_name=VISUAL_AUDIT_PATH.name,
+        mime="text/csv",
+    )
 
 
 elif section == "Contact / Ideas":
