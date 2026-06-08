@@ -1,0 +1,10 @@
+project_key,title,evidence,prototype,interactive,validated,published,next_step
+arcgis_raster_ml,Scientific Software Agent Training,complete,complete,planned,in_progress,planned,Build a small replay and rubric evaluation view
+thesis_knowledge_graph,Critical-Mineral Knowledge Graph,complete,complete,planned,in_progress,planned,Move the node and edge schema into a queryable prototype
+processing_visuals,Processing Earthquake Globe,complete,complete,in_progress,in_progress,partial,Recover the original sketch and verified video
+pondicherry,Pondicherry Seismic Workflow,complete,complete,planned,in_progress,planned,Create waveform pick and uncertainty interaction
+north_slope,North Slope Energy Screening,complete,complete,complete,in_progress,partial,Polish mobile explorer and document provenance
+rock_classification,Rock Classification And Resource Mapping,complete,complete,planned,in_progress,partial,Connect input ranges to classified map zones
+valles_caldera,Valles Field Geophysics,complete,complete,planned,in_progress,partial,Build a combined interpretation and uncertainty panel
+moho_ml,Moho ML Transfer,complete,complete,planned,in_progress,planned,Rebuild spatial validation and residual mapping
+stock_dashboard,Codex App Pipeline,complete,complete,complete,in_progress,partial,Make test and validation results visible in the workflow

@@ -1,10 +1,12 @@
 from pathlib import Path
 from html import escape
 from urllib.parse import quote
+import json
 
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
@@ -16,8 +18,10 @@ PROJECT_VISUALS_PATH = ROOT / "data" / "project_visuals.csv"
 LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
+PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
+ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
 STRUCTURAL_DATA_DIR = ROOT / "assets" / "structural_data"
 MASTER_3D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_3d_surfaces.parquet"
 MASTER_2D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_2d_layers.parquet"
@@ -925,6 +929,7 @@ st.set_page_config(
     page_title="AI Workflow Think Tank",
     page_icon="AI",
     layout="wide",
+    initial_sidebar_state="collapsed",
 )
 
 
@@ -1831,6 +1836,340 @@ def pill_html(terms: list[str], class_name: str) -> str:
     )
 
 
+def render_mobile_system_map(mode: str, project_status: pd.DataFrame) -> None:
+    flows = {
+        "Research Flow": [
+            ("Existing work", "PDFs, GIS, notebooks, screenshots, code, and videos."),
+            ("Source capture", "Manifests preserve evidence, provenance, and working context."),
+            ("Codex + notebooks", "Files become code, analysis, schemas, and reusable workflows."),
+            ("Maps + explanations", "Scientific outputs become inspectable visual evidence."),
+            ("Expert validation", "Claims, uncertainty, leakage, and plausibility are reviewed."),
+            ("Site + deck", "Accepted work becomes Streamlit, a paper, or PowerPoint."),
+        ],
+        "Application Architecture": [
+            ("CSV manifests", "Structured inventories, roadmaps, visuals, and project status."),
+            ("Visual assets", "Project evidence, topic posters, videos, and contact sheets."),
+            ("Parquet surfaces", "Structural datasets used by the North Slope explorer."),
+            ("Streamlit app", "Current navigation, content, data access, and rendering entry point."),
+            ("Plotly explorer", "Interactive scientific 3D surfaces and context overlays."),
+            ("p5 visual layer", "Processing-style motion for workflows and uncertainty."),
+            ("Visitor views", "Topic rooms, evidence, architecture, presentation, and mobile pages."),
+        ],
+    }
+
+    st.markdown(
+        """
+<style>
+  .mobile-system-stage {
+    border: 1px solid #dbe3ea;
+    border-left: 5px solid #2563eb;
+    border-radius: 8px;
+    padding: 14px 15px;
+    margin: 0;
+    background: #ffffff;
+  }
+  .mobile-system-stage.validation { border-left-color: #dc2626; }
+  .mobile-system-stage strong { display: block; color: #172033; font-size: 1rem; }
+  .mobile-system-stage span { color: #475569; font-size: 0.9rem; line-height: 1.4; }
+  .mobile-system-arrow {
+    color: #f97316;
+    font-size: 1.5rem;
+    line-height: 1;
+    text-align: center;
+    padding: 5px 0;
+  }
+</style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if mode in flows:
+        for index, (title, body) in enumerate(flows[mode]):
+            validation_class = " validation" if title == "Expert validation" else ""
+            st.markdown(
+                f"""
+<div class="mobile-system-stage{validation_class}">
+  <strong>{index + 1}. {escape(title)}</strong>
+  <span>{escape(body)}</span>
+</div>
+                """,
+                unsafe_allow_html=True,
+            )
+            if index < len(flows[mode]) - 1:
+                st.markdown(
+                    '<div class="mobile-system-arrow">&#8595;</div>',
+                    unsafe_allow_html=True,
+                )
+        if mode == "Research Flow":
+            st.info("Expert review can send the work back to Codex and notebooks for revision.")
+        return
+
+    stage_weights = {
+        "planned": 0.0,
+        "in_progress": 0.5,
+        "partial": 0.65,
+        "complete": 1.0,
+    }
+    for row in project_status.itertuples(index=False):
+        values = [
+            stage_weights.get(str(getattr(row, stage)).lower(), 0.0)
+            for stage in ["evidence", "prototype", "interactive", "validated", "published"]
+        ]
+        progress = sum(values) / len(values)
+        with st.container(border=True):
+            st.markdown(f"**{row.title}**")
+            st.progress(progress, text=f"{round(progress * 100)}% delivery progress")
+            st.caption(row.next_step)
+
+
+def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
+    stage_weights = {
+        "planned": 0.0,
+        "in_progress": 0.5,
+        "partial": 0.65,
+        "complete": 1.0,
+    }
+    progress_rows = []
+    for row in project_status.itertuples(index=False):
+        stage_values = [
+            stage_weights.get(str(getattr(row, stage)).lower(), 0.0)
+            for stage in ["evidence", "prototype", "interactive", "validated", "published"]
+        ]
+        progress_rows.append(
+            {
+                "id": row.project_key,
+                "label": row.title,
+                "progress": round(sum(stage_values) / len(stage_values), 2),
+                "next": row.next_step,
+            }
+        )
+
+    payload = json.dumps(
+        {"mode": mode, "projects": progress_rows},
+        ensure_ascii=True,
+    ).replace("</", "<\\/")
+
+    components.html(
+        f"""
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+  <style>
+    html, body {{ margin: 0; background: #f8fafc; color: #111827; font-family: Inter, system-ui, sans-serif; }}
+    #frame {{ border: 1px solid #dbe3ea; border-radius: 8px; overflow: hidden; background: #ffffff; }}
+    #canvas {{ min-height: 500px; overflow: hidden; }}
+    #detail {{ min-height: 52px; padding: 12px 16px; border-top: 1px solid #e5e7eb; font-size: 14px; line-height: 1.4; }}
+    #detail strong {{ display: block; margin-bottom: 3px; }}
+    .fallback {{ padding: 24px; color: #475569; }}
+    @media (max-width: 640px) {{
+      #detail {{ min-height: 72px; padding: 12px; font-size: 13px; }}
+    }}
+  </style>
+</head>
+<body>
+  <div id="frame">
+    <div id="canvas"><div class="fallback">Loading Processing-style system map...</div></div>
+    <div id="detail"><strong>Interactive system map</strong>Move across a node to inspect it. Click to hold its description.</div>
+  </div>
+  <script>
+  const config = {payload};
+  const palette = {{
+    ink: '#172033', quiet: '#64748b', line: '#cbd5e1',
+    orange: '#f97316', teal: '#0f766e', blue: '#2563eb',
+    yellow: '#eab308', gray: '#94a3b8', red: '#dc2626', green: '#16a34a'
+  }};
+  const definitions = {{
+    'Research Flow': {{
+      nodes: [
+        ['sources', 'Existing work', 0.09, 0.48, 'PDFs, GIS, notebooks, screenshots, code, and videos.'],
+        ['capture', 'Source capture', 0.27, 0.30, 'Manifests and evidence preserve provenance and context.'],
+        ['build', 'Codex + notebooks', 0.46, 0.48, 'Files become code, analysis, schemas, and reusable workflows.'],
+        ['visual', 'Maps + explanations', 0.64, 0.30, 'Scientific outputs become inspectable visual evidence.'],
+        ['review', 'Expert validation', 0.78, 0.58, 'Claims, uncertainty, leakage, and scientific plausibility are reviewed.'],
+        ['publish', 'Site + deck', 0.92, 0.30, 'Validated work becomes Streamlit, a paper, or PowerPoint.']
+      ],
+      edges: [['sources','capture'], ['capture','build'], ['build','visual'], ['visual','review'], ['review','publish'], ['review','build']]
+    }},
+    'Application Architecture': {{
+      nodes: [
+        ['manifest', 'CSV manifests', 0.10, 0.25, 'Structured inventories, roadmaps, visuals, and project status.'],
+        ['assets', 'Visual assets', 0.10, 0.68, 'Project evidence, SVG topics, videos, and contact sheets.'],
+        ['parquet', 'Parquet surfaces', 0.32, 0.68, 'Large structural datasets used by the North Slope explorer.'],
+        ['app', 'Streamlit app', 0.44, 0.40, 'Current routing, content, data access, and rendering entry point.'],
+        ['plotly', 'Plotly explorer', 0.68, 0.68, 'Interactive scientific 3D surfaces and overlays.'],
+        ['p5', 'p5 visual layer', 0.68, 0.22, 'Processing-style motion for workflows, uncertainty, and progress.'],
+        ['visitor', 'Visitor views', 0.91, 0.40, 'Topic rooms, evidence, architecture, presentation, and mobile views.']
+      ],
+      edges: [['manifest','app'], ['assets','app'], ['parquet','app'], ['app','plotly'], ['app','p5'], ['plotly','visitor'], ['p5','visitor']]
+    }}
+  }};
+  let nodes = [];
+  let edges = [];
+  let particles = [];
+  let heldNode = null;
+  let mobileLayout = false;
+
+  function setupMode() {{
+    if (config.mode === 'Delivery Progress') {{
+      nodes = config.projects.map((project, index) => ({{
+        id: project.id,
+        label: project.label,
+        xRatio: mobileLayout ? 0.26 + (index % 2) * 0.48 : 0.12 + (index % 3) * 0.38,
+        yRatio: mobileLayout ? 0.13 + Math.floor(index / 2) * 0.19 : 0.20 + Math.floor(index / 3) * 0.31,
+        detail: Math.round(project.progress * 100) + '% through evidence, prototype, interaction, validation, and publication. Next: ' + project.next,
+        progress: project.progress
+      }}));
+      edges = [];
+    }} else {{
+      const selected = definitions[config.mode];
+      nodes = selected.nodes.map((item, index) => ({{
+        id: item[0], label: item[1], xRatio: item[2], yRatio: item[3], detail: item[4], progress: null
+      }}));
+      if (mobileLayout) {{
+        const spacing = config.mode === 'Application Architecture' ? 0.13 : 0.15;
+        const start = config.mode === 'Application Architecture' ? 0.10 : 0.12;
+        nodes.forEach((node, index) => {{
+          node.xRatio = index % 2 === 0 ? 0.30 : 0.70;
+          node.yRatio = start + index * spacing;
+        }});
+      }}
+      edges = selected.edges;
+    }}
+  }}
+
+  function setup() {{
+    const host = document.getElementById('canvas');
+    host.innerHTML = '';
+    mobileLayout = host.clientWidth < 640;
+    const canvas = createCanvas(Math.max(host.clientWidth, 300), mobileLayout ? 700 : 500);
+    canvas.parent('canvas');
+    pixelDensity(1);
+    textFont('Arial');
+    setupMode();
+    for (let i = 0; i < 24; i++) {{
+      particles.push({{ edge: i % Math.max(edges.length, 1), t: random(), speed: random(0.0015, 0.004) }});
+    }}
+  }}
+
+  function windowResized() {{
+    const host = document.getElementById('canvas');
+    mobileLayout = host.clientWidth < 640;
+    resizeCanvas(Math.max(host.clientWidth, 300), mobileLayout ? 700 : 500);
+    setupMode();
+  }}
+
+  function nodePosition(node) {{
+    return {{ x: node.xRatio * width, y: node.yRatio * height }};
+  }}
+
+  function drawConnection(from, to, feedback) {{
+    const a = nodePosition(from);
+    const b = nodePosition(to);
+    stroke(feedback ? palette.orange : palette.line);
+    strokeWeight(feedback ? 2.5 : 2);
+    noFill();
+    if (feedback) {{
+      bezier(a.x, a.y + 28, a.x, height - 30, b.x, height - 30, b.x, b.y + 28);
+    }} else {{
+      line(a.x, a.y, b.x, b.y);
+    }}
+  }}
+
+  function draw() {{
+    background('#ffffff');
+    noStroke();
+    fill(palette.quiet);
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text(config.mode.toUpperCase(), 20, 16);
+
+    if (config.mode !== 'Delivery Progress') {{
+      edges.forEach((edge, index) => {{
+        const from = nodes.find(node => node.id === edge[0]);
+        const to = nodes.find(node => node.id === edge[1]);
+        drawConnection(from, to, index === edges.length - 1 && config.mode === 'Research Flow');
+      }});
+      particles.forEach(particle => {{
+        const edge = edges[particle.edge % edges.length];
+        const from = nodes.find(node => node.id === edge[0]);
+        const to = nodes.find(node => node.id === edge[1]);
+        const a = nodePosition(from);
+        const b = nodePosition(to);
+        particle.t = (particle.t + particle.speed) % 1;
+        noStroke();
+        fill(config.mode === 'Research Flow' ? palette.orange : palette.blue);
+        circle(lerp(a.x, b.x, particle.t), lerp(a.y, b.y, particle.t), 5);
+      }});
+    }}
+
+    let hovered = null;
+    nodes.forEach(node => {{
+      const p = nodePosition(node);
+      const touchRadius = mobileLayout ? 44 : 54;
+      const isHover = dist(mouseX, mouseY, p.x, p.y) < touchRadius;
+      if (isHover) hovered = node;
+      const isGate = node.id === 'review';
+      const radius = isHover || heldNode === node
+        ? (mobileLayout ? 43 : 54)
+        : (mobileLayout ? 38 : 47);
+      stroke(isGate ? palette.red : (node.progress !== null ? palette.teal : palette.ink));
+      strokeWeight(isHover ? 4 : 2);
+      fill('#ffffff');
+      circle(p.x, p.y, radius * 2);
+
+      if (node.progress !== null) {{
+        noFill();
+        stroke(node.progress > 0.68 ? palette.green : node.progress > 0.45 ? palette.yellow : palette.gray);
+        strokeWeight(7);
+        arc(p.x, p.y, radius * 1.72, radius * 1.72, -HALF_PI, -HALF_PI + TWO_PI * node.progress);
+      }}
+
+      noStroke();
+      fill(palette.ink);
+      textAlign(CENTER, CENTER);
+      textSize(mobileLayout ? 11 : 13);
+      textStyle(BOLD);
+      const label = node.label.length > 24 ? node.label.replace(' And ', '\\n').replace(' For ', '\\n') : node.label;
+      const labelWidth = mobileLayout ? 68 : 84;
+      text(label, p.x - labelWidth / 2, p.y - 22, labelWidth, 44);
+      textStyle(NORMAL);
+      if (node.progress !== null) {{
+        fill(palette.quiet);
+        textSize(mobileLayout ? 10 : 11);
+        text(Math.round(node.progress * 100) + '%', p.x, p.y + (mobileLayout ? 27 : 31));
+      }}
+    }});
+
+    if (hovered && !heldNode) updateDetail(hovered);
+    if (!hovered && !heldNode) {{
+      document.getElementById('detail').innerHTML = '<strong>Interactive system map</strong>Move across a node to inspect it. Click to hold its description.';
+    }}
+  }}
+
+  function updateDetail(node) {{
+    document.getElementById('detail').innerHTML = '<strong>' + node.label + '</strong>' + node.detail;
+  }}
+
+  function mousePressed() {{
+    const selected = nodes.find(node => {{
+      const p = nodePosition(node);
+      return dist(mouseX, mouseY, p.x, p.y) < (mobileLayout ? 44 : 54);
+    }});
+    heldNode = selected || null;
+    if (heldNode) updateDetail(heldNode);
+  }}
+  </script>
+</body>
+</html>
+        """,
+        height=790,
+        scrolling=False,
+    )
+
+
 def render_node_movement(row: pd.Series, title: str = "What moves through the ML system") -> None:
     inputs = split_terms(row["input_data"], 5)
     features = split_terms(row["features_or_variables"], 6)
@@ -2334,10 +2673,12 @@ project_visuals = load_current_csv(PROJECT_VISUALS_PATH)
 linkedin_evidence = load_current_csv(LINKEDIN_EVIDENCE_PATH)
 organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
+project_status = load_current_csv(PROJECT_STATUS_PATH)
 
 
 SECTIONS = [
     "Overview",
+    "System Map",
     "Mobile View",
     "Structural Explorer",
     "Presentation View",
@@ -2402,11 +2743,12 @@ if section == "Overview":
     )
 
     st.subheader("Explore")
-    fast_cols = st.columns(4)
-    fast_cols[0].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[1].link_button("Processing Lab", "?section=Processing%20Visual%20Lab")
-    fast_cols[2].link_button("Visual Gallery", "?section=Visual%20Gallery")
-    fast_cols[3].link_button("ML Future", "?section=Machine%20Learning%20Future")
+    fast_cols = st.columns(5)
+    fast_cols[0].link_button("System Map", "?section=System%20Map")
+    fast_cols[1].link_button("Presentation View", "?section=Presentation%20View")
+    fast_cols[2].link_button("Processing Lab", "?section=Processing%20Visual%20Lab")
+    fast_cols[3].link_button("Visual Gallery", "?section=Visual%20Gallery")
+    fast_cols[4].link_button("ML Future", "?section=Machine%20Learning%20Future")
 
     with st.expander("About this portfolio"):
         st.write(
@@ -2416,9 +2758,98 @@ if section == "Overview":
         )
 
 
+elif section == "System Map":
+    mobile_system_map = st.query_params.get("mobile", "0") == "1"
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Architecture and delivery</div>
+  <h2>How evidence becomes a reviewed system</h2>
+  <p>
+    This map separates the research workflow, the software that runs the portfolio,
+    and the actual delivery progress of each project.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    mode = st.radio(
+        "Map view",
+        ["Research Flow", "Application Architecture", "Delivery Progress"],
+        horizontal=True,
+    )
+    if mobile_system_map:
+        render_mobile_system_map(mode, project_status)
+        st.link_button("Open animated desktop map", "?section=System%20Map")
+    else:
+        render_system_map(mode, project_status)
+        st.link_button(
+            "Open phone-friendly map",
+            "?section=System%20Map&mobile=1",
+        )
+
+    if mode == "Research Flow":
+        st.caption(
+            "Orange particles represent evidence moving through the workflow. "
+            "The return path from expert validation makes revision part of the architecture."
+        )
+    elif mode == "Application Architecture":
+        st.caption(
+            "This is the current runtime, including the monolithic Streamlit entry point. "
+            "The next refactor will isolate data services, content, components, and page renderers."
+        )
+    else:
+        st.caption(
+            "Progress is calculated across evidence, prototype, interaction, validation, and publication. "
+            "It is a delivery signal, not a scientific-quality score."
+        )
+        st.dataframe(
+            project_status[
+                [
+                    "title",
+                    "evidence",
+                    "prototype",
+                    "interactive",
+                    "validated",
+                    "published",
+                    "next_step",
+                ]
+            ],
+            hide_index=True,
+            use_container_width=True,
+        )
+
+    architecture_cols = st.columns([1, 1])
+    with architecture_cols[0]:
+        st.markdown("**Current implementation**")
+        st.write(
+            "Streamlit renders the portfolio from one main Python entry point, "
+            "structured CSV manifests, visual assets, and Parquet structural datasets."
+        )
+    with architecture_cols[1]:
+        st.markdown("**Next implementation step**")
+        st.write(
+            "Move cached data access and page renderers into focused modules, "
+            "then add one interactive p5 study per high-priority scientific workflow."
+        )
+
+    if ARCHITECTURE_PATH.exists():
+        st.download_button(
+            "Download architecture document",
+            ARCHITECTURE_PATH.read_text(encoding="utf-8"),
+            file_name=ARCHITECTURE_PATH.name,
+            mime="text/markdown",
+        )
+
+
 elif section == "Mobile View":
     st.title("AI Workflow Portfolio")
     st.caption("Tap a visual to open the full project.")
+    st.link_button(
+        "Open architecture and project progress",
+        "?section=System%20Map&mobile=1",
+    )
 
     mobile_topics = [
         topic for topic in TOPIC_ROOMS if topic["slug"] in MOBILE_TOPIC_SLUGS
@@ -3275,6 +3706,7 @@ elif section == "Code And Architecture":
         "These excerpts are not meant to be the full codebase. They are quick proof "
         "of what each workflow actually does."
     )
+    st.link_button("Open interactive System Map", "?section=System%20Map")
 
     tab1, tab2, tab3, tab4 = st.tabs(
         [
@@ -3569,7 +4001,7 @@ elif section == "Build Plan":
     st.markdown(
         """
 1. Pick the best 12 to 20 individual screenshots from the contact sheets.
-2. Add one architecture diagram for ChatGPT, Obsidian, sources, notebooks, QGIS, Streamlit, and PowerPoint.
+2. Refactor cached data loading and page rendering out of the main app entry point.
 3. Convert the Pondicherry earthquake notebook into a clearer case-study panel.
 4. Capture current screenshots from the two Streamlit apps.
 5. Decide whether to generate a PowerPoint from the same case-study data.
