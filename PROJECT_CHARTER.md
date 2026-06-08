@@ -38,6 +38,8 @@ The larger argument is:
    scientific-workflow question.
 5. A maintainable repository where future work can continue across the laptop,
    desktop, GitHub, Drive, and Streamlit without losing context.
+6. A living vision board and structured update handoff so new notes,
+   screenshots, and conversation links become trackable project decisions.
 
 ## Intended Audience
 

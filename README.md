@@ -58,6 +58,7 @@ currently uses a poster image until the correct 54-second video is added.
 - `PROJECT_CHARTER.md`: Project goals, vision, decisions, and working rules.
 - `docs/ARCHITECTURE.md`: Current runtime, research flow, and target code structure.
 - `data/project_status.csv`: Evidence-to-publication progress used by the System Map.
+- `data/vision_board.csv`: Living Now / Next / Later direction and delivery queue.
 - `data/visual_audit.csv`: Prioritized visual-by-visual QA and improvement tracker.
 - `data/source_inventory.csv`: First-pass source inventory.
 - `data/google_drive_inventory.csv`: First-pass Google Drive pull list with live links.
@@ -65,6 +66,10 @@ currently uses a poster image until the correct 54-second video is added.
 - `data/case_studies.csv`: Curated 10-15+ project board for the cleaner website view.
 - `docs/narrative_outline.md`: Draft storyline for a deck or site.
 - `assets/contact_sheets/`: Copied visual contact sheets for review.
+
+The Streamlit `Update Inbox` packages change notes, screenshots, and a chat link
+into a downloadable ZIP. Approved changes should then be reflected in the
+repository-backed vision board and project files.
 
 ## Safety Notes
 

@@ -2,7 +2,10 @@ from pathlib import Path
 from html import escape
 from urllib.parse import quote
 import base64
+from datetime import datetime, timezone
+from io import BytesIO
 import json
+import zipfile
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -21,6 +24,7 @@ ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
 PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
 VISUAL_AUDIT_PATH = ROOT / "data" / "visual_audit.csv"
+VISION_BOARD_PATH = ROOT / "data" / "vision_board.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
 ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
@@ -147,6 +151,17 @@ VISUAL_STORYBOARD_IDEAS = [
         "Industry bottleneck card",
         "One diagram per project: why people have not solved it yet, then the AI lever that changes the cost.",
     ),
+]
+
+NEXT_REVIEW_QUESTIONS = [
+    "Which three project images should be the first things a visitor sees?",
+    "For each project card, what AI opinion do you most want visitors to debate?",
+    "Which current destination still feels redundant or unclear in the new navigator?",
+    "Which workflow should receive the first real Processing-style animation?",
+    "For QGIS agent training, what exact task should become the first input-actions-output-rubric example?",
+    "For the North Slope project, should the main product story emphasize 3D visualization, hydrate screening, or public-data organization?",
+    "Which technical details should stay visible by default, and which should move behind an expander?",
+    "What concrete output from the ML interview matters most: a model architecture, a product idea, a validation method, or a data pipeline?",
 ]
 
 TOPIC_ROOMS = [
@@ -351,9 +366,9 @@ TOPIC_FRAMES = {
         "pattern": ["wave", "pick", "qa", "map"],
     },
     "north_slope": {
-        "question": "How far can AI take public energy data before the expert has to step in?",
+        "question": "Can AI turn public geology into a useful 3D subsurface map?",
         "example": "The Alaska North Slope hydrate atlas is the example.",
-        "raise": "Raise your hand if you want to talk about profit, public energy value, and hydrate screening.",
+        "raise": "Raise your hand to talk about AI-built 3D maps, hydrate screening, and what geoscientists still must validate.",
         "pattern": ["open data", "GIS", "3D map", "screen"],
     },
     "rock_classification": {
@@ -392,6 +407,41 @@ TOPIC_VISUALS = {
     "valles": "assets/topic_visuals/field_geophysics.svg",
     "moho_ml": "assets/topic_visuals/moho_transfer.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+}
+
+CARD_VISUALS = {
+    "ai_workflow": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-18 001002.png",
+    "north_slope": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
+    "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
+    "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
+}
+
+WORKFLOW_NODE_ICONS = {
+    "Prompt": "ASK",
+    "Record": "REC",
+    "Rubric": "PASS?",
+    "Review": "HUMAN",
+    "Agent": "REPLAY",
+    "Prompt page": "ASK",
+    "Adobe sketch": "DRAW",
+    "CSV nodes": "DATA",
+    "Gephi": "GRAPH",
+    "Neo4j": "QUERY",
+    "USGS events": "EVENTS",
+    "Processing": "MOTION",
+    "Sound": "AUDIO",
+    "Streamlit/Three.js": "WEB",
+    "Explain": "STORY",
+    "Catalog": "EVENTS",
+    "Waveform": "TRACE",
+    "Pick": "PICK",
+    "QA": "CHECK",
+    "Dashboard": "REVIEW",
+    "Open data": "PUBLIC",
+    "GIS files": "LAYERS",
+    "3D atlas": "3D",
+    "Features": "LOGS",
+    "Screen": "RANK",
 }
 
 WORKFLOW_BLUEPRINTS = {
@@ -1042,6 +1092,63 @@ st.markdown(
         font-size: 1.65rem;
         line-height: 1;
     }
+    .vision-board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+        margin: 1rem 0 1.4rem;
+    }
+    .vision-card {
+        border: 1px solid #d8dee8;
+        border-top: 5px solid #0f766e;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem;
+        min-height: 225px;
+    }
+    .vision-card.now { border-top-color: #f97316; }
+    .vision-card.next { border-top-color: #2563eb; }
+    .vision-card.later { border-top-color: #7c3aed; }
+    .vision-card .horizon {
+        color: #64748b;
+        font-size: 0.76rem;
+        font-weight: 850;
+        text-transform: uppercase;
+    }
+    .vision-card h3 {
+        color: #172033;
+        font-size: 1.05rem;
+        line-height: 1.25;
+        margin: 0.35rem 0 0.45rem;
+    }
+    .vision-card p {
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.38;
+        margin: 0.3rem 0;
+    }
+    .vision-card .vision-next {
+        border-left: 3px solid #cbd5e1;
+        margin-top: 0.65rem;
+        padding-left: 0.6rem;
+        color: #334155;
+        font-weight: 700;
+    }
+    .vision-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.65rem;
+    }
+    .vision-meta span {
+        border: 1px solid #dbe3ea;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #475569;
+        font-size: 0.72rem;
+        font-weight: 750;
+        padding: 0.22rem 0.44rem;
+    }
     .pipeline-step {
         border-left: 4px solid #0f766e;
         padding: 0.55rem 0.75rem;
@@ -1480,6 +1587,107 @@ st.markdown(
         font-size: 0.92rem;
         line-height: 1.32;
     }
+    .workflow-tree {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background:
+            radial-gradient(circle at 50% 12%, rgba(15,118,110,0.08), transparent 28%),
+            #ffffff;
+        padding: 1rem;
+        margin: 0.8rem 0 1rem;
+    }
+    .workflow-tree h3 {
+        color: #172033;
+        font-size: 1.05rem;
+        margin: 0 0 0.8rem;
+        text-align: center;
+    }
+    .workflow-root {
+        width: min(280px, 90%);
+        margin: 0 auto 1.4rem;
+        border: 2px solid #0f766e;
+        border-radius: 8px;
+        background: #f0fdfa;
+        color: #134e4a;
+        padding: 0.7rem;
+        text-align: center;
+        font-weight: 850;
+        position: relative;
+    }
+    .workflow-root::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -1.4rem;
+        height: 1.4rem;
+        border-left: 3px solid #94a3b8;
+    }
+    .workflow-branches {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.65rem;
+        position: relative;
+    }
+    .workflow-branches::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: -0.7rem;
+        border-top: 3px solid #94a3b8;
+    }
+    .workflow-node {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.65rem;
+        min-height: 112px;
+        text-align: center;
+        position: relative;
+    }
+    .workflow-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: -0.7rem;
+        height: 0.7rem;
+        border-left: 3px solid #94a3b8;
+    }
+    .workflow-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 3rem;
+        height: 2rem;
+        border-radius: 999px;
+        background: #172033;
+        color: #ffffff;
+        font-size: 0.68rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.45rem;
+        padding: 0 0.55rem;
+    }
+    .workflow-node strong {
+        display: block;
+        color: #172033;
+        font-size: 0.88rem;
+        margin-bottom: 0.25rem;
+    }
+    .workflow-node span {
+        color: #64748b;
+        font-size: 0.8rem;
+        line-height: 1.25;
+    }
+    .workflow-result {
+        border-left: 4px solid #f97316;
+        background: #fff7ed;
+        color: #7c2d12;
+        padding: 0.65rem 0.75rem;
+        margin-top: 0.85rem;
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
     .prompt-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1804,7 +2012,10 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
+        .workflow-branches::before,
+        .workflow-node::before,
+        .workflow-root::after { display: none; }
         .think-card,
         .think-grid.compact .think-card {
             min-height: auto;
@@ -1835,6 +2046,36 @@ def load_csv(path: Path, modified_time: float) -> pd.DataFrame:
 
 def load_current_csv(path: Path) -> pd.DataFrame:
     return load_csv(path, path.stat().st_mtime)
+
+
+def build_update_handoff(
+    title: str,
+    message: str,
+    conversation_url: str,
+    project_area: str,
+    priority: str,
+    uploads,
+) -> bytes:
+    created_at = datetime.now(timezone.utc).isoformat()
+    request = {
+        "title": title.strip(),
+        "message": message.strip(),
+        "conversation_url": conversation_url.strip(),
+        "project_area": project_area,
+        "priority": priority,
+        "created_at": created_at,
+        "screenshots": [upload.name for upload in uploads],
+        "status": "new",
+    }
+    package = BytesIO()
+    with zipfile.ZipFile(package, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(
+            "update_request.json",
+            json.dumps(request, indent=2, ensure_ascii=True),
+        )
+        for upload in uploads:
+            archive.writestr(f"screenshots/{Path(upload.name).name}", upload.getvalue())
+    return package.getvalue()
 
 
 def local_file_uri(path_text: str) -> str:
@@ -2469,15 +2710,28 @@ def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
     )
 
 
-def render_topic_signal(topic: dict) -> str:
-    visual_path_text = TOPIC_VISUALS.get(topic["slug"])
+def render_topic_signal(topic: dict, card: bool = False) -> str:
+    visual_path_text = (
+        CARD_VISUALS.get(topic["slug"])
+        if card
+        else TOPIC_VISUALS.get(topic["slug"])
+    )
+    if not visual_path_text:
+        visual_path_text = TOPIC_VISUALS.get(topic["slug"])
     if visual_path_text:
         visual_path = project_asset(visual_path_text)
         if visual_path.exists():
             encoded = base64.b64encode(visual_path.read_bytes()).decode("ascii")
+            mime = {
+                ".svg": "image/svg+xml",
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".jpeg": "image/jpeg",
+                ".webp": "image/webp",
+            }.get(visual_path.suffix.lower(), "image/png")
             return (
                 "<div class='topic-poster'>"
-                f"<img src='data:image/svg+xml;base64,{encoded}' "
+                f"<img src='data:{mime};base64,{encoded}' "
                 f"alt='{escape(topic['title'])} workflow poster'>"
                 "</div>"
             )
@@ -2513,22 +2767,16 @@ def render_think_card(
     status_label, status_class = project_status_label(status_row)
     url = topic_url(topic["slug"]).replace("&", "&amp;")
     details = ""
-    if not compact:
-        details = f"""
-  <p class="think-example">{escape(example)}</p>
-  <div class="ai-chip-row" style="justify-content:flex-start;">
-    {''.join(f"<span class='ai-chip'>{escape(chip)}</span>" for chip in workflow.get("chips", [])[:3])}
-  </div>
-        """
+    raise_prompt = frame.get("raise", "Raise your hand if you want to discuss this project.")
     return f"""
 <a class="think-card-link" href="{url}" aria-label="Open {escape(topic['title'])}">
 <div class="think-card">
-  {render_topic_signal(topic)}
+  {render_topic_signal(topic, card=True)}
   <div class="project-status {status_class}">{escape(status_label)}</div>
   <p class="think-title">{escape(topic['title'])}</p>
   <p class="think-question">{escape(question)}</p>
   {details}
-  <div class="think-raise">Explore project</div>
+  <div class="think-raise">{escape(raise_prompt)}</div>
 </div>
 </a>
     """
@@ -2540,10 +2788,11 @@ def render_workflow_blueprint(topic: dict) -> None:
         return
     step_html = []
     for idx, (label, detail) in enumerate(blueprint["steps"], start=1):
+        icon = WORKFLOW_NODE_ICONS.get(label, f"STEP {idx}")
         step_html.append(
             f"""
-<div class="blue-step">
-  <div class="blue-index">{idx}</div>
+<div class="workflow-node">
+  <div class="workflow-icon">{escape(icon)}</div>
   <strong>{escape(label)}</strong>
   <span>{escape(detail)}</span>
 </div>
@@ -2551,10 +2800,11 @@ def render_workflow_blueprint(topic: dict) -> None:
         )
     st.markdown(
         f"""
-<div class="blueprint">
+<div class="workflow-tree">
   <h3>{escape(blueprint["title"])}</h3>
-  <div class="blueprint-steps">{''.join(step_html)}</div>
-  <div class="blue-outcome"><strong>End product idea:</strong> {escape(blueprint["outcome"])}</div>
+  <div class="workflow-root">Project evidence + domain question</div>
+  <div class="workflow-branches">{''.join(step_html)}</div>
+  <div class="workflow-result"><strong>Product direction:</strong> {escape(blueprint["outcome"])}</div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -2842,6 +3092,7 @@ organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 project_status = load_current_csv(PROJECT_STATUS_PATH)
 visual_audit = load_current_csv(VISUAL_AUDIT_PATH)
+vision_board = load_current_csv(VISION_BOARD_PATH)
 project_status_by_key = {
     row["project_key"]: row
     for _, row in project_status.iterrows()
@@ -2850,6 +3101,7 @@ project_status_by_key = {
 
 SECTIONS = [
     "Overview",
+    "Vision Board",
     "System Map",
     "Mobile View",
     "Structural Explorer",
@@ -2864,9 +3116,31 @@ SECTIONS = [
     "Evidence Library",
     "Visual Gallery",
     "Visual Audit",
+    "Update Inbox",
     "Contact / Ideas",
     "Build Plan",
 ]
+SECTION_LABELS = {
+    "Overview": "Start here: strongest project stories",
+    "Vision Board": "Direction: what this portfolio becomes",
+    "Think Tank Topics": "Projects: evidence, AI opinions, and future ML",
+    "Structural Explorer": "Interactive: North Slope 3D subsurface",
+    "Presentation View": "Talk mode: AI + geoscience presentation",
+    "Processing Visual Lab": "Visual lab: motion and Processing concepts",
+    "Machine Learning Future": "ML roadmap: specific models and outputs",
+    "System Map": "Architecture: evidence to reviewed system",
+    "Case Studies": "Project library: all case studies",
+    "Visual Gallery": "Media library: maps, screenshots, and graphs",
+    "LinkedIn Evidence": "Evidence: LinkedIn and local artifacts",
+    "Code And Architecture": "Build details: code and architecture",
+    "Notebook Explorer": "Build details: notebook inventory",
+    "Evidence Library": "Build details: source inventory",
+    "Visual Audit": "Review queue: visual quality and fixes",
+    "Update Inbox": "Send changes: notes, screenshots, and chat link",
+    "Mobile View": "Preview: phone-friendly portfolio",
+    "Contact / Ideas": "Discuss: questions and collaboration",
+    "Build Plan": "Roadmap: implementation backlog",
+}
 query_section = st.query_params.get("section", "Overview")
 if query_section == "Visual Contact Sheets":
     query_section = "Visual Gallery"
@@ -2878,14 +3152,15 @@ if query_section not in SECTIONS:
 
 with st.sidebar:
     st.title("AI Think Tank")
-    section = st.radio(
-        "View",
+    st.caption("Choose what you want to explore.")
+    section = st.selectbox(
+        "Portfolio navigator",
         SECTIONS,
         index=SECTIONS.index(query_section),
-        label_visibility="collapsed",
+        format_func=lambda item: SECTION_LABELS[item],
     )
     st.divider()
-    st.caption("Pick a topic. The projects are examples, not finished products.")
+    st.caption("Project claims separate current evidence, prototypes, and future ideas.")
     if DOWNLOAD_PACKAGE_PATH.exists():
         with DOWNLOAD_PACKAGE_PATH.open("rb") as package_file:
             st.download_button(
@@ -2977,12 +3252,13 @@ if section == "Overview":
     )
 
     st.subheader("Explore the system")
-    fast_cols = st.columns(5)
+    fast_cols = st.columns(6)
     fast_cols[0].link_button("System Map", "?section=System%20Map")
-    fast_cols[1].link_button("Structural Explorer", "?section=Structural%20Explorer")
-    fast_cols[2].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[3].link_button("Visual Audit", "?section=Visual%20Audit")
-    fast_cols[4].link_button("Phone View", "?section=Mobile%20View")
+    fast_cols[1].link_button("Vision Board", "?section=Vision%20Board")
+    fast_cols[2].link_button("Structural Explorer", "?section=Structural%20Explorer")
+    fast_cols[3].link_button("Presentation View", "?section=Presentation%20View")
+    fast_cols[4].link_button("Visual Audit", "?section=Visual%20Audit")
+    fast_cols[5].link_button("Phone View", "?section=Mobile%20View")
 
     with st.expander("About this portfolio"):
         st.write(
@@ -2990,6 +3266,129 @@ if section == "Overview":
             "The portfolio keeps the evidence visible while separating working prototypes "
             "from ideas that still need expert validation."
         )
+
+
+elif section == "Vision Board":
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Project direction</div>
+  <h2>Vision board: what the portfolio is becoming</h2>
+  <p>
+    A living view of the immediate build, the next prototypes, and the longer-term
+    platform direction. Each item links ambition to evidence and a concrete next move.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    status_counts = vision_board["status"].value_counts()
+    vision_metrics = st.columns(4)
+    vision_metrics[0].metric("Active now", int((vision_board["horizon"] == "Now").sum()))
+    vision_metrics[1].metric("Next up", int((vision_board["horizon"] == "Next").sum()))
+    vision_metrics[2].metric("In progress", int(status_counts.get("in_progress", 0)))
+    vision_metrics[3].metric("P0 priorities", int((vision_board["priority"] == "P0").sum()))
+
+    vision_filters = st.columns([1, 1, 2])
+    selected_horizon = vision_filters[0].selectbox(
+        "Horizon",
+        ["All", "Now", "Next", "Later"],
+    )
+    selected_vision_project = vision_filters[1].selectbox(
+        "Project",
+        ["All"] + sorted(vision_board["project_key"].dropna().unique().tolist()),
+    )
+    vision_search = vision_filters[2].text_input(
+        "Search the vision",
+        placeholder="interaction, PowerPoint, validation...",
+    )
+
+    filtered_vision = vision_board.copy()
+    if selected_horizon != "All":
+        filtered_vision = filtered_vision[
+            filtered_vision["horizon"] == selected_horizon
+        ]
+    if selected_vision_project != "All":
+        filtered_vision = filtered_vision[
+            filtered_vision["project_key"] == selected_vision_project
+        ]
+    if vision_search:
+        vision_haystack = (
+            filtered_vision["focus"].fillna("")
+            + " "
+            + filtered_vision["outcome"].fillna("")
+            + " "
+            + filtered_vision["evidence"].fillna("")
+            + " "
+            + filtered_vision["next_action"].fillna("")
+        ).str.lower()
+        filtered_vision = filtered_vision[
+            vision_haystack.str.contains(vision_search.lower(), regex=False)
+        ]
+
+    horizon_order = {"Now": 0, "Next": 1, "Later": 2}
+    priority_order = {"P0": 0, "P1": 1, "P2": 2}
+    filtered_vision = filtered_vision.assign(
+        horizon_order=filtered_vision["horizon"].map(horizon_order).fillna(9),
+        priority_order=filtered_vision["priority"].map(priority_order).fillna(9),
+    ).sort_values(["horizon_order", "priority_order", "focus"])
+
+    vision_cards = []
+    for item in filtered_vision.itertuples(index=False):
+        horizon_class = str(item.horizon).lower()
+        vision_cards.append(
+            f"""
+<div class="vision-card {escape(horizon_class)}">
+  <div class="horizon">{escape(str(item.horizon))}</div>
+  <h3>{escape(str(item.focus))}</h3>
+  <p>{escape(str(item.outcome))}</p>
+  <p><strong>Evidence:</strong> {escape(str(item.evidence))}</p>
+  <p class="vision-next">{escape(str(item.next_action))}</p>
+  <div class="vision-meta">
+    <span>{escape(str(item.priority))}</span>
+    <span>{escape(str(item.status).replace("_", " "))}</span>
+    <span>{escape(str(item.project_key))}</span>
+  </div>
+</div>
+            """
+        )
+    if vision_cards:
+        st.markdown(
+            "<div class='vision-board'>" + "".join(vision_cards) + "</div>",
+            unsafe_allow_html=True,
+        )
+    else:
+        st.info("No vision items match the current filters.")
+
+    st.subheader("Priority delivery queue")
+    vision_queue = vision_board[
+        vision_board["status"].isin(["in_progress", "planned"])
+    ].copy()
+    vision_queue["priority_order"] = vision_queue["priority"].map(priority_order).fillna(9)
+    vision_queue["horizon_order"] = vision_queue["horizon"].map(horizon_order).fillna(9)
+    vision_queue = vision_queue.sort_values(
+        ["priority_order", "horizon_order", "focus"]
+    )
+    st.dataframe(
+        vision_queue[
+            ["priority", "horizon", "focus", "status", "next_action", "project_key"]
+        ],
+        hide_index=True,
+        use_container_width=True,
+    )
+    st.download_button(
+        "Download vision board CSV",
+        vision_board.to_csv(index=False),
+        file_name=VISION_BOARD_PATH.name,
+        mime="text/csv",
+    )
+    st.subheader("Questions for the next review")
+    review_cols = st.columns(2)
+    for index, question in enumerate(NEXT_REVIEW_QUESTIONS):
+        with review_cols[index % 2]:
+            st.info(question)
+    st.link_button("Send a new update", "?section=Update%20Inbox")
 
 
 elif section == "System Map":
@@ -3246,13 +3645,32 @@ elif section == "Presentation View":
                 ]
             )
         ].sort_values(["project_key", "sort_order"])
-        visual_titles = featured_visuals["title"].tolist()
+        project_options = featured_visuals["project_key"].drop_duplicates().tolist()
+        selected_visual_project = st.selectbox(
+            "Evidence project",
+            project_options,
+            format_func=lambda key: next(
+                (
+                    topic["title"]
+                    for topic in TOPIC_ROOMS
+                    if topic["project_key"] == key
+                ),
+                key.replace("_", " ").title(),
+            ),
+            key="presentation_visual_project",
+        )
+        project_visual_options = featured_visuals[
+            featured_visuals["project_key"] == selected_visual_project
+        ]
+        visual_titles = project_visual_options["title"].tolist()
         selected_visual_title = st.selectbox(
-            "Visual proof",
+            "Visual from this project",
             visual_titles,
             key="presentation_visual",
         )
-        selected_visual = featured_visuals[featured_visuals["title"] == selected_visual_title].iloc[0]
+        selected_visual = project_visual_options[
+            project_visual_options["title"] == selected_visual_title
+        ].iloc[0]
         visual_path = project_asset(selected_visual["asset_path"])
         if visual_path.exists():
             st.image(str(visual_path), caption=selected_visual["caption"], use_container_width=True)
@@ -3311,6 +3729,28 @@ elif section == "Think Tank Topics":
 
     topic_roadmap = roadmap_row(topic["project_key"])
     st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+    if topic["slug"] == "north_slope":
+        st.subheader("Working 3D structural explorer")
+        st.caption(
+            "This interaction is part of the North Slope project, not separate evidence. "
+            "Rotate the basin and inspect the public-data structural context here."
+        )
+        st.plotly_chart(
+            build_structural_figure(
+                ["NStopo", "NSLCU", "NSshublik", "NSbasement"],
+                1500,
+                [
+                    "North Slope study-area boundary",
+                    "Assessment-unit outlines",
+                ],
+            ),
+            use_container_width=True,
+            key="north_slope_topic_explorer",
+        )
+        st.link_button(
+            "Open full explorer controls",
+            "?section=Structural%20Explorer",
+        )
     render_workflow_blueprint(topic)
 
     with st.expander("Switch think tank topic"):
@@ -4297,6 +4737,134 @@ elif section == "Visual Audit":
         file_name=VISUAL_AUDIT_PATH.name,
         mime="text/csv",
     )
+
+
+elif section == "Update Inbox":
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Change intake</div>
+  <h2>Package notes, screenshots, and a chat link</h2>
+  <p>
+    Turn a new idea or review message into one portable update package. The package
+    keeps the original screenshots beside structured instructions for the next build pass.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    with st.form("update_inbox_form"):
+        request_title = st.text_input(
+            "Update title",
+            placeholder="Example: simplify the homepage and add new project visuals",
+        )
+        request_message = st.text_area(
+            "Changes and new ideas",
+            height=180,
+            placeholder=(
+                "Describe what should change, what should stay, and what outcome "
+                "the updated page should create."
+            ),
+        )
+        request_cols = st.columns(2)
+        request_project = request_cols[0].selectbox(
+            "Project area",
+            ["Whole portfolio"]
+            + sorted(vision_board["project_key"].dropna().unique().tolist()),
+        )
+        request_priority = request_cols[1].selectbox(
+            "Priority",
+            ["P1 - next", "P0 - urgent", "P2 - later"],
+        )
+        conversation_url = st.text_input(
+            "Chat conversation link",
+            placeholder="https://...",
+        )
+        screenshot_uploads = st.file_uploader(
+            "Screenshots",
+            type=["png", "jpg", "jpeg", "webp"],
+            accept_multiple_files=True,
+            help="Add the screenshots that show the current state or desired changes.",
+        )
+        submitted_update = st.form_submit_button(
+            "Prepare update package",
+            type="primary",
+        )
+
+    if submitted_update:
+        errors = []
+        if not request_title.strip():
+            errors.append("Add an update title.")
+        if not request_message.strip():
+            errors.append("Describe the requested changes.")
+        if conversation_url and not conversation_url.lower().startswith(
+            ("http://", "https://")
+        ):
+            errors.append("The conversation link must start with http:// or https://.")
+
+        if errors:
+            for error in errors:
+                st.error(error)
+        else:
+            package_bytes = build_update_handoff(
+                request_title,
+                request_message,
+                conversation_url,
+                request_project,
+                request_priority,
+                screenshot_uploads,
+            )
+            st.session_state["update_handoff"] = {
+                "title": request_title.strip(),
+                "package": package_bytes,
+                "screenshots": [
+                    {
+                        "name": upload.name,
+                        "bytes": upload.getvalue(),
+                    }
+                    for upload in screenshot_uploads
+                ],
+            }
+            st.success(
+                "Update package prepared. Review the screenshots and download the ZIP."
+            )
+
+    update_handoff = st.session_state.get("update_handoff")
+    if update_handoff:
+        preview_rows = update_handoff["screenshots"]
+        if preview_rows:
+            st.subheader("Screenshot review")
+            preview_cols = st.columns(2)
+            for index, screenshot in enumerate(preview_rows):
+                with preview_cols[index % 2]:
+                    st.image(
+                        screenshot["bytes"],
+                        caption=screenshot["name"],
+                        use_container_width=True,
+                    )
+        st.download_button(
+            "Download update handoff ZIP",
+            update_handoff["package"],
+            file_name="portfolio_update_handoff.zip",
+            mime="application/zip",
+            type="primary",
+        )
+        st.caption(
+            "The ZIP contains update_request.json and the original screenshots. "
+            "Keep approved work in the repository vision board and project files."
+        )
+
+    with st.expander("How updates move into the project"):
+        st.markdown(
+            """
+1. Describe the requested change and attach visual evidence.
+2. Export one handoff ZIP so the message, chat link, and screenshots stay together.
+3. Review the request against the project charter and existing evidence.
+4. Update the app, relevant data files, and `data/vision_board.csv`.
+5. Test the affected desktop and mobile paths before publishing.
+            """
+        )
 
 
 elif section == "Contact / Ideas":
