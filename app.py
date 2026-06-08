@@ -385,13 +385,13 @@ TOPIC_FRAMES = {
         "pattern": ["field", "gravity", "EM", "review"],
     },
     "moho_ml": {
-        "question": "How do we know a geoscience ML model actually transfers?",
+        "question": "Did it transfer or memorize?",
         "example": "The Australia-to-USA gravity/Moho supervised ML project is the example.",
         "raise": "Raise your hand if you want to talk about leakage, transfer tests, and honest model scoring.",
         "pattern": ["train", "test", "transfer", "residual"],
     },
     "stock_workflow": {
-        "question": "Can Codex help young people build useful apps without fooling themselves?",
+        "question": "Build faster. Test honestly.",
         "example": "The stock dashboard and GitHub/cloud workflow are the example.",
         "raise": "Raise your hand if you want to talk about AI, money, app building, and model risk.",
         "pattern": ["files", "Codex", "GitHub", "app"],
@@ -1892,6 +1892,302 @@ st.markdown(
         font-size: 0.74rem;
         font-weight: 800;
     }
+    .project-stage {
+        position: relative;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background: #f8fafc;
+        overflow: hidden;
+        min-height: 430px;
+        margin: 0.9rem 0 1rem;
+    }
+    .stage-label {
+        position: absolute;
+        z-index: 4;
+        border-radius: 7px;
+        background: rgba(15, 23, 42, 0.92);
+        color: #ffffff;
+        padding: 0.42rem 0.58rem;
+        font-size: 0.72rem;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    .stage-label.failure { background: #b91c1c; }
+    .stage-label.review { background: #fff1f2; color: #991b1b; border: 2px solid #dc2626; }
+    .agent-stage {
+        min-height: 500px;
+        background-size: cover;
+        background-position: center;
+    }
+    .agent-stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(15,23,42,0.13), rgba(255,255,255,0.03));
+    }
+    .record-dot {
+        position: absolute;
+        z-index: 4;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #991b1b;
+        padding: 0.35rem 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 900;
+    }
+    .record-dot::before {
+        content: "";
+        width: 0.62rem;
+        height: 0.62rem;
+        border-radius: 50%;
+        background: #dc2626;
+        animation: recordPulse 1.2s ease-in-out infinite;
+    }
+    @keyframes recordPulse { 50% { opacity: 0.3; transform: scale(0.75); } }
+    .action-marker {
+        position: absolute;
+        z-index: 3;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #f97316;
+        color: #ffffff;
+        border: 3px solid #ffffff;
+        font-size: 0.8rem;
+        font-weight: 900;
+        box-shadow: 0 5px 14px rgba(15,23,42,0.25);
+    }
+    .agent-lanes {
+        position: absolute;
+        z-index: 3;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 110px 1fr;
+        gap: 0.55rem;
+        align-items: center;
+    }
+    .agent-lane {
+        border: 1px solid rgba(255,255,255,0.8);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.94);
+        padding: 0.58rem;
+        color: #172033;
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-align: center;
+    }
+    .rubric-gate {
+        border: 2px solid #dc2626;
+        border-radius: 8px;
+        background: #fff1f2;
+        color: #991b1b;
+        padding: 0.58rem 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-align: center;
+    }
+    .evidence-chain {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.55rem;
+        align-items: stretch;
+        padding: 1rem;
+        min-height: 310px;
+    }
+    .chain-node {
+        position: relative;
+        border: 1px solid #dbe3ea;
+        border-radius: 9px;
+        background: #ffffff;
+        padding: 0.55rem;
+        min-height: 190px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.45rem;
+        color: #334155;
+        text-align: center;
+        font-size: 0.76rem;
+        font-weight: 800;
+    }
+    .chain-node:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -0.58rem;
+        width: 0.58rem;
+        border-top: 3px dotted #94a3b8;
+        z-index: 3;
+    }
+    .chain-node.human::after { border-top-style: solid; border-color: #f97316; }
+    .chain-node img {
+        width: 100%;
+        height: 118px;
+        object-fit: contain;
+        border-radius: 6px;
+        background: #0f172a;
+    }
+    .chain-node svg { width: 52px; height: 52px; }
+    .mini-table {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1px solid #cbd5e1;
+        font-size: 0.62rem;
+    }
+    .mini-table span { padding: 0.25rem; border: 1px solid #e2e8f0; }
+    .question-node {
+        border: 2px solid #f97316;
+        box-shadow: 0 0 0 7px rgba(249,115,22,0.12);
+    }
+    .output-branches {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.45rem;
+        padding: 0 1rem 1rem;
+    }
+    .output-branches div {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.55rem;
+        text-align: center;
+        color: #334155;
+        font-size: 0.78rem;
+        font-weight: 850;
+    }
+    .output-branches .question { border-style: dashed; color: #9a3412; }
+    .transfer-stage, .pipeline-stage, .property-stage {
+        display: grid;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1rem;
+    }
+    .transfer-stage { grid-template-columns: 1fr 130px 1fr; }
+    .region-panel, .pipeline-node, .property-inputs, .map-output {
+        border: 1px solid #dbe3ea;
+        border-radius: 9px;
+        background: #ffffff;
+        padding: 0.7rem;
+        min-height: 250px;
+    }
+    .region-panel h4, .pipeline-node strong, .property-inputs strong, .map-output strong {
+        display: block;
+        margin: 0 0 0.45rem;
+        color: #172033;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+    }
+    .region-panel img, .map-output img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+    .sample-field {
+        height: 190px;
+        border-radius: 7px;
+        background:
+            radial-gradient(circle at 18% 22%, #2563eb 0 5px, transparent 6px),
+            radial-gradient(circle at 35% 65%, #0f766e 0 6px, transparent 7px),
+            radial-gradient(circle at 72% 28%, #f97316 0 5px, transparent 6px),
+            radial-gradient(circle at 81% 72%, #2563eb 0 5px, transparent 6px),
+            radial-gradient(circle at 55% 48%, #dc2626 0 7px, transparent 8px),
+            linear-gradient(135deg, #dbeafe, #f8fafc);
+    }
+    .model-gate {
+        border: 2px solid #2563eb;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        padding: 1rem 0.5rem;
+        text-align: center;
+        font-weight: 900;
+    }
+    .leakage-gate {
+        margin-top: 0.55rem;
+        border: 2px solid #dc2626;
+        border-radius: 7px;
+        background: #fff1f2;
+        color: #991b1b;
+        padding: 0.42rem;
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: 900;
+    }
+    .residual-dots {
+        display: flex;
+        gap: 0.35rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    .residual-dots i {
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background: #dc2626;
+    }
+    .residual-dots i:nth-child(even) { background: #2563eb; }
+    .pipeline-stage { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .pipeline-node {
+        min-height: 175px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        position: relative;
+    }
+    .pipeline-node:not(:last-child)::after {
+        content: "→";
+        position: absolute;
+        right: -0.72rem;
+        top: 44%;
+        color: #64748b;
+        font-size: 1.35rem;
+        font-weight: 900;
+        z-index: 3;
+    }
+    .pipeline-node svg { width: 58px; height: 58px; color: #2563eb; }
+    .pipeline-node.blocked { border: 2px solid #dc2626; background: #fff1f2; }
+    .file-rain { display: flex; flex-wrap: wrap; gap: 0.28rem; justify-content: center; }
+    .file-rain span { width: 1.2rem; height: 1.55rem; border: 2px solid #64748b; border-radius: 2px; animation: fileDrop 2.4s ease-in-out infinite; }
+    .file-rain span:nth-child(even) { animation-delay: 0.6s; }
+    @keyframes fileDrop { 50% { transform: translateY(8px); opacity: 0.45; } }
+    .property-stage { grid-template-columns: 1fr 120px 1.35fr; }
+    .property-chips { display: grid; gap: 0.4rem; }
+    .property-chips span {
+        border-radius: 999px;
+        padding: 0.35rem 0.5rem;
+        color: #ffffff;
+        font-size: 0.74rem;
+        font-weight: 900;
+        text-align: center;
+    }
+    .property-chips span:nth-child(1) { background: #0f766e; }
+    .property-chips span:nth-child(2) { background: #2563eb; }
+    .property-chips span:nth-child(3) { background: #7c3aed; }
+    .property-chips span:nth-child(4) { background: #f97316; }
+    .property-chips span:nth-child(5) { background: #475569; }
+    .range-gate {
+        border: 2px solid #172033;
+        border-radius: 9px;
+        padding: 0.7rem 0.4rem;
+        background: #ffffff;
+        color: #172033;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 900;
+    }
     .prompt-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2216,7 +2512,11 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage { grid-template-columns: 1fr; }
+        .chain-node:not(:last-child)::after,
+        .pipeline-node:not(:last-child)::after { display: none; }
+        .agent-lanes { grid-template-columns: 1fr; }
+        .agent-stage { min-height: 640px; }
         .guidance-gate {
             min-height: 110px;
         }
@@ -3186,6 +3486,150 @@ def render_current_future_board(topic: dict, roadmap: pd.Series | None) -> None:
     )
 
 
+def render_project_visual_stage(topic: dict) -> bool:
+    slug = topic["slug"]
+    if slug == "ai_workflow":
+        qgis_path = project_asset(
+            "assets/gmail_updates/2026-06-08/Screenshot 2026-05-17 233055.png"
+        )
+        qgis_uri = asset_data_uri(qgis_path, max_bytes=900_000)
+        if qgis_uri is None:
+            return False
+        st.markdown(
+            f"""
+<div class="project-stage agent-stage" style="background-image:url('{qgis_uri}')">
+  <div class="record-dot">RECORDING</div>
+  <div class="stage-label" style="left:3%;top:5%">PROMPT</div>
+  <div class="action-marker" style="left:17%;top:31%">1</div>
+  <div class="action-marker" style="left:39%;top:22%">2</div>
+  <div class="action-marker" style="left:62%;top:39%">3</div>
+  <div class="stage-label failure" style="right:5%;top:18%">FAILED ACTION ↩ HUMAN</div>
+  <div class="agent-lanes">
+    <div class="agent-lane">HUMAN LANE<br>DEMO → TRACE</div>
+    <div class="rubric-gate">SAME OUTPUT<br>RUBRIC</div>
+    <div class="agent-lane">AGENT LANE<br>REPLAY → REVIEW</div>
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+
+    if slug == "thesis_graph":
+        drawing_uri = asset_data_uri(
+            project_asset("assets/project_visuals/ree_bayan_obo_main.png"),
+            max_bytes=500_000,
+        )
+        graph_uri = asset_data_uri(
+            project_asset("assets/project_visuals/thesis_host_context_clean.png"),
+            max_bytes=500_000,
+        )
+        if drawing_uri is None or graph_uri is None:
+            return False
+        st.markdown(
+            f"""
+<div class="project-stage">
+  <div class="evidence-chain">
+    <div class="chain-node">{workflow_icon_svg("prompt", 1)}<strong>PROMPT</strong><span>What connects?</span></div>
+    <div class="chain-node human"><img src="{drawing_uri}" alt="Real Bayan Obo Adobe drawing"><strong>ADOBE</strong><span>orange = geologist</span></div>
+    <div class="chain-node">
+      <div class="mini-table"><span>mineral</span><span>stage</span><span>host</span><span>source</span><span>fluid</span><span>deposit</span></div>
+      <strong>EXCEL</strong><span>real fields</span>
+    </div>
+    <div class="chain-node">{workflow_icon_svg("csv nodes", 3)}<strong>NODES</strong><span>solid = source</span></div>
+    <div class="chain-node"><img src="{graph_uri}" alt="Real thesis graph export"><strong>GEPHI</strong><span>dotted = AI suggestion</span></div>
+    <div class="chain-node question-node">{workflow_icon_svg("review", 5)}<strong>UNKNOWN?</strong><span>expert review</span></div>
+  </div>
+  <div class="output-branches">
+    <div>EVIDENCE SUMMARY</div>
+    <div class="question">RELATIONSHIP GAP<br>question, not discovery</div>
+    <div class="question">EXTRACTION HYPOTHESIS<br>question, not discovery</div>
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+
+    if slug == "moho_ml":
+        moho_uri = asset_data_uri(
+            project_asset("assets/project_visuals/valles_moho.png"),
+            max_bytes=500_000,
+        )
+        if moho_uri is None:
+            return False
+        st.markdown(
+            f"""
+<div class="project-stage transfer-stage">
+  <div class="region-panel">
+    <h4>AUSTRALIA · TRAIN</h4>
+    <div class="sample-field"></div>
+    <div class="small-note">gravity + Moho points</div>
+  </div>
+  <div>
+    <div class="model-gate">ANN<br>BASELINE</div>
+    <div class="leakage-gate">LEAKAGE?<br>BLOCK INVALID SPLITS</div>
+  </div>
+  <div class="region-panel">
+    <h4>USA · TRANSFER FIRST</h4>
+    <img src="{moho_uri}" alt="Real Moho mapping evidence">
+    <div class="residual-dots"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="small-note">residuals before score</div>
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+
+    if slug == "stock_workflow":
+        st.markdown(
+            f"""
+<div class="project-stage pipeline-stage">
+  <div class="pipeline-node"><div><div class="file-rain"><span></span><span></span><span></span><span></span><span></span></div><strong>FILES</strong></div></div>
+  <div class="pipeline-node">{workflow_icon_svg("Codex code", 2)}<strong>CODEX</strong></div>
+  <div class="pipeline-node">{workflow_icon_svg("GitHub branches", 3)}<strong>GITHUB</strong></div>
+  <div class="pipeline-node">{workflow_icon_svg("Streamlit dashboard", 4)}<strong>APP</strong></div>
+  <div class="pipeline-node blocked">{workflow_icon_svg("review", 5)}<strong>UNSEEN TEST?</strong><span>reused data is blocked</span></div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+
+    if slug == "rock_classification":
+        map_uri = asset_data_uri(
+            project_asset(
+                "assets/project_visuals/rock_classification_slides/"
+                "rock_raster_classification_map.png"
+            ),
+            max_bytes=700_000,
+        )
+        if map_uri is None:
+            return False
+        st.markdown(
+            f"""
+<div class="project-stage property-stage">
+  <div class="property-inputs">
+    <strong>MEASURED SIGNALS</strong>
+    <div class="property-chips">
+      <span>DENSITY</span><span>VELOCITY</span><span>RESISTIVITY</span>
+      <span>CHEMISTRY</span><span>FORMATION</span>
+    </div>
+  </div>
+  <div class="range-gate">RANGE<br>GATES<br>↓<br>GRAY = UNCERTAIN</div>
+  <div class="map-output">
+    <strong>CLASSIFIED GIS ZONES</strong>
+    <img src="{map_uri}" alt="Real raster classification map">
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return True
+    return False
+
+
 def render_discussion_prompts(topic: dict) -> None:
     prompts = DISCUSSION_PROMPTS.get(topic["slug"], [])
     if not prompts:
@@ -3475,66 +3919,106 @@ project_status_by_key = {
 }
 
 
-SECTIONS = [
-    "Overview",
-    "Vision Board",
+PUBLIC_SECTIONS = [
+    "Start",
+    "Topics",
+    "Interactives",
+    "Visual Lab",
+    "Vision",
+    "About",
+    "Build Room",
+]
+PUBLIC_TO_INTERNAL = {
+    "Start": "Overview",
+    "Topics": "Think Tank Topics",
+    "Interactives": "Structural Explorer",
+    "Visual Lab": "Processing Visual Lab",
+    "Vision": "Vision Board",
+    "About": "Contact / Ideas",
+}
+BUILD_ROOM_SECTIONS = [
     "System Map",
-    "Mobile View",
-    "Structural Explorer",
-    "Presentation View",
-    "Think Tank Topics",
-    "Processing Visual Lab",
-    "Machine Learning Future",
-    "Case Studies",
-    "LinkedIn Evidence",
-    "Code And Architecture",
-    "Notebook Explorer",
     "Evidence Library",
+    "LinkedIn Evidence",
+    "Notebook Explorer",
+    "Code And Architecture",
     "Visual Gallery",
     "Visual Audit",
     "Update Inbox",
-    "Contact / Ideas",
     "Build Plan",
+    "Machine Learning Future",
+    "Presentation View",
+    "Mobile View",
+    "Case Studies",
 ]
-SECTION_LABELS = {
-    "Overview": "Start here: strongest project stories",
-    "Vision Board": "Direction: what this portfolio becomes",
-    "Think Tank Topics": "Projects: evidence, AI opinions, and future ML",
-    "Structural Explorer": "Interactive: North Slope 3D subsurface",
-    "Presentation View": "Talk mode: AI + geoscience presentation",
-    "Processing Visual Lab": "Visual lab: motion and Processing concepts",
-    "Machine Learning Future": "ML roadmap: specific models and outputs",
-    "System Map": "Architecture: evidence to reviewed system",
-    "Case Studies": "Project library: all case studies",
-    "Visual Gallery": "Media library: maps, screenshots, and graphs",
-    "LinkedIn Evidence": "Evidence: LinkedIn and local artifacts",
-    "Code And Architecture": "Build details: code and architecture",
-    "Notebook Explorer": "Build details: notebook inventory",
-    "Evidence Library": "Build details: source inventory",
-    "Visual Audit": "Review queue: visual quality and fixes",
-    "Update Inbox": "Send changes: notes, screenshots, and chat link",
-    "Mobile View": "Preview: phone-friendly portfolio",
-    "Contact / Ideas": "Discuss: questions and collaboration",
-    "Build Plan": "Roadmap: implementation backlog",
+ALL_INTERNAL_SECTIONS = list(PUBLIC_TO_INTERNAL.values()) + BUILD_ROOM_SECTIONS
+PUBLIC_LABELS = {
+    "Start": "Start · choose a question",
+    "Topics": "Topics · evidence and future systems",
+    "Interactives": "Interactives · working scientific tools",
+    "Visual Lab": "Visual Lab · motion and Processing",
+    "Vision": "Vision · now, next, and later",
+    "About": "About · share an idea or correction",
+    "Build Room": "Build Room · sources, code, and review",
 }
-query_section = st.query_params.get("section", "Overview")
+BUILD_ROOM_LABELS = {
+    "System Map": "Architecture / System Map",
+    "Evidence Library": "Sources and Evidence Library",
+    "LinkedIn Evidence": "LinkedIn evidence",
+    "Notebook Explorer": "Notebook Explorer",
+    "Code And Architecture": "Code and architecture",
+    "Visual Gallery": "Visual asset gallery",
+    "Visual Audit": "Visual Audit",
+    "Update Inbox": "Update Inbox",
+    "Build Plan": "Build Plan",
+    "Machine Learning Future": "ML research index",
+    "Presentation View": "Presentation system",
+    "Mobile View": "Mobile preview",
+    "Case Studies": "Case-study inventory",
+}
+query_section = st.query_params.get("section", "Start")
 if query_section == "Visual Contact Sheets":
     query_section = "Visual Gallery"
 if query_section == "Project Rooms":
     query_section = "Think Tank Topics"
-if query_section not in SECTIONS:
-    query_section = "Overview"
+if query_section in PUBLIC_SECTIONS:
+    query_public = query_section
+    query_build = BUILD_ROOM_SECTIONS[0]
+elif query_section in PUBLIC_TO_INTERNAL.values():
+    query_public = next(
+        public for public, internal in PUBLIC_TO_INTERNAL.items()
+        if internal == query_section
+    )
+    query_build = BUILD_ROOM_SECTIONS[0]
+elif query_section in BUILD_ROOM_SECTIONS:
+    query_public = "Build Room"
+    query_build = query_section
+else:
+    query_public = "Start"
+    query_build = BUILD_ROOM_SECTIONS[0]
 
 
 with st.sidebar:
     st.title("AI Think Tank")
-    st.caption("Choose what you want to explore.")
-    section = st.selectbox(
-        "Portfolio navigator",
-        SECTIONS,
-        index=SECTIONS.index(query_section),
-        format_func=lambda item: SECTION_LABELS[item],
+    st.caption("Choose a room.")
+    public_section = st.selectbox(
+        "Public navigator",
+        PUBLIC_SECTIONS,
+        index=PUBLIC_SECTIONS.index(query_public),
+        format_func=lambda item: PUBLIC_LABELS[item],
+        key="public_section",
     )
+    if public_section == "Build Room":
+        section = st.selectbox(
+            "Build Room tool",
+            BUILD_ROOM_SECTIONS,
+            index=BUILD_ROOM_SECTIONS.index(query_build),
+            format_func=lambda item: BUILD_ROOM_LABELS[item],
+            key="build_room_section",
+        )
+        st.caption("Behind the think tank: sources, code, audits, and backlog.")
+    else:
+        section = PUBLIC_TO_INTERNAL[public_section]
     st.divider()
     st.caption("Project claims separate current evidence, prototypes, and future ideas.")
     if DOWNLOAD_PACKAGE_PATH.exists():
@@ -4124,7 +4608,8 @@ elif section == "Think Tank Topics":
     )
 
     topic_roadmap = roadmap_row(topic["project_key"])
-    st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+    if not render_project_visual_stage(topic):
+        st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
     render_current_future_board(topic, topic_roadmap)
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
