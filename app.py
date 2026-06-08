@@ -1,6 +1,7 @@
 from pathlib import Path
 from html import escape
 from urllib.parse import quote
+import base64
 import json
 
 import pandas as pd
@@ -959,6 +960,64 @@ st.markdown(
         letter-spacing: 0;
         font-weight: 700;
     }
+    .portfolio-intro {
+        max-width: 920px;
+        padding: 0.35rem 0 1rem;
+    }
+    .portfolio-eyebrow {
+        color: #0f766e !important;
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 0.55rem;
+    }
+    .portfolio-intro h1 {
+        color: #172033;
+        font-size: 2.65rem;
+        line-height: 1.06;
+        margin: 0 0 0.75rem;
+        max-width: 820px;
+    }
+    .portfolio-intro p {
+        color: #475569;
+        font-size: 1.08rem;
+        line-height: 1.55;
+        margin: 0;
+        max-width: 780px;
+    }
+    .portfolio-proof {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin: 0.25rem 0 1.65rem;
+    }
+    .portfolio-proof span {
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #334155;
+        font-size: 0.82rem;
+        font-weight: 750;
+        padding: 0.38rem 0.65rem;
+    }
+    .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 0.8rem 0 0.3rem;
+    }
+    .section-heading-title {
+        color: #172033;
+        font-size: 1.45rem !important;
+        font-weight: 800 !important;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .section-heading span {
+        color: #64748b;
+        font-size: 0.88rem;
+    }
     .pipeline-step {
         border-left: 4px solid #0f766e;
         padding: 0.55rem 0.75rem;
@@ -1179,15 +1238,23 @@ st.markdown(
         border-radius: 8px;
         background: #ffffff;
         padding: 0.85rem;
-        min-height: 335px;
+        min-height: 315px;
         display: flex;
         flex-direction: column;
         gap: 0.65rem;
     }
+    .think-grid.compact .think-card { min-height: 286px; }
     .think-card-link {
         color: inherit;
-        text-decoration: none;
+        text-decoration: none !important;
         display: block;
+    }
+    .think-card-link:hover,
+    .think-card-link:focus,
+    .think-card-link *,
+    .think-card-link:hover *,
+    .think-card-link:focus * {
+        text-decoration: none !important;
     }
     .think-card-link:hover .think-card,
     .think-card-link:focus .think-card {
@@ -1216,12 +1283,12 @@ st.markdown(
         border-radius: 8px;
         background: #ffffff;
         overflow: hidden;
-        min-height: 118px;
     }
-    .topic-poster svg {
+    .topic-poster > img {
         display: block;
-        width: 100%;
-        height: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
     }
     .topic-signal::before {
         content: "";
@@ -1260,25 +1327,54 @@ st.markdown(
         font-size: 0.72rem;
         font-weight: 750;
     }
-    .think-question {
+    .think-title {
+        color: #172033;
         font-size: 1.05rem;
-        line-height: 1.25;
-        color: #111827;
         font-weight: 850;
+        line-height: 1.22;
+        margin: 0;
+    }
+    .think-question {
+        font-size: 0.94rem;
+        line-height: 1.34;
+        color: #334155;
+        font-weight: 650;
         margin: 0;
     }
     .think-example {
         color: #475569;
-        font-size: 0.92rem;
+        font-size: 0.86rem;
         line-height: 1.34;
         margin: 0;
+    }
+    .project-status {
+        align-self: flex-start;
+        border: 1px solid #a7f3d0;
+        border-radius: 999px;
+        background: #ecfdf5;
+        color: #065f46;
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 0.22rem 0.48rem;
+        text-transform: uppercase;
+    }
+    .project-status.prototype {
+        border-color: #bfdbfe;
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+    .project-status.evidence {
+        border-color: #fed7aa;
+        background: #fff7ed;
+        color: #9a3412;
     }
     .think-raise {
         border-left: 4px solid #0f766e;
         background: #f0fdfa;
         color: #134e4a;
-        padding: 0.55rem 0.65rem;
-        font-size: 0.9rem;
+        padding: 0.48rem 0.6rem;
+        font-size: 0.84rem;
+        font-weight: 750;
         line-height: 1.3;
         margin-top: auto;
     }
@@ -1669,7 +1765,22 @@ st.markdown(
         .talk-hero {
             padding: 1rem;
         }
+        .portfolio-intro h1 {
+            font-size: 2rem !important;
+        }
+        .portfolio-intro p {
+            font-size: 1rem;
+        }
+        .section-heading {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
         .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .blueprint-steps, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
+        .think-card,
+        .think-grid.compact .think-card {
+            min-height: auto;
+        }
         .ml-stage { min-height: auto; }
         .ai-chip-row { justify-content: flex-start; }
         .model-core::before, .model-core::after { display: none; }
@@ -2165,7 +2276,7 @@ def render_system_map(mode: str, project_status: pd.DataFrame) -> None:
 </body>
 </html>
         """,
-        height=790,
+        height=610,
         scrolling=False,
     )
 
@@ -2335,7 +2446,13 @@ def render_topic_signal(topic: dict) -> str:
     if visual_path_text:
         visual_path = project_asset(visual_path_text)
         if visual_path.exists():
-            return f"<div class='topic-poster'>{visual_path.read_text(encoding='utf-8', errors='ignore')}</div>"
+            encoded = base64.b64encode(visual_path.read_bytes()).decode("ascii")
+            return (
+                "<div class='topic-poster'>"
+                f"<img src='data:image/svg+xml;base64,{encoded}' "
+                f"alt='{escape(topic['title'])} workflow poster'>"
+                "</div>"
+            )
     frame = TOPIC_FRAMES.get(topic["slug"], {})
     pattern = frame.get("pattern", ["input", "AI", "output", "review"])
     chips = "".join(f"<span>{escape(term)}</span>" for term in pattern)
@@ -2346,22 +2463,44 @@ def render_topic_signal(topic: dict) -> str:
     """
 
 
-def render_think_card(topic: dict) -> str:
+def project_status_label(status_row: pd.Series | None) -> tuple[str, str]:
+    if status_row is None:
+        return "Evidence assembled", "evidence"
+    if str(status_row.get("interactive", "")).lower() == "complete":
+        return "Working interactive", ""
+    if str(status_row.get("published", "")).lower() == "partial":
+        return "Published evidence", "evidence"
+    return "Prototype", "prototype"
+
+
+def render_think_card(
+    topic: dict,
+    status_row: pd.Series | None = None,
+    compact: bool = False,
+) -> str:
     frame = TOPIC_FRAMES.get(topic["slug"], {})
     workflow = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
     question = frame.get("question", topic["question"])
     example = frame.get("example", workflow.get("description", topic["tagline"]))
+    status_label, status_class = project_status_label(status_row)
     url = topic_url(topic["slug"]).replace("&", "&amp;")
+    details = ""
+    if not compact:
+        details = f"""
+  <p class="think-example">{escape(example)}</p>
+  <div class="ai-chip-row" style="justify-content:flex-start;">
+    {''.join(f"<span class='ai-chip'>{escape(chip)}</span>" for chip in workflow.get("chips", [])[:3])}
+  </div>
+        """
     return f"""
 <a class="think-card-link" href="{url}" aria-label="Open {escape(topic['title'])}">
 <div class="think-card">
   {render_topic_signal(topic)}
+  <div class="project-status {status_class}">{escape(status_label)}</div>
+  <p class="think-title">{escape(topic['title'])}</p>
   <p class="think-question">{escape(question)}</p>
-  <p class="think-example">{escape(example)}</p>
-  <div class="ai-chip-row" style="justify-content:flex-start;">
-    {''.join(f"<span class='ai-chip'>{escape(chip)}</span>" for chip in workflow.get("chips", []))}
-  </div>
-  <div class="think-raise">Open topic</div>
+  {details}
+  <div class="think-raise">Explore project</div>
 </div>
 </a>
     """
@@ -2674,6 +2813,10 @@ linkedin_evidence = load_current_csv(LINKEDIN_EVIDENCE_PATH)
 organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
 project_status = load_current_csv(PROJECT_STATUS_PATH)
+project_status_by_key = {
+    row["project_key"]: row
+    for _, row in project_status.iterrows()
+}
 
 
 SECTIONS = [
@@ -2724,31 +2867,91 @@ with st.sidebar:
 
 
 if section == "Overview":
-    st.title("AI Workflow Think Tank")
-    st.write(
-        "Pick a visual to open a project. Each one shows how AI, code, and geoscience "
-        "move an unfinished idea toward something testable."
-    )
-
-    cols = st.columns(3)
-    cols[0].metric("Think tank topics", len(TOPIC_ROOMS))
-    cols[1].metric("Visual assets", len(project_visuals))
-    cols[2].metric("Notebooks indexed", len(notebook_inventory))
-
-    st.subheader("Pick a topic")
-    st.caption("Click any poster. Processing-style motion studies and real project evidence continue inside.")
     st.markdown(
-        f"<div class='think-grid'>{''.join(render_think_card(topic) for topic in TOPIC_ROOMS)}</div>",
+        """
+<div class="portfolio-intro">
+  <div class="portfolio-eyebrow">AI + geoscience + software</div>
+  <h1>Turning unfinished technical work into systems people can inspect</h1>
+  <p>
+    Real notebooks, maps, code, screenshots, and research evidence become interactive
+    tools, visual explanations, and testable workflows. Human review and uncertainty
+    stay visible throughout.
+  </p>
+</div>
+<div class="portfolio-proof">
+  <span>9 project rooms</span>
+  <span>2 working interactives</span>
+  <span>42 visual assets</span>
+  <span>107 notebooks indexed</span>
+</div>
+        """,
         unsafe_allow_html=True,
     )
 
-    st.subheader("Explore")
-    fast_cols = st.columns(5)
+    st.markdown(
+        """
+<div class="section-heading">
+  <div class="section-heading-title">Start with the strongest work</div>
+  <span>Interactive systems, creative visualization, and research structure</span>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    featured_slug_order = ["north_slope", "processing_earthquake", "thesis_graph"]
+    featured_slugs = set(featured_slug_order)
+    featured_topics = [
+        next(topic for topic in TOPIC_ROOMS if topic["slug"] == slug)
+        for slug in featured_slug_order
+    ]
+    st.markdown(
+        (
+            "<div class='think-grid'>"
+            + "".join(
+                render_think_card(
+                    topic,
+                    project_status_by_key.get(topic["project_key"]),
+                )
+                for topic in featured_topics
+            )
+            + "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+<div class="section-heading">
+  <div class="section-heading-title">Browse the project rooms</div>
+  <span>Each room separates evidence, prototypes, and future ML plans</span>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    remaining_topics = [
+        topic for topic in TOPIC_ROOMS if topic["slug"] not in featured_slugs
+    ]
+    st.markdown(
+        (
+            "<div class='think-grid compact'>"
+            + "".join(
+                render_think_card(
+                    topic,
+                    project_status_by_key.get(topic["project_key"]),
+                    compact=True,
+                )
+                for topic in remaining_topics
+            )
+            + "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Explore the system")
+    fast_cols = st.columns(4)
     fast_cols[0].link_button("System Map", "?section=System%20Map")
-    fast_cols[1].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[2].link_button("Processing Lab", "?section=Processing%20Visual%20Lab")
-    fast_cols[3].link_button("Visual Gallery", "?section=Visual%20Gallery")
-    fast_cols[4].link_button("ML Future", "?section=Machine%20Learning%20Future")
+    fast_cols[1].link_button("Structural Explorer", "?section=Structural%20Explorer")
+    fast_cols[2].link_button("Presentation View", "?section=Presentation%20View")
+    fast_cols[3].link_button("Phone View", "?section=Mobile%20View")
 
     with st.expander("About this portfolio"):
         st.write(
@@ -3344,7 +3547,7 @@ elif section == "Processing Visual Lab":
         "This is the abstract visual layer for the think tank. The sketches should not recreate screenshots or PowerPoints. "
         "They should use dots, arrows, waves, clusters, fields, gates, and pulses to make the workflow idea easy to understand."
     )
-    with st.expander("Visual redesign checklist", expanded=True):
+    with st.expander("Visual redesign checklist"):
         st.markdown(
             """
 1. **North Slope:** real four-horizon perspective, wells, assessment context, screening disclaimer.
