@@ -1402,6 +1402,32 @@ st.markdown(
         gap: 0.9rem;
         margin: 1rem 0;
     }
+    .think-grid.topic-wall {
+        position: relative;
+        padding: 0.65rem;
+        border: 1px solid #dbe3ea;
+        border-radius: 10px;
+        background:
+            radial-gradient(circle at 12% 16%, rgba(15,118,110,0.12), transparent 20%),
+            radial-gradient(circle at 88% 22%, rgba(249,115,22,0.12), transparent 22%),
+            radial-gradient(circle at 50% 95%, rgba(37,99,235,0.12), transparent 24%),
+            linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        overflow: hidden;
+    }
+    .think-grid.topic-wall::before {
+        content: "";
+        position: absolute;
+        inset: 1.3rem;
+        background:
+            linear-gradient(90deg, transparent 0 12%, rgba(148,163,184,0.38) 12% 13%, transparent 13% 44%, rgba(148,163,184,0.34) 44% 45%, transparent 45% 76%, rgba(148,163,184,0.32) 76% 77%, transparent 77%),
+            linear-gradient(0deg, transparent 0 30%, rgba(148,163,184,0.25) 30% 31%, transparent 31% 64%, rgba(148,163,184,0.25) 64% 65%, transparent 65%);
+        pointer-events: none;
+        animation: wallPulse 5s ease-in-out infinite;
+    }
+    @keyframes wallPulse {
+        0%, 100% { opacity: 0.38; }
+        50% { opacity: 0.7; }
+    }
     .think-card {
         border: 1px solid #d8dee8;
         border-radius: 8px;
@@ -1411,6 +1437,8 @@ st.markdown(
         display: flex;
         flex-direction: column;
         gap: 0.65rem;
+        position: relative;
+        z-index: 1;
     }
     .think-grid.compact .think-card { min-height: 286px; }
     .think-card-link {
@@ -1452,12 +1480,73 @@ st.markdown(
         border-radius: 8px;
         background: #ffffff;
         overflow: hidden;
+        position: relative;
     }
     .topic-poster > img {
         display: block;
         width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
+    }
+    .topic-poster-composite.card-visual > img {
+        aspect-ratio: 16 / 9;
+        object-fit: contain;
+        background: #f8fafc;
+    }
+    .topic-room-visual > img {
+        max-height: 430px !important;
+        object-fit: contain;
+        background: #f8fafc;
+    }
+    .topic-proof-inset {
+        position: absolute;
+        right: 0.52rem;
+        bottom: 0.52rem;
+        width: 38%;
+        min-width: 86px;
+        border: 2px solid #ffffff;
+        border-radius: 7px;
+        overflow: hidden;
+        background: #0f172a;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+    }
+    .topic-proof-inset img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        opacity: 0.92;
+    }
+    .topic-proof-inset span {
+        display: block;
+        padding: 0.16rem 0.28rem;
+        color: #ffffff;
+        font-size: 0.58rem;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-align: center;
+    }
+    .topic-proof-inset.text-only {
+        min-height: 78px;
+        display: grid;
+        place-items: center;
+        padding-top: 0.35rem;
+        color: #ffffff;
+    }
+    .topic-proof-inset.text-only svg {
+        width: 34px;
+        height: 34px;
+    }
+    .topic-pattern.fallback-pattern {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        max-width: none;
+        min-height: 145px;
+        padding: 1rem;
+        align-content: center;
+        justify-content: center;
+        background: #f8fafc;
     }
     .topic-signal::before {
         content: "";
@@ -1498,16 +1587,18 @@ st.markdown(
     }
     .think-title {
         color: #172033;
-        font-size: 1.05rem;
+        font-size: 0.88rem;
         font-weight: 850;
         line-height: 1.22;
         margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
     }
     .think-question {
-        font-size: 0.94rem;
+        font-size: 1.02rem;
         line-height: 1.34;
-        color: #334155;
-        font-weight: 650;
+        color: #111827;
+        font-weight: 850;
         margin: 0;
     }
     .think-example {
@@ -1727,6 +1818,79 @@ st.markdown(
         margin-top: 0.85rem;
         font-size: 0.9rem;
         line-height: 1.3;
+    }
+    .current-future-board {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: stretch;
+        margin: 0.9rem 0 1rem;
+    }
+    .state-side {
+        border: 1px solid #dbe3ea;
+        border-radius: 10px;
+        background: #ffffff;
+        padding: 0.8rem;
+    }
+    .state-side.current { border-top: 5px solid #0f766e; }
+    .state-side.future { border-top: 5px solid #2563eb; }
+    .state-kicker {
+        color: #475569;
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.55rem;
+    }
+    .state-flow {
+        display: grid;
+        gap: 0.45rem;
+    }
+    .state-step {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 0.55rem;
+        align-items: center;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.48rem;
+        color: #334155;
+        font-size: 0.84rem;
+        line-height: 1.25;
+        font-weight: 700;
+    }
+    .state-step svg {
+        width: 32px;
+        height: 32px;
+        color: #0f766e;
+    }
+    .state-step.future svg { color: #2563eb; }
+    .guidance-gate {
+        border: 2px solid #dc2626;
+        border-radius: 10px;
+        background: #fff1f2;
+        color: #991b1b;
+        padding: 0.75rem 0.6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 0.35rem;
+    }
+    .guidance-gate svg {
+        width: 42px;
+        height: 42px;
+    }
+    .guidance-gate strong {
+        font-size: 0.9rem;
+        line-height: 1.06;
+        letter-spacing: 0.04em;
+    }
+    .guidance-gate span {
+        color: #7f1d1d;
+        font-size: 0.74rem;
+        font-weight: 800;
     }
     .prompt-grid {
         display: grid;
@@ -2052,7 +2216,10 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board { grid-template-columns: 1fr; }
+        .guidance-gate {
+            min-height: 110px;
+        }
         .workflow-branches::before,
         .workflow-node::before,
         .workflow-root::after { display: none; }
@@ -2169,6 +2336,22 @@ def topic_by_slug(slug: str) -> dict:
         if topic["slug"] == slug:
             return topic
     return TOPIC_ROOMS[0]
+
+
+def asset_data_uri(path: Path, max_bytes: int | None = None) -> str | None:
+    if not path.exists():
+        return None
+    if max_bytes is not None and path.stat().st_size > max_bytes:
+        return None
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    mime = {
+        ".svg": "image/svg+xml",
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".webp": "image/webp",
+    }.get(path.suffix.lower(), "image/png")
+    return f"data:{mime};base64,{encoded}"
 
 
 def evidence_path_by_key(key: str) -> Path | None:
@@ -2845,29 +3028,51 @@ def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
 
 
 def render_topic_signal(topic: dict, card: bool = False) -> str:
-    visual_path_text = (
-        CARD_VISUALS.get(topic["slug"])
-        if card
-        else TOPIC_VISUALS.get(topic["slug"])
-    )
+    visual_path_text = TOPIC_VISUALS.get(topic["slug"])
     if not visual_path_text:
-        visual_path_text = TOPIC_VISUALS.get(topic["slug"])
+        visual_path_text = CARD_VISUALS.get(topic["slug"])
     if visual_path_text:
         visual_path = project_asset(visual_path_text)
         if visual_path.exists():
-            encoded = base64.b64encode(visual_path.read_bytes()).decode("ascii")
-            mime = {
-                ".svg": "image/svg+xml",
-                ".png": "image/png",
-                ".jpg": "image/jpeg",
-                ".jpeg": "image/jpeg",
-                ".webp": "image/webp",
-            }.get(visual_path.suffix.lower(), "image/png")
+            data_uri = asset_data_uri(visual_path, max_bytes=900_000 if card else None)
+            if data_uri is None:
+                data_uri = ""
+            proof_html = ""
+            if card:
+                proof_path_text = CARD_VISUALS.get(
+                    topic["slug"],
+                    topic.get("hero", ""),
+                )
+                proof_path = project_asset(proof_path_text)
+                if proof_path.exists() and proof_path != visual_path:
+                    proof_uri = asset_data_uri(proof_path, max_bytes=450_000)
+                    if proof_uri is not None:
+                        proof_html = (
+                            "<div class='topic-proof-inset'>"
+                            f"<img src='{proof_uri}' "
+                            f"alt='Real project evidence for {escape(topic['title'])}'>"
+                            "<span>REAL PROOF</span></div>"
+                        )
+                    else:
+                        proof_html = (
+                            "<div class='topic-proof-inset text-only'>"
+                            f"{workflow_icon_svg(topic['title'], 0)}"
+                            "<span>REAL PROOF</span></div>"
+                        )
+            if data_uri:
+                visual_html = (
+                    f"<img src='{data_uri}' "
+                    f"alt='{escape(topic['title'])} workflow poster'>"
+                )
+            else:
+                frame = TOPIC_FRAMES.get(topic["slug"], {})
+                pattern = frame.get("pattern", ["input", "AI", "output", "review"])
+                chips = "".join(f"<span>{escape(term)}</span>" for term in pattern)
+                visual_html = f"<div class='topic-pattern fallback-pattern'>{chips}</div>"
+            visual_class = "card-visual" if card else "topic-room-visual"
             return (
-                "<div class='topic-poster'>"
-                f"<img src='data:{mime};base64,{encoded}' "
-                f"alt='{escape(topic['title'])} workflow poster'>"
-                "</div>"
+                f"<div class='topic-poster topic-poster-composite {visual_class}'>"
+                f"{visual_html}{proof_html}</div>"
             )
     frame = TOPIC_FRAMES.get(topic["slug"], {})
     pattern = frame.get("pattern", ["input", "AI", "output", "review"])
@@ -2897,19 +3102,14 @@ def render_think_card(
     frame = TOPIC_FRAMES.get(topic["slug"], {})
     workflow = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
     question = frame.get("question", topic["question"])
-    example = frame.get("example", workflow.get("description", topic["tagline"]))
-    status_label, status_class = project_status_label(status_row)
     url = topic_url(topic["slug"]).replace("&", "&amp;")
-    details = ""
     raise_prompt = frame.get("raise", "Raise your hand if you want to discuss this project.")
     return f"""
 <a class="think-card-link" href="{url}" aria-label="Open {escape(topic['title'])}">
 <div class="think-card">
-  {render_topic_signal(topic, card=True)}
-  <div class="project-status {status_class}">{escape(status_label)}</div>
-  <p class="think-title">{escape(topic['title'])}</p>
   <p class="think-question">{escape(question)}</p>
-  {details}
+  {render_topic_signal(topic, card=True)}
+  <p class="think-title">{escape(topic['title'])}</p>
   <div class="think-raise">{escape(raise_prompt)}</div>
 </div>
 </a>
@@ -2938,6 +3138,48 @@ def render_workflow_blueprint(topic: dict) -> None:
   <div class="workflow-root">Project evidence + domain question</div>
   <div class="workflow-branches">{''.join(step_html)}</div>
   <div class="workflow-result"><strong>Product direction:</strong> {escape(blueprint["outcome"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_current_future_board(topic: dict, roadmap: pd.Series | None) -> None:
+    evidence = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
+    current_steps = evidence.get("chips", topic["proof"][:3])
+    if roadmap is not None:
+        future_model = str(roadmap["model_or_method"]).split(";")[0].strip()
+        future_output = str(roadmap["output"]).split(";")[0].strip()
+    else:
+        future_model = topic["future_ai"]
+        future_output = topic["why_it_matters"]
+    current_html = "".join(
+        f"<div class='state-step'>{workflow_icon_svg(value, index)}"
+        f"<span>{escape(value)}</span></div>"
+        for index, value in enumerate(current_steps, start=1)
+    )
+    future_steps = [future_model, future_output]
+    future_html = "".join(
+        f"<div class='state-step future'>{workflow_icon_svg(value, index + 4)}"
+        f"<span>{escape(value)}</span></div>"
+        for index, value in enumerate(future_steps, start=1)
+    )
+    st.markdown(
+        f"""
+<div class="current-future-board">
+  <div class="state-side current">
+    <div class="state-kicker">USED NOW</div>
+    <div class="state-flow">{current_html}</div>
+  </div>
+  <div class="guidance-gate">
+    <div>{workflow_icon_svg("review", 0)}</div>
+    <strong>DOMAIN<br>GUIDANCE</strong>
+    <span>check · revise · approve</span>
+  </div>
+  <div class="state-side future">
+    <div class="state-kicker">COULD BECOME</div>
+    <div class="state-flow">{future_html}</div>
+  </div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -3309,19 +3551,9 @@ if section == "Overview":
     st.markdown(
         """
 <div class="portfolio-intro">
-  <div class="portfolio-eyebrow">AI + geoscience + software</div>
-  <h1>Turning unfinished technical work into systems people can inspect</h1>
-  <p>
-    Real notebooks, maps, code, screenshots, and research evidence become interactive
-    tools, visual explanations, and testable workflows. Human review and uncertainty
-    stay visible throughout.
-  </p>
-</div>
-<div class="portfolio-proof">
-  <span>9 project rooms</span>
-  <span>2 working interactives</span>
-  <span>42 visual assets</span>
-  <span>107 notebooks indexed</span>
+  <div class="portfolio-eyebrow">VISUAL AI THINK TANK</div>
+  <h1>Pick a question. Let's talk.</h1>
+  <p>Real project evidence anchors each idea. Domain guidance stays in the loop.</p>
 </div>
         """,
         unsafe_allow_html=True,
@@ -3330,55 +3562,21 @@ if section == "Overview":
     st.markdown(
         """
 <div class="section-heading">
-  <div class="section-heading-title">Start with the strongest work</div>
-  <span>Interactive systems, creative visualization, and research structure</span>
+  <div class="section-heading-title">Discussion wall</div>
+  <span>concept visual + real proof + open question</span>
 </div>
         """,
         unsafe_allow_html=True,
     )
-    featured_slug_order = ["north_slope", "processing_earthquake", "thesis_graph"]
-    featured_slugs = set(featured_slug_order)
-    featured_topics = [
-        next(topic for topic in TOPIC_ROOMS if topic["slug"] == slug)
-        for slug in featured_slug_order
-    ]
     st.markdown(
         (
-            "<div class='think-grid'>"
+            "<div class='think-grid topic-wall'>"
             + "".join(
                 render_think_card(
                     topic,
                     project_status_by_key.get(topic["project_key"]),
                 )
-                for topic in featured_topics
-            )
-            + "</div>"
-        ),
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-<div class="section-heading">
-  <div class="section-heading-title">Browse the project rooms</div>
-  <span>Each room separates evidence, prototypes, and future ML plans</span>
-</div>
-        """,
-        unsafe_allow_html=True,
-    )
-    remaining_topics = [
-        topic for topic in TOPIC_ROOMS if topic["slug"] not in featured_slugs
-    ]
-    st.markdown(
-        (
-            "<div class='think-grid compact'>"
-            + "".join(
-                render_think_card(
-                    topic,
-                    project_status_by_key.get(topic["project_key"]),
-                    compact=True,
-                )
-                for topic in remaining_topics
+                for topic in TOPIC_ROOMS
             )
             + "</div>"
         ),
@@ -3927,6 +4125,7 @@ elif section == "Think Tank Topics":
 
     topic_roadmap = roadmap_row(topic["project_key"])
     st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+    render_current_future_board(topic, topic_roadmap)
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
         st.caption(
