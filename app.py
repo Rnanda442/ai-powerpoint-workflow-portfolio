@@ -14,6 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
+DEPLOY_BUILD_ID = "0a824ca / 2026-06-09"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -4344,7 +4345,7 @@ else:
 
 with st.sidebar:
     st.title("AI Think Tank")
-    st.caption("Choose a room.")
+    st.caption(f"Choose a room. Build {DEPLOY_BUILD_ID}")
     public_section = st.selectbox(
         "Public navigator",
         PUBLIC_SECTIONS,
