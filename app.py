@@ -4445,11 +4445,35 @@ elif section == "Vision Board":
     )
 
     status_counts = vision_board["status"].value_counts()
+    change_status_counts = website_change_ideas["status"].value_counts()
     vision_metrics = st.columns(4)
     vision_metrics[0].metric("Active now", int((vision_board["horizon"] == "Now").sum()))
     vision_metrics[1].metric("Next up", int((vision_board["horizon"] == "Next").sum()))
     vision_metrics[2].metric("In progress", int(status_counts.get("in_progress", 0)))
-    vision_metrics[3].metric("P0 priorities", int((vision_board["priority"] == "P0").sum()))
+    unfinished_changes = website_change_ideas[
+        ~website_change_ideas["status"].isin(["done", "complete"])
+    ].copy()
+    vision_metrics[3].metric(
+        "Website changes left",
+        int(len(unfinished_changes)),
+        f"{int(change_status_counts.get('done', 0))} done",
+    )
+
+    if not unfinished_changes.empty:
+        st.warning(
+            "Not all vision-board changes are complete yet. The table below is the active implementation queue."
+        )
+        unfinished_priority_rank = {"P0": 0, "P1": 1, "P2": 2}
+        unfinished_changes = unfinished_changes.assign(
+            priority_rank=unfinished_changes["priority"].map(unfinished_priority_rank).fillna(9)
+        ).sort_values(["priority_rank", "section", "change_id"])
+        st.dataframe(
+            unfinished_changes[
+                ["priority", "status", "section", "change_id", "minimal_copy"]
+            ].head(12),
+            hide_index=True,
+            use_container_width=True,
+        )
 
     vision_filters = st.columns([1, 1, 2])
     selected_horizon = vision_filters[0].selectbox(
