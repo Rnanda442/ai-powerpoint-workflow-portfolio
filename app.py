@@ -231,7 +231,7 @@ TOPIC_ROOMS = [
         "title": "AI For Energy Screening Workflows",
         "tagline": "A GIS and source-library workflow for turning public geoscience material into a dashboard and ML planning scaffold.",
         "project_key": "north_slope",
-        "hero": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
+        "hero": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
         "theme": "Public sources + GIS layers + Streamlit atlas + hydrate ML planning.",
         "bottleneck": "Subsurface energy projects often have fragmented public data: maps, papers, well-log concepts, stratigraphy, and ML ideas are spread across many formats.",
         "why_not_done": "Integrating geologic context with machine-learning-ready features is slow because provenance, scale, coordinate systems, and domain assumptions have to be reconciled before modeling.",
@@ -412,9 +412,14 @@ TOPIC_VISUALS = {
 
 CARD_VISUALS = {
     "ai_workflow": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-18 001002.png",
-    "north_slope": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
+    "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_system_overview.png",
+    "processing_earthquake": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
+    "north_slope": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
     "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
     "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
+    "valles": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
+    "moho_ml": "assets/project_visuals/valles_moho.png",
+    "stock_workflow": "assets/project_visuals/stock_saved_data_chart.svg",
 }
 
 WORKFLOW_NODE_ICONS = {
@@ -2540,6 +2545,108 @@ st.markdown(
             width: 100%;
         }
     }
+    .stApp {
+        background:
+            radial-gradient(circle at 8% 0%, rgba(20,184,166,0.20), transparent 30%),
+            radial-gradient(circle at 92% 8%, rgba(249,115,22,0.16), transparent 28%),
+            linear-gradient(145deg, #07111f 0%, #111827 48%, #0f172a 100%) !important;
+        color: #e5edf7 !important;
+    }
+    section[data-testid="stSidebar"] {
+        background: #07111f !important;
+        border-right: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .talk-hero,
+    .portfolio-intro,
+    .think-grid.topic-wall,
+    .visual-flow,
+    .blueprint,
+    .workflow-tree,
+    .current-future-board,
+    .detail-card,
+    .sketch-card,
+    .ai-case-brief,
+    .compare-panel {
+        background: rgba(15, 23, 42, 0.82) !important;
+        border: 1px solid rgba(148, 163, 184, 0.28) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+    }
+    .portfolio-intro {
+        max-width: none;
+        border-radius: 18px;
+        padding: 1.35rem 1.45rem 1.45rem;
+        margin-bottom: 1rem;
+    }
+    .talk-hero {
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 118, 110, 0.28)) !important;
+    }
+    .portfolio-eyebrow,
+    .talk-kicker { color: #5eead4 !important; letter-spacing: 0.08em; }
+    .portfolio-intro h1,
+    .talk-hero h2,
+    .section-heading-title,
+    .think-title,
+    .think-question,
+    h1, h2, h3, h4 { color: #f8fafc !important; }
+    .portfolio-intro p,
+    .talk-hero p,
+    .section-heading span,
+    .small-note,
+    .ml-body,
+    .vision-card p { color: #cbd5e1 !important; }
+    .think-grid.topic-wall {
+        border-radius: 18px;
+        background:
+            radial-gradient(circle at 12% 16%, rgba(20,184,166,0.20), transparent 20%),
+            radial-gradient(circle at 88% 22%, rgba(249,115,22,0.18), transparent 22%),
+            radial-gradient(circle at 50% 95%, rgba(96,165,250,0.20), transparent 24%),
+            linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.88) 100%) !important;
+    }
+    .think-card,
+    .vision-card,
+    .ml-stage,
+    .node-cluster,
+    .source-chip,
+    div[data-testid="stMetric"],
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: rgba(15, 23, 42, 0.84) !important;
+        border-color: rgba(148, 163, 184, 0.28) !important;
+        color: #e5edf7 !important;
+    }
+    .think-card { border-radius: 14px; }
+    .think-card-link:hover .think-card,
+    .think-card-link:focus .think-card {
+        border-color: #5eead4 !important;
+        box-shadow: 0 16px 42px rgba(20, 184, 166, 0.24);
+    }
+    .topic-poster {
+        background: #020617 !important;
+        border-color: rgba(94, 234, 212, 0.28) !important;
+    }
+    .topic-poster-composite.card-visual > img,
+    .topic-room-visual > img,
+    .topic-pattern.fallback-pattern { background: #020617 !important; }
+    .think-raise {
+        background: rgba(20, 184, 166, 0.12) !important;
+        color: #ccfbf1 !important;
+        border-left-color: #5eead4 !important;
+    }
+    .project-status,
+    .portfolio-proof span,
+    .vision-meta span,
+    .topic-pattern span,
+    .node-pill,
+    .ai-chip,
+    .motion-pill {
+        background: rgba(15, 23, 42, 0.92) !important;
+        border-color: rgba(94, 234, 212, 0.30) !important;
+        color: #e0f2fe !important;
+    }
+    .stAlert {
+        background: rgba(15, 23, 42, 0.88) !important;
+        color: #e5edf7 !important;
+    }
 </style>
     """,
     unsafe_allow_html=True,
@@ -4633,6 +4740,43 @@ elif section == "Think Tank Topics":
             "Open full explorer controls",
             "?section=Structural%20Explorer",
         )
+        source_library_manifest = project_asset(
+            "assets/drive_sources/north_slope_source_library/source_manifest.csv"
+        )
+        source_library_index = project_asset(
+            "assets/drive_sources/north_slope_source_library/source_index.md"
+        )
+        if source_library_manifest.exists():
+            library_df = pd.read_csv(source_library_manifest)
+            st.subheader("Local North Slope source-library index")
+            source_cols = st.columns(3)
+            source_cols[0].metric("Indexed source files", f"{len(library_df):,}")
+            source_cols[1].metric(
+                "Source categories",
+                f"{library_df['Category'].nunique():,}",
+            )
+            source_cols[2].metric(
+                "Indexed size",
+                f"{library_df['Bytes'].sum() / 1_000_000:.1f} MB",
+            )
+            st.caption(
+                "These are the curated source-library records copied into the local portfolio. "
+                "Some rows still point to original laptop paths until the matching Drive files are exported."
+            )
+            with st.expander("Preview source-library manifest"):
+                preview_cols = ["Category", "File", "Extension", "Bytes"]
+                st.dataframe(
+                    library_df[preview_cols].head(12),
+                    hide_index=True,
+                    use_container_width=True,
+                )
+            if source_library_index.exists():
+                st.download_button(
+                    "Download local source index",
+                    source_library_index.read_bytes(),
+                    file_name="north_slope_source_index.md",
+                    mime="text/markdown",
+                )
     render_workflow_blueprint(topic)
 
     with st.expander("Switch think tank topic"):
@@ -4811,6 +4955,14 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
                 st.info("Node/edge CSVs were not found in the organized evidence folder.")
 
     related_visuals = current_visuals
+    if topic["slug"] == "north_slope":
+        related_visuals = related_visuals[
+            ~related_visuals["asset_path"].fillna("").str.contains(
+                "north_slope_3d_streamlit_plotly_map",
+                case=False,
+                regex=False,
+            )
+        ]
     related_evidence = linkedin_evidence[
         linkedin_evidence["project_key"].fillna("") == topic["project_key"]
     ]
