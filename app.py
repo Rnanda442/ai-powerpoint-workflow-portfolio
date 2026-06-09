@@ -32,6 +32,12 @@ ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
 STRUCTURAL_DATA_DIR = ROOT / "assets" / "structural_data"
 MASTER_3D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_3d_surfaces.parquet"
 MASTER_2D_PATH = STRUCTURAL_DATA_DIR / "north_slope_master_2d_layers.parquet"
+USGS_GLOBE_VIDEO_PATH = ROOT / "assets" / "videos" / "usgs_3d_globe_video.mp4"
+USGS_GLOBE_DRIVE_URL = "https://drive.google.com/file/d/1sV8QsgJNknjSCsGZwktc_7LtWSHdrGfZ/view"
+NORTH_SLOPE_APP_URL = "https://north-slope-gas-hydrates-vj67xkke9ksfzveon8ldt2.streamlit.app/"
+NORTH_SLOPE_WELL_SCAFFOLD_URL = (
+    NORTH_SLOPE_APP_URL + "?page=Future%20Well-Log%20Engine"
+)
 CONTACT_SHEETS = [
     ROOT / "assets" / "contact_sheets" / "contact_sheet_02.jpg",
     ROOT / "assets" / "contact_sheets" / "contact_sheet_05.jpg",
@@ -1235,16 +1241,45 @@ st.markdown(
         line-height: 1.35;
     }
     .future-timeline {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.8rem;
-        margin: 0.8rem 0;
+        display: flex;
+        gap: 1rem;
+        margin: 0.9rem 0 1rem;
+        overflow-x: auto;
+        padding: 0.2rem 0.2rem 0.85rem;
+        scroll-snap-type: x proximity;
     }
-    .future-timeline div {
-        border-left: 4px solid #2563eb;
-        background: #eff6ff;
-        padding: 0.75rem 0.85rem;
-        min-height: 112px;
+    .future-timeline .timeline-node {
+        position: relative;
+        flex: 0 0 min(22rem, 86vw);
+        border: 1px solid rgba(37, 99, 235, 0.25);
+        border-top: 5px solid #2563eb;
+        border-radius: 16px;
+        background:
+            radial-gradient(circle at 12% 10%, rgba(96, 165, 250, 0.16), transparent 30%),
+            #eff6ff;
+        padding: 0.95rem 1rem;
+        min-height: 162px;
+        scroll-snap-align: start;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+    .future-timeline .timeline-node::after {
+        content: "";
+        position: absolute;
+        right: -1.05rem;
+        top: 50%;
+        width: 1.05rem;
+        border-top: 2px dashed rgba(37, 99, 235, 0.42);
+    }
+    .future-timeline .timeline-node:last-child::after { display: none; }
+    .future-timeline .timeline-node.model { border-top-color: #0f766e; }
+    .future-timeline .timeline-node.deploy { border-top-color: #f97316; }
+    .future-timeline .timeline-node em {
+        display: block;
+        margin-top: 0.65rem;
+        color: #475569;
+        font-size: 0.82rem;
+        font-style: normal;
+        line-height: 1.35;
     }
     .future-timeline span {
         display: block;
@@ -1255,6 +1290,7 @@ st.markdown(
         text-transform: uppercase;
     }
     .future-timeline strong {
+        display: block;
         color: #1e293b;
         font-size: 0.95rem;
         line-height: 1.35;
@@ -2594,6 +2630,7 @@ st.markdown(
     .section-heading span,
     .small-note,
     .ml-body,
+    .timeline-node em,
     .vision-card p { color: #cbd5e1 !important; }
     .think-grid.topic-wall {
         border-radius: 18px;
@@ -2606,6 +2643,7 @@ st.markdown(
     .think-card,
     .vision-card,
     .ml-stage,
+    .future-timeline .timeline-node,
     .node-cluster,
     .source-chip,
     div[data-testid="stMetric"],
@@ -2647,6 +2685,13 @@ st.markdown(
         background: rgba(15, 23, 42, 0.88) !important;
         color: #e5edf7 !important;
     }
+    .stAlert p,
+    .stAlert li,
+    div[data-testid="stMarkdownContainer"] p {
+        color: #dbeafe;
+    }
+    .future-timeline .timeline-node span { color: #5eead4 !important; }
+    .future-timeline .timeline-node strong { color: #f8fafc !important; }
 </style>
     """,
     unsafe_allow_html=True,
@@ -2757,7 +2802,11 @@ def asset_data_uri(path: Path, max_bytes: int | None = None) -> str | None:
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
         ".webp": "image/webp",
-    }.get(path.suffix.lower(), "image/png")
+        ".mp4": "video/mp4",
+        ".m4v": "video/mp4",
+        ".mov": "video/quicktime",
+        ".webm": "video/webm",
+    }.get(path.suffix.lower(), "application/octet-stream")
     return f"data:{mime};base64,{encoded}"
 
 
@@ -2809,24 +2858,204 @@ def render_ml_strip(row: pd.Series, compact: bool = False) -> None:
 
 
 def render_future_timeline(row: pd.Series) -> None:
+    phases = [
+        (
+            "Now to 6 months",
+            "assemble",
+            row["next_6_months"],
+            "Screenshots, source records, app links, and first cleaned visuals.",
+        ),
+        (
+            "6 to 12 months",
+            "model",
+            row["next_12_months"],
+            "Convert the evidence into variables, tests, and reviewable outputs.",
+        ),
+        (
+            "12 to 24 months",
+            "deploy",
+            row["next_24_months"],
+            "Ship a stronger tool, paper, deck, or validated workflow.",
+        ),
+    ]
+    phase_html = "".join(
+        f"""
+  <div class="timeline-node {escape(style)}">
+    <span>{escape(label)}</span>
+    <strong>{escape(str(body))}</strong>
+    <em>{escape(note)}</em>
+  </div>
+        """
+        for label, style, body, note in phases
+    )
     st.markdown(
         f"""
 <div class="future-timeline">
-  <div>
-    <span>Now to 6 months</span>
-    <strong>{row['next_6_months']}</strong>
-  </div>
-  <div>
-    <span>6 to 12 months</span>
-    <strong>{row['next_12_months']}</strong>
-  </div>
-  <div>
-    <span>12 to 24 months</span>
-    <strong>{row['next_24_months']}</strong>
-  </div>
+  {phase_html}
 </div>
         """,
         unsafe_allow_html=True,
+    )
+
+
+def render_fast_motion_video(
+    video_path: Path,
+    title: str,
+    caption: str,
+    playback_rate: float = 1.75,
+) -> bool:
+    video_uri = asset_data_uri(video_path, max_bytes=25_000_000)
+    if video_uri is None:
+        return False
+    component_id = "video_" + "".join(ch for ch in video_path.stem if ch.isalnum())
+    components.html(
+        f"""
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    html, body {{
+      margin: 0;
+      background: transparent;
+      color: #e5edf7;
+      font-family: Inter, system-ui, sans-serif;
+    }}
+    .video-card {{
+      border: 1px solid rgba(94, 234, 212, 0.32);
+      border-radius: 18px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(20,184,166,0.22), transparent 32%),
+        linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.92));
+      box-shadow: 0 22px 52px rgba(0,0,0,0.28);
+    }}
+    .video-head {{
+      padding: 14px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }}
+    .video-head strong {{
+      font-size: 15px;
+      letter-spacing: 0.01em;
+    }}
+    .speed-chip {{
+      border: 1px solid rgba(251,146,60,0.42);
+      border-radius: 999px;
+      color: #fed7aa;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }}
+    video {{
+      width: 100%;
+      display: block;
+      background: #020617;
+      max-height: 560px;
+    }}
+    .video-caption {{
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.45;
+      padding: 10px 16px 15px;
+    }}
+  </style>
+</head>
+<body>
+  <div class="video-card">
+    <div class="video-head">
+      <strong>{escape(title)}</strong>
+      <span class="speed-chip">{playback_rate:.2f}x playback</span>
+    </div>
+    <video id="{component_id}" src="{video_uri}" controls autoplay muted loop playsinline></video>
+    <div class="video-caption">{escape(caption)}</div>
+  </div>
+  <script>
+    const video = document.getElementById("{component_id}");
+    video.playbackRate = {playback_rate};
+    video.addEventListener("loadedmetadata", () => {{
+      video.playbackRate = {playback_rate};
+    }});
+  </script>
+</body>
+</html>
+        """,
+        height=650,
+        scrolling=False,
+    )
+    return True
+
+
+def render_external_app_embed(url: str, title: str, caption: str, height: int = 760) -> None:
+    components.html(
+        f"""
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    html, body {{
+      margin: 0;
+      background: transparent;
+      font-family: Inter, system-ui, sans-serif;
+      color: #e5edf7;
+    }}
+    .embed-shell {{
+      border: 1px solid rgba(94, 234, 212, 0.30);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #020617;
+      box-shadow: 0 22px 52px rgba(0,0,0,0.30);
+    }}
+    .embed-head {{
+      padding: 13px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(15,23,42,0.98), rgba(15,118,110,0.26));
+      border-bottom: 1px solid rgba(148,163,184,0.20);
+    }}
+    .embed-head strong {{ font-size: 15px; }}
+    .embed-head a {{
+      color: #5eead4;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }}
+    iframe {{
+      width: 100%;
+      height: {height - 86}px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }}
+    .embed-caption {{
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 10px 16px 13px;
+    }}
+  </style>
+</head>
+<body>
+  <div class="embed-shell">
+    <div class="embed-head">
+      <strong>{escape(title)}</strong>
+      <a href="{escape(url)}" target="_blank" rel="noreferrer">Open full app</a>
+    </div>
+    <iframe src="{escape(url)}" loading="lazy" allowfullscreen></iframe>
+    <div class="embed-caption">{escape(caption)}</div>
+  </div>
+</body>
+</html>
+        """,
+        height=height,
+        scrolling=False,
     )
 
 
@@ -3621,6 +3850,14 @@ def render_project_visual_stage(topic: dict) -> bool:
             unsafe_allow_html=True,
         )
         return True
+
+    if slug == "processing_earthquake":
+        return render_fast_motion_video(
+            USGS_GLOBE_VIDEO_PATH,
+            "USGS 3D globe video",
+            "Drive upload embedded locally and played faster so the globe motion reads immediately in the portfolio.",
+            playback_rate=1.85,
+        )
 
     if slug == "thesis_graph":
         drawing_uri = asset_data_uri(
@@ -4825,35 +5062,21 @@ elif section == "Think Tank Topics":
     with hero_cols[0]:
         hero_path = project_asset(topic["hero"])
         if topic["slug"] == "north_slope":
-            if hero_path.exists():
-                st.image(
-                    str(hero_path),
-                    caption="Current North Slope Streamlit/Plotly structural preview.",
-                    use_container_width=True,
-                )
-            st.link_button(
-                "Open interactive Structural Explorer",
-                "?section=Structural%20Explorer",
+            render_external_app_embed(
+                NORTH_SLOPE_WELL_SCAFFOLD_URL,
+                "Embedded North Slope well-log scaffold",
+                "This is the live Future Well-Log Engine from the North Slope Streamlit app, not a static screenshot.",
+                height=760,
             )
+            st.link_button("Open portfolio Structural Explorer", "?section=Structural%20Explorer")
+            st.link_button("Open full North Slope app", NORTH_SLOPE_WELL_SCAFFOLD_URL)
             st.caption(
-                "The embedded explorer uses the current selectable geographic horizons, "
-                "public wells, study boundary, and assessment-unit overlays."
+                "The portfolio structural explorer is embedded above on this page; this app embed shows the separate synthetic well-log scaffold."
             )
         elif topic["slug"] == "processing_earthquake":
-            processing_room_video = evidence_path_by_key("processing_earthquake")
-            if processing_room_video is not None:
-                st.video(str(processing_room_video))
-                st.caption("Embedded local Processing video with sound from the organized evidence folder.")
-            elif hero_path.exists():
-                st.image(
-                    str(hero_path),
-                    caption="Verified LinkedIn poster frame. Correct local video export is still needed before embedding with sound.",
-                    use_container_width=True,
-                )
-                st.info(
-                    "Correction: the previous local `Video.mov` candidate was not verified as the earthquake visualization. "
-                    "The LinkedIn post itself is verified; the correct 54-second media file needs to be exported/downloaded and added here."
-                )
+            if hero_path.exists():
+                st.image(str(hero_path), caption="Poster frame kept as secondary evidence.", use_container_width=True)
+            st.link_button("Open original Drive video", USGS_GLOBE_DRIVE_URL)
         elif hero_path.exists():
             st.image(str(hero_path), caption=topic["theme"], use_container_width=True)
         else:
