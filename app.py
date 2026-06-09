@@ -177,7 +177,7 @@ TOPIC_ROOMS = [
         "title": "How AI Agents Learn Scientific Software",
         "tagline": "How screenshots, task recordings, and rubric checks become supervised examples for future scientific software agents.",
         "project_key": "arcgis_raster_ml",
-        "hero": "assets/project_visuals/workflow_qgis_handshake_ai_01.png",
+        "hero": "assets/topic_visuals/agent_training.svg",
         "theme": "Human demonstrations + Codex file access + geospatial software evaluation.",
         "bottleneck": "Scientific software tasks are still hard for AI agents because the work is visual, multi-step, file-dependent, and judged by domain-specific output quality.",
         "why_not_done": "Most training data captures final answers, not the messy human process: opening files, choosing tools, recovering from errors, checking map layers, and deciding whether an output is scientifically acceptable.",
