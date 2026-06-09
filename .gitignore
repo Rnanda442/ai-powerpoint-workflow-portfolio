@@ -12,3 +12,5 @@ streamlit.*.log
 deliverables/*.zip
 deliverables/ai_powerpoint_streamlit_site_package/
 assets/deck_renders/
+assets/drive_sources/north_slope_source_library/*.zip
+assets/drive_sources/north_slope_source_library/unclassified_local/
