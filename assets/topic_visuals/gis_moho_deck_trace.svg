@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="GIS and Moho slide-source workflow trace">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.5" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#312e81"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" rx="42" fill="url(#bg)"/>
+  <g transform="translate(88 118)" font-family="Inter, Arial, sans-serif">
+    <text x="0" y="0" fill="#f8fafc" font-size="38" font-weight="800">ADVGIS / Moho source deck</text>
+    <text x="0" y="40" fill="#cbd5e1" font-size="20">formation tables, raster tools, Moho depth, and transfer-test framing</text>
+  </g>
+  <g transform="translate(120 235)" fill="none" stroke-width="4">
+    <rect x="0" y="0" width="230" height="145" rx="24" fill="#0f172a" stroke="#a78bfa"/>
+    <rect x="312" y="0" width="230" height="145" rx="24" fill="#0f172a" stroke="#38bdf8"/>
+    <rect x="624" y="0" width="230" height="145" rx="24" fill="#0f172a" stroke="#2dd4bf"/>
+    <path d="M230 72h82M542 72h82" stroke="#e0e7ff"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#f8fafc">
+    <text x="158" y="292" font-size="23" font-weight="800">Inputs</text>
+    <text x="158" y="330" font-size="17" fill="#cbd5e1">density / velocity / resistivity</text>
+    <text x="470" y="292" font-size="23" font-weight="800">GIS tools</text>
+    <text x="470" y="330" font-size="17" fill="#cbd5e1">raster calculator + overlay</text>
+    <text x="782" y="292" font-size="23" font-weight="800">Moho map</text>
+    <text x="782" y="330" font-size="17" fill="#cbd5e1">prediction + residual review</text>
+  </g>
+  <g transform="translate(185 470)">
+    <path d="M0 70c55-82 102 82 157 0s102 82 157 0 102 82 157 0 102 82 157 0 102 82 157 0" fill="none" stroke="#38bdf8" stroke-width="7"/>
+    <path d="M0 110c55-48 102 48 157 0s102 48 157 0 102 48 157 0 102 48 157 0 102 48 157 0" fill="none" stroke="#f97316" stroke-width="5" opacity="0.9"/>
+  </g>
+</svg>

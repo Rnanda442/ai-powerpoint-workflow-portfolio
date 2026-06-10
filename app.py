@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "0a824ca / 2026-06-09"
+DEPLOY_BUILD_ID = "2026-06-10 / drive-asset-refresh"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -27,6 +27,7 @@ PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
 VISUAL_AUDIT_PATH = ROOT / "data" / "visual_audit.csv"
 VISION_BOARD_PATH = ROOT / "data" / "vision_board.csv"
 WEBSITE_CHANGE_IDEAS_PATH = ROOT / "data" / "website_change_ideas.csv"
+DRIVE_SLIDE_SOURCES_PATH = ROOT / "data" / "drive_slide_sources.csv"
 DOWNLOAD_PACKAGE_PATH = ROOT / "deliverables" / "ai_powerpoint_streamlit_site_package.zip"
 VISUAL_DESIGN_SPEC_PATH = ROOT / "docs" / "VISUAL_DESIGN_SPEC.md"
 ARCHITECTURE_PATH = ROOT / "docs" / "ARCHITECTURE.md"
@@ -406,26 +407,26 @@ TOPIC_FRAMES = {
 }
 
 TOPIC_VISUALS = {
-    "ai_workflow": "assets/topic_visuals/agent_training.svg",
+    "ai_workflow": "assets/topic_visuals/agent_training_trace.svg",
     "thesis_graph": "assets/topic_visuals/knowledge_graph.svg",
-    "processing_earthquake": "assets/topic_visuals/earthquake_globe.svg",
+    "processing_earthquake": "assets/topic_visuals/earthquake_globe_signal.svg",
     "seismic": "assets/topic_visuals/seismic_processing.svg",
-    "north_slope": "assets/topic_visuals/north_slope_energy.svg",
+    "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
     "valles": "assets/topic_visuals/field_geophysics.svg",
-    "moho_ml": "assets/topic_visuals/moho_transfer.svg",
+    "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
 }
 
 CARD_VISUALS = {
-    "ai_workflow": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-18 001002.png",
+    "ai_workflow": "assets/topic_visuals/agent_training_trace.svg",
     "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_system_overview.png",
-    "processing_earthquake": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
-    "north_slope": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
+    "processing_earthquake": "assets/topic_visuals/earthquake_globe_signal.svg",
+    "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
     "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
     "valles": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
-    "moho_ml": "assets/project_visuals/valles_moho.png",
+    "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "stock_workflow": "assets/project_visuals/stock_saved_data_chart.svg",
 }
 
@@ -2693,6 +2694,49 @@ st.markdown(
     }
     .future-timeline .timeline-node span { color: #5eead4 !important; }
     .future-timeline .timeline-node strong { color: #f8fafc !important; }
+    .drive-source-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+        gap: 0.9rem;
+        margin: 1rem 0 1.35rem;
+    }
+    .drive-source-card {
+        background:
+            radial-gradient(circle at 90% 0%, rgba(45,212,191,0.16), transparent 32%),
+            rgba(15, 23, 42, 0.88);
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 18px;
+        padding: 1rem;
+        min-height: 15rem;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+    }
+    .drive-source-card .source-status {
+        color: #5eead4;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .drive-source-card h3 {
+        margin: 0.35rem 0 0.55rem;
+        font-size: 1.05rem;
+        line-height: 1.25;
+    }
+    .drive-source-card p {
+        color: #cbd5e1 !important;
+        margin: 0.35rem 0;
+        font-size: 0.92rem;
+    }
+    .drive-source-card a {
+        display: inline-flex;
+        margin-top: 0.75rem;
+        color: #ecfeff;
+        background: #0f766e;
+        border-radius: 999px;
+        padding: 0.45rem 0.75rem;
+        text-decoration: none;
+        font-weight: 750;
+    }
 </style>
     """,
     unsafe_allow_html=True,
@@ -4258,6 +4302,7 @@ project_status = load_current_csv(PROJECT_STATUS_PATH)
 visual_audit = load_current_csv(VISUAL_AUDIT_PATH)
 vision_board = load_current_csv(VISION_BOARD_PATH)
 website_change_ideas = load_current_csv(WEBSITE_CHANGE_IDEAS_PATH)
+drive_slide_sources = load_current_csv(DRIVE_SLIDE_SOURCES_PATH)
 project_status_by_key = {
     row["project_key"]: row
     for _, row in project_status.iterrows()
@@ -4473,6 +4518,54 @@ elif section == "Vision Board":
             ].head(12),
             hide_index=True,
             use_container_width=True,
+        )
+
+    if not drive_slide_sources.empty:
+        st.subheader("Drive slide and document sources now connected")
+        st.caption(
+            "These are the Drive decks/docs I found for new topic material, screenshots, "
+            "and replacements for generic reused visuals. Open the Drive link for the "
+            "native PowerPoint/Slides/Doc source; the North Slope source library also "
+            "exists locally in the repo."
+        )
+        source_priority = {
+            "active source": 0,
+            "local source library": 1,
+            "source candidate": 2,
+        }
+        source_cards_df = drive_slide_sources.assign(
+            source_rank=drive_slide_sources["status"].map(source_priority).fillna(9)
+        ).sort_values(["source_rank", "project_key", "deck_title"])
+        source_cards = []
+        for source in source_cards_df.head(12).itertuples(index=False):
+            local_copy = str(source.local_copy)
+            local_line = (
+                f"<p><strong>Local:</strong> {escape(local_copy)}</p>"
+                if local_copy and local_copy.lower() != "nan"
+                else ""
+            )
+            source_cards.append(
+                f"""
+<div class="drive-source-card">
+  <div class="source-status">{escape(str(source.status))}</div>
+  <h3>{escape(str(source.deck_title))}</h3>
+  <p><strong>Project:</strong> {escape(str(source.project_key))}</p>
+  <p><strong>Use for:</strong> {escape(str(source.use_for))}</p>
+  {local_line}
+  <p>{escape(str(source.notes))}</p>
+  <a href="{escape(str(source.drive_url))}" target="_blank">Open source</a>
+</div>
+                """
+            )
+        st.markdown(
+            "<div class='drive-source-grid'>" + "".join(source_cards) + "</div>",
+            unsafe_allow_html=True,
+        )
+        st.download_button(
+            "Download Drive source inventory CSV",
+            drive_slide_sources.to_csv(index=False),
+            file_name=DRIVE_SLIDE_SOURCES_PATH.name,
+            mime="text/csv",
         )
 
     vision_filters = st.columns([1, 1, 2])
