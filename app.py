@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-10 / public-nav-cleanup"
+DEPLOY_BUILD_ID = "2026-06-10 / public-site-updates"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -840,6 +840,103 @@ NORTH_SLOPE_ML_UPDATES = [
     ),
 ]
 
+TOPIC_SITE_UPDATES = {
+    "thesis_graph": {
+        "kicker": "Graph validation",
+        "title": "Make every relationship explain its confidence",
+        "intro": (
+            "The critical-minerals page is strongest when the viewer can tell which graph "
+            "links came from sources, which came from AI structure, and which came from "
+            "geologic reasoning."
+        ),
+        "items": [
+            ("Solid edge", "source-supported relationship"),
+            ("Dotted edge", "AI-suggested relationship to review"),
+            ("Orange edge", "geologist reasoning or interpretation"),
+            ("Gray edge", "unresolved link or missing evidence"),
+        ],
+    },
+    "seismic": {
+        "kicker": "Seismic review loop",
+        "title": "Show AI picks as suggestions, not final answers",
+        "intro": (
+            "The seismic page should make the human override visible: a waveform pick, "
+            "confidence band, and event/station map should move together."
+        ),
+        "items": [
+            ("PICK", "arrival line proposed by the workflow"),
+            ("CONFIDENCE", "band width shows uncertainty or noise"),
+            ("MAP", "event and station geometry updates"),
+            ("OVERRIDE", "human accepts, edits, or rejects"),
+        ],
+    },
+    "rock_classification": {
+        "kicker": "Label quality gate",
+        "title": "Classified maps need reviewed labels before ML claims",
+        "intro": (
+            "Rock and mineral visuals should show that diagrams, thin sections, and maps "
+            "become training evidence only after class quality is checked."
+        ),
+        "items": [
+            ("Known class", "label is supported by visual or geochemical evidence"),
+            ("Mixed class", "overlap or ambiguous rock/mineral signal"),
+            ("Needs review", "petrography or geochemistry check required"),
+            ("Map layer", "candidate output, not final discovery"),
+        ],
+    },
+    "valles": {
+        "kicker": "Field-method fusion",
+        "title": "Combine evidence without flattening uncertainty",
+        "intro": (
+            "Valles should show gravity, EM/ERT/TEM, and seismic layers meeting on common "
+            "geometry while disagreement remains visible."
+        ),
+        "items": [
+            ("Gravity", "density clue"),
+            ("EM / ERT / TEM", "conductivity clue"),
+            ("Seismic", "velocity or structural clue"),
+            ("Gray conflict", "method disagreement stays unresolved"),
+        ],
+    },
+}
+
+SLIDE_SOURCE_UPDATES = {
+    "north_slope": [
+        ("Updated North Slope deck", "use as the topic value story and connect slides to the 3D explorer"),
+        ("Gas hydrate doc", "pull wording for public data, well logs, methodology, and validation"),
+    ],
+    "thesis_graph": [
+        ("Thesis Ch.1 / REE deck", "crop graph, map, spider diagram, and deposit-model regions instead of showing full slides"),
+    ],
+    "seismic": [
+        ("EarthScope and exploration seismology decks", "replace generic seismic visuals with waveform, field, and notebook-method proof"),
+        ("NoisePy", "hold as a possible ambient-noise subsection"),
+    ],
+    "rock_classification": [
+        ("SEM petrography deck", "add petrography examples as visual-label evidence"),
+        ("Thin-section/classification slides", "crop to the rock/mineral examples and map outputs"),
+    ],
+    "valles": [
+        ("SAGE / Valles deck", "use method-comparison figures and field-context slides"),
+        ("Alaska Seismotech portfolio", "use only if it clarifies applied geophysics value"),
+    ],
+}
+
+MOTION_SKETCH_PRIORITIES = [
+    (
+        "Earthquake globe loop",
+        "Recover or rebuild the globe motion with event dots, depth color, magnitude pulses, and time arc.",
+    ),
+    (
+        "North Slope decision loop",
+        "Animate public sources entering a structural block, then branching into review targets.",
+    ),
+    (
+        "Seismic pick-confidence loop",
+        "Move a pick line across a waveform while confidence and map context update.",
+    ),
+]
+
 DETAILED_TOPIC_PLANS = {
     "ai_workflow": {
         "title": "Teaching AI Agents Scientific Software",
@@ -1586,6 +1683,189 @@ st.markdown(
     }
     .north-slope-ml-card {
         min-height: 8.5rem;
+    }
+    .public-system-legend {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.6rem;
+        margin: 0.85rem 0 1rem;
+    }
+    .public-system-legend div {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 0.65rem 0.75rem;
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.35;
+    }
+    .public-system-legend strong {
+        display: block;
+        color: #172033;
+        font-size: 0.82rem;
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+    }
+    .topic-update-panel {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background:
+            radial-gradient(circle at 94% 0%, rgba(37, 99, 235, 0.10), transparent 26%),
+            #ffffff;
+        padding: 1rem;
+        margin: 1rem 0 1.2rem;
+    }
+    .topic-update-kicker {
+        color: #0f766e;
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 850;
+        text-transform: uppercase;
+    }
+    .topic-update-panel h3 {
+        color: #172033;
+        margin: 0.35rem 0 0.45rem;
+        font-size: 1.16rem;
+        line-height: 1.25;
+    }
+    .topic-update-panel p {
+        color: #475569;
+        margin: 0 0 0.85rem;
+        line-height: 1.45;
+    }
+    .topic-update-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.6rem;
+    }
+    .topic-update-item {
+        border: 1px solid #d8dee8;
+        border-left: 4px solid #0f766e;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.65rem 0.7rem;
+        min-height: 6rem;
+    }
+    .topic-update-item strong {
+        display: block;
+        color: #172033;
+        font-size: 0.86rem;
+        margin-bottom: 0.28rem;
+        text-transform: uppercase;
+    }
+    .topic-update-item span {
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.35;
+    }
+    .slide-source-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 0.6rem;
+        margin: 0.8rem 0 1.2rem;
+    }
+    .slide-source-note {
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        background: #eff6ff;
+        padding: 0.72rem 0.8rem;
+    }
+    .slide-source-note strong {
+        display: block;
+        color: #1e3a8a;
+        font-size: 0.86rem;
+        margin-bottom: 0.25rem;
+    }
+    .slide-source-note span {
+        color: #334155;
+        font-size: 0.84rem;
+        line-height: 1.35;
+    }
+    .north-decision-board {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+        gap: 0.9rem;
+        margin: 1rem 0 1.25rem;
+    }
+    .well-log-panel,
+    .decision-branches {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.9rem;
+    }
+    .well-log-panel h3,
+    .decision-branches h3 {
+        color: #172033;
+        margin: 0 0 0.65rem;
+        font-size: 1.05rem;
+    }
+    .well-log-track {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.42rem;
+        min-height: 14rem;
+    }
+    .well-log-track span {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background:
+            linear-gradient(180deg, rgba(15,118,110,0.18), transparent 25%, rgba(249,115,22,0.18) 52%, transparent 76%, rgba(37,99,235,0.18)),
+            #f8fafc;
+        color: #172033;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        padding: 0.55rem 0.3rem;
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .decision-branch {
+        border-left: 4px solid #0f766e;
+        background: #ecfdf5;
+        border-radius: 8px;
+        margin-bottom: 0.55rem;
+        padding: 0.62rem 0.7rem;
+    }
+    .decision-branch.more { border-left-color: #f97316; background: #fff7ed; }
+    .decision-branch.low { border-left-color: #64748b; background: #f8fafc; }
+    .decision-branch strong {
+        color: #172033;
+        display: block;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .decision-branch span {
+        color: #475569;
+        font-size: 0.86rem;
+    }
+    .feedback-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin: 1rem 0 1.25rem;
+    }
+    .feedback-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.95rem;
+        min-height: 10rem;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    }
+    .feedback-card strong {
+        color: #172033;
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 0.45rem;
+    }
+    .feedback-card p {
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.42;
+        margin: 0;
     }
     .think-grid.topic-wall {
         position: relative;
@@ -2697,7 +2977,7 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
         .pipeline-node:not(:last-child)::after { display: none; }
         .agent-lanes { grid-template-columns: 1fr; }
@@ -3093,6 +3373,136 @@ def render_north_slope_ml_update() -> None:
   </div>
   <div class="source-update-grid source-update-grid-tight">
     {cards}
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_public_system_legend() -> None:
+    st.markdown(
+        """
+<div class="public-system-legend">
+  <div><strong>Evidence</strong>Real maps, slides, code, notebooks, videos, or screenshots anchor each topic.</div>
+  <div><strong>AI action</strong>Codex, prompting, file search, app building, and source organization move the work forward.</div>
+  <div><strong>Validation</strong>Leakage, uncertainty, provenance, labels, and expert review stay visible.</div>
+  <div><strong>Question</strong>Each topic asks what an experienced person would change, test, or build next.</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_topic_update_panel(slug: str) -> None:
+    panel = TOPIC_SITE_UPDATES.get(slug)
+    if panel is None:
+        return
+    items = "".join(
+        f"""
+<div class="topic-update-item">
+  <strong>{escape(label)}</strong>
+  <span>{escape(body)}</span>
+</div>
+        """
+        for label, body in panel["items"]
+    )
+    st.markdown(
+        f"""
+<div class="topic-update-panel">
+  <span class="topic-update-kicker">{escape(panel["kicker"])}</span>
+  <h3>{escape(panel["title"])}</h3>
+  <p>{escape(panel["intro"])}</p>
+  <div class="topic-update-grid">{items}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_slide_source_updates(slug: str) -> None:
+    updates = SLIDE_SOURCE_UPDATES.get(slug)
+    if not updates:
+        return
+    notes = "".join(
+        f"""
+<div class="slide-source-note">
+  <strong>{escape(title)}</strong>
+  <span>{escape(body)}</span>
+</div>
+        """
+        for title, body in updates
+    )
+    st.markdown(
+        f"<div class='slide-source-strip'>{notes}</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_north_slope_decision_board() -> None:
+    st.markdown(
+        """
+<div class="north-decision-board">
+  <div class="well-log-panel">
+    <h3>Vertical well-log panel to build next</h3>
+    <div class="well-log-track">
+      <span>Gamma ray</span>
+      <span>Resistivity</span>
+      <span>Density</span>
+      <span>Rock unit</span>
+      <span>Hydrate clue</span>
+    </div>
+  </div>
+  <div class="decision-branches">
+    <h3>Screening output should branch, not overclaim</h3>
+    <div class="decision-branch"><strong>Investigate</strong><span>source-backed review target with geologic context</span></div>
+    <div class="decision-branch more"><strong>Need more data</strong><span>missing logs, weak provenance, or unresolved uncertainty</span></div>
+    <div class="decision-branch low"><strong>Low priority</strong><span>public evidence does not support immediate follow-up</span></div>
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_motion_priority_cards() -> None:
+    cards = "".join(
+        f"""
+<div class="topic-update-item">
+  <strong>{escape(title)}</strong>
+  <span>{escape(body)}</span>
+</div>
+        """
+        for title, body in MOTION_SKETCH_PRIORITIES
+    )
+    st.markdown(
+        f"""
+<div class="topic-update-panel">
+  <span class="topic-update-kicker">Motion priority</span>
+  <h3>Build one finished loop before adding more sketch plans</h3>
+  <p>The Visual Lab needs a completed motion artifact at the top so it feels like proof, not only a planning board.</p>
+  <div class="topic-update-grid">{cards}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_feedback_cards() -> None:
+    st.markdown(
+        """
+<div class="feedback-card-grid">
+  <div class="feedback-card">
+    <strong>Correct a claim</strong>
+    <p>Point out overreach, missing uncertainty, weak evidence, or a better way to phrase the scientific or ML claim.</p>
+  </div>
+  <div class="feedback-card">
+    <strong>Suggest a method</strong>
+    <p>Recommend a validation test, graph workflow, agent-evaluation pattern, data-engineering step, or geoscience method.</p>
+  </div>
+  <div class="feedback-card">
+    <strong>Share a workflow</strong>
+    <p>Show how your team handles public data, maps, notebooks, slides, scientific software, or AI-assisted review.</p>
   </div>
 </div>
         """,
@@ -4651,13 +5061,14 @@ if section == "Overview":
         ),
         unsafe_allow_html=True,
     )
+    render_public_system_legend()
 
     st.subheader("Explore the system")
     fast_cols = st.columns(5)
     fast_cols[0].link_button("Topics", "?section=Think%20Tank%20Topics")
     fast_cols[1].link_button("Structural Explorer", "?section=Structural%20Explorer")
     fast_cols[2].link_button("Visual Lab", "?section=Processing%20Visual%20Lab")
-    fast_cols[3].link_button("Contact / Ideas", "?section=Contact%20/%20Ideas")
+    fast_cols[3].link_button("Contact / Ideas", "?section=Contact%20%2F%20Ideas")
     fast_cols[4].link_button("Phone View", "?section=Mobile%20View")
 
     with st.expander("About this portfolio"):
@@ -5129,14 +5540,11 @@ elif section == "Think Tank Topics":
     )
 
     topic_roadmap = roadmap_row(topic["project_key"])
-    if not render_project_visual_stage(topic):
-        st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
-    render_current_future_board(topic, topic_roadmap)
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
         st.caption(
-            "This interaction is part of the North Slope project, not separate evidence. "
-            "Rotate the basin and inspect the public-data structural context here."
+            "Start with the live interaction: rotate the basin, inspect public structural context, "
+            "then treat any output as a screening candidate that still needs expert review."
         )
         st.plotly_chart(
             build_structural_figure(
@@ -5150,6 +5558,8 @@ elif section == "Think Tank Topics":
             use_container_width=True,
             key="north_slope_topic_explorer",
         )
+        render_north_slope_decision_board()
+        render_current_future_board(topic, topic_roadmap)
         st.link_button(
             "Open full explorer controls",
             "?section=Structural%20Explorer",
@@ -5192,6 +5602,13 @@ elif section == "Think Tank Topics":
                     mime="text/markdown",
                 )
         render_north_slope_ml_update()
+        render_slide_source_updates(topic["slug"])
+    else:
+        if not render_project_visual_stage(topic):
+            st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+        render_current_future_board(topic, topic_roadmap)
+        render_topic_update_panel(topic["slug"])
+        render_slide_source_updates(topic["slug"])
     render_workflow_blueprint(topic)
 
     with st.expander("Switch think tank topic"):
@@ -5483,6 +5900,7 @@ elif section == "Processing Visual Lab":
         """,
         unsafe_allow_html=True,
     )
+    render_motion_priority_cards()
 
     st.subheader("Visual language")
     language_cols = st.columns(4)
@@ -6330,19 +6748,12 @@ elif section == "Contact / Ideas":
         "I would love to hear your opinion, what you have seen work in industry or government, "
         "and how your experience changes these ideas. The best outcome is not applause; it is a better question."
     )
-    idea_cols = st.columns(3)
-    with idea_cols[0]:
-        with st.container(border=True):
-            st.markdown("**Tell me what breaks**")
-            st.caption("Where would this workflow fail in a real organization, dataset, basin, or software environment?")
-    with idea_cols[1]:
-        with st.container(border=True):
-            st.markdown("**Tell me what to learn**")
-            st.caption("Neo4j, cloud hosting, Linux sandboxes, agents, model validation, data engineering, or something older that still matters.")
-    with idea_cols[2]:
-        with st.container(border=True):
-            st.markdown("**Tell me what is useful**")
-            st.caption("Which topic could actually help energy, geoscience, finance, or scientific software work if it was built correctly?")
+    render_feedback_cards()
+    st.info(
+        "I am showing unfinished systems because that is where expert feedback matters most. "
+        "If you see a better validation test, a stronger dataset, a clearer visualization, "
+        "or a false assumption, that is the conversation I want."
+    )
     st.subheader("A little me")
     st.write(
         "I like cafes, geoscience, coding, art, markets, and conversations about how people are using AI. "
