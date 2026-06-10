@@ -765,6 +765,81 @@ RESEARCH_SOURCES = [
     ("ADEPT scientific workflow agents", "https://www.osti.gov/biblio/3006464"),
 ]
 
+GMAIL_SOURCE_UPDATES = [
+    {
+        "label": "Design system",
+        "title": "Stop color drift with tokens",
+        "body": (
+            "Move the site toward semantic color roles: primary, accent, secondary, "
+            "background, surface, border, and text. The practical test is changing one "
+            "token and seeing buttons, chips, cards, and focal highlights update together."
+        ),
+    },
+    {
+        "label": "Visual direction",
+        "title": "Lighten the full-page dark shell",
+        "body": (
+            "Keep a technical dark accent for code, videos, and 3D scenes, but use lighter "
+            "section surfaces so screenshots, captions, and workflow cards are readable."
+        ),
+    },
+    {
+        "label": "ML principle",
+        "title": "Baseline first, complexity second",
+        "body": (
+            "Frame ML examples with a simple baseline before flexible models. Only add "
+            "gradient boosting, nearest-neighbor, neural, or graph methods when validation "
+            "shows the added complexity helps."
+        ),
+    },
+    {
+        "label": "Validation",
+        "title": "Use chronological and spatial splits",
+        "body": (
+            "For geoscience and production workflows, validation should mimic deployment: "
+            "train on available past or source regions, then test on future windows or "
+            "held-out geography without leakage."
+        ),
+    },
+    {
+        "label": "Data quality",
+        "title": "Monitor missingness, drift, and late data",
+        "body": (
+            "The portfolio should show ETL checks as part of the story: completeness, "
+            "freshness, row counts, null spikes, schema changes, and feature drift before "
+            "any model claim is trusted."
+        ),
+    },
+    {
+        "label": "Production ML",
+        "title": "Add fairness and incident thinking",
+        "body": (
+            "CreditScoreV4 is a useful case-study pattern: feature drift, stale training "
+            "data, proxy variables, fairness gaps, fallback models, and monitoring that "
+            "looks at segments rather than only global score PSI."
+        ),
+    },
+]
+
+NORTH_SLOPE_ML_UPDATES = [
+    (
+        "Inputs to make visible",
+        "well logs, hydrate indicators, stratigraphy, public wells, shapefiles, papers, and depth references",
+    ),
+    (
+        "Model families to discuss",
+        "linear baseline, tree/boosting model, explainable interval ranking, and physics-informed constraints",
+    ),
+    (
+        "Validation gates",
+        "chronological/source split, spatial holdout, leakage check, VIF/correlation review, and expert plausibility review",
+    ),
+    (
+        "Monitoring story",
+        "missing logs, null-rate spikes, row-count drift, source freshness, feature drift, and segment-level performance",
+    ),
+]
+
 DETAILED_TOPIC_PLANS = {
     "ai_workflow": {
         "title": "Teaching AI Agents Scientific Software",
@@ -1444,6 +1519,73 @@ st.markdown(
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.9rem;
         margin: 1rem 0;
+    }
+    .source-update-panel {
+        display: grid;
+        grid-template-columns: minmax(16rem, 0.85fr) minmax(0, 1.35fr);
+        gap: 1rem;
+        align-items: start;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background:
+            radial-gradient(circle at 94% 0%, rgba(20, 184, 166, 0.12), transparent 28%),
+            linear-gradient(135deg, #ffffff 0%, #eef6f5 100%);
+        padding: 1rem;
+        margin: 1rem 0 1.25rem;
+    }
+    .source-update-panel h3 {
+        color: #172033;
+        font-size: 1.18rem;
+        line-height: 1.25;
+        margin: 0.35rem 0 0.5rem;
+    }
+    .source-update-panel p {
+        color: #475569;
+        font-size: 0.94rem;
+        line-height: 1.45;
+        margin: 0;
+    }
+    .source-update-kicker,
+    .source-update-card span {
+        color: #0f766e;
+        display: block;
+        font-size: 0.74rem;
+        font-weight: 850;
+        text-transform: uppercase;
+    }
+    .source-update-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin: 0.85rem 0 1.1rem;
+    }
+    .source-update-grid-tight {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 0;
+    }
+    .source-update-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.8rem 0.85rem;
+        min-height: 10.25rem;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    }
+    .source-update-card strong {
+        color: #172033;
+        display: block;
+        font-size: 0.98rem;
+        line-height: 1.25;
+        margin: 0.35rem 0 0.42rem;
+    }
+    .source-update-card p {
+        color: #475569;
+        font-size: 0.88rem;
+        line-height: 1.38;
+        margin: 0;
+    }
+    .north-slope-ml-card {
+        min-height: 8.5rem;
     }
     .think-grid.topic-wall {
         position: relative;
@@ -2555,7 +2697,7 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
         .pipeline-node:not(:last-child)::after { display: none; }
         .agent-lanes { grid-template-columns: 1fr; }
@@ -2585,14 +2727,14 @@ st.markdown(
     }
     .stApp {
         background:
-            radial-gradient(circle at 8% 0%, rgba(20,184,166,0.20), transparent 30%),
-            radial-gradient(circle at 92% 8%, rgba(249,115,22,0.16), transparent 28%),
-            linear-gradient(145deg, #07111f 0%, #111827 48%, #0f172a 100%) !important;
-        color: #e5edf7 !important;
+            radial-gradient(circle at 8% 0%, rgba(20,184,166,0.13), transparent 28%),
+            radial-gradient(circle at 92% 8%, rgba(249,115,22,0.10), transparent 28%),
+            linear-gradient(145deg, #f8fafc 0%, #eef6f5 46%, #f7f3ea 100%) !important;
+        color: #172033 !important;
     }
     section[data-testid="stSidebar"] {
-        background: #07111f !important;
-        border-right: 1px solid rgba(148, 163, 184, 0.22);
+        background: #ffffff !important;
+        border-right: 1px solid #d8dee8;
     }
     .talk-hero,
     .portfolio-intro,
@@ -2605,9 +2747,9 @@ st.markdown(
     .sketch-card,
     .ai-case-brief,
     .compare-panel {
-        background: rgba(15, 23, 42, 0.82) !important;
-        border: 1px solid rgba(148, 163, 184, 0.28) !important;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+        background: rgba(255, 255, 255, 0.88) !important;
+        border: 1px solid rgba(203, 213, 225, 0.92) !important;
+        box-shadow: 0 18px 46px rgba(15, 23, 42, 0.10);
     }
     .portfolio-intro {
         max-width: none;
@@ -2617,30 +2759,32 @@ st.markdown(
     }
     .talk-hero {
         border-radius: 16px;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 118, 110, 0.28)) !important;
+        background:
+            radial-gradient(circle at 85% 0%, rgba(20,184,166,0.16), transparent 28%),
+            linear-gradient(135deg, rgba(255,255,255,0.96), rgba(236,253,245,0.92)) !important;
     }
     .portfolio-eyebrow,
-    .talk-kicker { color: #5eead4 !important; letter-spacing: 0.08em; }
+    .talk-kicker { color: #0f766e !important; letter-spacing: 0.04em; }
     .portfolio-intro h1,
     .talk-hero h2,
     .section-heading-title,
     .think-title,
     .think-question,
-    h1, h2, h3, h4 { color: #f8fafc !important; }
+    h1, h2, h3, h4 { color: #172033 !important; }
     .portfolio-intro p,
     .talk-hero p,
     .section-heading span,
     .small-note,
     .ml-body,
     .timeline-node em,
-    .vision-card p { color: #cbd5e1 !important; }
+    .vision-card p { color: #475569 !important; }
     .think-grid.topic-wall {
         border-radius: 18px;
         background:
             radial-gradient(circle at 12% 16%, rgba(20,184,166,0.20), transparent 20%),
             radial-gradient(circle at 88% 22%, rgba(249,115,22,0.18), transparent 22%),
             radial-gradient(circle at 50% 95%, rgba(96,165,250,0.20), transparent 24%),
-            linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.88) 100%) !important;
+            linear-gradient(135deg, rgba(255,255,255,0.93) 0%, rgba(239,246,255,0.88) 100%) !important;
     }
     .think-card,
     .vision-card,
@@ -2650,15 +2794,15 @@ st.markdown(
     .source-chip,
     div[data-testid="stMetric"],
     div[data-testid="stVerticalBlockBorderWrapper"] {
-        background: rgba(15, 23, 42, 0.84) !important;
-        border-color: rgba(148, 163, 184, 0.28) !important;
-        color: #e5edf7 !important;
+        background: rgba(255, 255, 255, 0.92) !important;
+        border-color: rgba(203, 213, 225, 0.96) !important;
+        color: #172033 !important;
     }
     .think-card { border-radius: 14px; }
     .think-card-link:hover .think-card,
     .think-card-link:focus .think-card {
-        border-color: #5eead4 !important;
-        box-shadow: 0 16px 42px rgba(20, 184, 166, 0.24);
+        border-color: #0f766e !important;
+        box-shadow: 0 16px 42px rgba(20, 184, 166, 0.16);
     }
     .topic-poster {
         background: #020617 !important;
@@ -2668,9 +2812,9 @@ st.markdown(
     .topic-room-visual > img,
     .topic-pattern.fallback-pattern { background: #020617 !important; }
     .think-raise {
-        background: rgba(20, 184, 166, 0.12) !important;
-        color: #ccfbf1 !important;
-        border-left-color: #5eead4 !important;
+        background: #ecfdf5 !important;
+        color: #134e4a !important;
+        border-left-color: #0f766e !important;
     }
     .project-status,
     .portfolio-proof span,
@@ -2679,21 +2823,22 @@ st.markdown(
     .node-pill,
     .ai-chip,
     .motion-pill {
-        background: rgba(15, 23, 42, 0.92) !important;
-        border-color: rgba(94, 234, 212, 0.30) !important;
-        color: #e0f2fe !important;
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+        color: #334155 !important;
     }
     .stAlert {
-        background: rgba(15, 23, 42, 0.88) !important;
-        color: #e5edf7 !important;
+        background: #ffffff !important;
+        color: #172033 !important;
+        border: 1px solid #d8dee8 !important;
     }
     .stAlert p,
     .stAlert li,
     div[data-testid="stMarkdownContainer"] p {
-        color: #dbeafe;
+        color: #334155;
     }
-    .future-timeline .timeline-node span { color: #5eead4 !important; }
-    .future-timeline .timeline-node strong { color: #f8fafc !important; }
+    .future-timeline .timeline-node span { color: #0f766e !important; }
+    .future-timeline .timeline-node strong { color: #172033 !important; }
     .drive-source-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
@@ -2703,15 +2848,15 @@ st.markdown(
     .drive-source-card {
         background:
             radial-gradient(circle at 90% 0%, rgba(45,212,191,0.16), transparent 32%),
-            rgba(15, 23, 42, 0.88);
-        border: 1px solid rgba(148, 163, 184, 0.28);
-        border-radius: 18px;
+            rgba(255, 255, 255, 0.94);
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
         padding: 1rem;
         min-height: 15rem;
-        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
     }
     .drive-source-card .source-status {
-        color: #5eead4;
+        color: #0f766e;
         font-size: 0.78rem;
         font-weight: 800;
         letter-spacing: 0.08em;
@@ -2723,14 +2868,14 @@ st.markdown(
         line-height: 1.25;
     }
     .drive-source-card p {
-        color: #cbd5e1 !important;
+        color: #475569 !important;
         margin: 0.35rem 0;
         font-size: 0.92rem;
     }
     .drive-source-card a {
         display: inline-flex;
         margin-top: 0.75rem;
-        color: #ecfeff;
+        color: #ffffff;
         background: #0f766e;
         border-radius: 999px;
         padding: 0.45rem 0.75rem;
@@ -2896,6 +3041,59 @@ def render_ml_strip(row: pd.Series, compact: bool = False) -> None:
         f"""
 <div class="{css_class}">
   {''.join(cards)}
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_gmail_source_update(compact: bool = False) -> None:
+    shown = GMAIL_SOURCE_UPDATES[:3] if compact else GMAIL_SOURCE_UPDATES
+    cards = "".join(
+        f"""
+<div class="source-update-card">
+  <span>{escape(item["label"])}</span>
+  <strong>{escape(item["title"])}</strong>
+  <p>{escape(item["body"])}</p>
+</div>
+        """
+        for item in shown
+    )
+    st.markdown(
+        f"""
+<div class="source-update-grid">
+  {cards}
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_north_slope_ml_update() -> None:
+    cards = "".join(
+        f"""
+<div class="source-update-card north-slope-ml-card">
+  <span>{escape(title)}</span>
+  <p>{escape(body)}</p>
+</div>
+        """
+        for title, body in NORTH_SLOPE_ML_UPDATES
+    )
+    st.markdown(
+        f"""
+<div class="source-update-panel">
+  <div>
+    <span class="source-update-kicker">New source integration</span>
+    <h3>North Slope ML scaffold now needs visible validation gates</h3>
+    <p>
+      The new notes make the project stronger if the audience can see the path from
+      public data to features to a model, and then through leakage, split, drift, and
+      expert-review checks before any hydrate-screening output is trusted.
+    </p>
+  </div>
+  <div class="source-update-grid source-update-grid-tight">
+    {cards}
+  </div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -4489,6 +4687,12 @@ elif section == "Vision Board":
         unsafe_allow_html=True,
     )
 
+    st.subheader("New source updates to apply")
+    st.caption(
+        "Pulled from the self-sent Gmail attachments on June 10, 2026: website brand/design workflow and ML project reference notes."
+    )
+    render_gmail_source_update(compact=False)
+
     status_counts = vision_board["status"].value_counts()
     change_status_counts = website_change_ideas["status"].value_counts()
     vision_metrics = st.columns(4)
@@ -5132,6 +5336,7 @@ elif section == "Think Tank Topics":
                     file_name="north_slope_source_index.md",
                     mime="text/markdown",
                 )
+        render_north_slope_ml_update()
     render_workflow_blueprint(topic)
 
     with st.expander("Switch think tank topic"):
@@ -5490,6 +5695,12 @@ elif section == "Machine Learning Future":
         "Use this page as the high-level map: the same structure appears under each think tank topic, "
         "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
     )
+
+    st.subheader("New ML and design source notes")
+    st.caption(
+        "Pulled from the latest Gmail source attachments and translated into portfolio update requirements."
+    )
+    render_gmail_source_update(compact=False)
 
     with st.expander("Research backbone for this roadmap", expanded=True):
         st.write(
