@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-10 / drive-asset-refresh"
+DEPLOY_BUILD_ID = "2026-06-10 / public-nav-cleanup"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -4512,7 +4512,6 @@ PUBLIC_SECTIONS = [
     "Topics",
     "Interactives",
     "Visual Lab",
-    "Vision",
     "About",
     "Build Room",
 ]
@@ -4521,10 +4520,10 @@ PUBLIC_TO_INTERNAL = {
     "Topics": "Think Tank Topics",
     "Interactives": "Structural Explorer",
     "Visual Lab": "Processing Visual Lab",
-    "Vision": "Vision Board",
     "About": "Contact / Ideas",
 }
 BUILD_ROOM_SECTIONS = [
+    "Vision Board",
     "System Map",
     "Evidence Library",
     "LinkedIn Evidence",
@@ -4535,7 +4534,6 @@ BUILD_ROOM_SECTIONS = [
     "Update Inbox",
     "Build Plan",
     "Machine Learning Future",
-    "Presentation View",
     "Mobile View",
     "Case Studies",
 ]
@@ -4545,11 +4543,11 @@ PUBLIC_LABELS = {
     "Topics": "Topics · evidence and future systems",
     "Interactives": "Interactives · working scientific tools",
     "Visual Lab": "Visual Lab · motion and Processing",
-    "Vision": "Vision · now, next, and later",
     "About": "About · share an idea or correction",
     "Build Room": "Build Room · sources, code, and review",
 }
 BUILD_ROOM_LABELS = {
+    "Vision Board": "Vision Board / internal tracker",
     "System Map": "Architecture / System Map",
     "Evidence Library": "Sources and Evidence Library",
     "LinkedIn Evidence": "LinkedIn evidence",
@@ -4560,7 +4558,6 @@ BUILD_ROOM_LABELS = {
     "Update Inbox": "Update Inbox",
     "Build Plan": "Build Plan",
     "Machine Learning Future": "ML research index",
-    "Presentation View": "Presentation system",
     "Mobile View": "Mobile preview",
     "Case Studies": "Case-study inventory",
 }
@@ -4656,13 +4653,12 @@ if section == "Overview":
     )
 
     st.subheader("Explore the system")
-    fast_cols = st.columns(6)
-    fast_cols[0].link_button("System Map", "?section=System%20Map")
-    fast_cols[1].link_button("Vision Board", "?section=Vision%20Board")
-    fast_cols[2].link_button("Structural Explorer", "?section=Structural%20Explorer")
-    fast_cols[3].link_button("Presentation View", "?section=Presentation%20View")
-    fast_cols[4].link_button("Visual Audit", "?section=Visual%20Audit")
-    fast_cols[5].link_button("Phone View", "?section=Mobile%20View")
+    fast_cols = st.columns(5)
+    fast_cols[0].link_button("Topics", "?section=Think%20Tank%20Topics")
+    fast_cols[1].link_button("Structural Explorer", "?section=Structural%20Explorer")
+    fast_cols[2].link_button("Visual Lab", "?section=Processing%20Visual%20Lab")
+    fast_cols[3].link_button("Contact / Ideas", "?section=Contact%20/%20Ideas")
+    fast_cols[4].link_button("Phone View", "?section=Mobile%20View")
 
     with st.expander("About this portfolio"):
         st.write(
@@ -5114,147 +5110,6 @@ elif section == "Structural Explorer":
             "can change structural layers, inspect depth, and connect the model to "
             "public wells and assessment units."
         )
-
-
-elif section == "Presentation View":
-    st.markdown(
-        """
-<div class="talk-hero">
-  <div class="talk-kicker">Talk view for AI + geoscience professionals</div>
-  <h2>From scattered research artifacts to AI-assisted geoscience pipelines</h2>
-  <p>
-    The strongest claim here is practical: AI becomes valuable when it can see the work,
-    help organize the evidence, turn experiments into repeatable systems, and expose what
-    still needs expert validation.
-  </p>
-</div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.subheader("The core argument")
-    pillar_cols = st.columns(4)
-    for col, (title, body) in zip(pillar_cols, PRESENTATION_PILLARS):
-        with col:
-            with st.container(border=True):
-                st.markdown(f"**{title}**")
-                st.write(body)
-
-    st.subheader("How to read every project")
-    st.write(
-        "Each topic should be evaluated with the same four-part lens: "
-        "what bottleneck is being addressed, why it has persisted, how AI was actually used in the current example, "
-        "and what a modern AI/ML implementation would need to make it trustworthy."
-    )
-
-    st.subheader("Workflow architecture")
-    pipeline_cols = st.columns(len(WORKFLOW_STAGES))
-    for col, (title, body) in zip(pipeline_cols, WORKFLOW_STAGES):
-        with col:
-            st.markdown(
-                f"""
-<div class="pipeline-step">
-  <strong>{title}</strong><br>
-  <span>{body}</span>
-</div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    st.subheader("Evidence you can show live")
-    evidence_cols = st.columns([1.1, 1])
-    with evidence_cols[0]:
-        video_rows = linkedin_evidence[linkedin_evidence["category"] == "video"]
-        selected_video = st.selectbox(
-            "Embedded video",
-            video_rows["title"].tolist(),
-            key="presentation_video",
-        )
-        video_row = video_rows[video_rows["title"] == selected_video].iloc[0]
-        video_path = existing_path(video_row["local_path"])
-        if video_path is not None:
-            st.video(str(video_path))
-            st.caption(video_row["linkedin_signal"])
-        else:
-            st.warning("Organized local video file not found.")
-
-    with evidence_cols[1]:
-        featured_visuals = project_visuals[
-            project_visuals["project_key"].isin(
-                [
-                    "thesis_knowledge_graph",
-                    "north_slope",
-                    "arcgis_raster_ml",
-                    "rock_classification",
-                    "valles_caldera",
-                    "pondicherry",
-                ]
-            )
-        ].sort_values(["project_key", "sort_order"])
-        project_options = featured_visuals["project_key"].drop_duplicates().tolist()
-        selected_visual_project = st.selectbox(
-            "Evidence project",
-            project_options,
-            format_func=lambda key: next(
-                (
-                    topic["title"]
-                    for topic in TOPIC_ROOMS
-                    if topic["project_key"] == key
-                ),
-                key.replace("_", " ").title(),
-            ),
-            key="presentation_visual_project",
-        )
-        project_visual_options = featured_visuals[
-            featured_visuals["project_key"] == selected_visual_project
-        ]
-        visual_titles = project_visual_options["title"].tolist()
-        selected_visual_title = st.selectbox(
-            "Visual from this project",
-            visual_titles,
-            key="presentation_visual",
-        )
-        selected_visual = project_visual_options[
-            project_visual_options["title"] == selected_visual_title
-        ].iloc[0]
-        visual_path = project_asset(selected_visual["asset_path"])
-        if visual_path.exists():
-            st.image(str(visual_path), caption=selected_visual["caption"], use_container_width=True)
-        else:
-            st.warning("Visual asset not found.")
-
-    st.subheader("What people who know more may ask")
-    insight_cols = st.columns(3)
-    for idx, (title, body) in enumerate(EXPERT_INSIGHTS):
-        with insight_cols[idx % 3]:
-            with st.container(border=True):
-                st.markdown(f"**{title}**")
-                st.write(body)
-
-    st.subheader("Talk path")
-    path_cols = st.columns(3)
-    with path_cols[0]:
-        st.markdown("**1. Open with honesty**")
-        st.write(
-            "AI was used as a working collaborator: screenshots, repeated next-step prompting, "
-            "file search, code edits, notebook interpretation, and evidence organization."
-        )
-    with path_cols[1]:
-        st.markdown("**2. Show the proof**")
-        st.write(
-            "Use the embedded thesis video, Processing earthquake visualization, QGIS/Handshake screenshots, "
-            "Gephi files, and rock-classification deck as concrete artifacts."
-        )
-    with path_cols[2]:
-        st.markdown("**3. Invite expert critique**")
-        st.write(
-            "Ask what validation, labels, uncertainty, schema, and data provenance would make each project "
-            "more useful as an ML or scientific-agent workflow."
-        )
-
-    st.subheader("Organized evidence folders")
-    folder_display = organized_folders[["title", "contents", "folder"]]
-    st.dataframe(folder_display, hide_index=True, use_container_width=True)
 
 
 elif section == "Think Tank Topics":
