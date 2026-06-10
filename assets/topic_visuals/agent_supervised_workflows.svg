@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" role="img" aria-labelledby="title desc">
+  <title id="title">Prompting and supervised agent training workflow</title>
+  <desc id="desc">A diagram showing prompt and rubric evidence becoming supervised machine learning examples for scientific software agents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5f1e8"/>
+      <stop offset="1" stop-color="#e7f7f8"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0b1f3a" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0l10 5-10 5z" fill="#0b1f3a"/>
+    </marker>
+  </defs>
+  <rect width="980" height="560" rx="28" fill="url(#bg)"/>
+  <g fill="none" stroke="#d7dee6" stroke-width="1">
+    <path d="M44 84h892M44 178h892M44 272h892M44 366h892M44 460h892"/>
+    <path d="M132 44v472M276 44v472M420 44v472M564 44v472M708 44v472M852 44v472"/>
+  </g>
+  <text x="58" y="68" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="26" font-weight="800">Prompting becomes agent training data</text>
+  <text x="60" y="101" fill="#435160" font-family="Arial, sans-serif" font-size="16">The project-specific skill is not the software name. It is turning human work into supervised examples agents can learn from.</text>
+
+  <g filter="url(#softShadow)">
+    <rect x="68" y="150" width="164" height="104" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="92" y="184" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Prompt</text>
+    <text x="92" y="209" fill="#536171" font-family="Arial, sans-serif" font-size="13">task wording</text>
+    <text x="92" y="232" fill="#f28c28" font-family="Arial, sans-serif" font-size="13" font-weight="700">rubric visible</text>
+
+    <rect x="286" y="138" width="188" height="128" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <rect x="306" y="164" width="148" height="68" rx="8" fill="#0b1f3a"/>
+    <circle cx="328" cy="188" r="9" fill="#f28c28"/>
+    <path d="M354 213h72M354 190h48" stroke="#7ed6df" stroke-width="8" stroke-linecap="round"/>
+    <text x="306" y="251" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="14" font-weight="800">screen recorded work</text>
+
+    <rect x="530" y="150" width="174" height="104" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="558" y="184" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Supervised ML</text>
+    <path d="M572 211h92" stroke="#f28c28" stroke-width="7" stroke-linecap="round"/>
+    <path d="M572 232h64" stroke="#7ed6df" stroke-width="7" stroke-linecap="round"/>
+
+    <rect x="758" y="138" width="156" height="128" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="786" y="178" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Agent run</text>
+    <text x="786" y="205" fill="#536171" font-family="Arial, sans-serif" font-size="13">executes task</text>
+    <rect x="786" y="224" width="86" height="18" rx="9" fill="#f28c28"/>
+  </g>
+
+  <g stroke="#0b1f3a" stroke-width="3.5" marker-end="url(#arrow)" fill="none">
+    <path d="M236 202h42"/>
+    <path d="M478 202h43"/>
+    <path d="M708 202h42"/>
+  </g>
+
+  <g>
+    <rect x="84" y="340" width="812" height="128" rx="18" fill="#0b1f3a"/>
+    <text x="118" y="376" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="800">What agents could execute after training</text>
+    <text x="118" y="407" fill="#c7d2fe" font-family="Arial, sans-serif" font-size="14">QGIS maps</text>
+    <text x="284" y="407" fill="#c7d2fe" font-family="Arial, sans-serif" font-size="14">ParaView volumes</text>
+    <text x="486" y="407" fill="#c7d2fe" font-family="Arial, sans-serif" font-size="14">3D Slicer workflows</text>
+    <text x="716" y="407" fill="#c7d2fe" font-family="Arial, sans-serif" font-size="14">KiCad boards</text>
+    <path d="M132 426h92M298 426h124M500 426h154M728 426h94" stroke="#7ed6df" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <rect x="122" y="492" width="736" height="34" rx="17" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="190" y="514" fill="#9a3412" font-family="Arial, sans-serif" font-size="14" font-weight="800">Future: agents handle repetitive software steps; humans lead new projects.</text>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" role="img" aria-labelledby="title desc">
+  <title id="title">Using AI for web scraping public energy data</title>
+  <desc id="desc">A diagram showing public maps, reports, APIs, and shapefiles scraped into one organized energy data environment.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#0b1f3a"/>
+    </marker>
+  </defs>
+  <rect width="980" height="560" rx="28" fill="#f8fafc"/>
+  <text x="56" y="66" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="27" font-weight="800">AI scrapes public energy data</text>
+  <text x="58" y="98" fill="#475569" font-family="Arial, sans-serif" font-size="15">The North Slope story is public-source hunting, data organization, and visual screening.</text>
+
+  <g transform="translate(58 142)">
+    <rect x="0" y="0" width="220" height="74" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="24" y="30" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Public maps</text>
+    <text x="24" y="54" fill="#536171" font-family="Arial, sans-serif" font-size="13">subsurface / geology layers</text>
+    <rect x="0" y="108" width="220" height="74" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="24" y="138" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Reports + PDFs</text>
+    <text x="24" y="162" fill="#536171" font-family="Arial, sans-serif" font-size="13">methods, formations, evidence</text>
+    <rect x="0" y="216" width="220" height="74" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="24" y="246" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Shapefiles + APIs</text>
+    <text x="24" y="270" fill="#536171" font-family="Arial, sans-serif" font-size="13">coordinates, wells, boundaries</text>
+  </g>
+
+  <g stroke="#0b1f3a" stroke-width="3.5" marker-end="url(#arrow)" fill="none">
+    <path d="M284 179h100"/>
+    <path d="M284 287h100"/>
+    <path d="M284 395h100"/>
+    <path d="M578 287h94"/>
+  </g>
+
+  <g transform="translate(396 178)">
+    <rect width="170" height="220" rx="18" fill="#0b1f3a"/>
+    <text x="36" y="46" fill="#ffffff" font-family="Arial, sans-serif" font-size="19" font-weight="800">AI scraper</text>
+    <text x="34" y="78" fill="#bfeff3" font-family="Arial, sans-serif" font-size="13">searches</text>
+    <text x="34" y="104" fill="#bfeff3" font-family="Arial, sans-serif" font-size="13">downloads</text>
+    <text x="34" y="130" fill="#bfeff3" font-family="Arial, sans-serif" font-size="13">normalizes names</text>
+    <text x="34" y="156" fill="#bfeff3" font-family="Arial, sans-serif" font-size="13">logs provenance</text>
+    <rect x="34" y="178" width="102" height="20" rx="10" fill="#f28c28"/>
+  </g>
+
+  <g transform="translate(684 144)">
+    <rect width="238" height="304" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="28" y="42" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="18" font-weight="800">One workbench</text>
+    <rect x="28" y="74" width="182" height="46" rx="10" fill="#e7f7f8"/>
+    <text x="44" y="102" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="13" font-weight="800">well scaffold view</text>
+    <rect x="28" y="140" width="182" height="46" rx="10" fill="#fff7ed"/>
+    <text x="44" y="168" fill="#9a3412" font-family="Arial, sans-serif" font-size="13" font-weight="800">3D map + surfaces</text>
+    <rect x="28" y="206" width="182" height="46" rx="10" fill="#eff6ff"/>
+    <text x="44" y="234" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="13" font-weight="800">source library</text>
+  </g>
+
+  <rect x="128" y="486" width="724" height="34" rx="17" fill="#fff1f2" stroke="#fecdd3"/>
+  <text x="173" y="508" fill="#991b1b" font-family="Arial, sans-serif" font-size="14" font-weight="800">Boundary: use public skeleton data for portfolio examples, not restricted well logs.</text>
+</svg>

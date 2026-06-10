@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" role="img" aria-labelledby="title desc">
+  <title id="title">AI visualization turns earthquake data into model variables</title>
+  <desc id="desc">A diagram showing earthquake locations on a globe converted into two-dimensional time-window features for prediction models.</desc>
+  <defs>
+    <radialGradient id="globe" cx="42%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#7ed6df"/>
+      <stop offset="0.58" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#0b1f3a"/>
+    </radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#0b1f3a"/>
+    </marker>
+  </defs>
+  <rect width="980" height="560" rx="28" fill="#f8fafc"/>
+  <text x="56" y="66" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="27" font-weight="800">AI visualization creates model variables</text>
+  <text x="58" y="98" fill="#475569" font-family="Arial, sans-serif" font-size="15">The Processing globe is the example: prompt, code, iterate, then rethink the data shape.</text>
+
+  <g transform="translate(84 138)">
+    <circle cx="150" cy="160" r="128" fill="url(#globe)"/>
+    <ellipse cx="150" cy="160" rx="126" ry="38" fill="none" stroke="#ffffff" stroke-opacity="0.48" stroke-width="2"/>
+    <ellipse cx="150" cy="160" rx="62" ry="128" fill="none" stroke="#ffffff" stroke-opacity="0.42" stroke-width="2"/>
+    <path d="M50 104c58 28 137 30 202 2M54 220c66-32 134-31 196 0" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="2"/>
+    <g fill="#f28c28">
+      <circle cx="104" cy="112" r="6"/>
+      <circle cx="190" cy="138" r="9"/>
+      <circle cx="154" cy="218" r="5"/>
+      <circle cx="220" cy="205" r="7"/>
+      <circle cx="92" cy="204" r="8"/>
+    </g>
+    <text x="56" y="328" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="16" font-weight="800">3D event locations</text>
+    <text x="48" y="352" fill="#536171" font-family="Arial, sans-serif" font-size="13">lat, lon, depth, magnitude, time</text>
+  </g>
+
+  <g stroke="#0b1f3a" stroke-width="3.5" marker-end="url(#arrow)" fill="none">
+    <path d="M344 302h108"/>
+    <path d="M606 302h108"/>
+  </g>
+
+  <g transform="translate(430 172)">
+    <rect x="0" y="0" width="190" height="232" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="28" y="44" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="18" font-weight="800">AI feature maker</text>
+    <text x="28" y="76" fill="#536171" font-family="Arial, sans-serif" font-size="13">ask ChatGPT for code</text>
+    <text x="28" y="100" fill="#536171" font-family="Arial, sans-serif" font-size="13">iterate Processing sketch</text>
+    <text x="28" y="124" fill="#536171" font-family="Arial, sans-serif" font-size="13">transform variables</text>
+    <rect x="28" y="154" width="134" height="18" rx="9" fill="#7ed6df"/>
+    <rect x="28" y="184" width="98" height="18" rx="9" fill="#f28c28"/>
+  </g>
+
+  <g transform="translate(720 150)">
+    <rect x="0" y="0" width="204" height="260" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="28" y="42" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="18" font-weight="800">2D over time</text>
+    <g stroke="#0b1f3a" stroke-width="2" fill="none">
+      <path d="M34 214h134M34 62v152"/>
+      <path d="M42 190c22-42 44-66 72-44s42 20 58-38" stroke="#f28c28" stroke-width="4"/>
+      <path d="M42 152c28-12 52-8 74 6s34 12 56-24" stroke="#7ed6df" stroke-width="4"/>
+    </g>
+    <text x="36" y="240" fill="#536171" font-family="Arial, sans-serif" font-size="13">windows, rates, clusters, lagged features</text>
+  </g>
+
+  <rect x="176" y="488" width="628" height="34" rx="17" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="248" y="510" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="14" font-weight="800">Future: turn 3D patterns into testable model features.</text>
+</svg>

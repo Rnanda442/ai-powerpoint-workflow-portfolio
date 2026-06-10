@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Ambient-noise processing workflow</title>
+  <desc id="desc">Stations record noise, station pairs cross-correlate, stacks build signal, and monitoring outputs are reviewed.</desc>
+  <rect width="1200" height="675" fill="#06111f"/>
+  <g opacity=".18" stroke="#93c5fd" stroke-width="2">
+    <path d="M0 118H1200M0 236H1200M0 354H1200M0 472H1200M0 590H1200"/>
+    <path d="M150 0V675M300 0V675M450 0V675M600 0V675M750 0V675M900 0V675M1050 0V675"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <path d="M70 180c40 0 40-42 80-42s40 42 80 42 40-42 80-42 40 42 80 42" stroke="#38bdf8" stroke-width="9"/>
+    <path d="M70 250c35 0 35-24 70-24s35 24 70 24 35-24 70-24 35 24 70 24 35-24 70-24" stroke="#14b8a6" stroke-width="7" opacity=".9"/>
+    <path d="M70 320c30 0 30-15 60-15s30 15 60 15 30-15 60-15 30 15 60 15 30-15 60-15" stroke="#f97316" stroke-width="6" opacity=".85"/>
+  </g>
+  <g stroke="#94a3b8" stroke-width="3" fill="none" opacity=".8">
+    <path d="M350 455C470 360 650 360 770 455"/>
+    <path d="M350 455C520 520 600 520 770 455"/>
+    <path d="M350 455C455 430 665 430 770 455"/>
+  </g>
+  <g>
+    <circle cx="350" cy="455" r="34" fill="#0f766e"/>
+    <circle cx="560" cy="395" r="34" fill="#2563eb"/>
+    <circle cx="770" cy="455" r="34" fill="#0f766e"/>
+    <circle cx="560" cy="520" r="34" fill="#f97316"/>
+    <g fill="#fff" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">
+      <text x="350" y="464">STA</text>
+      <text x="560" y="404">CCF</text>
+      <text x="770" y="464">STA</text>
+      <text x="560" y="529">STACK</text>
+    </g>
+  </g>
+  <g fill="#e2e8f0" font-family="Arial, sans-serif">
+    <text x="70" y="82" font-size="44" font-weight="800">Ambient Noise To Monitoring</text>
+    <text x="70" y="126" font-size="22">window noise -> cross-correlate station pairs -> stack -> review change</text>
+    <text x="820" y="600" font-size="28" font-weight="800" fill="#fff">AI question</text>
+    <text x="820" y="632" font-size="20">Which correlations are signal, and which are noise?</text>
+  </g>
+  <g transform="translate(830 170)">
+    <rect width="280" height="245" rx="18" fill="#f8fafc"/>
+    <rect x="24" y="32" width="232" height="36" rx="8" fill="#dbeafe"/>
+    <rect x="24" y="90" width="232" height="36" rx="8" fill="#ccfbf1"/>
+    <rect x="24" y="148" width="232" height="36" rx="8" fill="#fed7aa"/>
+    <path d="M40 50h185M40 108h165M40 166h195" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/>
+    <text x="24" y="220" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#0f172a">COMPUTE + QA LOG</text>
+  </g>
+</svg>

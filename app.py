@@ -280,6 +280,21 @@ TOPIC_ROOMS = [
         "question": "How should AI help compare map products without flattening field uncertainty and geologic judgment?",
     },
     {
+        "slug": "near_surface",
+        "title": "AI For Near-Surface Geophysics",
+        "tagline": "A Valles fen investigation topic built from the Near-Surface Dwellers deck: hammer seismic, transient EM, ERT, geologic units, and line intersections.",
+        "project_key": "near_surface_geophysics",
+        "hero": "assets/topic_visuals/near_surface_ai.svg",
+        "theme": "Hammer seismic + ERT/TEM + geologic units + field interpretation.",
+        "bottleneck": "Near-surface field surveys produce overlapping but imperfect views of shallow geology, and the hard part is aligning lines, units, method limits, and field context.",
+        "why_not_done": "The measurements exist, but turning them into one defensible interpretation is slow because line intersections, method sensitivity, uncertainty, and geologic labels have to be reconciled.",
+        "ai_used": "AI can help organize deck evidence, compare survey lines, label possible units, and keep method-specific uncertainty visible instead of collapsing everything into one clean answer.",
+        "future_ai": "A stronger version would let users toggle hammer seismic, ERT, TEM, mapped units, and confidence bands, then ask AI to explain where methods agree or conflict.",
+        "why_it_matters": "This topic turns the Valles field evidence into a concrete AI question: how should models support shallow-subsurface interpretation without overwriting field judgment?",
+        "proof": ["Near-Surface Dwellers deck", "Valles fen context", "Hammer seismic", "Transient EM", "ERT / seismic line intersection"],
+        "question": "Can AI compare shallow geophysical methods while preserving disagreement between survey types?",
+    },
+    {
         "slug": "moho_ml",
         "title": "Supervised ML For Moho Depth Mapping",
         "tagline": "A real class project example: train on gravity/Moho relationships in Australia, then test whether the learned pattern transfers to the USA.",
@@ -295,9 +310,24 @@ TOPIC_ROOMS = [
         "question": "How do we know a geoscience ML model learned a transferable pattern instead of memorizing one region?",
     },
     {
+        "slug": "ambient_noise",
+        "title": "AI For Ambient-Noise Seismology",
+        "tagline": "NoisePy and ambient-noise workflows as a topic about turning continuous station noise into cross-correlations, stacks, monitoring, and scalable QA.",
+        "project_key": "ambient_noise",
+        "hero": "assets/topic_visuals/ambient_noise_processing.svg",
+        "theme": "Continuous records + station pairs + cross-correlation + stacking + monitoring.",
+        "bottleneck": "Ambient-noise workflows can create huge numbers of station pairs, files, cross-correlations, and stacks before anyone knows which outputs are physically useful.",
+        "why_not_done": "The workflow is computationally heavy and quality-sensitive: windowing, preprocessing, CCF generation, stacking, plotting, and station metadata all need review.",
+        "ai_used": "AI can help explain NoisePy steps, organize station-pair outputs, flag weak correlations, and summarize compute/QA logs for human review.",
+        "future_ai": "A future workflow could use AI-assisted QC to triage station pairs, detect unstable stacks, document parameter choices, and make monitoring changes easier to audit.",
+        "why_it_matters": "This gives the seismic section a software-scale example: AI is not just interpreting one trace, it can help manage continuous data pipelines.",
+        "proof": ["NoisePy deck", "Ambient Noise Seismology", "station windows", "cross-correlations", "stacking and monitoring"],
+        "question": "How should AI decide which ambient-noise correlations are trustworthy enough to monitor?",
+    },
+    {
         "slug": "stock_workflow",
-        "title": "AI-Assisted App Building And Data Pipelines",
-        "tagline": "A stock dashboard example for discussing Codex, GitHub, cloud workflows, automation, and how young people think about AI-driven opportunity.",
+        "title": "AI App Building, Automation, And Model Risk",
+        "tagline": "How Codex-style tools can turn messy local files into tracked apps while keeping testing, leakage, and decision risk visible.",
         "project_key": "stock_dashboard",
         "hero": "assets/project_visuals/stock_all_tickers_chart.svg",
         "theme": "Codex + local files + GitHub + Streamlit + model-evaluation honesty.",
@@ -305,9 +335,24 @@ TOPIC_ROOMS = [
         "why_not_done": "Before Codex, building an app from notebook screenshots meant repetitive copying, local debugging, and scattered files. The new workflow can organize existing work, track changes, and push more of the build into GitHub/cloud-style systems.",
         "ai_used": "Codex organized local downloads, inspected existing notebook/app outputs, built Streamlit structure, helped debug charts, and made the workflow feel less like copy-paste and more like a system.",
         "future_ai": "A future version would separate training and unseen evaluation data, keep GitHub-tracked pipelines, automate refreshes, and use cloud/virtual desktop workflows so local storage and CPU are less of a bottleneck.",
-        "why_it_matters": "This opens a bigger discussion: if jobs and markets are changing, what practical AI skills help young people build tools, test ideas, and maybe create value without pretending the model is magic?",
+        "why_it_matters": "This opens a bigger discussion: practical AI skills now include building apps, automating pipelines, reading model outputs critically, and knowing when a prediction workflow is not trustworthy yet.",
         "proof": ["stockprediction2025 dashboard", "GitHub Actions pipeline", "Streamlit charts", "model-baseline notes"],
         "question": "How can Codex-style tools help people build real apps without hiding model risk or data leakage?",
+    },
+    {
+        "slug": "sem_petrography",
+        "title": "AI For SEM Petrography And Climate Proxies",
+        "tagline": "SEM petrography slides reframed as a topic about mineral texture labels, detrital/authigenic interpretation, kaolinite morphology, and paleoclimate signals.",
+        "project_key": "sem_petrography",
+        "hero": "assets/topic_visuals/sem_petrography_ai.svg",
+        "theme": "SEM images + clay minerals + morphology labels + environmental interpretation.",
+        "bottleneck": "SEM petrography can show tiny mineral textures, but turning those textures into climate or reservoir claims requires careful label definitions and expert review.",
+        "why_not_done": "Image interpretation is not enough: detrital versus authigenic context, kaolinite form, weathering history, and literature support must be connected.",
+        "ai_used": "AI can help organize SEM slide evidence, propose visual labels, compare morphology categories, and separate observation from interpretation.",
+        "future_ai": "A future version could pair SEM crops, mineral labels, literature claims, and expert decisions into a multimodal training set for petrographic interpretation.",
+        "why_it_matters": "This is a stronger AI topic than a generic rock card because it asks how image models can help with microscopic evidence while preserving geologic reasoning.",
+        "proof": ["SEM Petrography deck", "carbonates/evaporites/clays", "detrital vs authigenic examples", "kaolinite morphology", "paleoclimate proxy reasoning"],
+        "question": "Can AI label SEM textures without confusing observation, interpretation, and climate proxy claims?",
     },
 ]
 
@@ -317,6 +362,7 @@ MOBILE_TOPIC_SLUGS = [
     "processing_earthquake",
     "north_slope",
     "seismic",
+    "near_surface",
     "rock_classification",
 ]
 
@@ -392,18 +438,51 @@ TOPIC_FRAMES = {
         "raise": "Raise your hand if you want to talk about field data, uncertainty, and map fusion.",
         "pattern": ["field", "gravity", "EM", "review"],
     },
+    "near_surface": {
+        "question": "Can AI compare shallow geophysical methods without erasing disagreement?",
+        "example": "The Near-Surface Dwellers Valles fen deck is the example.",
+        "raise": "AI advance: line intersections, ERT, TEM, seismic, and geologic units become one review board.",
+        "pattern": ["fen", "seismic", "ERT", "TEM"],
+    },
     "moho_ml": {
         "question": "Did it transfer or memorize?",
         "example": "The Australia-to-USA gravity/Moho supervised ML project is the example.",
         "raise": "Raise your hand if you want to talk about leakage, transfer tests, and honest model scoring.",
         "pattern": ["train", "test", "transfer", "residual"],
     },
-    "stock_workflow": {
-        "question": "Build faster. Test honestly.",
-        "example": "The stock dashboard and GitHub/cloud workflow are the example.",
-        "raise": "Raise your hand if you want to talk about AI, money, app building, and model risk.",
-        "pattern": ["files", "Codex", "GitHub", "app"],
+    "ambient_noise": {
+        "question": "Which ambient-noise correlations are real enough to monitor?",
+        "example": "The NoisePy ambient-noise deck is the example.",
+        "raise": "AI advance: continuous noise becomes station-pair stacks with compute logs and QC gates.",
+        "pattern": ["noise", "CCF", "stack", "QC"],
     },
+    "stock_workflow": {
+        "question": "How should AI help people build apps without hiding model risk?",
+        "example": "The stock dashboard and GitHub/cloud workflow are only the example.",
+        "raise": "AI advance: local files become a tracked app, then a validation gate blocks weak predictions.",
+        "pattern": ["files", "Codex", "pipeline", "risk"],
+    },
+    "sem_petrography": {
+        "question": "Can AI label SEM textures without overclaiming climate meaning?",
+        "example": "The SEM petrography deck is the example.",
+        "raise": "AI advance: microscope textures become reviewed labels, not automatic conclusions.",
+        "pattern": ["SEM", "clay", "label", "review"],
+    },
+}
+
+TOPIC_AI_LEVERS = {
+    "ai_workflow": "AI use: demonstrations become action traces, rubrics, and agent training examples.",
+    "thesis_graph": "AI use: notes and drawings become graph structure that experts can query and correct.",
+    "processing_earthquake": "AI use: creative code turns raw events into visible, audible patterns.",
+    "seismic": "AI use: notebooks become repeatable waveform QA, picking, and uncertainty workflows.",
+    "north_slope": "AI use: public geology is organized into screening features and expert-review gates.",
+    "rock_classification": "AI use: images, chemistry, and maps become labeled multimodal training evidence.",
+    "valles": "AI use: imperfect survey layers are compared without erasing uncertainty.",
+    "near_surface": "AI use: shallow seismic, ERT, TEM, and unit labels become a reviewable field board.",
+    "moho_ml": "AI use: models are judged by transfer, residuals, and leakage checks.",
+    "ambient_noise": "AI use: station-pair noise processing gets QC, compute tracking, and monitoring summaries.",
+    "stock_workflow": "AI use: messy files become a cloud-ready app pipeline with honest testing.",
+    "sem_petrography": "AI use: SEM textures become expert-reviewed mineral and proxy labels.",
 }
 
 TOPIC_VISUALS = {
@@ -414,8 +493,11 @@ TOPIC_VISUALS = {
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
     "valles": "assets/topic_visuals/field_geophysics.svg",
+    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
+    "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+    "sem_petrography": "assets/topic_visuals/sem_petrography_ai.svg",
 }
 
 CARD_VISUALS = {
@@ -425,9 +507,12 @@ CARD_VISUALS = {
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
     "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
-    "valles": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
+    "valles": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_05.jpg",
+    "near_surface": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
-    "stock_workflow": "assets/project_visuals/stock_saved_data_chart.svg",
+    "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
+    "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+    "sem_petrography": "assets/topic_visuals/sem_petrography_ai.svg",
 }
 
 WORKFLOW_NODE_ICONS = {
@@ -573,6 +658,17 @@ WORKFLOW_BLUEPRINTS = {
         ],
         "outcome": "AI helps compare imperfect surveys without pretending they are perfect.",
     },
+    "near_surface": {
+        "title": "fen survey -> method comparison",
+        "steps": [
+            ("Field lines", "fen geometry"),
+            ("Hammer seismic", "velocity clues"),
+            ("ERT/TEM", "conductivity"),
+            ("Units", "possible geology"),
+            ("Review", "method conflict"),
+        ],
+        "outcome": "AI helps line up shallow surveys while keeping disagreements visible.",
+    },
     "moho_ml": {
         "title": "train region -> transfer test",
         "steps": [
@@ -584,6 +680,17 @@ WORKFLOW_BLUEPRINTS = {
         ],
         "outcome": "A model is useful only if it survives new geography and expert review.",
     },
+    "ambient_noise": {
+        "title": "continuous noise -> monitoring signal",
+        "steps": [
+            ("Stations", "continuous records"),
+            ("Window", "noise segments"),
+            ("CCF", "station pairs"),
+            ("Stack", "stable signal"),
+            ("Monitor", "change review"),
+        ],
+        "outcome": "AI helps triage massive ambient-noise outputs before interpretation.",
+    },
     "stock_workflow": {
         "title": "local notebook -> tracked app",
         "steps": [
@@ -594,6 +701,17 @@ WORKFLOW_BLUEPRINTS = {
             ("Risk check", "leakage"),
         ],
         "outcome": "Young builders can make useful tools faster without trusting fake model scores.",
+    },
+    "sem_petrography": {
+        "title": "SEM texture -> reviewed proxy",
+        "steps": [
+            ("SEM image", "micro texture"),
+            ("Mineral label", "clay form"),
+            ("Context", "detrital/authigenic"),
+            ("Proxy", "climate question"),
+            ("Review", "expert call"),
+        ],
+        "outcome": "AI helps organize microscope evidence without turning labels into unsupported claims.",
     },
 }
 
@@ -633,15 +751,30 @@ DISCUSSION_PROMPTS = {
         "What would a field geophysicist want to see first?",
         "Where does map fusion become misleading?",
     ],
+    "near_surface": [
+        "Which shallow method should lead: hammer seismic, ERT, or TEM?",
+        "How should line intersections be used to validate interpretation?",
+        "Where should an AI system leave the geology unresolved?",
+    ],
     "moho_ml": [
         "What is the cleanest way to test regional transfer?",
         "Which model family would you try before an ANN today?",
         "How should residual maps guide geology review?",
     ],
+    "ambient_noise": [
+        "Which station pairs should be trusted first?",
+        "What QC flags would make NoisePy outputs easier to review?",
+        "How should compute cost and parameter choices stay visible?",
+    ],
     "stock_workflow": [
         "What AI skills help young people build practical tools?",
         "How do we keep model testing honest?",
         "What belongs in GitHub/cloud instead of a laptop folder?",
+    ],
+    "sem_petrography": [
+        "What SEM labels are visually defensible?",
+        "Where does petrographic observation end and climate interpretation begin?",
+        "What expert-reviewed examples would a model need before it is useful?",
     ],
 }
 
@@ -671,6 +804,15 @@ EVIDENCE_LEADS = {
     ],
     "stock_workflow": [
         ("Stock dashboard folder", "C:\\Users\\gargi\\Downloads\\stockprediction2025"),
+    ],
+    "near_surface": [
+        ("Near-Surface Dwellers deck", "https://docs.google.com/presentation/d/1bY4HCjuD-60DU6IMZXA_DAMeqza3Gq_xH_-Xd_-NwIA"),
+    ],
+    "ambient_noise": [
+        ("NoisePy deck", "https://docs.google.com/presentation/d/1db8rT7vo8nEx8ZHyfIiOEqbIz4rheQdT8rVrc0B_BBs"),
+    ],
+    "sem_petrography": [
+        ("SEM petrography deck", "https://docs.google.com/presentation/d/1vvMzqiRPkHiyPTyq6fZki04ZMUor7N1zR0SPebxmX_w"),
     ],
 }
 
@@ -731,6 +873,14 @@ PROCESSING_SKETCH_PLANS = {
         "future_ml": "Data fusion, anomaly segmentation, uncertainty tagging, and map-comparison assistants.",
         "processing_notes": "Use alpha-blended fields and noise-based gray regions that never fully resolve.",
     },
+    "near_surface": {
+        "sketch": "near_surface_method_board",
+        "visual": "A fen cross-section receives three moving layers: hammer-seismic velocity, ERT resistivity, and TEM conductivity. Agreement glows; conflict stays striped.",
+        "motion": ["survey-line sweep", "layer alignment", "conflict stripes", "expert pin"],
+        "conclusion": "AI can compare shallow methods, but unresolved zones should stay visible.",
+        "future_ml": "Cross-method registration, uncertainty tagging, line-intersection QA, and promptable shallow-subsurface review.",
+        "processing_notes": "Use stacked translucent bands, vertical survey lines, and blinking conflict cells where methods disagree.",
+    },
     "moho_ml": {
         "sketch": "transfer_residual_loop",
         "visual": "A training cluster on the left feeds a neural-node chain. Predictions land on a new region, then residual dots flash where transfer fails.",
@@ -739,6 +889,14 @@ PROCESSING_SKETCH_PLANS = {
         "future_ml": "Spatial cross-validation, transfer learning, residual mapping, uncertainty estimates, and model-family comparison.",
         "processing_notes": "Use two point clouds, a simple node network, and red/blue residual particles after prediction.",
     },
+    "ambient_noise": {
+        "sketch": "ambient_noise_correlation_loop",
+        "visual": "Noise traces from many stations flow into pairwise arcs. Strong correlations stack into a bright center line while weak pairs fade into a QC bin.",
+        "motion": ["trace windows", "station-pair arcs", "stack brightening", "QC fade"],
+        "conclusion": "AI can help manage continuous seismic pipelines by triaging station pairs and making processing choices auditable.",
+        "future_ml": "Correlation QC, unstable-stack detection, parameter recommendation, compute-log summarization, and monitoring change detection.",
+        "processing_notes": "Use many tiny traces, curved station-pair connectors, and a central stack line that only brightens after enough consistent pairs.",
+    },
     "stock_workflow": {
         "sketch": "codex_pipeline_risk_gate_loop",
         "visual": "Chaotic file dots fall into a Codex node, split into GitHub branches and dashboard panels, then pass through a leakage-check gate.",
@@ -746,6 +904,14 @@ PROCESSING_SKETCH_PLANS = {
         "conclusion": "AI helps people build tools quickly, but useful apps need honest model testing and visible risk checks.",
         "future_ml": "Pipeline automation, model monitoring, leakage detection, cloud refreshes, and human-reviewed decision support.",
         "processing_notes": "Animate falling particles into lanes, branch lines, mini dashboard rectangles, and a red gate that blocks bad scores.",
+    },
+    "sem_petrography": {
+        "sketch": "sem_texture_label_review",
+        "visual": "SEM-like grayscale textures drift under a magnifier. Candidate labels attach to grains, then unsupported interpretation labels are rejected by a review gate.",
+        "motion": ["texture scan", "label snap", "proxy branch", "review reject"],
+        "conclusion": "AI can help label petrographic textures, but climate and reservoir interpretations need evidence and expert review.",
+        "future_ml": "Multimodal SEM classifiers, literature-linked labels, expert review queues, and proxy-claim audit trails.",
+        "processing_notes": "Use grayscale noise fields, contour-like grain edges, small orange label points, and a red review gate for overclaims.",
     },
 }
 
@@ -898,6 +1064,48 @@ TOPIC_SITE_UPDATES = {
             ("Gray conflict", "method disagreement stays unresolved"),
         ],
     },
+    "near_surface": {
+        "kicker": "New deck-derived topic",
+        "title": "Near-Surface Dwellers becomes a shallow-method review board",
+        "intro": (
+            "The deck is not just another Valles slide source: it focuses on fen-scale "
+            "hammer seismic, transient EM, ERT, possible units, and line intersections."
+        ),
+        "items": [
+            ("Hammer seismic", "velocity clue"),
+            ("ERT / TEM", "conductivity clue"),
+            ("Line intersection", "method comparison checkpoint"),
+            ("Possible units", "interpretation needs field review"),
+        ],
+    },
+    "ambient_noise": {
+        "kicker": "New deck-derived topic",
+        "title": "NoisePy becomes a continuous-data pipeline topic",
+        "intro": (
+            "The ambient-noise deck adds a software-scale seismic workflow: station noise, "
+            "cross-correlations, stacking, monitoring, compute cost, and QC."
+        ),
+        "items": [
+            ("Window", "split continuous station noise"),
+            ("CCF", "cross-correlate station pairs"),
+            ("Stack", "build stable signals"),
+            ("QC", "flag weak or unstable outputs"),
+        ],
+    },
+    "sem_petrography": {
+        "kicker": "New deck-derived topic",
+        "title": "SEM petrography becomes a microscopic-label topic",
+        "intro": (
+            "The SEM deck is stronger as its own AI question because it connects image "
+            "texture, mineral form, detrital/authigenic context, and climate proxy claims."
+        ),
+        "items": [
+            ("SEM image", "microscopic visual evidence"),
+            ("Clay form", "kaolinite and mineral texture labels"),
+            ("Context", "detrital versus authigenic distinction"),
+            ("Proxy claim", "expert-reviewed interpretation"),
+        ],
+    },
 }
 
 SLIDE_SOURCE_UPDATES = {
@@ -910,15 +1118,25 @@ SLIDE_SOURCE_UPDATES = {
     ],
     "seismic": [
         ("EarthScope and exploration seismology decks", "replace generic seismic visuals with waveform, field, and notebook-method proof"),
-        ("NoisePy", "hold as a possible ambient-noise subsection"),
+        ("NoisePy", "promoted to its own ambient-noise topic"),
     ],
     "rock_classification": [
-        ("SEM petrography deck", "add petrography examples as visual-label evidence"),
+        ("SEM petrography deck", "promoted to its own microscopic-label and climate-proxy topic"),
         ("Thin-section/classification slides", "crop to the rock/mineral examples and map outputs"),
     ],
     "valles": [
         ("SAGE / Valles deck", "use method-comparison figures and field-context slides"),
         ("Alaska Seismotech portfolio", "use only if it clarifies applied geophysics value"),
+        ("Near-Surface Dwellers", "promoted to its own shallow geophysics topic"),
+    ],
+    "near_surface": [
+        ("Near-Surface Dwellers Presentation", "use fen context, hammer seismic, transient EM, possible units, and line-intersection slides"),
+    ],
+    "ambient_noise": [
+        ("NoisePy", "use ambient-noise station windows, CCF, stack, monitoring, and compute/QC slides"),
+    ],
+    "sem_petrography": [
+        ("SEM petrography", "use SEM theory, clay-mineral examples, detrital/authigenic distinction, and kaolinite proxy reasoning"),
     ],
 }
 
@@ -1036,6 +1254,20 @@ DETAILED_TOPIC_PLANS = {
         "labels": ["gravity", "EM", "seismic", "agree", "uncertain"],
         "do_not_claim": "Do not claim one unified true subsurface model.",
     },
+    "near_surface": {
+        "title": "Near-Surface Field Methods With Visible Conflict",
+        "question": "Can AI compare shallow geophysical methods without erasing disagreement?",
+        "anchor": "The Near-Surface Dwellers deck anchors hammer seismic, transient EM, ERT, Valles fen context, possible units, and line intersections.",
+        "conclusion": "AI can organize shallow-method evidence, but method conflict and possible units need to remain reviewable.",
+        "techniques": ["cross-method registration", "line-intersection QA", "uncertainty tagging"],
+        "inputs": ["hammer seismic lines", "ERT sections", "TEM context", "fen maps", "possible units", "field notes"],
+        "outputs": ["method-overlap board", "conflict zones", "reviewed unit candidates"],
+        "bottleneck": "Near-surface surveys differ in sensitivity and geometry, so simple overlays can make disagreement look resolved.",
+        "validate": "A human still checks line geometry, field constraints, acquisition artifacts, unit labels, and whether methods are actually comparable.",
+        "storyboard": ["fen cross-section appears", "seismic and ERT layers slide in", "line intersection glows", "conflict zones stay striped"],
+        "labels": ["fen", "seismic", "ERT", "TEM", "conflict"],
+        "do_not_claim": "Do not claim the AI found the true shallow geology from method overlays alone.",
+    },
     "moho_ml": {
         "title": "Honest Transfer Testing For Moho ML",
         "question": "How do we know a geoscience ML model actually transfers?",
@@ -1050,6 +1282,20 @@ DETAILED_TOPIC_PLANS = {
         "labels": ["train", "test region", "R2?", "residual", "leakage check"],
         "do_not_claim": "Do not claim strong generalization unless spatial validation supports it.",
     },
+    "ambient_noise": {
+        "title": "Ambient-Noise Seismology As A Scalable Pipeline",
+        "question": "Which station-pair correlations are trustworthy enough to monitor?",
+        "anchor": "The NoisePy deck anchors continuous records, station windows, cross-correlation, stacking, monitoring, compute scale, and QC.",
+        "conclusion": "AI can help triage continuous seismic processing, but correlation quality and parameter choices must stay auditable.",
+        "techniques": ["correlation QC", "stack stability checks", "monitoring anomaly review"],
+        "inputs": ["continuous waveforms", "station metadata", "noise windows", "station pairs", "processing parameters", "compute logs"],
+        "outputs": ["CCF quality flags", "stacked signals", "monitoring summaries", "parameter audit trails"],
+        "bottleneck": "Ambient-noise workflows scale quickly into thousands of station pairs and millions of files.",
+        "validate": "A human still checks station metadata, preprocessing choices, seasonal effects, unstable stacks, and whether changes are physical.",
+        "storyboard": ["continuous traces split into windows", "station-pair arcs form", "strong correlations stack", "weak pairs fall into QC"],
+        "labels": ["noise", "window", "CCF", "stack", "monitor"],
+        "do_not_claim": "Do not claim every correlation is a geologic signal.",
+    },
     "stock_workflow": {
         "title": "Codex, Pipelines, And Honest App Building",
         "question": "Can Codex help young builders make useful apps without fooling themselves?",
@@ -1063,6 +1309,20 @@ DETAILED_TOPIC_PLANS = {
         "storyboard": ["chaotic files rain into Codex", "GitHub branches split", "Streamlit panels appear", "red leakage gate blocks bad scores"],
         "labels": ["files", "Codex", "GitHub", "dashboard", "leakage gate"],
         "do_not_claim": "Do not claim reliable prediction just because the dashboard runs.",
+    },
+    "sem_petrography": {
+        "title": "SEM Petrography Labels And Proxy Claims",
+        "question": "Can AI label SEM textures without overclaiming climate meaning?",
+        "anchor": "The SEM petrography deck anchors carbonates/evaporites/clays, detrital versus authigenic interpretation, kaolinite morphology, and paleoclimate proxy reasoning.",
+        "conclusion": "AI can help organize microscopic labels, but proxy interpretation needs literature support and expert petrography.",
+        "techniques": ["multimodal image labeling", "literature-linked feature definitions", "expert review queues"],
+        "inputs": ["SEM image crops", "mineral labels", "morphology classes", "lake/environment context", "literature claims", "expert notes"],
+        "outputs": ["reviewed texture labels", "proxy-claim audit trail", "candidate training examples"],
+        "bottleneck": "A texture label can be visually plausible while the environmental interpretation is unsupported or context-dependent.",
+        "validate": "A human still checks whether labels are visible, whether minerals are detrital or authigenic, and whether proxy claims follow from the evidence.",
+        "storyboard": ["SEM field of view scans", "candidate labels snap to grains", "proxy branches appear", "review gate rejects overclaims"],
+        "labels": ["SEM", "texture", "clay", "proxy", "review"],
+        "do_not_claim": "Do not claim climate reconstruction from image labels alone.",
     },
 }
 
@@ -1130,6 +1390,15 @@ AI_WORKFLOW_EVIDENCE = {
         "validated": "Instrument limits, anomaly interpretation, terrain constraints, uncertainty, and whether map comparisons were geologically defensible.",
         "future": "A future system would compare geophysical products side by side while preserving method uncertainty and expert comments.",
     },
+    "near_surface": {
+        "description": "Near-Surface Dwellers deck becomes a field-method comparison workflow.",
+        "chips": ["Hammer seismic", "ERT/TEM", "Line intersections"],
+        "where": "AI helped separate this from the broader Valles topic because the deck focuses on fen-scale shallow methods and possible units.",
+        "gave": "Near-Surface Dwellers slides, Valles fen context, hammer seismic, transient EM, ERT/seismic line intersections, and possible geologic unit labels.",
+        "produced": "A new topic room about comparing shallow geophysical methods while preserving conflict and uncertainty.",
+        "validated": "Survey geometry, line intersections, possible units, method limits, and whether agreement is real or just an overlay artifact.",
+        "future": "A future tool would align shallow survey lines, expose conflicts, and let experts approve unit interpretations.",
+    },
     "moho_ml": {
         "description": "A real supervised ML example becomes a discussion about transfer, leakage, and reproducibility.",
         "chips": ["Gravity inputs", "ANN-style model", "Transfer test"],
@@ -1138,6 +1407,15 @@ AI_WORKFLOW_EVIDENCE = {
         "produced": "A new topic room that separates actual past ML from future speculative AI workflows.",
         "validated": "Train/test boundaries, model leakage, whether R2 means anything on unseen geography, and whether the prediction makes geologic sense.",
         "future": "A current version would compare ANN, tree ensembles, Gaussian/process-style uncertainty, spatial cross-validation, and residual maps before claiming it works.",
+    },
+    "ambient_noise": {
+        "description": "NoisePy deck becomes a continuous-data seismic pipeline topic.",
+        "chips": ["Noise windows", "CCF", "Stack/QC"],
+        "where": "AI helped identify this as a separate workflow: station-pair processing and monitoring are different from one-off seismic picking.",
+        "gave": "NoisePy slides, ambient-noise seismology framing, station-window steps, cross-correlation, stacking, monitoring, and compute/QC details.",
+        "produced": "A new topic room about using AI to manage continuous seismic processing at scale.",
+        "validated": "Station metadata, preprocessing choices, pair quality, stack stability, compute assumptions, and whether monitoring changes are physical.",
+        "future": "A future assistant would flag weak correlations, summarize parameter choices, and document why a station pair was trusted or rejected.",
     },
     "stock_workflow": {
         "description": "Codex turns scattered local analysis into a tracked app-building workflow.",
@@ -1148,7 +1426,875 @@ AI_WORKFLOW_EVIDENCE = {
         "validated": "Whether model tests use truly unseen data, whether results are biased by leakage, and whether the app is a tool rather than a financial claim.",
         "future": "A future version would run tracked pipelines through GitHub/cloud or virtual desktops, separate training/evaluation windows, and keep model claims honest.",
     },
+    "sem_petrography": {
+        "description": "SEM petrography deck becomes a microscopic-label and proxy-claim topic.",
+        "chips": ["SEM textures", "Clay labels", "Proxy review"],
+        "where": "AI helped split SEM petrography from the general rock-classification topic because it is about microscopic evidence and interpretation boundaries.",
+        "gave": "SEM petrography slides, clay-mineral examples, detrital/authigenic distinctions, kaolinite morphology notes, and paleoclimate proxy reasoning.",
+        "produced": "A new topic room about how image AI could support petrography without overclaiming climate interpretation.",
+        "validated": "Visible texture labels, mineral context, detrital/authigenic distinction, literature support, and expert petrographic judgment.",
+        "future": "A future workflow would pair SEM crops, reviewed labels, literature snippets, and expert decisions into a multimodal training/evaluation set.",
+    },
 }
+
+EMAIL_TOPIC_ROOM_OVERRIDES = {
+    "ai_workflow": {
+        "title": "Prompting, Rubrics, And Agent Training",
+        "tagline": "Human prompts, rubrics, and screen-recorded scientific software work become supervised examples for future agents.",
+        "hero": "assets/topic_visuals/agent_supervised_workflows.svg",
+        "theme": "Prompt/rubric -> virtual software work -> supervised ML for scientific agents.",
+        "bottleneck": "The bottleneck is workforce time: people still do repetitive software labor by hand before they can move into higher-level leadership and project design.",
+        "why_not_done": "Agents do not learn enough from final screenshots alone. They need the prompt, the rubric, the screen recording, the files, the mistakes, and the human judgement that says the output worked.",
+        "ai_used": "ChatGPT and Codex help turn prompts, screenshots, rubrics, and virtual software recordings into structured examples for supervised agent training.",
+        "future_ai": "Humans write the prompts and goals; agents execute workflows in QGIS, ParaView, 3D Slicer, KiCad, and similar tools with less supervision over time.",
+        "why_it_matters": "If agents can run labor-heavy software tasks, people can spend more time leading new projects in energy, commerce, agriculture, and field operations.",
+        "proof": ["Prompt/rubric screenshots", "Screen-recorded virtual work", "QGIS and ParaView examples", "Agent-training workflow diagram"],
+        "question": "Will screenshots and ChatGPT prompting be replaced by Codex?",
+    },
+    "thesis_graph": {
+        "title": "AI Knowledge Graphs And Project Diagrams",
+        "tagline": "Tables, questions, and scientific drawings become knowledge graphs, ML architecture diagrams, and clearer research explanations.",
+        "hero": "assets/topic_visuals/knowledge_architecture_ai.svg",
+        "theme": "Many inputs -> AI/ML structure -> graph, architecture, and visual explanation.",
+        "bottleneck": "Critical-mineral research becomes wordy and scattered when the relationships live only in papers, notes, and slide text.",
+        "why_not_done": "The hard work is deciding what the variables are, which relationships have evidence, and which AI-suggested links still need a geologist to review them.",
+        "ai_used": "AI helps convert tables, CSVs, drawings, and project questions into graph structures and visual architectures that are easier to inspect.",
+        "future_ai": "More accurate critical-mineral workflows could use AI to connect variables, show uncertainty, and build visual programs for complex accumulation questions.",
+        "why_it_matters": "Project architecture is easier to understand when people can see how variables connect instead of reading a wall of text.",
+        "proof": ["REE thesis deck", "Adobe-style deposit drawings", "Gephi graph exports", "Node and edge tables"],
+        "question": "Knowledge graphs and diagrams built using AI: are they the next way to understand project architectures?",
+    },
+    "processing_earthquake": {
+        "title": "AI Visualization For Prediction Variables",
+        "tagline": "A Processing earthquake globe becomes the example for turning spatial events into model-ready variables.",
+        "hero": "assets/topic_visuals/data_variable_transform.svg",
+        "theme": "Prompt -> Processing code -> 3D visual -> 2D time-window variables.",
+        "bottleneck": "Earthquake catalogs are hard to model directly when location, depth, magnitude, and time are all tangled in a 3D visual problem.",
+        "why_not_done": "The first version was creative and useful for seeing patterns, but prediction work needs repeatable features, time windows, and honest limits.",
+        "ai_used": "The user asked ChatGPT to write Processing code that maps earthquake locations onto a globe, then iterated with AI until the sketch worked.",
+        "future_ai": "AI can help convert the original 3D visualization into 2D-over-time variables for linear and nonlinear regression experiments.",
+        "why_it_matters": "The real topic is not only a cool globe. It is how AI can reshape messy data into variables that models can test.",
+        "proof": ["Processing earthquake globe", "USGS event attributes", "ChatGPT coding loop", "future feature-conversion diagram"],
+        "question": "Can we use AI to visualize data into new variables for prediction models?",
+    },
+    "seismic": {
+        "title": "Large Data Processing Streamlined With AI",
+        "tagline": "Codex, GitHub, and cloud workspaces make large seismic and satellite datasets easier to process, share, and review.",
+        "project_key": "pondicherry",
+        "hero": "assets/topic_visuals/cloud_data_processing.svg",
+        "theme": "Phone prompt -> Codex -> GitHub -> cloud compute -> collaborative science output.",
+        "bottleneck": "Large scientific datasets can keep people waiting at one machine instead of moving the workflow through cloud computers and version control.",
+        "why_not_done": "The files are big, the environments are fragile, and collaboration is slow when processing lives only in a local notebook or desktop folder.",
+        "ai_used": "Codex can inspect code, edit notebooks, run tasks in virtual/cloud environments, and help commit/push reproducible processing steps.",
+        "future_ai": "People could start or monitor large workflows from a phone while OpenScienceLab, Alaska Satellite Facility cloud tools, or other virtual machines handle the heavy processing.",
+        "why_it_matters": "The AI advance is practical access: process, document, and collaborate faster without waiting at one computer.",
+        "proof": ["Seismic notebook evidence", "OpenScienceLab workflow idea", "Alaska Satellite Facility cloud idea", "GitHub collaboration path"],
+        "question": "How can Codex make large scientific data processing faster from cloud workspaces?",
+    },
+    "north_slope": {
+        "title": "Using AI For Web Scraping Public Energy Data",
+        "tagline": "AI helps find public subsurface maps, shapefiles, reports, and APIs, then organizes them into one screening workspace.",
+        "hero": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
+        "theme": "Public web search -> scraper/API organization -> source library -> Streamlit well scaffold.",
+        "bottleneck": "Public North Slope material is scattered across maps, PDFs, shapefiles, state/federal sources, and project notes.",
+        "why_not_done": "The hard part is not one map. It is finding the sources, preserving provenance, cleaning names and coordinates, and making a public-safe scaffold without exposing restricted well data.",
+        "ai_used": "AI helps scour the web for public subsurface maps and shapefiles, organize API/source pulls, and turn them into Streamlit visuals and source libraries.",
+        "future_ai": "A stronger version would scrape and organize public data into a live workspace with well skeletons, 3D context, and source-confidence flags.",
+        "why_it_matters": "For energy screening, the useful AI skill is turning fragmented public evidence into a workspace experts can actually review.",
+        "proof": ["North Slope Streamlit map", "well scaffold concept", "public source library", "gas hydrate ML planning docs"],
+        "question": "How can AI scrape and organize public subsurface sources into one usable workspace?",
+    },
+    "rock_classification": {
+        "title": "Rock Type Classification From Satellite Variables",
+        "tagline": "Satellite and GIS variables become reviewed rock-type classes, with critical-mineral visuals used as explanation support.",
+        "hero": "assets/topic_visuals/satellite_rock_classification.svg",
+        "theme": "ADV GIS variables + satellite layers + classifier + reviewed resource-map output.",
+        "bottleneck": "Rock classification from remote sensing can look clean while hiding mixed pixels, bad labels, and weak validation.",
+        "why_not_done": "Satellite variables, terrain context, and map labels need review before a classifier can be trusted. Geochemical plots can explain complexity, but they are not the same as satellite features.",
+        "ai_used": "AI helps organize ADV GIS-style satellite variables, compare feature groups, simplify the verbal story, and keep uncertainty visible.",
+        "future_ai": "Future models could combine satellite bands, DEM derivatives, structures, and reviewed labels to improve rock-type maps.",
+        "why_it_matters": "This makes the topic about AI advances in classification, not just a list of old project artifacts.",
+        "proof": ["ADV GIS final presentation", "satellite variables", "critical-mineral heatmaps and spider diagrams", "reviewed map outputs"],
+        "question": "Can AI classify rock types from satellite variables more accurately?",
+    },
+    "valles": {
+        "title": "AI For Field Geophysics Method Comparison",
+        "tagline": "Near-surface Valles evidence replaces the unrelated person image with graphs, lines, methods, and uncertainty.",
+        "hero": "assets/project_visuals/valles_bouguer.png",
+        "theme": "Hammer seismic + TEM/ERT + gravity context + field uncertainty.",
+        "bottleneck": "Field teams need to compare imperfect surveys without pretending one method gives the final answer.",
+        "why_not_done": "Each method sees different physics at different resolution, and field errors, line geometry, and possible units complicate the comparison.",
+        "ai_used": "AI helps organize the Near-Surface Dwellers deck into a method-comparison board with seismic, ERT/TEM, line intersections, and possible units.",
+        "future_ai": "A stronger tool would let reviewers compare methods side by side, flag conflicts, and keep uncertain zones visible.",
+        "why_it_matters": "The topic becomes a real field-geophysics question instead of a generic SAGE profile page.",
+        "proof": ["Near-Surface Dwellers deck", "Valles fen lines", "ERT/TEM comparisons", "seismic processing panels"],
+        "question": "How should AI compare imperfect geophysical surveys without flattening uncertainty?",
+    },
+    "moho_ml": {
+        "title": "ML Architecture For Gas Hydrate Prediction",
+        "tagline": "North Slope ML slides and documents become a clear architecture: public-safe inputs, feature lanes, models, validation, and leakage gates.",
+        "project_key": "north_slope",
+        "hero": "assets/topic_visuals/north_slope_ml_architecture.svg",
+        "theme": "Well-log scaffold -> feature separation -> classification/regression/ANN -> held-out wells.",
+        "bottleneck": "ML can look impressive while leaking target information or testing on depth samples too close to the training data.",
+        "why_not_done": "A trustworthy hydrate model needs skeleton well data, normalized public-safe features, separate target lanes, and validation by complete wells.",
+        "ai_used": "AI helps turn the North Slope Word doc, updated slides, and hydrate ML paper into a model architecture diagram that explains why ML is the backbone.",
+        "future_ai": "A stronger implementation would compare a baseline, classification for hydrate occurrence, regression for saturation, and an ANN challenger under held-out-well validation.",
+        "why_it_matters": "This shows how AI workflows become actual ML systems: inputs, leakage controls, validation, and human review.",
+        "proof": ["Updated North Slope Word doc", "updated North Slope slides", "Chong et al. ANN gas hydrate paper", "public-safe well-log scaffold"],
+        "question": "What ML architecture can predict hydrate occurrence and saturation without leaking target data?",
+    },
+    "stock_workflow": {
+        "title": "Current Stock Prediction App Workflow",
+        "tagline": "Use the updated Streamlit stock app visuals to explain AI app building, pipeline organization, and model-risk honesty.",
+        "hero": "assets/project_visuals/stock_all_tickers_chart.svg",
+        "theme": "Codex app building + Streamlit visuals + GitHub workflow + model-risk gate.",
+        "bottleneck": "AI can make an app quickly, but finance-looking dashboards can mislead people if model evaluation is weak.",
+        "why_not_done": "The old public navigator visual made this look like a stale stock-prediction project instead of a current AI-assisted app-building workflow.",
+        "ai_used": "Codex helped inspect the local app, organize files, update Streamlit visuals, and frame model leakage/testing as part of the story.",
+        "future_ai": "A stronger version would track refreshes, separate training and unseen evaluation data, monitor drift, and make the app useful without overstating prediction power.",
+        "why_it_matters": "This is a relatable example of AI-assisted app building: the app works, but the claims still need human judgement.",
+        "proof": ["updated Streamlit stock app", "all-tickers chart", "saved-data chart", "model-risk notes"],
+        "question": "How can the current stock prediction app show AI app building without hiding model risk?",
+    },
+}
+
+EMAIL_FRAME_OVERRIDES = {
+    "ai_workflow": {
+        "question": "Will screenshots and ChatGPT prompting be replaced by Codex?",
+        "example": "Prompt/rubric screenshots plus screen-recorded scientific software work are the example.",
+        "raise": "AI advance: supervised training data for agents, not generic demos.",
+        "pattern": ["prompt", "rubric", "record", "agent"],
+    },
+    "thesis_graph": {
+        "question": "Can AI-built graphs and diagrams explain project architecture?",
+        "example": "Tables, project questions, and Adobe drawings become graph and ML architecture views.",
+        "raise": "AI advance: words become structures people can inspect.",
+        "pattern": ["tables", "questions", "AI", "graph"],
+    },
+    "processing_earthquake": {
+        "question": "Can AI visualize data into new variables for prediction models?",
+        "example": "The ChatGPT-to-Processing earthquake globe is the example.",
+        "raise": "AI advance: a 3D visual problem becomes model-ready time features.",
+        "pattern": ["events", "globe", "features", "model"],
+    },
+    "seismic": {
+        "question": "Can Codex streamline large data processing in cloud workspaces?",
+        "example": "Seismic and satellite-scale workflows are the example.",
+        "raise": "AI advance: cloud compute, GitHub, and Codex reduce local waiting.",
+        "pattern": ["phone", "Codex", "cloud", "GitHub"],
+    },
+    "north_slope": {
+        "question": "Can AI scrape public sources into one energy-data workspace?",
+        "example": "North Slope maps, shapefiles, APIs, and well skeletons are the example.",
+        "raise": "AI advance: web scraping plus source organization becomes a public-data workbench.",
+        "pattern": ["web", "sources", "scrape", "map"],
+    },
+    "rock_classification": {
+        "question": "Can AI classify rock types from satellite variables?",
+        "example": "ADV GIS satellite variables and reviewed rock maps are the example.",
+        "raise": "AI advance: remote-sensing variables become reviewed map classes.",
+        "pattern": ["satellite", "features", "class", "review"],
+    },
+    "valles": {
+        "question": "How should AI compare imperfect geophysical surveys?",
+        "example": "Near-Surface Dwellers seismic, ERT, TEM, and Valles line intersections are the example.",
+        "raise": "AI advance: compare methods while uncertainty stays visible.",
+        "pattern": ["seismic", "ERT", "TEM", "uncertain"],
+    },
+    "moho_ml": {
+        "question": "What ML architecture predicts hydrates without leakage?",
+        "example": "North Slope well-log inputs and complete-well validation are the example.",
+        "raise": "AI advance: project notes become an actual model architecture.",
+        "pattern": ["inputs", "features", "models", "validation"],
+    },
+    "stock_workflow": {
+        "question": "Can the current stock app teach honest AI app building?",
+        "example": "The updated Streamlit stock dashboard is the example.",
+        "raise": "AI advance: app building plus model-risk checks, not a stale prediction screenshot.",
+        "pattern": ["Streamlit", "Codex", "risk", "GitHub"],
+    },
+}
+
+EMAIL_AI_LEVER_OVERRIDES = {
+    "ai_workflow": "AI use: prompts and recordings become supervised agent-training examples.",
+    "thesis_graph": "AI use: tables and drawings become graphs, diagrams, and architecture maps.",
+    "processing_earthquake": "AI use: visualization reshapes raw events into model-ready variables.",
+    "seismic": "AI use: Codex moves large data work into cloud and GitHub workflows.",
+    "north_slope": "AI use: web scraping organizes public energy data into one workspace.",
+    "rock_classification": "AI use: satellite variables become reviewed rock-type classifications.",
+    "valles": "AI use: survey methods are compared without hiding uncertainty.",
+    "moho_ml": "AI use: North Slope notes become a leakage-aware ML architecture.",
+    "stock_workflow": "AI use: the current app shows build speed plus model-risk discipline.",
+}
+
+EMAIL_VISUAL_OVERRIDES = {
+    "ai_workflow": "assets/topic_visuals/agent_supervised_workflows.svg",
+    "thesis_graph": "assets/topic_visuals/knowledge_architecture_ai.svg",
+    "processing_earthquake": "assets/topic_visuals/data_variable_transform.svg",
+    "seismic": "assets/topic_visuals/cloud_data_processing.svg",
+    "north_slope": "assets/topic_visuals/web_scraping_data_lake.svg",
+    "rock_classification": "assets/topic_visuals/satellite_rock_classification.svg",
+    "valles": "assets/topic_visuals/field_geophysics.svg",
+    "moho_ml": "assets/topic_visuals/north_slope_ml_architecture.svg",
+    "stock_workflow": "assets/project_visuals/stock_saved_data_chart.svg",
+}
+
+EMAIL_CARD_VISUAL_OVERRIDES = {
+    "ai_workflow": "assets/topic_visuals/agent_supervised_workflows.svg",
+    "thesis_graph": "assets/topic_visuals/knowledge_architecture_ai.svg",
+    "processing_earthquake": "assets/topic_visuals/data_variable_transform.svg",
+    "seismic": "assets/topic_visuals/cloud_data_processing.svg",
+    "north_slope": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
+    "rock_classification": "assets/topic_visuals/satellite_rock_classification.svg",
+    "valles": "assets/project_visuals/valles_bouguer.png",
+    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
+    "moho_ml": "assets/topic_visuals/north_slope_ml_architecture.svg",
+    "stock_workflow": "assets/project_visuals/stock_all_tickers_chart.svg",
+}
+
+EMAIL_WORKFLOW_BLUEPRINT_OVERRIDES = {
+    "ai_workflow": {
+        "title": "prompt -> recording -> supervised agent",
+        "steps": [
+            ("Prompt", "task + rubric"),
+            ("Record", "virtual software work"),
+            ("Review", "human judgement"),
+            ("Supervised ML", "train agent"),
+            ("Agent", "future execution"),
+        ],
+        "outcome": "Agents learn the work so people can lead bigger projects instead of repeating software labor.",
+    },
+    "thesis_graph": {
+        "title": "inputs -> AI/ML -> project architecture",
+        "steps": [
+            ("Tables", "CSVs + variables"),
+            ("Questions", "project relationships"),
+            ("Drawings", "visual ideas"),
+            ("AI/ML", "connect structure"),
+            ("Graphs", "architecture output"),
+        ],
+        "outcome": "Complex science becomes a visual structure instead of only a long explanation.",
+    },
+    "processing_earthquake": {
+        "title": "3D visualization -> model variables",
+        "steps": [
+            ("USGS events", "lat/lon/depth"),
+            ("ChatGPT", "Processing code"),
+            ("Globe", "visual pattern"),
+            ("Features", "2D time windows"),
+            ("Regression", "future test"),
+        ],
+        "outcome": "Visualization becomes a bridge into prediction features, not the final claim.",
+    },
+    "seismic": {
+        "title": "phone prompt -> cloud data run",
+        "steps": [
+            ("Codex", "start/edit task"),
+            ("GitHub", "track work"),
+            ("Cloud", "OSL/ASF compute"),
+            ("Dataset", "large files"),
+            ("Review", "share results"),
+        ],
+        "outcome": "Large processing can move forward without one person waiting at one machine.",
+    },
+    "north_slope": {
+        "title": "public web -> energy-data workspace",
+        "steps": [
+            ("Search", "maps + reports"),
+            ("Scrape", "shapes + APIs"),
+            ("Provenance", "source log"),
+            ("Scaffold", "public wells"),
+            ("Map", "review workspace"),
+        ],
+        "outcome": "Public sources become a reviewable North Slope workbench.",
+    },
+    "rock_classification": {
+        "title": "satellite variables -> reviewed rock classes",
+        "steps": [
+            ("Satellite", "bands + texture"),
+            ("GIS", "DEM + context"),
+            ("Features", "model inputs"),
+            ("Classify", "rock type"),
+            ("Review", "uncertainty"),
+        ],
+        "outcome": "AI helps map rock classes while keeping label quality visible.",
+    },
+    "valles": {
+        "title": "field methods -> uncertainty board",
+        "steps": [
+            ("Hammer seismic", "velocity"),
+            ("ERT", "resistivity"),
+            ("TEM", "conductivity"),
+            ("Intersect", "line check"),
+            ("Review", "possible units"),
+        ],
+        "outcome": "Field evidence is compared without erasing conflicts.",
+    },
+    "moho_ml": {
+        "title": "well logs -> hydrate ML architecture",
+        "steps": [
+            ("Inputs", "logs + core"),
+            ("QC", "caliper + flags"),
+            ("Features", "measured/derived"),
+            ("Models", "class/regress/ANN"),
+            ("Validate", "held-out wells"),
+        ],
+        "outcome": "The ML story shows model design, leakage control, and validation.",
+    },
+    "stock_workflow": {
+        "title": "current app -> honest AI build",
+        "steps": [
+            ("Codex", "inspect files"),
+            ("Streamlit", "current visuals"),
+            ("GitHub", "track pipeline"),
+            ("Metrics", "test claims"),
+            ("Risk", "block leakage"),
+        ],
+        "outcome": "The stock app becomes a build-and-validation example, not a prediction promise.",
+    },
+}
+
+EMAIL_DISCUSSION_PROMPT_OVERRIDES = {
+    "ai_workflow": [
+        "What should count as a good training example for a scientific software agent?",
+        "Which labor-heavy projects should agents take on first?",
+        "Where should human supervision stay mandatory?",
+    ],
+    "thesis_graph": [
+        "When does a diagram explain a research project better than text?",
+        "Which graph edges should be source-backed, AI-suggested, or human-interpreted?",
+        "How could graph structure improve critical-mineral workflows?",
+    ],
+    "processing_earthquake": [
+        "Which variables should be extracted from a 3D earthquake globe?",
+        "What is visualization allowed to claim before modeling starts?",
+        "How do we test a 2D-over-time feature idea honestly?",
+    ],
+    "seismic": [
+        "What large-data workflows should move from local laptops into cloud workspaces?",
+        "How should Codex and GitHub make seismic processing easier to collaborate on?",
+        "What outputs still require an expert sitting with the data?",
+    ],
+    "north_slope": [
+        "Which public sources are worth scraping first?",
+        "How should a source library show trust and uncertainty?",
+        "What belongs in a public-safe well scaffold?",
+    ],
+    "rock_classification": [
+        "Which satellite variables are most useful for rock-type classification?",
+        "How should mixed pixels and uncertain labels be shown?",
+        "Where do critical-mineral heatmaps help explain the problem without becoming model inputs?",
+    ],
+    "valles": [
+        "Where do the Valles methods agree, and where do they conflict?",
+        "How should AI show field errors and acquisition limits?",
+        "Which figure from the Near-Surface deck should anchor the topic?",
+    ],
+    "moho_ml": [
+        "What is the simplest baseline before the ANN?",
+        "Which features must stay separate from the target?",
+        "Why is complete-well validation stronger than random depth-row splitting?",
+    ],
+    "stock_workflow": [
+        "What does the current app prove, and what does it not prove?",
+        "How should a young builder explain model risk clearly?",
+        "Which visuals from the updated app should replace the old navigator image?",
+    ],
+}
+
+EMAIL_EVIDENCE_LEAD_OVERRIDES = {
+    "ai_workflow": [
+        ("Prompt/rubric screenshot folder", "assets/gmail_updates/2026-06-08/Screenshot 2026-05-17 233055.png"),
+        ("Agent workflow visual", "assets/topic_visuals/agent_supervised_workflows.svg"),
+    ],
+    "thesis_graph": [
+        ("REE architecture visual", "assets/topic_visuals/knowledge_architecture_ai.svg"),
+        ("Bayan Obo drawing", "assets/project_visuals/ree_bayan_obo_main.png"),
+        ("Thesis host context", "assets/project_visuals/thesis_host_context_clean.png"),
+    ],
+    "processing_earthquake": [
+        ("Variable transform visual", "assets/topic_visuals/data_variable_transform.svg"),
+        ("Processing poster", "assets/project_visuals/processing_earthquake_linkedin_poster.jpg"),
+    ],
+    "seismic": [
+        ("Cloud processing visual", "assets/topic_visuals/cloud_data_processing.svg"),
+        ("Alaska Satellite Facility cloud", "https://asf.alaska.edu/"),
+        ("Open Science Lab", "https://opensciencelab.org/"),
+    ],
+    "north_slope": [
+        ("Web scraping visual", "assets/topic_visuals/web_scraping_data_lake.svg"),
+        ("North Slope Plotly map", "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png"),
+        ("Public data layer notes", "assets/drive_sources/north_slope_source_library/unclassified_local/source_library/06_maps_and_public_data_notes/North Slope Data Layer Map.pdf"),
+    ],
+    "rock_classification": [
+        ("Satellite classification visual", "assets/topic_visuals/satellite_rock_classification.svg"),
+        ("Rock raster classification map", "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png"),
+    ],
+    "valles": [
+        ("Valles Bouguer map", "assets/project_visuals/valles_bouguer.png"),
+        ("Near-Surface Dwellers Presentation", "https://docs.google.com/presentation/d/1bY4HCjuD-60DU6IMZXA_DAMeqza3Gq_xH_-Xd_-NwIA"),
+    ],
+    "moho_ml": [
+        ("North Slope ML architecture visual", "assets/topic_visuals/north_slope_ml_architecture.svg"),
+        ("Gas hydrate ANN paper", "https://doi.org/10.1007/s10596-022-10151-9"),
+    ],
+    "stock_workflow": [
+        ("Current all-tickers chart", "assets/project_visuals/stock_all_tickers_chart.svg"),
+        ("Current saved-data chart", "assets/project_visuals/stock_saved_data_chart.svg"),
+    ],
+}
+
+EMAIL_PROCESSING_SKETCH_OVERRIDES = {
+    "ai_workflow": {
+        "sketch": "prompt_rubric_agent_training_loop",
+        "visual": "Prompt cards and rubric chips feed screen-recorded software actions. Approved steps become glowing training traces, then an agent repeats the workflow.",
+        "motion": ["prompt pulse", "screen capture", "rubric gate", "agent replay"],
+        "conclusion": "Future agents need supervised examples from real technical work, not only final screenshots.",
+        "future_ml": "Imitation learning, GUI action models, workflow classifiers, and rubric-based evaluation for scientific software.",
+        "processing_notes": "Use moving cursor paths, screenshot tiles, and a red/green rubric gate that turns demonstrations into agent traces.",
+    },
+    "thesis_graph": {
+        "sketch": "ai_project_architecture_builder",
+        "visual": "Left-side tables, questions, and drawings orbit into an AI/ML circle. Right-side outputs become a knowledge graph, architecture diagram, and scientific drawing.",
+        "motion": ["input orbit", "AI sort", "edge growth", "diagram reveal"],
+        "conclusion": "AI can make project structure visible so complex research is easier to discuss.",
+        "future_ml": "GraphRAG, relation extraction, graph embeddings, and expert-reviewed graph ML for critical minerals.",
+        "processing_notes": "Use three left columns, one central gravity well, and three right output panels with edges that keep confidence styles visible.",
+    },
+    "processing_earthquake": {
+        "sketch": "globe_to_feature_matrix_loop",
+        "visual": "Earthquake dots pulse on a globe, flatten into a timeline, then become feature bars for regression experiments.",
+        "motion": ["event pulse", "flatten globe", "window bins", "feature chart"],
+        "conclusion": "AI visualization can reshape spatial data into variables that models can test.",
+        "future_ml": "Lagged features, spatiotemporal clustering, linear regression baselines, nonlinear models, and strict no-forecasting claims.",
+        "processing_notes": "Animate globe points sliding into time bins and then into a small matrix with magnitude, depth, rate, and cluster fields.",
+    },
+    "seismic": {
+        "sketch": "cloud_processing_handoff_loop",
+        "visual": "A phone prompt sends work to Codex, GitHub branches light up, cloud compute runs through large data tiles, and review artifacts return.",
+        "motion": ["phone prompt", "branch split", "cloud run", "artifact return"],
+        "conclusion": "AI can reduce local waiting time by moving big processing into shared compute and version control.",
+        "future_ml": "Cloud orchestration, automated QA summaries, station/event triage, and collaborative review assistants.",
+        "processing_notes": "Animate packets traveling from phone to GitHub to a cloud, then returning small result cards instead of huge raw files.",
+    },
+    "north_slope": {
+        "sketch": "public_source_scraper_loop",
+        "visual": "Public maps, PDFs, shapefiles, and APIs flow into a scraper node, then stack into a source library and public well scaffold.",
+        "motion": ["source crawl", "scraper parse", "provenance stamp", "well scaffold"],
+        "conclusion": "AI web scraping is useful when provenance and public-safe boundaries stay visible.",
+        "future_ml": "Public-source retrieval, schema matching, spatial joins, provenance scoring, and expert-reviewed hydrate feature assembly.",
+        "processing_notes": "Draw source tiles entering a dark scraper box, then emit well sticks and 3D layer cards with provenance badges.",
+    },
+    "rock_classification": {
+        "sketch": "satellite_feature_classifier_loop",
+        "visual": "Satellite bands, DEM texture, slope, and structural context pass through feature gates and become reviewed rock-class map cells.",
+        "motion": ["band stack", "feature gate", "class color", "review mask"],
+        "conclusion": "AI can improve rock-type maps only when satellite variables and label uncertainty are explicit.",
+        "future_ml": "Remote-sensing classifiers, spatial cross-validation, uncertainty maps, and expert label auditing.",
+        "processing_notes": "Use colored raster tiles, feature sliders, and map cells that keep uncertain classes striped instead of solid.",
+    },
+    "valles": {
+        "sketch": "near_surface_method_comparison_loop",
+        "visual": "Hammer seismic, ERT, TEM, and mapped units slide into one field board. Agreement glows; conflicts remain striped.",
+        "motion": ["line sweep", "method overlay", "intersection check", "conflict stripe"],
+        "conclusion": "AI can compare imperfect geophysical surveys while preserving disagreement.",
+        "future_ml": "Cross-method registration, field-error tagging, line-intersection QA, uncertainty masks, and promptable method summaries.",
+        "processing_notes": "Use stacked translucent sections and keep conflict cells gray-striped even after AI suggests possible units.",
+    },
+    "moho_ml": {
+        "sketch": "hydrate_ml_architecture_loop",
+        "visual": "Well-log columns split into measured, derived, QC, and target lanes. Baseline, classifier, regressor, and ANN nodes feed a held-out-well validation gate.",
+        "motion": ["well log split", "feature lanes", "model compare", "held-out gate"],
+        "conclusion": "A hydrate ML topic needs architecture, leakage control, and complete-well validation before model claims.",
+        "future_ml": "Baselines, boosted trees, ANN challengers, classification for occurrence, regression for saturation, and complete-well validation.",
+        "processing_notes": "Show a vertical well log splitting into colored lanes, then block any arrow from target labels back into inputs.",
+    },
+    "stock_workflow": {
+        "sketch": "current_stock_app_risk_loop",
+        "visual": "Updated Streamlit charts replace the old image, then Codex/GitHub pipeline nodes pass through a model-risk gate.",
+        "motion": ["chart swap", "pipeline build", "metric update", "risk gate"],
+        "conclusion": "The current stock app is an AI app-building example, not a guarantee that predictions are reliable.",
+        "future_ml": "Leakage checks, walk-forward testing, drift monitoring, baseline comparison, and production dashboard QA.",
+        "processing_notes": "Animate a stale image fading out while current chart panels, commit nodes, and a red leakage gate fade in.",
+    },
+}
+
+EMAIL_SITE_UPDATE_OVERRIDES = {
+    "ai_workflow": {
+        "kicker": "Email instruction",
+        "title": "Replace agent demos with supervised agent training",
+        "intro": "The page should tell a simple story: human prompt and rubric, screen-recorded virtual work, then supervised ML examples for future agents.",
+        "items": [
+            ("Prompt", "human writes the goal and rubric"),
+            ("Recording", "virtual scientific software work becomes evidence"),
+            ("Training", "approved steps become supervised examples"),
+            ("Future", "agents execute repetitive work while humans lead new projects"),
+        ],
+    },
+    "thesis_graph": {
+        "kicker": "Email instruction",
+        "title": "Use diagrams and graphs to cut down wordiness",
+        "intro": "This topic should show how AI turns many inputs into knowledge graphs, ML architecture diagrams, and Adobe-style scientific drawings.",
+        "items": [
+            ("Left inputs", "tables, questions, drawings"),
+            ("AI/ML center", "sort and connect variables"),
+            ("Right outputs", "graphs, architecture diagrams, explanatory drawings"),
+            ("Validation", "source-backed, AI-suggested, and human-interpreted links stay separate"),
+        ],
+    },
+    "processing_earthquake": {
+        "kicker": "Email instruction",
+        "title": "Make the globe about feature creation",
+        "intro": "The Processing sketch should explain how a 3D visual question can become model-ready 2D-over-time variables.",
+        "items": [
+            ("Prompt", "ask ChatGPT for Processing globe code"),
+            ("Iterate", "revise until the map works"),
+            ("Transform", "make rate, depth, magnitude, and cluster variables"),
+            ("Model", "test linear and nonlinear regressions later"),
+        ],
+    },
+    "seismic": {
+        "kicker": "Email instruction",
+        "title": "Large data processing belongs in cloud workflows",
+        "intro": "The seismic topic should focus on Codex, GitHub, and cloud/virtual computers for big datasets, not only notebook interpretation.",
+        "items": [
+            ("Codex", "edit and run from anywhere"),
+            ("GitHub", "commit and collaborate"),
+            ("Cloud", "OpenScienceLab, ASF, or virtual machines"),
+            ("Review", "humans check the scientific result"),
+        ],
+    },
+    "north_slope": {
+        "kicker": "Email instruction",
+        "title": "Make North Slope a web-scraping and source-organization topic",
+        "intro": "This page should show public data discovery, scraping, source logging, and a well scaffold rather than overclaiming real restricted well data.",
+        "items": [
+            ("Find", "public subsurface maps and shapefiles"),
+            ("Scrape", "reports, APIs, names, coordinates"),
+            ("Scaffold", "skeleton wells and public-safe fields"),
+            ("Visualize", "3D map, source library, review board"),
+        ],
+    },
+    "rock_classification": {
+        "kicker": "Email instruction",
+        "title": "Use satellite variables, not geochemical inputs, as the main classifier story",
+        "intro": "Critical-mineral plots can explain complex patterns, but the classification topic should be driven by ADV GIS and satellite variables.",
+        "items": [
+            ("Satellite", "bands, texture, DEM derivatives"),
+            ("GIS", "slope, structure, mapped context"),
+            ("Classify", "rock type probabilities"),
+            ("Review", "mixed pixels and uncertain labels"),
+        ],
+    },
+    "valles": {
+        "kicker": "Email instruction",
+        "title": "Replace the unrelated person image with field graphs and lines",
+        "intro": "Use Near-Surface Dwellers slides to ground the Valles topic in seismic, ERT, TEM, possible units, and line intersections.",
+        "items": [
+            ("Hammer seismic", "velocity and processing flow"),
+            ("ERT / TEM", "conductivity comparison"),
+            ("Lines", "survey intersections"),
+            ("Uncertainty", "possible units, not final truth"),
+        ],
+    },
+    "moho_ml": {
+        "kicker": "Email instruction",
+        "title": "Use the North Slope docs to explain the ML backbone",
+        "intro": "The ML page should show architecture decisions: inputs, feature separation, model family, leakage controls, and validation.",
+        "items": [
+            ("Inputs", "depth, logs, core data, QC flags"),
+            ("Targets", "hydrate occurrence and saturation stay separate"),
+            ("Models", "baseline, classifier, regressor, ANN"),
+            ("Validation", "complete wells held out"),
+        ],
+    },
+    "stock_workflow": {
+        "kicker": "Email instruction",
+        "title": "Use the updated stock app visuals",
+        "intro": "The public navigator should stop showing the old app-diagram image and use the newer Streamlit chart evidence.",
+        "items": [
+            ("Current chart", "all tickers / saved data visuals"),
+            ("Build story", "Codex organizes local app files"),
+            ("Pipeline", "GitHub and refresh workflow"),
+            ("Risk", "testing and leakage stay visible"),
+        ],
+    },
+}
+
+EMAIL_SLIDE_SOURCE_OVERRIDES = {
+    "ai_workflow": [
+        ("Prompt/rubric screenshot", "place next to the first workflow image on the detail page"),
+        ("Scientific software recordings", "frame QGIS, ParaView, 3D Slicer, and KiCad as future agent-training environments"),
+    ],
+    "thesis_graph": [
+        ("Thesis Ch.1 REE deck", "show the images the text talks about instead of hiding them at the end"),
+        ("Graph validation", "keep source-backed, AI-suggested, and human-interpreted edges visually distinct"),
+    ],
+    "processing_earthquake": [
+        ("Processing earthquake sketch", "explain the ChatGPT prompt loop and future variable conversion"),
+    ],
+    "seismic": [
+        ("OpenScienceLab / ASF references", "connect large data processing to cloud or virtual workspaces"),
+        ("GitHub workflow", "show commit/push/collaboration as part of the AI skill"),
+    ],
+    "north_slope": [
+        ("North Slope Streamlit site", "use the updated well scaffold and 3D map story"),
+        ("North Slope public source library", "use public maps/shapefiles instead of restricted 71-well detail"),
+    ],
+    "rock_classification": [
+        ("ADV GIS Final presentation", "use satellite variables as the classifier source"),
+        ("Critical minerals powerpoint PDF", "use heatmaps, spider diagrams, and complex-problem visuals as support"),
+    ],
+    "valles": [
+        ("Near-Surface Dwellers Presentation", "use graphs, line intersections, and method figures instead of the person image"),
+    ],
+    "moho_ml": [
+        ("Updated North Slope Word doc", "use parameter definitions, model families, and validation language"),
+        ("Updated North Slope slides", "use the ML methodology architecture and well-log scaffold"),
+        ("Chong et al. gas hydrate ANN paper", "use as the ML backbone reference"),
+    ],
+    "stock_workflow": [
+        ("Updated AI stock app pred website", "use newer Streamlit visuals instead of the old navigator image"),
+    ],
+}
+
+EMAIL_DETAILED_TOPIC_PLAN_OVERRIDES = {
+    "ai_workflow": {
+        "title": "Prompting And Supervised Agent Training",
+        "question": "Will screenshots and ChatGPT prompting be replaced by Codex?",
+        "anchor": "Prompt/rubric screenshots and screen-recorded scientific software work become supervised examples for agents.",
+        "conclusion": "The new story is not agent demos. It is human demonstrations becoming training data for future agents.",
+        "techniques": ["supervised learning", "GUI agents", "rubric-based evaluation"],
+        "inputs": ["prompt text", "rubrics", "screen recordings", "software files", "human corrections"],
+        "outputs": ["training traces", "pass/fail labels", "agent task evaluations"],
+        "bottleneck": "People spend time on repetitive software execution before they can lead larger energy, agriculture, commerce, and field projects.",
+        "validate": "A human checks the software output, the file state, the scientific meaning, and whether the task truly followed the rubric.",
+        "storyboard": ["prompt and rubric appear", "screen recording captures work", "rubric gate labels steps", "agent executes a similar task"],
+        "labels": ["prompt", "rubric", "recording", "training", "agent"],
+        "do_not_claim": "Do not claim agents already replace trained scientific software users.",
+    },
+    "thesis_graph": {
+        "title": "AI Knowledge Graphs And Diagrams",
+        "question": "Knowledge graphs and diagrams built using AI: are they the next way to understand project architectures?",
+        "anchor": "Tables, CSVs, project questions, and Adobe-style deposit drawings feed an AI/ML architecture view.",
+        "conclusion": "AI diagrams make complex research easier to understand when evidence and uncertainty stay visible.",
+        "techniques": ["knowledge graphs", "GraphRAG", "relation extraction"],
+        "inputs": ["tables", "CSVs", "questions", "drawings", "deposit variables", "source evidence"],
+        "outputs": ["knowledge graphs", "ML architecture diagrams", "scientific drawings", "review questions"],
+        "bottleneck": "Critical-mineral ideas are scattered across wordy papers, disconnected figures, and hidden assumptions.",
+        "validate": "A human checks entity names, edge confidence, geologic plausibility, and which links are source-backed.",
+        "storyboard": ["left-side inputs stack", "AI/ML center sorts variables", "right-side graph appears", "diagram highlights project architecture"],
+        "labels": ["tables", "questions", "drawings", "AI/ML", "graph"],
+        "do_not_claim": "Do not claim a graph discovers mineral deposits by itself.",
+    },
+    "processing_earthquake": {
+        "title": "AI Visualization Into Prediction Variables",
+        "question": "Can we use AI to visualize data into new variables for prediction models?",
+        "anchor": "The user asked ChatGPT for Processing code that maps earthquake locations onto a globe and iterated until it worked.",
+        "conclusion": "The globe is the entry point for a bigger idea: converting spatial data into model-ready variables.",
+        "techniques": ["feature engineering", "spatiotemporal clustering", "linear/nonlinear regression"],
+        "inputs": ["event time", "latitude", "longitude", "depth", "magnitude", "region windows"],
+        "outputs": ["time-window features", "cluster features", "2D trend views", "testable model inputs"],
+        "bottleneck": "A 3D visualization is powerful for people, but models need defined variables and validation.",
+        "validate": "A human checks that the visual transformation does not imply earthquake prediction claims the data cannot support.",
+        "storyboard": ["ChatGPT prompt appears", "Processing globe animates", "events flatten into time windows", "feature table feeds a model"],
+        "labels": ["prompt", "globe", "features", "regression", "limits"],
+        "do_not_claim": "Do not claim earthquake forecasting from the visualization.",
+    },
+    "seismic": {
+        "title": "Large Data Processing With AI Workspaces",
+        "question": "How can Codex make large scientific data processing faster from cloud workspaces?",
+        "anchor": "Codex, GitHub, OpenScienceLab, ASF cloud ideas, and large seismic/satellite data make the topic about workflow access.",
+        "conclusion": "The AI value is moving heavy processing into shared, trackable environments.",
+        "techniques": ["cloud workflows", "version control", "automated QA summaries"],
+        "inputs": ["large datasets", "notebooks", "cloud credentials", "GitHub repositories", "processing logs"],
+        "outputs": ["tracked runs", "review artifacts", "collaborative commits", "QA summaries"],
+        "bottleneck": "Local machines and scattered files slow down large data projects and make collaboration harder.",
+        "validate": "A human checks data provenance, processing parameters, output quality, and scientific interpretation.",
+        "storyboard": ["phone prompt starts task", "GitHub branch appears", "cloud compute processes data", "review card returns"],
+        "labels": ["Codex", "GitHub", "cloud", "data", "review"],
+        "do_not_claim": "Do not claim AI removes the need for seismic or satellite data review.",
+    },
+    "north_slope": {
+        "title": "AI Web Scraping For Public Energy Data",
+        "question": "How can AI scrape and organize public subsurface sources into one usable workspace?",
+        "anchor": "North Slope public maps, shapefiles, reports, APIs, source libraries, and Streamlit well scaffolds anchor the topic.",
+        "conclusion": "The useful AI task is finding, organizing, and visualizing public energy evidence with provenance.",
+        "techniques": ["web scraping", "source provenance", "spatial data organization"],
+        "inputs": ["public maps", "shapefiles", "reports", "APIs", "well skeletons", "source metadata"],
+        "outputs": ["source library", "public-safe well scaffold", "3D map", "review workspace"],
+        "bottleneck": "The information exists, but it is fragmented across websites, PDFs, GIS layers, and naming conventions.",
+        "validate": "A human checks source permissions, coordinate systems, public-safe boundaries, and geologic meaning.",
+        "storyboard": ["public sources appear", "scraper organizes files", "provenance stamps light up", "well scaffold and 3D map appear"],
+        "labels": ["web", "scrape", "source", "scaffold", "map"],
+        "do_not_claim": "Do not display restricted well data or imply the public scaffold is the real 71-well dataset.",
+    },
+    "rock_classification": {
+        "title": "Satellite Variables For Rock Classification",
+        "question": "Can AI classify rock types from satellite variables more accurately?",
+        "anchor": "ADV GIS satellite variables drive the classifier story; the critical-minerals PDF supplies supporting complexity visuals.",
+        "conclusion": "AI classification is stronger when the input variables and label review are clear.",
+        "techniques": ["remote-sensing classification", "spatial cross-validation", "uncertainty mapping"],
+        "inputs": ["spectral bands", "DEM derivatives", "texture", "slope", "mapped context", "reviewed labels"],
+        "outputs": ["rock-class map", "confidence mask", "uncertain zones", "review queue"],
+        "bottleneck": "Satellite classes can hide mixed pixels, bad labels, and overconfident map colors.",
+        "validate": "A human checks label quality, mixed classes, training/test geography, and whether the map makes geologic sense.",
+        "storyboard": ["satellite layers stack", "feature gates select variables", "classifier colors map cells", "review mask keeps uncertainty visible"],
+        "labels": ["satellite", "features", "class", "uncertainty", "review"],
+        "do_not_claim": "Do not treat geochemical diagrams as the classifier input source.",
+    },
+    "valles": {
+        "title": "Comparing Imperfect Geophysical Surveys",
+        "question": "How should AI compare imperfect geophysical surveys without flattening uncertainty?",
+        "anchor": "Near-Surface Dwellers supplies hammer seismic, ERT, TEM, line intersections, possible units, and field-error context.",
+        "conclusion": "AI should help compare methods while keeping conflict and field uncertainty visible.",
+        "techniques": ["cross-method comparison", "uncertainty tagging", "line-intersection QA"],
+        "inputs": ["hammer seismic", "ERT", "TEM", "survey lines", "possible units", "field notes"],
+        "outputs": ["method comparison board", "agreement zones", "conflict zones", "reviewed unit candidates"],
+        "bottleneck": "Different methods see different physics and can disagree for valid reasons.",
+        "validate": "A human checks acquisition errors, line geometry, method limits, and geologic plausibility.",
+        "storyboard": ["seismic line appears", "ERT and TEM layers slide in", "line intersections glow", "conflict zones stay unresolved"],
+        "labels": ["seismic", "ERT", "TEM", "line", "uncertain"],
+        "do_not_claim": "Do not imply AI found the true subsurface from overlays alone.",
+    },
+    "moho_ml": {
+        "title": "North Slope ML Architecture",
+        "question": "What ML architecture can predict hydrate occurrence and saturation without leaking target data?",
+        "anchor": "Updated North Slope documents and the hydrate ANN paper define public-safe inputs, target separation, and validation.",
+        "conclusion": "The ML story should show architecture and validation before any model performance claim.",
+        "techniques": ["baseline modeling", "classification", "regression", "ANN challenger"],
+        "inputs": ["depth", "GR", "density", "porosity", "resistivity", "Vp/Vs", "core data", "QC flags"],
+        "outputs": ["hydrate occurrence", "hydrate saturation", "uncertainty flags", "held-out-well scorecards"],
+        "bottleneck": "Random depth-row splits can leak nearby information and make a model look stronger than it is.",
+        "validate": "A human holds out complete wells, checks leakage, reviews physics, and separates measured inputs from targets.",
+        "storyboard": ["well-log inputs split into lanes", "target lane is isolated", "baseline and ANN compare", "held-out well gate approves or blocks"],
+        "labels": ["logs", "QC", "target", "model", "held-out well"],
+        "do_not_claim": "Do not claim trained hydrate predictions from skeleton public data.",
+    },
+    "stock_workflow": {
+        "title": "Current Stock App As AI Build Workflow",
+        "question": "How can the current stock prediction app show AI app building without hiding model risk?",
+        "anchor": "Updated Streamlit stock charts replace the old public navigator image.",
+        "conclusion": "The page should explain AI-assisted app building and model-risk honesty, not sell a stock prediction claim.",
+        "techniques": ["Streamlit apps", "pipeline automation", "leakage checks"],
+        "inputs": ["local files", "price data", "app code", "metrics", "GitHub changes"],
+        "outputs": ["updated dashboard", "tracked build", "risk notes", "testing gate"],
+        "bottleneck": "It is easy to make a financial dashboard look authoritative before evaluation is trustworthy.",
+        "validate": "A human checks train/test design, leakage, metric meaning, and whether the app language avoids financial advice.",
+        "storyboard": ["old image fades", "current chart appears", "Codex/GitHub pipeline connects", "risk gate blocks overclaim"],
+        "labels": ["app", "Codex", "GitHub", "metrics", "risk"],
+        "do_not_claim": "Do not imply the app gives reliable investment advice.",
+    },
+}
+
+EMAIL_AI_WORKFLOW_EVIDENCE_OVERRIDES = {
+    "ai_workflow": {
+        "description": "Prompt/rubric and screen-recording evidence becomes supervised learning material for future software agents.",
+        "chips": ["Prompt + rubric", "Screen recording", "Supervised agent training"],
+        "where": "Codex and ChatGPT help structure human software work into task descriptions, action traces, and review labels.",
+        "gave": "Prompt text, rubric screenshots, QGIS/ParaView-style software context, recordings, corrections, and expected outputs.",
+        "produced": "A clearer agent-training story: prompt, record, review, label, and future agent execution.",
+        "validated": "A human checks whether the software output works and whether the trace follows the rubric.",
+        "future": "Agents execute labor-heavy software steps while humans design and manage higher-value projects.",
+    },
+    "thesis_graph": {
+        "description": "AI converts scattered critical-mineral research into graphs and diagrams that explain project architecture.",
+        "chips": ["Tables + CSVs", "AI/ML center", "Graph + diagram outputs"],
+        "where": "AI helps translate notes, tables, drawings, and project questions into visual structures.",
+        "gave": "REE slides, deposit drawings, Gephi exports, node/edge logic, and critical-mineral research questions.",
+        "produced": "A cleaner left-to-right architecture: inputs, AI/ML connector, and graph/diagram outputs.",
+        "validated": "Sources, edge confidence, geologic reasoning, and AI-suggested relationships are kept separate.",
+        "future": "Graph-backed workflows could help explain critical-mineral accumulation systems and project structure.",
+    },
+    "processing_earthquake": {
+        "description": "ChatGPT-assisted Processing visualization becomes a feature-engineering story.",
+        "chips": ["ChatGPT prompt", "Processing globe", "2D time features"],
+        "where": "AI helped write and iterate code for mapping earthquake locations onto a globe.",
+        "gave": "Earthquake locations, magnitudes, depths, time, and a Processing visual idea.",
+        "produced": "A globe visualization and a future plan for turning event patterns into model variables.",
+        "validated": "The topic is framed as variable creation, not earthquake forecasting.",
+        "future": "Future work converts 3D visual patterns into linear and nonlinear regression features.",
+    },
+    "seismic": {
+        "description": "Large data processing becomes an AI-assisted cloud and GitHub workflow.",
+        "chips": ["Codex from phone", "GitHub", "Cloud compute"],
+        "where": "Codex can help edit, run, and document workflows that use large scientific datasets in virtual environments.",
+        "gave": "Notebook logic, data-processing goals, cloud workflow ideas, and collaboration needs.",
+        "produced": "A topic about access and workflow speed instead of only one seismic notebook output.",
+        "validated": "Humans still check processing parameters, data provenance, and scientific interpretation.",
+        "future": "Workflows run in OSL/ASF-style cloud spaces while GitHub keeps changes shareable.",
+    },
+    "north_slope": {
+        "description": "AI web scraping organizes public North Slope energy data into a reviewable workspace.",
+        "chips": ["Public maps", "Scraper/API", "Well scaffold"],
+        "where": "AI helps find public subsurface maps, shapefiles, reports, and data APIs.",
+        "gave": "Public-source goals, North Slope Streamlit visuals, source-library notes, and gas hydrate planning documents.",
+        "produced": "A public-safe web-scraping and source-organization topic with updated well-scaffold framing.",
+        "validated": "Source permissions, provenance, coordinate systems, and restricted-data boundaries stay visible.",
+        "future": "A live source workbench could update maps, skeleton wells, and evidence panels from public sources.",
+    },
+    "rock_classification": {
+        "description": "Satellite variables and ADV GIS become the basis for rock-type classification.",
+        "chips": ["Satellite bands", "GIS features", "Reviewed map"],
+        "where": "AI helps organize remote-sensing variables and simplify the classification story.",
+        "gave": "ADV GIS presentation ideas, satellite variables, map outputs, and critical-mineral complexity visuals.",
+        "produced": "A topic centered on satellite/GIS classification rather than geochemical inputs.",
+        "validated": "Labels, mixed pixels, uncertainty masks, and spatial validation need human review.",
+        "future": "Models combine satellite bands, terrain variables, and reviewed labels to improve rock maps.",
+    },
+    "valles": {
+        "description": "Near-Surface Dwellers replaces the unrelated image with real method-comparison evidence.",
+        "chips": ["Hammer seismic", "ERT/TEM", "Line intersections"],
+        "where": "AI helps organize shallow Valles survey evidence into a comparison board.",
+        "gave": "Near-Surface Dwellers slides, field method notes, possible units, and survey-line relationships.",
+        "produced": "A clearer field geophysics topic with method disagreement and uncertainty visible.",
+        "validated": "Field errors, acquisition geometry, method sensitivity, and possible geologic units require expert review.",
+        "future": "A future assistant compares methods side by side and flags conflicts for review.",
+    },
+    "moho_ml": {
+        "description": "North Slope documents become a model architecture for hydrate occurrence and saturation prediction.",
+        "chips": ["Well-log inputs", "Feature lanes", "Held-out wells"],
+        "where": "AI extracts architecture from the updated Word doc, slides, and hydrate ANN paper.",
+        "gave": "Parameter lists, model goals, validation warnings, and public-safe scaffold constraints.",
+        "produced": "A leakage-aware ML architecture diagram that explains the backbone of the topic.",
+        "validated": "Complete wells are held out, targets are isolated, and random adjacent depth splits are treated as risky.",
+        "future": "Baseline, classification, regression, and ANN models are compared under honest validation.",
+    },
+    "stock_workflow": {
+        "description": "Updated stock app visuals explain current AI app building and model-risk discipline.",
+        "chips": ["Current Streamlit chart", "Codex build", "Risk gate"],
+        "where": "Codex helps inspect the app, update visuals, and frame testing limitations.",
+        "gave": "Current stock app charts, local files, code structure, and model-risk concerns.",
+        "produced": "A current public navigator topic instead of the old stock-prediction visual.",
+        "validated": "Train/test split, leakage, metric meaning, and finance-language boundaries remain human-reviewed.",
+        "future": "Pipeline refreshes, drift monitoring, and unseen-data testing make the app more honest.",
+    },
+}
+
+
+def apply_email_instruction_updates() -> None:
+    """Keep the June 2026 email-driven website changes grouped and easy to audit."""
+    for topic in TOPIC_ROOMS:
+        overrides = EMAIL_TOPIC_ROOM_OVERRIDES.get(topic["slug"])
+        if overrides:
+            topic.update(overrides)
+
+    TOPIC_FRAMES.update(EMAIL_FRAME_OVERRIDES)
+    TOPIC_AI_LEVERS.update(EMAIL_AI_LEVER_OVERRIDES)
+    TOPIC_VISUALS.update(EMAIL_VISUAL_OVERRIDES)
+    CARD_VISUALS.update(EMAIL_CARD_VISUAL_OVERRIDES)
+    WORKFLOW_BLUEPRINTS.update(EMAIL_WORKFLOW_BLUEPRINT_OVERRIDES)
+    DISCUSSION_PROMPTS.update(EMAIL_DISCUSSION_PROMPT_OVERRIDES)
+    EVIDENCE_LEADS.update(EMAIL_EVIDENCE_LEAD_OVERRIDES)
+    PROCESSING_SKETCH_PLANS.update(EMAIL_PROCESSING_SKETCH_OVERRIDES)
+    TOPIC_SITE_UPDATES.update(EMAIL_SITE_UPDATE_OVERRIDES)
+    SLIDE_SOURCE_UPDATES.update(EMAIL_SLIDE_SOURCE_OVERRIDES)
+    DETAILED_TOPIC_PLANS.update(EMAIL_DETAILED_TOPIC_PLAN_OVERRIDES)
+    AI_WORKFLOW_EVIDENCE.update(EMAIL_AI_WORKFLOW_EVIDENCE_OVERRIDES)
+
+
+apply_email_instruction_updates()
 
 CODE_SNIPPETS = {
     "pondicherry": """from obspy.clients.fdsn import Client
@@ -1211,6 +2357,16 @@ st.set_page_config(
 st.markdown(
     """
 <style>
+    :root {
+        --color-primary: #0B1F3A;
+        --color-accent: #F28C28;
+        --color-secondary: #7ED6DF;
+        --color-background: #F5F1E8;
+        --color-surface: #FFFFFF;
+        --color-text: #222222;
+        --color-muted: #64748B;
+        --color-border: #CBD5E1;
+    }
     .block-container { padding-top: 2rem; max-width: 1320px; }
     div[data-testid="stMetric"] {
         background: #f8fafc;
@@ -1236,7 +2392,7 @@ st.markdown(
     }
     .portfolio-intro {
         max-width: 920px;
-        padding: 0.35rem 0 1rem;
+        padding: 0.25rem 0 0.65rem;
     }
     .portfolio-eyebrow {
         color: #0f766e !important;
@@ -1247,9 +2403,9 @@ st.markdown(
     }
     .portfolio-intro h1 {
         color: #172033;
-        font-size: 2.65rem;
+        font-size: 2.9rem;
         line-height: 1.06;
-        margin: 0 0 0.75rem;
+        margin: 0 0 0.45rem;
         max-width: 820px;
     }
     .portfolio-intro p {
@@ -1613,8 +2769,8 @@ st.markdown(
     }
     .think-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.9rem;
+        grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+        gap: 1rem;
         margin: 1rem 0;
     }
     .source-update-panel {
@@ -1897,11 +3053,11 @@ st.markdown(
         border: 1px solid #d8dee8;
         border-radius: 8px;
         background: #ffffff;
-        padding: 0.85rem;
-        min-height: 315px;
+        padding: 0.95rem;
+        min-height: 380px;
         display: flex;
         flex-direction: column;
-        gap: 0.65rem;
+        gap: 0.7rem;
         position: relative;
         z-index: 1;
     }
@@ -1955,8 +3111,22 @@ st.markdown(
     }
     .topic-poster-composite.card-visual > img {
         aspect-ratio: 16 / 9;
+        height: 220px !important;
         object-fit: contain;
         background: #f8fafc;
+    }
+    .topic-card-keywords {
+        display: none;
+    }
+    .topic-card-keywords span {
+        background: rgba(15, 23, 42, 0.78);
+        border: 1px solid rgba(255,255,255,0.22);
+        border-radius: 999px;
+        color: #ffffff;
+        padding: 0.18rem 0.38rem;
+        font-size: 0.68rem;
+        font-weight: 850;
+        text-transform: uppercase;
     }
     .topic-room-visual > img {
         max-height: 430px !important;
@@ -2052,16 +3222,16 @@ st.markdown(
     }
     .think-title {
         color: #172033;
-        font-size: 0.88rem;
+        font-size: 0.78rem;
         font-weight: 850;
-        line-height: 1.22;
+        line-height: 1.15;
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.02em;
     }
     .think-question {
-        font-size: 1.02rem;
-        line-height: 1.34;
+        font-size: 1.18rem;
+        line-height: 1.22;
         color: #111827;
         font-weight: 850;
         margin: 0;
@@ -2097,10 +3267,10 @@ st.markdown(
         border-left: 4px solid #0f766e;
         background: #f0fdfa;
         color: #134e4a;
-        padding: 0.48rem 0.6rem;
-        font-size: 0.84rem;
+        padding: 0.5rem 0.62rem;
+        font-size: 0.82rem;
         font-weight: 750;
-        line-height: 1.3;
+        line-height: 1.25;
         margin-top: auto;
     }
     .unfinished-note {
@@ -3215,6 +4385,12 @@ def local_file_uri(path_text: str) -> str:
         return "file:///" + quote(str(path).replace("\\", "/"))
 
 
+def source_href(path_text: str) -> str:
+    if path_text.startswith(("http://", "https://")):
+        return path_text
+    return local_file_uri(path_text)
+
+
 def source_row(title: str) -> pd.Series | None:
     match = inventory[inventory["title"] == title]
     if match.empty:
@@ -4317,9 +5493,12 @@ def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
 
 
 def render_topic_signal(topic: dict, card: bool = False) -> str:
-    visual_path_text = TOPIC_VISUALS.get(topic["slug"])
-    if not visual_path_text:
-        visual_path_text = CARD_VISUALS.get(topic["slug"])
+    if card:
+        visual_path_text = CARD_VISUALS.get(topic["slug"]) or TOPIC_VISUALS.get(topic["slug"])
+    else:
+        visual_path_text = TOPIC_VISUALS.get(topic["slug"])
+        if not visual_path_text:
+            visual_path_text = CARD_VISUALS.get(topic["slug"])
     if visual_path_text:
         visual_path = project_asset(visual_path_text)
         if visual_path.exists():
@@ -4332,26 +5511,43 @@ def render_topic_signal(topic: dict, card: bool = False) -> str:
                     topic["slug"],
                     topic.get("hero", ""),
                 )
+                if proof_path_text == visual_path_text:
+                    proof_path_text = topic.get("hero", "") or TOPIC_VISUALS.get(
+                        topic["slug"],
+                        "",
+                    )
                 proof_path = project_asset(proof_path_text)
                 if proof_path.exists() and proof_path != visual_path:
                     proof_uri = asset_data_uri(proof_path, max_bytes=450_000)
                     if proof_uri is not None:
+                        proof_label = (
+                            "AI SKETCH"
+                            if proof_path_text == TOPIC_VISUALS.get(topic["slug"])
+                            else "REAL PROOF"
+                        )
                         proof_html = (
                             "<div class='topic-proof-inset'>"
                             f"<img src='{proof_uri}' "
                             f"alt='Real project evidence for {escape(topic['title'])}'>"
-                            "<span>REAL PROOF</span></div>"
+                            f"<span>{proof_label}</span></div>"
                         )
                     else:
                         proof_html = (
                             "<div class='topic-proof-inset text-only'>"
                             f"{workflow_icon_svg(topic['title'], 0)}"
-                            "<span>REAL PROOF</span></div>"
+                            "<span>AI SKETCH</span></div>"
                         )
             if data_uri:
+                keyword_html = ""
+                if card:
+                    frame = TOPIC_FRAMES.get(topic["slug"], {})
+                    pattern = frame.get("pattern", ["input", "AI", "output", "review"])
+                    chips = "".join(f"<span>{escape(term)}</span>" for term in pattern[:4])
+                    keyword_html = f"<div class='topic-card-keywords'>{chips}</div>"
                 visual_html = (
                     f"<img src='{data_uri}' "
                     f"alt='{escape(topic['title'])} workflow poster'>"
+                    f"{keyword_html}"
                 )
             else:
                 frame = TOPIC_FRAMES.get(topic["slug"], {})
@@ -4389,10 +5585,12 @@ def render_think_card(
     compact: bool = False,
 ) -> str:
     frame = TOPIC_FRAMES.get(topic["slug"], {})
-    workflow = AI_WORKFLOW_EVIDENCE.get(topic["slug"], {})
     question = frame.get("question", topic["question"])
     url = topic_url(topic["slug"]).replace("&", "&amp;")
-    raise_prompt = frame.get("raise", "Raise your hand if you want to discuss this project.")
+    raise_prompt = TOPIC_AI_LEVERS.get(
+        topic["slug"],
+        frame.get("raise", "AI use: evidence becomes a reviewable workflow."),
+    )
     return f"""
 <a class="think-card-link" href="{url}" aria-label="Open {escape(topic['title'])}">
 <div class="think-card">
@@ -4488,15 +5686,16 @@ def render_project_visual_stage(topic: dict) -> bool:
             f"""
 <div class="project-stage agent-stage" style="background-image:url('{qgis_uri}')">
   <div class="record-dot">RECORDING</div>
-  <div class="stage-label" style="left:3%;top:5%">PROMPT</div>
+  <div class="stage-label" style="left:3%;top:5%">PROMPT + RUBRIC</div>
   <div class="action-marker" style="left:17%;top:31%">1</div>
   <div class="action-marker" style="left:39%;top:22%">2</div>
   <div class="action-marker" style="left:62%;top:39%">3</div>
-  <div class="stage-label failure" style="right:5%;top:18%">FAILED ACTION ↩ HUMAN</div>
+  <div class="stage-label" style="right:5%;top:18%">SCREEN-RECORDED VIRTUAL ENV</div>
+  <div class="stage-label failure" style="right:5%;top:31%">HUMAN REVIEW GATE</div>
   <div class="agent-lanes">
-    <div class="agent-lane">HUMAN LANE<br>DEMO → TRACE</div>
-    <div class="rubric-gate">SAME OUTPUT<br>RUBRIC</div>
-    <div class="agent-lane">AGENT LANE<br>REPLAY → REVIEW</div>
+    <div class="agent-lane">HUMAN WORK<br>PROMPT - SCREEN RECORD</div>
+    <div class="rubric-gate">SUPERVISED<br>ML LABELS</div>
+    <div class="agent-lane">FUTURE AGENT<br>EXECUTES SOFTWARE</div>
   </div>
 </div>
             """,
@@ -4525,22 +5724,26 @@ def render_project_visual_stage(topic: dict) -> bool:
             return False
         st.markdown(
             f"""
-<div class="project-stage">
-  <div class="evidence-chain">
-    <div class="chain-node">{workflow_icon_svg("prompt", 1)}<strong>PROMPT</strong><span>What connects?</span></div>
-    <div class="chain-node human"><img src="{drawing_uri}" alt="Real Bayan Obo Adobe drawing"><strong>ADOBE</strong><span>orange = geologist</span></div>
-    <div class="chain-node">
-      <div class="mini-table"><span>mineral</span><span>stage</span><span>host</span><span>source</span><span>fluid</span><span>deposit</span></div>
-      <strong>EXCEL</strong><span>real fields</span>
+<div class="project-stage" style="background:#eef2f4;padding:1rem;min-height:510px;">
+  <div style="display:grid;grid-template-columns:1fr 150px 1fr;gap:0.9rem;align-items:center;">
+    <div style="display:grid;gap:0.7rem;">
+      <div class="chain-node" style="min-height:92px;"><strong>TABLES / CSVs</strong><span>many inputs and variables</span></div>
+      <div class="chain-node" style="min-height:92px;"><strong>QUESTIONS / PROJECTS</strong><span>related variables and research goals</span></div>
+      <div class="chain-node human" style="min-height:120px;"><img src="{drawing_uri}" alt="Bayan Obo drawing"><strong>DRAWINGS / IDEAS</strong><span>shapes, colors, polygons</span></div>
     </div>
-    <div class="chain-node">{workflow_icon_svg("csv nodes", 3)}<strong>NODES</strong><span>solid = source</span></div>
-    <div class="chain-node"><img src="{graph_uri}" alt="Real thesis graph export"><strong>GEPHI</strong><span>dotted = AI suggestion</span></div>
-    <div class="chain-node question-node">{workflow_icon_svg("review", 5)}<strong>UNKNOWN?</strong><span>expert review</span></div>
+    <div style="height:150px;border-radius:50%;background:#0b1f3a;color:#ffffff;display:grid;place-items:center;text-align:center;font-weight:900;border:6px solid #7ed6df;">
+      <div>AI / ML<br><span style="font-size:0.78rem;color:#bfeff3;">sort + connect</span></div>
+    </div>
+    <div style="display:grid;gap:0.7rem;">
+      <div class="chain-node" style="min-height:92px;"><strong>KNOWLEDGE GRAPH</strong><span>variables connect with evidence</span></div>
+      <div class="chain-node" style="min-height:92px;"><strong>ML ARCHITECTURE</strong><span>inputs, model, validation gates</span></div>
+      <div class="chain-node" style="min-height:120px;"><img src="{graph_uri}" alt="Graph export"><strong>ADOBE / GEPHI VISUAL</strong><span>architecture people can inspect</span></div>
+    </div>
   </div>
-  <div class="output-branches">
-    <div>EVIDENCE SUMMARY</div>
-    <div class="question">RELATIONSHIP GAP<br>question, not discovery</div>
-    <div class="question">EXTRACTION HYPOTHESIS<br>question, not discovery</div>
+  <div class="output-branches" style="padding:1rem 0 0;">
+    <div>SOURCE-BACKED EDGES</div>
+    <div class="question">AI-SUGGESTED LINKS<br>review first</div>
+    <div class="question">HUMAN INTERPRETATION<br>kept visible</div>
   </div>
 </div>
             """,
@@ -4549,29 +5752,28 @@ def render_project_visual_stage(topic: dict) -> bool:
         return True
 
     if slug == "moho_ml":
-        moho_uri = asset_data_uri(
-            project_asset("assets/project_visuals/valles_moho.png"),
-            max_bytes=500_000,
-        )
-        if moho_uri is None:
-            return False
         st.markdown(
-            f"""
-<div class="project-stage transfer-stage">
+            """
+<div class="project-stage transfer-stage" style="grid-template-columns:1.15fr 1.3fr 1fr;">
   <div class="region-panel">
-    <h4>AUSTRALIA · TRAIN</h4>
-    <div class="sample-field"></div>
-    <div class="small-note">gravity + Moho points</div>
+    <h4>NORTH SLOPE INPUTS</h4>
+    <div class="property-chips">
+      <span>DEPTH RAW</span><span>GR / DENSITY</span><span>RESISTIVITY</span>
+      <span>VP / VS</span><span>CORE + QC</span>
+    </div>
+    <div class="small-note" style="margin-top:0.7rem;">Measured inputs, derived features, QC flags, and targets stay separate.</div>
   </div>
   <div>
-    <div class="model-gate">ANN<br>BASELINE</div>
-    <div class="leakage-gate">LEAKAGE?<br>BLOCK INVALID SPLITS</div>
+    <div class="model-gate">BASELINE<br>FIRST</div>
+    <div class="model-gate" style="margin-top:0.55rem;">CLASSIFY<br>OCCURRENCE</div>
+    <div class="model-gate" style="margin-top:0.55rem;">REGRESS<br>SATURATION</div>
+    <div class="leakage-gate">LEAKAGE GATE<br>NO TARGETS IN INPUTS</div>
   </div>
   <div class="region-panel">
-    <h4>USA · TRANSFER FIRST</h4>
-    <img src="{moho_uri}" alt="Real Moho mapping evidence">
+    <h4>VALIDATION</h4>
+    <div class="sample-field"></div>
     <div class="residual-dots"><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="small-note">residuals before score</div>
+    <div class="small-note">Hold out complete wells before trusting model scores.</div>
   </div>
 </div>
             """,
@@ -4580,10 +5782,21 @@ def render_project_visual_stage(topic: dict) -> bool:
         return True
 
     if slug == "stock_workflow":
+        stock_uri = asset_data_uri(
+            project_asset("assets/project_visuals/stock_all_tickers_chart.svg"),
+            max_bytes=600_000,
+        )
+        if stock_uri is None:
+            return False
         st.markdown(
             f"""
-<div class="project-stage pipeline-stage">
-  <div class="pipeline-node"><div><div class="file-rain"><span></span><span></span><span></span><span></span><span></span></div><strong>FILES</strong></div></div>
+<div class="project-stage pipeline-stage" style="grid-template-columns:1.35fr repeat(4,minmax(0,1fr));">
+  <div class="pipeline-node">
+    <div>
+      <img src="{stock_uri}" alt="Current stock dashboard chart" style="width:100%;height:94px;object-fit:contain;margin-bottom:0.45rem;">
+      <strong>CURRENT APP VISUAL</strong>
+    </div>
+  </div>
   <div class="pipeline-node">{workflow_icon_svg("Codex code", 2)}<strong>CODEX</strong></div>
   <div class="pipeline-node">{workflow_icon_svg("GitHub branches", 3)}<strong>GITHUB</strong></div>
   <div class="pipeline-node">{workflow_icon_svg("Streamlit dashboard", 4)}<strong>APP</strong></div>
@@ -4608,15 +5821,15 @@ def render_project_visual_stage(topic: dict) -> bool:
             f"""
 <div class="project-stage property-stage">
   <div class="property-inputs">
-    <strong>MEASURED SIGNALS</strong>
+    <strong>SATELLITE / GIS VARIABLES</strong>
     <div class="property-chips">
-      <span>DENSITY</span><span>VELOCITY</span><span>RESISTIVITY</span>
-      <span>CHEMISTRY</span><span>FORMATION</span>
+      <span>BANDS</span><span>DEM</span><span>TEXTURE</span>
+      <span>SLOPE</span><span>STRUCTURE</span>
     </div>
   </div>
-  <div class="range-gate">RANGE<br>GATES<br>↓<br>GRAY = UNCERTAIN</div>
+  <div class="range-gate">FEATURE<br>GATES<br>down<br>GRAY = UNCERTAIN</div>
   <div class="map-output">
-    <strong>CLASSIFIED GIS ZONES</strong>
+    <strong>REVIEWED ROCK-TYPE MAP</strong>
     <img src="{map_uri}" alt="Real raster classification map">
   </div>
 </div>
@@ -4646,14 +5859,16 @@ def render_evidence_leads(topic: dict) -> None:
         return
     chips = []
     for label, path_text in leads:
+        is_url = path_text.startswith(("http://", "https://"))
         path = Path(path_text)
-        status = "found" if path.exists() else "missing"
+        status = "deck" if is_url else ("found" if path.exists() else "missing")
+        display_name = label if is_url else path.name
         chips.append(
             f"""
-<div class="source-chip">
+<a class="source-chip" href="{escape(source_href(path_text))}" target="_blank" rel="noopener noreferrer">
   <strong>{escape(label)}</strong>
-  <span>{escape(status)} | {escape(path.name)}</span>
-</div>
+  <span>{escape(status)} | {escape(display_name)}</span>
+</a>
             """
         )
     st.subheader("Evidence leads")
@@ -5878,10 +7093,10 @@ elif section == "Processing Visual Lab":
 3. **Knowledge graph:** larger graph, three node types, one labeled relationship.
 4. **Seismic:** dominant P-pick, confidence band, direct station/event output.
 5. **Agent training:** larger final agent, visible failure example, animated action trace.
-6. **Rock mapping:** connect input ranges to classified zones and uncertainty overlap.
+6. **Rock mapping:** connect satellite/GIS variables to reviewed classes and uncertainty overlap.
 7. **Field geophysics:** add a combined interpretation panel and uncertainty bars.
-8. **Moho ML:** emphasize geographic transfer, leakage gate, and residual map.
-9. **App pipeline:** put validation in the main path and loop results back to Codex.
+8. **Hydrate ML:** emphasize feature lanes, leakage gate, and held-out complete wells.
+9. **App pipeline:** use the current stock app visuals and put validation in the main path.
             """
         )
         if VISUAL_DESIGN_SPEC_PATH.exists():
