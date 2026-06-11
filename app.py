@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-11 / source-backed-ml-update"
+DEPLOY_BUILD_ID = "2026-06-11 / final-email-source-pass"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -2304,6 +2304,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Grounds the graph topic in actual map and geochemical-pattern evidence.",
         },
         {
+            "title": "Critical-minerals heatmaps",
+            "path": "assets/gmail_updates/2026-06-10/critical_minerals_pdf_pages/critical_minerals_p08_heatmaps.png",
+            "source": "Critical minerals PowerPoint PDF, page 8",
+            "note": "Shows property-overlap matrices that can become graph edge weights and uncertainty checks.",
+        },
+        {
             "title": "Bayan Obo interpretation drawing",
             "path": "assets/project_visuals/ree_bayan_obo_main.png",
             "source": "Local REE visual export",
@@ -2355,6 +2361,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "source": "EarthScope / seismic slide export",
             "note": "Supports cloud, station, and collaboration context.",
         },
+        {
+            "title": "IMG_9800 field-computer run",
+            "path": "assets/gmail_updates/2026-06-10/IMG_9800.jpg",
+            "source": "Gmail attachment IMG_9800",
+            "note": "Email-specific source image for field/cloud processing and plot review on rugged hardware.",
+        },
     ],
     "north_slope": [
         {
@@ -2400,6 +2412,24 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/rock_classification_slides/rock_formation_classification_outputs.png",
             "source": "Rock-classification slide export",
             "note": "Shows labels and output structure that future ML would need to audit.",
+        },
+        {
+            "title": "Measurement-condition problem",
+            "path": "assets/gmail_updates/2026-06-10/critical_minerals_pdf_pages/critical_minerals_p05_measurement_conditions_problem.png",
+            "source": "Critical minerals PowerPoint PDF, page 5",
+            "note": "Explains why density, saturation, temperature, and matrix effects cannot be treated as simple labels.",
+        },
+        {
+            "title": "Formation trend comparison",
+            "path": "assets/gmail_updates/2026-06-10/critical_minerals_pdf_pages/critical_minerals_p10_formation_trend_comparison.png",
+            "source": "Critical minerals PowerPoint PDF, page 10",
+            "note": "Supports rock-property feature engineering before classification or resource mapping.",
+        },
+        {
+            "title": "Property-correlation map",
+            "path": "assets/gmail_updates/2026-06-10/critical_minerals_pdf_pages/critical_minerals_p17_property_correlation.png",
+            "source": "Critical minerals PowerPoint PDF, page 17",
+            "note": "Shows source geography that future spatial validation must keep separate from training labels.",
         },
     ],
     "valles": [
@@ -2621,6 +2651,58 @@ ML_PIPELINE_CONTRACTS = {
         "pipeline": ["crop SEM fields", "propose visible labels", "separate observation from interpretation", "link literature support", "queue expert review"],
         "validation": ["label visibility check", "proxy-claim audit", "expert petrography review", "ambiguous example bucket"],
         "failure_modes": ["texture label overclaim", "proxy meaning inferred from image alone", "detrital/authigenic confusion", "missing scale/context"],
+    },
+}
+
+
+ML_PIPELINE_SOURCE_CONTEXT = {
+    "ai_workflow": {
+        "keywords": ["GUI agents", "action traces", "rubric labels", "scientific workflow agents"],
+        "sector_advance": ["energy project drafting", "banking operations QA", "startup app delivery", "commerce back-office automation"],
+    },
+    "thesis_graph": {
+        "keywords": ["GraphRAG", "knowledge graph schema", "source-weighted edges", "GNN prospectivity"],
+        "sector_advance": ["critical-mineral targeting", "banking risk maps", "startup knowledge bases", "marketing relationship graphs"],
+    },
+    "processing_earthquake": {
+        "keywords": ["feature engineering", "lagged windows", "nonlinear baseline", "held-out future windows"],
+        "sector_advance": ["hazard communication", "logistics anomaly windows", "finance volatility windows", "equipment monitoring"],
+    },
+    "seismic": {
+        "keywords": ["SeisLM", "seismic foundation model", "phase picking", "run provenance"],
+        "sector_advance": ["energy cloud processing", "agriculture remote sensing", "insurance geohazard triage", "research collaboration"],
+    },
+    "north_slope": {
+        "keywords": ["source provenance", "schema matching", "spatial joins", "public-safe scaffold"],
+        "sector_advance": ["energy source libraries", "real-estate due diligence", "supply-chain site intelligence", "public-sector data portals"],
+    },
+    "rock_classification": {
+        "keywords": ["spatial cross-validation", "GNN prospectivity", "spectral features", "class-imbalance check"],
+        "sector_advance": ["resource mapping", "precision agriculture soil classes", "construction material screening", "environmental land-cover QA"],
+    },
+    "valles": {
+        "keywords": ["method fusion", "uncertainty mask", "physics-aware review", "line registration"],
+        "sector_advance": ["geothermal surveys", "infrastructure corridor risk", "water-resource screening", "site-remediation planning"],
+    },
+    "near_surface": {
+        "keywords": ["multimodal fusion", "conflict-aware labels", "ERT/TEM/seismic features", "field-note review"],
+        "sector_advance": ["near-surface engineering", "farm drainage mapping", "utility siting", "wetland monitoring"],
+    },
+    "moho_ml": {
+        "keywords": ["gas hydrate well-log ML", "physics-informed ML", "well-held-out validation", "calibration and abstention"],
+        "sector_advance": ["hydrate screening", "reservoir analog ranking", "carbon-storage review", "energy decision support"],
+    },
+    "ambient_noise": {
+        "keywords": ["station-pair CCF", "stack stability", "continuous windows", "metadata QC"],
+        "sector_advance": ["volcano monitoring", "infrastructure vibration alerts", "industrial equipment monitoring", "city-scale subsurface sensing"],
+    },
+    "stock_workflow": {
+        "keywords": ["walk-forward testing", "drift monitoring", "baseline challenger", "leakage detection"],
+        "sector_advance": ["finance dashboards", "sales forecasting", "inventory planning", "marketing spend monitoring"],
+    },
+    "sem_petrography": {
+        "keywords": ["image labels", "multimodal classifiers", "proxy-claim audit", "expert review queue"],
+        "sector_advance": ["petrography review", "materials QA", "agriculture soil microscopy", "manufacturing defect triage"],
     },
 }
 
@@ -4703,7 +4785,7 @@ st.markdown(
     }
     .pipeline-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
         gap: 0.75rem;
     }
     .pipeline-cell {
@@ -5936,28 +6018,32 @@ def render_ml_pipeline_contract(topic: dict) -> None:
     def list_items(values: list[str]) -> str:
         return "".join(f"<li>{escape(value)}</li>" for value in values)
 
+    def pipeline_cell(title: str, values: list[str]) -> str:
+        return (
+            "<div class=\"pipeline-cell\">"
+            f"<strong>{escape(title)}</strong>"
+            f"<ul>{list_items(values)}</ul>"
+            "</div>"
+        )
+
+    source_context = ML_PIPELINE_SOURCE_CONTEXT.get(topic["slug"], {})
+    extra_cells = ""
+    if source_context.get("keywords"):
+        extra_cells += pipeline_cell("ML Source Keywords", source_context["keywords"])
+    if source_context.get("sector_advance"):
+        extra_cells += pipeline_cell("Sector Advance", source_context["sector_advance"])
+
     st.markdown(
         f"""
 <div class="pipeline-contract">
   <h3>{escape(contract["title"])}</h3>
   <p>{escape(contract["summary"])}</p>
   <div class="pipeline-grid">
-    <div class="pipeline-cell">
-      <strong>Feature Set</strong>
-      <ul>{list_items(contract["features"])}</ul>
-    </div>
-    <div class="pipeline-cell">
-      <strong>Pipeline Changes</strong>
-      <ul>{list_items(contract["pipeline"])}</ul>
-    </div>
-    <div class="pipeline-cell">
-      <strong>Validation Gates</strong>
-      <ul>{list_items(contract["validation"])}</ul>
-    </div>
-    <div class="pipeline-cell">
-      <strong>Failure Modes</strong>
-      <ul>{list_items(contract["failure_modes"])}</ul>
-    </div>
+    {pipeline_cell("Feature Set", contract["features"])}
+    {pipeline_cell("Pipeline Changes", contract["pipeline"])}
+    {pipeline_cell("Validation Gates", contract["validation"])}
+    {pipeline_cell("Failure Modes", contract["failure_modes"])}
+    {extra_cells}
   </div>
 </div>
         """,
