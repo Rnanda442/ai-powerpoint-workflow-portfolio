@@ -23,6 +23,7 @@ PROJECT_VISUALS_PATH = ROOT / "data" / "project_visuals.csv"
 LINKEDIN_EVIDENCE_PATH = ROOT / "data" / "linkedin_evidence.csv"
 ORGANIZED_FOLDERS_PATH = ROOT / "data" / "organized_project_folders.csv"
 ML_ROADMAP_PATH = ROOT / "data" / "ml_future_roadmap.csv"
+ML_DIAGRAM_TRACKER_PATH = ROOT / "data" / "ml_diagram_tracker.csv"
 PROJECT_STATUS_PATH = ROOT / "data" / "project_status.csv"
 VISUAL_AUDIT_PATH = ROOT / "data" / "visual_audit.csv"
 VISION_BOARD_PATH = ROOT / "data" / "vision_board.csv"
@@ -515,6 +516,136 @@ CARD_VISUALS = {
     "sem_petrography": "assets/topic_visuals/sem_petrography_ai.svg",
 }
 
+ML_SOURCE_RIBBONS = [
+    {
+        "label": "Hydrate ML paper",
+        "short": "Sgh + well logs",
+        "detail": "ANN, NMR Sgh target, density/porosity/GR/resistivity/Vp/Vs, washout/GLOSS QC, basin transfer.",
+    },
+    {
+        "label": "ML validation notes",
+        "short": "leakage + drift",
+        "detail": "Baseline first, split matches use, train-only transforms, data quality checks, drift, fallback.",
+    },
+]
+
+ML_DIAGRAM_BLUEPRINTS = {
+    "ai_workflow": {
+        "objective": "task replay",
+        "target": "pass / fail",
+        "features": ["screen state", "click trace", "rubric"],
+        "model": "agent policy",
+        "source_pattern": "target + features",
+        "validation": "held-out task",
+        "output": "reviewed replay",
+    },
+    "thesis_graph": {
+        "objective": "edge ranking",
+        "target": "valid relation",
+        "features": ["entity", "edge type", "source"],
+        "model": "GraphRAG",
+        "source_pattern": "source-backed target",
+        "validation": "edge audit",
+        "output": "query graph",
+    },
+    "processing_earthquake": {
+        "objective": "feature windows",
+        "target": "event pattern",
+        "features": ["lat/lon", "depth", "magnitude"],
+        "model": "baseline first",
+        "source_pattern": "logs -> variables",
+        "validation": "time split",
+        "output": "no forecast claim",
+    },
+    "seismic": {
+        "objective": "pick QA",
+        "target": "arrival quality",
+        "features": ["waveform", "station", "SNR"],
+        "model": "pick scorer",
+        "source_pattern": "target + QC",
+        "validation": "human pick",
+        "output": "velocity risk",
+    },
+    "north_slope": {
+        "objective": "hydrate Sgh",
+        "target": "NMR Sgh",
+        "features": ["density", "porosity", "GR", "Rt", "Vp/Vs"],
+        "model": "ANN / GBM",
+        "source_pattern": "washout + GLOSS",
+        "validation": "well-held-out",
+        "output": "screened interval",
+    },
+    "rock_classification": {
+        "objective": "rock labels",
+        "target": "expert label",
+        "features": ["image", "chemistry", "map"],
+        "model": "multimodal",
+        "source_pattern": "feature combos",
+        "validation": "sample split",
+        "output": "review queue",
+    },
+    "valles": {
+        "objective": "conflict zones",
+        "target": "agree / conflict",
+        "features": ["gravity", "ERT/TEM", "seismic"],
+        "model": "ranker",
+        "source_pattern": "physical QC",
+        "validation": "method lane",
+        "output": "field review",
+    },
+    "near_surface": {
+        "objective": "line review",
+        "target": "method conflict",
+        "features": ["line id", "velocity", "resistivity"],
+        "model": "rule + ML",
+        "source_pattern": "bad rows out",
+        "validation": "leave-line-out",
+        "output": "review target",
+    },
+    "moho_ml": {
+        "objective": "transfer test",
+        "target": "Moho depth",
+        "features": ["gravity", "region", "residual"],
+        "model": "baseline + ANN",
+        "source_pattern": "basin transfer",
+        "validation": "area-held-out",
+        "output": "residual map",
+    },
+    "ambient_noise": {
+        "objective": "monitoring",
+        "target": "stable CCF",
+        "features": ["station pair", "window", "stack"],
+        "model": "anomaly triage",
+        "source_pattern": "freshness QC",
+        "validation": "seasonal check",
+        "output": "alert review",
+    },
+    "stock_workflow": {
+        "objective": "honest app",
+        "target": "future window",
+        "features": ["ticker", "past data", "refresh"],
+        "model": "baseline + GBM",
+        "source_pattern": "shift before rolling",
+        "validation": "walk-forward",
+        "output": "claim gate",
+    },
+    "sem_petrography": {
+        "objective": "label vs claim",
+        "target": "visible label",
+        "features": ["SEM crop", "scale", "sample"],
+        "model": "label assist",
+        "source_pattern": "validity check",
+        "validation": "expert + lit",
+        "output": "blocked proxy",
+    },
+}
+
+PROJECT_TOPIC_FALLBACKS = {
+    "moho_ml": "moho_ml",
+    "stock_workflow": "stock_workflow",
+    "stock_dashboard": "stock_workflow",
+}
+
 WORKFLOW_NODE_ICONS = {
     "Prompt": "ASK",
     "Record": "REC",
@@ -933,56 +1064,35 @@ RESEARCH_SOURCES = [
 
 GMAIL_SOURCE_UPDATES = [
     {
-        "label": "Design system",
-        "title": "Stop color drift with tokens",
+        "label": "ML source 1",
+        "title": "Hydrate ANN paper",
         "body": (
-            "Move the site toward semantic color roles: primary, accent, secondary, "
-            "background, surface, border, and text. The practical test is changing one "
-            "token and seeing buttons, chips, cards, and focal highlights update together."
+            "Use Sgh, well logs, washout/GLOSS QC, feature-combination testing, and basin "
+            "transfer as the geoscience ML pattern."
         ),
     },
     {
-        "label": "Visual direction",
-        "title": "Lighten the full-page dark shell",
+        "label": "ML source 2",
+        "title": "Validation notes",
         "body": (
-            "Keep a technical dark accent for code, videos, and 3D scenes, but use lighter "
-            "section surfaces so screenshots, captions, and workflow cards are readable."
+            "Use baseline-first modeling, train-only transforms, split policy, ETL checks, "
+            "drift monitoring, fallback, and fairness where people are affected."
         ),
     },
     {
-        "label": "ML principle",
-        "title": "Baseline first, complexity second",
+        "label": "Diagram rule",
+        "title": "Target, features, gate",
         "body": (
-            "Frame ML examples with a simple baseline before flexible models. Only add "
-            "gradient boosting, nearest-neighbor, neural, or graph methods when validation "
-            "shows the added complexity helps."
+            "Every topic should show the model target, feature lane, QC step, model layer, "
+            "validation gate, and decision output."
         ),
     },
     {
-        "label": "Validation",
-        "title": "Use chronological and spatial splits",
+        "label": "Visual rule",
+        "title": "Less prose, more boards",
         "body": (
-            "For geoscience and production workflows, validation should mimic deployment: "
-            "train on available past or source regions, then test on future windows or "
-            "held-out geography without leakage."
-        ),
-    },
-    {
-        "label": "Data quality",
-        "title": "Monitor missingness, drift, and late data",
-        "body": (
-            "The portfolio should show ETL checks as part of the story: completeness, "
-            "freshness, row counts, null spikes, schema changes, and feature drift before "
-            "any model claim is trusted."
-        ),
-    },
-    {
-        "label": "Production ML",
-        "title": "Add fairness and incident thinking",
-        "body": (
-            "CreditScoreV4 is a useful case-study pattern: feature drift, stale training "
-            "data, proxy variables, fairness gaps, fallback models, and monitoring that "
-            "looks at segments rather than only global score PSI."
+            "If a section starts turning into bullets, convert it into a source image, "
+            "pipeline board, or Processing-style sketch."
         ),
     },
 ]
@@ -4813,14 +4923,256 @@ st.markdown(
         font-size: 0.9rem;
         line-height: 1.35;
     }
+    .ml-visual-diagram {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .ml-visual-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+        gap: 0.75rem;
+        align-items: start;
+        margin-bottom: 0.8rem;
+    }
+    .ml-kicker {
+        color: #0f766e;
+        font-size: 0.74rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .ml-visual-head h3 {
+        color: #0b1f3a;
+        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        line-height: 1.15;
+        margin: 0.15rem 0 0;
+    }
+    .ml-source-ribbons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.45rem;
+    }
+    .ml-source-ribbon {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-left: 5px solid #0f766e;
+        border-radius: 8px;
+        min-height: 4.2rem;
+        padding: 0.55rem 0.65rem;
+    }
+    .ml-source-ribbon strong,
+    .ml-source-ribbon span {
+        display: block;
+    }
+    .ml-source-ribbon strong {
+        color: #0b1f3a;
+        font-size: 0.78rem;
+        line-height: 1.15;
+    }
+    .ml-source-ribbon span {
+        color: #475569;
+        font-size: 0.82rem;
+        margin-top: 0.25rem;
+    }
+    .ml-visual-board {
+        display: grid;
+        grid-template-columns: 12rem minmax(0, 1fr) 12rem;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+    .ml-evidence-card,
+    .ml-gate-card {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        padding: 0.55rem;
+        min-height: 12.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+    .ml-evidence-card img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #d8dee8;
+        background: #e2e8f0;
+    }
+    .ml-evidence-card svg {
+        width: 100%;
+        height: 7.5rem;
+        color: #0f766e;
+        background: #e8f3f1;
+        border-radius: 6px;
+        padding: 1rem;
+    }
+    .ml-evidence-card strong,
+    .ml-evidence-card span {
+        display: block;
+        color: #334155;
+        font-size: 0.76rem;
+        line-height: 1.2;
+        margin-top: 0.35rem;
+    }
+    .ml-evidence-card span {
+        color: #64748b;
+        margin-top: 0.1rem;
+    }
+    .ml-flow-track {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.4rem;
+        align-items: stretch;
+        position: relative;
+    }
+    .ml-flow-node {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        min-height: 12.5rem;
+        padding: 0.55rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: relative;
+    }
+    .ml-flow-node:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -0.35rem;
+        width: 0.42rem;
+        height: 0.42rem;
+        border-top: 2px solid #64748b;
+        border-right: 2px solid #64748b;
+        transform: translateY(-50%) rotate(45deg);
+        background: #f8fafc;
+        z-index: 1;
+    }
+    .ml-node-icon {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #0f766e;
+        background: #e8f3f1;
+        margin-bottom: 0.45rem;
+    }
+    .ml-node-icon svg {
+        width: 1.45rem;
+        height: 1.45rem;
+    }
+    .ml-flow-node strong {
+        color: #0f766e;
+        font-size: 0.68rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+    .ml-flow-node span {
+        color: #0b1f3a;
+        font-size: clamp(0.72rem, 1vw, 0.88rem);
+        font-weight: 760;
+        line-height: 1.15;
+        margin-top: 0.35rem;
+        overflow-wrap: anywhere;
+    }
+    .ml-flow-node span span {
+        display: inline-block;
+        background: #eef2f7;
+        border-radius: 999px;
+        color: #334155;
+        font-size: 0.68rem;
+        font-weight: 760;
+        margin: 0.1rem 0.1rem 0 0;
+        padding: 0.18rem 0.38rem;
+    }
+    .ml-gate-card {
+        border-color: #f59e0b;
+        border-top: 5px solid #f59e0b;
+    }
+    .ml-gate-card strong {
+        color: #92400e;
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .ml-risk-chips {
+        display: grid;
+        gap: 0.35rem;
+        margin: 0.55rem 0;
+    }
+    .ml-risk-chips span {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        border-radius: 999px;
+        color: #9a3412;
+        font-size: 0.72rem;
+        font-weight: 760;
+        line-height: 1.15;
+        padding: 0.32rem 0.45rem;
+    }
+    .ml-gate-card small {
+        color: #64748b;
+        display: block;
+        font-size: 0.72rem;
+        line-height: 1.25;
+    }
+    .ml-source-map {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+    .ml-source-map div {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        min-height: 4.4rem;
+        padding: 0.55rem 0.65rem;
+    }
+    .ml-source-map strong,
+    .ml-source-map span {
+        display: block;
+        line-height: 1.18;
+    }
+    .ml-source-map strong {
+        color: #0b1f3a;
+        font-size: 0.78rem;
+    }
+    .ml-source-map span {
+        color: #475569;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+    }
     .source-panel-note {
         color: #64748b !important;
         font-size: 0.9rem;
         margin-bottom: 0.6rem;
     }
     @media (max-width: 900px) {
-        .pipeline-grid {
+        .pipeline-grid,
+        .ml-visual-head,
+        .ml-visual-board,
+        .ml-source-map {
             grid-template-columns: 1fr;
+        }
+        .ml-source-ribbons {
+            grid-template-columns: 1fr;
+        }
+        .ml-flow-track {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .ml-flow-node {
+            min-height: 9.4rem;
+        }
+        .ml-flow-node:not(:last-child)::after {
+            display: none;
         }
     }
 </style>
@@ -4925,6 +5277,16 @@ def topic_by_slug(slug: str) -> dict:
         if topic["slug"] == slug:
             return topic
     return TOPIC_ROOMS[0]
+
+
+def topic_for_project_key(project_key: str) -> dict | None:
+    for topic in TOPIC_ROOMS:
+        if topic["project_key"] == project_key:
+            return topic
+    fallback_slug = PROJECT_TOPIC_FALLBACKS.get(project_key)
+    if fallback_slug:
+        return topic_by_slug(fallback_slug)
+    return None
 
 
 def asset_data_uri(path: Path, max_bytes: int | None = None) -> str | None:
@@ -6010,7 +6372,127 @@ def render_source_backed_asset_panel(topic: dict) -> None:
                     st.caption(f"{asset['source']}: {asset['note']}")
 
 
+def ml_diagram_row(slug: str) -> pd.Series | None:
+    match = ml_diagram_tracker[ml_diagram_tracker["topic_slug"] == slug]
+    if match.empty:
+        return None
+    return match.iloc[0]
+
+
+def compact_terms(value: str, limit: int = 3) -> list[str]:
+    return [
+        term.strip()
+        for term in str(value).split(";")
+        if term.strip()
+    ][:limit]
+
+
+def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
+    blueprint = ML_DIAGRAM_BLUEPRINTS.get(topic["slug"])
+    if blueprint is None:
+        return
+    row = ml_diagram_row(topic["slug"])
+    tracker_validation = compact_terms(row["validation_gates"], 3) if row is not None else []
+    tracker_next = str(row["next_action"]) if row is not None else "Build source-backed diagram."
+    primary_source = str(row["primary_ml_source"]) if row is not None else "ML sources"
+    secondary_source = str(row["secondary_ml_source"]) if row is not None else ""
+    evidence_assets = SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])
+    evidence_html = workflow_icon_svg(topic["title"], 0)
+    evidence_label = "project source"
+    evidence_candidates = [
+        (asset["title"], asset["path"])
+        for asset in evidence_assets
+    ]
+    topic_visual = TOPIC_VISUALS.get(topic["slug"])
+    if topic_visual:
+        evidence_candidates.append(("topic sketch", topic_visual))
+    for candidate_title, candidate_path in evidence_candidates:
+        asset_path = project_asset(candidate_path)
+        if asset_path.exists():
+            asset_uri = asset_data_uri(asset_path, max_bytes=900_000)
+            if asset_uri is not None:
+                evidence_html = f"<img src='{asset_uri}' alt='{escape(candidate_title)}'>"
+                evidence_label = candidate_title
+                break
+
+    source_chips = "".join(
+        f"""
+<div class="ml-source-ribbon">
+  <strong>{escape(source['label'])}</strong>
+  <span>{escape(source['short'])}</span>
+</div>
+        """
+        for source in ML_SOURCE_RIBBONS
+    )
+    feature_chips = "".join(
+        f"<span>{escape(feature)}</span>"
+        for feature in blueprint["features"][:5]
+    )
+    risk_chips = "".join(
+        f"<span>{escape(risk)}</span>"
+        for risk in tracker_validation
+    )
+    flow_nodes = [
+        ("TARGET", blueprint["target"]),
+        ("FEATURES", feature_chips),
+        ("QC", blueprint["source_pattern"]),
+        ("MODEL", blueprint["model"]),
+        ("VALIDATE", blueprint["validation"]),
+        ("OUTPUT", blueprint["output"]),
+    ]
+    flow_html = ""
+    for idx, (label, value) in enumerate(flow_nodes, start=1):
+        value_html = value if label == "FEATURES" else escape(value)
+        flow_html += f"""
+<div class="ml-flow-node">
+  <div class="ml-node-icon">{workflow_icon_svg(label, idx)}</div>
+  <strong>{label}</strong>
+  <span>{value_html}</span>
+</div>
+        """
+
+    secondary_line = (
+        f"<span>{escape(secondary_source)}</span>"
+        if secondary_source and secondary_source.lower() != "nan"
+        else "<span>Used as validation / monitoring layer</span>"
+    )
+    compact_class = " compact" if compact else ""
+    st.markdown(
+        f"""
+<div class="ml-visual-diagram{compact_class}">
+  <div class="ml-visual-head">
+    <div>
+      <div class="ml-kicker">ML diagram from the two source attachments</div>
+      <h3>{escape(topic['title'])}: {escape(blueprint['objective'])}</h3>
+    </div>
+    <div class="ml-source-ribbons">{source_chips}</div>
+  </div>
+  <div class="ml-visual-board">
+    <div class="ml-evidence-card">
+      {evidence_html}
+      <strong>{escape(evidence_label)}</strong>
+      <span>real topic evidence</span>
+    </div>
+    <div class="ml-flow-track">{flow_html}</div>
+    <div class="ml-gate-card">
+      <strong>risk gate</strong>
+      <div class="ml-risk-chips">{risk_chips}</div>
+      <small>{escape(tracker_next)}</small>
+    </div>
+  </div>
+  <div class="ml-source-map">
+    <div><strong>Hydrate paper pattern</strong><span>Sgh target, log features, washout/GLOSS QC, transfer test.</span></div>
+    <div><strong>Primary here</strong><span>{escape(primary_source)}</span></div>
+    <div><strong>Validation notes</strong>{secondary_line}</div>
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_ml_pipeline_contract(topic: dict) -> None:
+    render_ml_visual_diagram(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
         return
@@ -6033,8 +6515,9 @@ def render_ml_pipeline_contract(topic: dict) -> None:
     if source_context.get("sector_advance"):
         extra_cells += pipeline_cell("Sector Advance", source_context["sector_advance"])
 
-    st.markdown(
-        f"""
+    with st.expander("Detailed ML implementation notes"):
+        st.markdown(
+            f"""
 <div class="pipeline-contract">
   <h3>{escape(contract["title"])}</h3>
   <p>{escape(contract["summary"])}</p>
@@ -6047,8 +6530,8 @@ def render_ml_pipeline_contract(topic: dict) -> None:
   </div>
 </div>
         """,
-        unsafe_allow_html=True,
-    )
+            unsafe_allow_html=True,
+        )
 
 
 def render_topic_signal(topic: dict, card: bool = False) -> str:
@@ -6680,6 +7163,7 @@ project_visuals = load_current_csv(PROJECT_VISUALS_PATH)
 linkedin_evidence = load_current_csv(LINKEDIN_EVIDENCE_PATH)
 organized_folders = load_current_csv(ORGANIZED_FOLDERS_PATH)
 ml_roadmap = load_current_csv(ML_ROADMAP_PATH)
+ml_diagram_tracker = load_current_csv(ML_DIAGRAM_TRACKER_PATH)
 project_status = load_current_csv(PROJECT_STATUS_PATH)
 visual_audit = load_current_csv(VISUAL_AUDIT_PATH)
 vision_board = load_current_csv(VISION_BOARD_PATH)
@@ -7787,11 +8271,9 @@ elif section == "Machine Learning Future":
             render_node_movement(pd.Series(row._asdict()), title="Artifact movement")
             render_future_timeline(pd.Series(row._asdict()))
             st.markdown(f"**Why it matters:** {row.why_important}")
-            topic_match = next(
-                (topic for topic in TOPIC_ROOMS if topic["project_key"] == row.project_key),
-                None,
-            )
+            topic_match = topic_for_project_key(row.project_key)
             if topic_match is not None:
+                render_ml_visual_diagram(topic_match, compact=True)
                 with st.expander("Detailed think-tank plan"):
                     render_detailed_topic_plan(topic_match)
 
