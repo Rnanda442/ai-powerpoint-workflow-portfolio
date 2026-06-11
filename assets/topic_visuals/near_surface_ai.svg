@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Near-surface geophysics interpretation board</title>
+  <desc id="desc">Hammer seismic, ERT and transient EM are fused with geologic units while uncertainty stays visible.</desc>
+  <rect width="1200" height="675" fill="#07151d"/>
+  <path d="M0 185c140-30 240 8 360-18 148-32 245-78 390-48 150 31 250 88 450 38v518H0z" fill="#164e63"/>
+  <path d="M0 288c160-20 260 24 420-12 120-27 210-52 350-14 125 34 250 75 430 30v383H0z" fill="#0f766e"/>
+  <path d="M0 435c155-24 310-6 470 20 160 26 345-16 505 2 90 10 150 23 225 9v209H0z" fill="#78350f"/>
+  <g opacity=".78" fill="none" stroke-width="5">
+    <path d="M90 220c95 28 180 28 260 0s160-28 245 0 178 30 275 0" stroke="#38bdf8"/>
+    <path d="M90 350c100-36 190-36 300 0s210 36 330 0 210-34 340 0" stroke="#f97316"/>
+    <path d="M110 505c120-18 250-18 390 0s275 18 450 0" stroke="#facc15"/>
+  </g>
+  <g fill="#fff" font-family="Arial, sans-serif">
+    <text x="70" y="80" font-size="44" font-weight="800">Near-Surface AI For Fen Geophysics</text>
+    <text x="70" y="124" font-size="22">hammer seismic + ERT + transient EM + geologic units -> reviewable interpretation</text>
+  </g>
+  <g transform="translate(780 170)">
+    <rect width="310" height="360" rx="18" fill="#f8fafc"/>
+    <text x="26" y="48" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="#0f172a">METHOD LAYERS</text>
+    <g font-family="Arial, sans-serif" font-size="20" font-weight="700">
+      <rect x="26" y="78" width="258" height="48" rx="10" fill="#dbeafe"/><text x="48" y="109" fill="#1e3a8a">SEISMIC</text>
+      <rect x="26" y="142" width="258" height="48" rx="10" fill="#ccfbf1"/><text x="48" y="173" fill="#134e4a">ERT</text>
+      <rect x="26" y="206" width="258" height="48" rx="10" fill="#ffedd5"/><text x="48" y="237" fill="#9a3412">TEM</text>
+      <rect x="26" y="270" width="258" height="48" rx="10" fill="#e5e7eb"/><text x="48" y="301" fill="#334155">UNCERTAIN</text>
+    </g>
+  </g>
+  <g transform="translate(125 500)" font-family="Arial, sans-serif" font-weight="800">
+    <rect width="420" height="70" rx="14" fill="#ffffff" opacity=".92"/>
+    <text x="24" y="44" font-size="24" fill="#0f172a">AI suggests. Field evidence decides.</text>
+  </g>
+</svg>
