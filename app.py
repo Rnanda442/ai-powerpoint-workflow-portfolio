@@ -534,7 +534,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "task replay",
         "target": "pass / fail",
         "features": ["screen state", "click trace", "rubric"],
-        "model": "agent policy",
+        "model": "behavior-cloning transformer",
         "source_pattern": "target + features",
         "validation": "held-out task",
         "output": "reviewed replay",
@@ -543,7 +543,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "edge ranking",
         "target": "valid relation",
         "features": ["entity", "edge type", "source"],
-        "model": "GraphRAG",
+        "model": "SciBERT + GraphSAGE",
         "source_pattern": "source-backed target",
         "validation": "edge audit",
         "output": "query graph",
@@ -552,7 +552,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "feature windows",
         "target": "event pattern",
         "features": ["lat/lon", "depth", "magnitude"],
-        "model": "baseline first",
+        "model": "Poisson GLM + LightGBM",
         "source_pattern": "logs -> variables",
         "validation": "time split",
         "output": "no forecast claim",
@@ -561,7 +561,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "pick QA",
         "target": "arrival quality",
         "features": ["waveform", "station", "SNR"],
-        "model": "pick scorer",
+        "model": "LightGBM + PhaseNet",
         "source_pattern": "target + QC",
         "validation": "human pick",
         "output": "velocity risk",
@@ -570,7 +570,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "hydrate Sgh",
         "target": "NMR Sgh",
         "features": ["density", "porosity", "GR", "Rt", "Vp/Vs"],
-        "model": "ANN / GBM",
+        "model": "Keras ANN + XGBoost",
         "source_pattern": "washout + GLOSS",
         "validation": "well-held-out",
         "output": "screened interval",
@@ -579,7 +579,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "rock labels",
         "target": "expert label",
         "features": ["image", "chemistry", "map"],
-        "model": "multimodal",
+        "model": "EfficientNet + XGBoost",
         "source_pattern": "feature combos",
         "validation": "sample split",
         "output": "review queue",
@@ -588,7 +588,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "conflict zones",
         "target": "agree / conflict",
         "features": ["gravity", "ERT/TEM", "seismic"],
-        "model": "ranker",
+        "model": "LightGBM + Gaussian Process",
         "source_pattern": "physical QC",
         "validation": "method lane",
         "output": "field review",
@@ -597,7 +597,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "line review",
         "target": "method conflict",
         "features": ["line id", "velocity", "resistivity"],
-        "model": "rule + ML",
+        "model": "LightGBM + GP surface",
         "source_pattern": "bad rows out",
         "validation": "leave-line-out",
         "output": "review target",
@@ -606,7 +606,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "transfer test",
         "target": "Moho depth",
         "features": ["gravity", "region", "residual"],
-        "model": "baseline + ANN",
+        "model": "Ridge + LightGBM + ANN",
         "source_pattern": "basin transfer",
         "validation": "area-held-out",
         "output": "residual map",
@@ -615,7 +615,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "monitoring",
         "target": "stable CCF",
         "features": ["station pair", "window", "stack"],
-        "model": "anomaly triage",
+        "model": "LightGBM + Isolation Forest",
         "source_pattern": "freshness QC",
         "validation": "seasonal check",
         "output": "alert review",
@@ -624,7 +624,7 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "honest app",
         "target": "future window",
         "features": ["ticker", "past data", "refresh"],
-        "model": "baseline + GBM",
+        "model": "ElasticNet + LightGBM",
         "source_pattern": "shift before rolling",
         "validation": "walk-forward",
         "output": "claim gate",
@@ -633,10 +633,301 @@ ML_DIAGRAM_BLUEPRINTS = {
         "objective": "label vs claim",
         "target": "visible label",
         "features": ["SEM crop", "scale", "sample"],
-        "model": "label assist",
+        "model": "EfficientNet + U-Net",
         "source_pattern": "validity check",
         "validation": "expert + lit",
         "output": "blocked proxy",
+    },
+}
+
+ML_MODEL_DETAIL_DIAGRAMS = {
+    "ai_workflow": {
+        "reference": {
+            "name": "LightGBM action classifier",
+            "target": "next action class",
+            "input": "prompt type, rubric id, state label, prior action, error flag",
+            "unit": "one labeled action step",
+        },
+        "main": {
+            "name": "behavior-cloning transformer",
+            "target": "action token, UI target, parameter, stop/review decision",
+            "input": "screenshot embedding, OCR/UI tokens, file tree, prior steps",
+            "unit": "observe -> act -> inspect trace sequence",
+        },
+        "challenger": {
+            "name": "decision transformer + tool planner",
+            "target": "task graph and low-level software actions",
+            "input": "retrieved prior traces, accepted outputs, rubric failures",
+            "unit": "full scientific software task",
+        },
+        "validation": "held-out software task, held-out project, held-out file structure",
+        "metrics": ["task success rate", "step accuracy", "action F1", "unsafe action rate"],
+        "gate": "human approval before file writes, external actions, or uncertain execution",
+        "diagram": "CLIP/OCR state encoder -> behavior-cloning transformer -> replay simulator -> held-out task score",
+    },
+    "thesis_graph": {
+        "reference": {
+            "name": "SciBERT / MatSciBERT NER",
+            "target": "mineral, host rock, deposit, process, location, source entity",
+            "input": "thesis text, slide text, captions, CSV node tables",
+            "unit": "sentence, table row, or slide text box",
+        },
+        "main": {
+            "name": "relation cross-encoder",
+            "target": "observed, inferred, analog, conceptual, or AI-suggested edge",
+            "input": "entity pair, source chunk, figure caption, graph context",
+            "unit": "candidate source-backed edge",
+        },
+        "challenger": {
+            "name": "GraphSAGE / R-GCN link ranker",
+            "target": "relationship or prospectivity edge for review",
+            "input": "node features, edge types, source weights, ontology labels",
+            "unit": "graph edge or node pair",
+        },
+        "validation": "held-out source document, held-out deposit, held-out edge set",
+        "metrics": ["entity F1", "edge F1", "citation accuracy", "MRR / Hits@K"],
+        "gate": "human edge audit with observed vs inferred styling",
+        "diagram": "SciBERT entity extractor -> relation cross-encoder -> GraphRAG retrieval -> GraphSAGE/R-GCN edge ranking",
+    },
+    "processing_earthquake": {
+        "reference": {
+            "name": "Poisson GLM",
+            "target": "event count by region-time window",
+            "input": "prior count, magnitude bins, depth bins, region id, lagged history",
+            "unit": "region-time window",
+        },
+        "main": {
+            "name": "negative-binomial GLM or LightGBM",
+            "target": "expected count or current-window anomaly rank",
+            "input": "lagged counts, depth histogram, magnitude histogram, cluster density",
+            "unit": "time-window feature row",
+        },
+        "challenger": {
+            "name": "Hawkes process / ST-DBSCAN",
+            "target": "self-exciting sequence or spatiotemporal cluster",
+            "input": "event time, coordinates, magnitude, depth",
+            "unit": "event sequence or cluster",
+        },
+        "validation": "chronological split or leave-region-out split",
+        "metrics": ["MAE / RMSE", "PR-AUC for anomaly labels", "calibration", "rare-event recall"],
+        "gate": "no forecasting claim unless a target and future-window test exist",
+        "diagram": "USGS events -> region-time windows -> Poisson/negative-binomial count model -> LightGBM anomaly ranker",
+    },
+    "seismic": {
+        "reference": {
+            "name": "LightGBM waveform QA classifier",
+            "target": "usable waveform, weak waveform, station mismatch, needs human pick",
+            "input": "SNR, distance, channel, metadata completeness, magnitude",
+            "unit": "event-station-channel waveform window",
+        },
+        "main": {
+            "name": "PhaseNet / EQTransformer",
+            "target": "P arrival probability, S arrival probability, noise probability",
+            "input": "three-component waveform windows and station metadata",
+            "unit": "waveform window",
+        },
+        "challenger": {
+            "name": "seismic representation model + uncertainty head",
+            "target": "pick quality, event association, waveform anomaly",
+            "input": "pretrained waveform embedding, station context, QA labels",
+            "unit": "reviewed waveform segment",
+        },
+        "validation": "held-out event, held-out station, or held-out region",
+        "metrics": ["pick-time error", "usable-pick F1", "SNR-stratified score", "velocity residual"],
+        "gate": "human-reviewed pick before velocity or aquifer interpretation",
+        "diagram": "ObsPy waveform windows -> LightGBM QA -> PhaseNet/EQTransformer picks -> bootstrap uncertainty",
+    },
+    "north_slope": {
+        "reference": {
+            "name": "Ridge / ElasticNet Sgh regressor",
+            "target": "NMR-derived gas hydrate saturation Sgh",
+            "input": "GR, Rt, Vp, Vs, density, porosity, missingness flags",
+            "unit": "QC-approved depth point",
+        },
+        "main": {
+            "name": "Keras/TensorFlow ANN",
+            "target": "continuous Sgh regression",
+            "input": "GR + Vp, Rt + Vp, phi_den + GR + Vp, phi_den + Rt + Vp",
+            "unit": "depth point grouped by complete well",
+        },
+        "challenger": {
+            "name": "XGBoost / LightGBM + multitask NN",
+            "target": "hydrate occurrence head plus saturation head",
+            "input": "log combinations, QC flags, formation tags, public-safe context",
+            "unit": "well interval",
+        },
+        "validation": "leave-well-out, leave-area-out, and basin-transfer testing",
+        "metrics": ["R2", "MAE / RMSE", "ROC-AUC / PR-AUC", "calibration and abstention"],
+        "gate": "caliper washout, GLOSS outliers, target leakage, and random depth-row split checks",
+        "diagram": "caliper + GLOSS QC -> train-only normalization -> Keras ANN Sgh regressor -> XGBoost challenger",
+    },
+    "rock_classification": {
+        "reference": {
+            "name": "linear SVM / logistic regression",
+            "target": "rock, mineral, formation, or ambiguous label",
+            "input": "chemical ratios, texture statistics, source label",
+            "unit": "sample, image crop, or mapped unit",
+        },
+        "main": {
+            "name": "EfficientNet or ResNet + XGBoost",
+            "target": "expert-reviewed class label",
+            "input": "thin-section/map image embedding plus chemistry and formation variables",
+            "unit": "labeled sample or crop",
+        },
+        "challenger": {
+            "name": "CLIP/SigLIP retrieval + Swin Transformer",
+            "target": "similar expert example or high-resolution patch label",
+            "input": "image-text pairs, captions, chemistry tables",
+            "unit": "image-text training example",
+        },
+        "validation": "sample-held-out, site-held-out, or formation-held-out",
+        "metrics": ["macro-F1", "balanced accuracy", "top-k accuracy", "expert correction rate"],
+        "gate": "no duplicate crop leakage from the same sample",
+        "diagram": "EfficientNet image branch + XGBoost chemistry branch + late-fusion label ranker -> expert audit",
+    },
+    "valles": {
+        "reference": {
+            "name": "logistic conflict classifier",
+            "target": "agree, conflict, insufficient evidence, needs review",
+            "input": "method flags, anomaly strength, uncertainty, spatial overlap",
+            "unit": "grid cell, line intersection, or interpreted zone",
+        },
+        "main": {
+            "name": "LightGBM / random forest conflict ranker",
+            "target": "review-priority rank and conflict type",
+            "input": "gravity, EM/TEM/ERT response, seismic velocity, geology, registration error",
+            "unit": "method-overlap zone",
+        },
+        "challenger": {
+            "name": "Gaussian Process / U-Net / graph model",
+            "target": "uncertainty surface, anomaly segment, or survey-intersection graph",
+            "input": "gridded method outputs and adjacency between survey zones",
+            "unit": "surface cell or graph node",
+        },
+        "validation": "leave-area-out or leave-survey-line-out",
+        "metrics": ["conflict F1", "precision@K", "uncertainty calibration", "expert agreement"],
+        "gate": "method disagreement remains visible; no false unified subsurface map",
+        "diagram": "method-specific features -> LightGBM conflict classifier -> Gaussian Process uncertainty surfaces",
+    },
+    "near_surface": {
+        "reference": {
+            "name": "decision tree / logistic agreement model",
+            "target": "agreement, conflict, missing context, possible unit only",
+            "input": "line id, intersection id, velocity, resistivity, conductivity, depth",
+            "unit": "line intersection or depth interval",
+        },
+        "main": {
+            "name": "LightGBM method-conflict classifier",
+            "target": "review target, not final geologic unit",
+            "input": "hammer seismic velocity, ERT resistivity, TEM conductivity, field note flags",
+            "unit": "field-line interval",
+        },
+        "challenger": {
+            "name": "Gaussian Process surface or graph model",
+            "target": "method-specific property surface or intersection graph",
+            "input": "line geometry, method values, possible unit labels",
+            "unit": "line node or cross-section zone",
+        },
+        "validation": "leave-line-out or leave-intersection-out",
+        "metrics": ["conflict F1", "precision@K", "false-consensus rate", "expert acceptance"],
+        "gate": "striped unresolved zones when methods conflict",
+        "diagram": "line geometry -> LightGBM conflict ranker -> GP method uncertainty -> leave-line-out validation",
+    },
+    "moho_ml": {
+        "reference": {
+            "name": "Ridge / ElasticNet / GAM",
+            "target": "Moho depth",
+            "input": "gravity anomaly, topography, crustal proxies, region id",
+            "unit": "grid cell or control point",
+        },
+        "main": {
+            "name": "LightGBM / XGBoost regressor",
+            "target": "Moho depth plus residual map",
+            "input": "gravity features, spatial derivatives, regional context",
+            "unit": "spatial feature row",
+        },
+        "challenger": {
+            "name": "Keras MLP + Gaussian Process residual",
+            "target": "transfer prediction with spatial uncertainty",
+            "input": "ANN prediction, residuals, train/test geography",
+            "unit": "held-out region cell",
+        },
+        "validation": "leave-region-out, Australia-to-USA transfer, spatial block validation",
+        "metrics": ["RMSE", "MAE", "R2", "regional residual bias"],
+        "gate": "coordinate memorization and spatial leakage check",
+        "diagram": "Ridge/GAM reference -> LightGBM Moho regressor -> ANN challenger -> GP residual uncertainty",
+    },
+    "ambient_noise": {
+        "reference": {
+            "name": "LightGBM CCF-quality classifier",
+            "target": "stable CCF, unstable CCF, data gap, instrument issue, seasonal flag",
+            "input": "stack count, CCF peak strength, symmetry, lag stability, metadata flags",
+            "unit": "station-pair time window",
+        },
+        "main": {
+            "name": "Isolation Forest + LightGBM",
+            "target": "station-pair anomaly and review priority",
+            "input": "CCF features, stack stability, station distance, missing windows",
+            "unit": "station-pair monitoring window",
+        },
+        "challenger": {
+            "name": "SeisLM-style embedding + temporal model",
+            "target": "station-pair quality or change detection",
+            "input": "pretrained waveform embedding and CCF time series",
+            "unit": "station-pair sequence",
+        },
+        "validation": "held-out station pair, held-out time period, or held-out network",
+        "metrics": ["bad-window F1", "false alert rate", "detection delay", "stability calibration"],
+        "gate": "human review before treating a weak correlation as subsurface signal",
+        "diagram": "CCF table -> LightGBM stability classifier -> Isolation Forest anomaly triage -> SeisLM challenger",
+    },
+    "stock_workflow": {
+        "reference": {
+            "name": "persistence + moving average",
+            "target": "next-window level, return, volatility, or risk bucket",
+            "input": "past-only price windows and refresh timestamp",
+            "unit": "ticker-date window",
+        },
+        "main": {
+            "name": "ElasticNet + LightGBM",
+            "target": "continuous target or calibrated up/down/risk label",
+            "input": "shifted rolling features, ticker universe, date split",
+            "unit": "past-only feature row",
+        },
+        "challenger": {
+            "name": "ARIMA/SARIMAX or temporal CNN/LSTM",
+            "target": "time-series forecast only after walk-forward proof",
+            "input": "single-series history or sequence features",
+            "unit": "walk-forward fold",
+        },
+        "validation": "walk-forward or rolling chronological split",
+        "metrics": ["MAE / RMSE", "ROC-AUC / PR-AUC", "Brier score", "PSI drift"],
+        "gate": "claim-language gate: tool/demo, not investment advice",
+        "diagram": "persistence reference -> ElasticNet/LightGBM challenger -> walk-forward validation -> PSI drift monitor",
+    },
+    "sem_petrography": {
+        "reference": {
+            "name": "linear SVM / logistic texture model",
+            "target": "grain, pore/fracture, clay morphology, mineral texture, ambiguous",
+            "input": "texture features, scale metadata, crop location, sample id",
+            "unit": "SEM image crop",
+        },
+        "main": {
+            "name": "EfficientNet / ResNet patch classifier",
+            "target": "visible petrographic label",
+            "input": "SEM crop, scale bar, sample context",
+            "unit": "expert-labeled patch",
+        },
+        "challenger": {
+            "name": "U-Net / Mask R-CNN + CLIP retrieval",
+            "target": "grain/pore segmentation or similar reviewed example",
+            "input": "pixel masks, patch labels, literature-linked examples",
+            "unit": "segmented crop or retrieval pair",
+        },
+        "validation": "sample-held-out or site-held-out",
+        "metrics": ["macro-F1", "IoU / Dice", "top-k retrieval", "unsupported-claim block rate"],
+        "gate": "proxy claim must pass literature and expert review; image pixels alone are not enough",
+        "diagram": "EfficientNet patch classifier -> U-Net/Mask R-CNN segmentation -> CLIP retrieval -> proxy claim gate",
     },
 }
 
@@ -5150,6 +5441,114 @@ st.markdown(
         font-size: 0.8rem;
         margin-top: 0.25rem;
     }
+    .ml-model-detail {
+        display: grid;
+        gap: 0.65rem;
+        margin-top: 0.75rem;
+    }
+    .ml-model-stack {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+        gap: 0.55rem;
+        align-items: stretch;
+    }
+    .ml-model-card {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-top: 5px solid #2563eb;
+        border-radius: 8px;
+        min-height: 16rem;
+        padding: 0.72rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.42rem;
+    }
+    .ml-model-card.reference {
+        border-top-color: #0f766e;
+    }
+    .ml-model-card.challenger {
+        border-top-color: #f59e0b;
+    }
+    .ml-model-card.validation {
+        border-top-color: #7c3aed;
+    }
+    .ml-model-card > strong {
+        color: #64748b;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .ml-model-name {
+        color: #0b1f3a;
+        font-size: 0.98rem;
+        font-weight: 850;
+        line-height: 1.18;
+        margin: 0;
+    }
+    .ml-model-row {
+        border-top: 1px solid #eef2f7;
+        padding-top: 0.38rem;
+    }
+    .ml-model-row span {
+        color: #0f766e;
+        display: block;
+        font-size: 0.66rem;
+        font-weight: 850;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+    .ml-model-row p {
+        color: #334155 !important;
+        font-size: 0.78rem;
+        line-height: 1.25;
+        margin: 0.14rem 0 0;
+    }
+    .ml-model-checks {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+    }
+    .ml-model-checks div,
+    .ml-diagram-label {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        padding: 0.62rem 0.7rem;
+    }
+    .ml-model-checks strong,
+    .ml-diagram-label strong {
+        color: #0b1f3a;
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+    .ml-model-checks span,
+    .ml-diagram-label span {
+        color: #475569;
+        display: block;
+        font-size: 0.8rem;
+        line-height: 1.25;
+        margin-top: 0.28rem;
+    }
+    .ml-metric-chips {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    .ml-metric-chips span {
+        background: #eef2f7;
+        border: 1px solid #d8dee8;
+        border-radius: 999px;
+        color: #334155;
+        display: inline-flex;
+        font-size: 0.68rem;
+        font-weight: 760;
+        line-height: 1.1;
+        margin: 0;
+        padding: 0.22rem 0.4rem;
+    }
     .source-panel-note {
         color: #64748b !important;
         font-size: 0.9rem;
@@ -5160,6 +5559,10 @@ st.markdown(
         .ml-visual-head,
         .ml-visual-board,
         .ml-source-map {
+            grid-template-columns: 1fr;
+        }
+        .ml-model-stack,
+        .ml-model-checks {
             grid-template-columns: 1fr;
         }
         .ml-source-ribbons {
@@ -6391,6 +6794,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
     blueprint = ML_DIAGRAM_BLUEPRINTS.get(topic["slug"])
     if blueprint is None:
         return
+    model_detail = ML_MODEL_DETAIL_DIAGRAMS.get(topic["slug"])
     row = ml_diagram_row(topic["slug"])
     tracker_validation = compact_terms(row["validation_gates"], 3) if row is not None else []
     tracker_next = str(row["next_action"]) if row is not None else "Build source-backed diagram."
@@ -6432,11 +6836,16 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
         f"<span>{escape(risk)}</span>"
         for risk in tracker_validation
     )
+    model_label = (
+        model_detail["main"]["name"]
+        if model_detail is not None
+        else blueprint["model"]
+    )
     flow_nodes = [
         ("TARGET", blueprint["target"]),
         ("FEATURES", feature_chips),
         ("QC", blueprint["source_pattern"]),
-        ("MODEL", blueprint["model"]),
+        ("MODEL", model_label),
         ("VALIDATE", blueprint["validation"]),
         ("OUTPUT", blueprint["output"]),
     ]
@@ -6456,6 +6865,43 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
         if secondary_source and secondary_source.lower() != "nan"
         else "<span>Used as validation / monitoring layer</span>"
     )
+    model_detail_html = ""
+    if model_detail is not None and not compact:
+        def model_stage_card(stage_key: str, stage_label: str) -> str:
+            stage = model_detail[stage_key]
+            return f"""
+<div class="ml-model-card {stage_key}">
+  <strong>{escape(stage_label)}</strong>
+  <div class="ml-model-name">{escape(stage["name"])}</div>
+  <div class="ml-model-row"><span>Target</span><p>{escape(stage["target"])}</p></div>
+  <div class="ml-model-row"><span>Inputs</span><p>{escape(stage["input"])}</p></div>
+  <div class="ml-model-row"><span>Training unit</span><p>{escape(stage["unit"])}</p></div>
+</div>
+            """
+
+        metric_chips = "".join(
+            f"<span>{escape(metric)}</span>"
+            for metric in model_detail["metrics"]
+        )
+        validation_card = f"""
+<div class="ml-model-card validation">
+  <strong>Validation / Gate</strong>
+  <div class="ml-model-row"><span>Split strategy</span><p>{escape(model_detail["validation"])}</p></div>
+  <div class="ml-model-row"><span>Metrics</span><p class="ml-metric-chips">{metric_chips}</p></div>
+  <div class="ml-model-row"><span>Human / risk gate</span><p>{escape(model_detail["gate"])}</p></div>
+  <div class="ml-model-row"><span>Diagram wording</span><p>{escape(model_detail["diagram"])}</p></div>
+</div>
+        """
+        model_detail_html = f"""
+  <div class="ml-model-detail">
+    <div class="ml-model-stack">
+      {model_stage_card("reference", "Reference Model")}
+      {model_stage_card("main", "Main Candidate")}
+      {model_stage_card("challenger", "Challenger / Advanced")}
+      {validation_card}
+    </div>
+  </div>
+        """
     compact_class = " compact" if compact else ""
     st.markdown(
         f"""
@@ -6480,6 +6926,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
       <small>{escape(tracker_next)}</small>
     </div>
   </div>
+  {model_detail_html}
   <div class="ml-source-map">
     <div><strong>Hydrate paper pattern</strong><span>Sgh target, log features, washout/GLOSS QC, transfer test.</span></div>
     <div><strong>Primary here</strong><span>{escape(primary_source)}</span></div>
@@ -6509,7 +6956,22 @@ def render_ml_pipeline_contract(topic: dict) -> None:
         )
 
     source_context = ML_PIPELINE_SOURCE_CONTEXT.get(topic["slug"], {})
+    model_detail = ML_MODEL_DETAIL_DIAGRAMS.get(topic["slug"])
     extra_cells = ""
+    if model_detail is not None:
+        extra_cells += pipeline_cell(
+            "Named Models",
+            [
+                model_detail["reference"]["name"],
+                model_detail["main"]["name"],
+                model_detail["challenger"]["name"],
+            ],
+        )
+        extra_cells += pipeline_cell("Model Metrics", model_detail["metrics"])
+        extra_cells += pipeline_cell(
+            "Split And Gate",
+            [model_detail["validation"], model_detail["gate"]],
+        )
     if source_context.get("keywords"):
         extra_cells += pipeline_cell("ML Source Keywords", source_context["keywords"])
     if source_context.get("sector_advance"):

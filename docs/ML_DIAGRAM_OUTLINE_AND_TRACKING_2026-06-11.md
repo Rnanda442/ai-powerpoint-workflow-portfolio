@@ -2,6 +2,12 @@
 
 This is the working outline for turning every topic/project into a detailed ML diagram or ML pipeline panel. The goal is to make the site show how real evidence becomes model-ready structure, where validation happens, and what should be tracked before any claim becomes credible.
 
+## Model Detail Addendum
+
+Use `docs/ML_MODEL_DETAIL_SPEC_2026-06-11.md` before writing any diagram or website copy that mentions a model. That addendum names the actual candidate models for each topic, including ANN/Keras, XGBoost, LightGBM, PhaseNet, EQTransformer, GraphSAGE, R-GCN, U-Net, Isolation Forest, Gaussian Process, EfficientNet, and the exact targets, splits, metrics, and failure gates they belong with.
+
+Generic phrases like "baseline model", "prediction model", or "ML pipeline" are not specific enough unless the diagram also names the model class, target, input variables, training unit, split policy, metrics, and human review step.
+
 ## Sources Found
 
 The two actual ML sources from the June 11, 2026 self-sent email `ML sources` are:

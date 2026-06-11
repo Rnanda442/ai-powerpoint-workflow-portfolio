@@ -9,6 +9,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 streamlit.*.log
+streamlit_*.log
 deliverables/*.zip
 deliverables/ai_powerpoint_streamlit_site_package/
 assets/deck_renders/
