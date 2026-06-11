@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-10 / public-site-updates"
+DEPLOY_BUILD_ID = "2026-06-11 / source-backed-ml-update"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -989,20 +989,20 @@ GMAIL_SOURCE_UPDATES = [
 
 NORTH_SLOPE_ML_UPDATES = [
     (
-        "Inputs to make visible",
-        "well logs, hydrate indicators, stratigraphy, public wells, shapefiles, papers, and depth references",
+        "Newest deck source",
+        "FINAL 9-slide revision, parameter signal grid, ML workflow ladder, decision map, and final acceptance criteria",
     ),
     (
-        "Model families to discuss",
-        "linear baseline, tree/boosting model, explainable interval ranking, and physics-informed constraints",
+        "Feature equations to name",
+        "Vsh, phi_den, Vp/Vs, acoustic impedance, lambda-rho, mu-rho, NMR separation, H_proxy, QC flags",
     ),
     (
-        "Validation gates",
-        "chronological/source split, spatial holdout, leakage check, VIF/correlation review, and expert plausibility review",
+        "Model ladder to show",
+        "linear/logistic baseline, tree and boosting models, classification head, saturation regression head, ANN challenger",
     ),
     (
-        "Monitoring story",
-        "missing logs, null-rate spikes, row-count drift, source freshness, feature drift, and segment-level performance",
+        "Validation and errors",
+        "complete-well split, leakage barrier, MAE/RMSE/R2, precision/recall/F1, calibration, OOD lithology, gas/ice/cement lookalikes",
     ),
 ]
 
@@ -1110,7 +1110,7 @@ TOPIC_SITE_UPDATES = {
 
 SLIDE_SOURCE_UPDATES = {
     "north_slope": [
-        ("Updated North Slope deck", "use as the topic value story and connect slides to the 3D explorer"),
+        ("FINAL 9-slide North Slope deck", "use the June 11 ML parameter architecture revision, including slide 4 parameter grid and slide 7 decision map"),
         ("Gas hydrate doc", "pull wording for public data, well logs, methodology, and validation"),
     ],
     "thesis_graph": [
@@ -1819,8 +1819,8 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
     ],
     "seismic": [
         ("Cloud processing visual", "assets/topic_visuals/cloud_data_processing.svg"),
-        ("Alaska Satellite Facility cloud", "https://asf.alaska.edu/"),
-        ("Open Science Lab", "https://opensciencelab.org/"),
+        ("Pondicherry near-offset figure", "assets/project_visuals/pondicherry_near_offset_reannotated.png"),
+        ("EarthScope slide export", "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_04.jpg"),
     ],
     "north_slope": [
         ("Web scraping visual", "assets/topic_visuals/web_scraping_data_lake.svg"),
@@ -1833,11 +1833,12 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
     ],
     "valles": [
         ("Valles Bouguer map", "assets/project_visuals/valles_bouguer.png"),
-        ("Near-Surface Dwellers Presentation", "https://docs.google.com/presentation/d/1bY4HCjuD-60DU6IMZXA_DAMeqza3Gq_xH_-Xd_-NwIA"),
+        ("SAGE / Valles slide export", "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_04.jpg"),
     ],
     "moho_ml": [
         ("North Slope ML architecture visual", "assets/topic_visuals/north_slope_ml_architecture.svg"),
-        ("Gas hydrate ANN paper", "https://doi.org/10.1007/s10596-022-10151-9"),
+        ("Latest North Slope decision map slide", "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png"),
+        ("Latest North Slope parameter grid slide", "assets/drive_slide_thumbnails/north_slope_parameter_grid_slide.png"),
     ],
     "stock_workflow": [
         ("Current all-tickers chart", "assets/project_visuals/stock_all_tickers_chart.svg"),
@@ -2039,8 +2040,9 @@ EMAIL_SLIDE_SOURCE_OVERRIDES = {
         ("GitHub workflow", "show commit/push/collaboration as part of the AI skill"),
     ],
     "north_slope": [
-        ("North Slope Streamlit site", "use the updated well scaffold and 3D map story"),
-        ("North Slope public source library", "use public maps/shapefiles instead of restricted 71-well detail"),
+        ("FINAL 9-slide North Slope deck", "use the June 11 parameter grid and decision-map screenshots as local images"),
+        ("North Slope public source library", "use public maps/shapefiles and provenance records instead of restricted 71-well detail"),
+        ("North Slope Streamlit site", "keep the updated scaffold and 3D map story as interactive support"),
     ],
     "rock_classification": [
         ("ADV GIS Final presentation", "use satellite variables as the classifier source"),
@@ -2051,7 +2053,7 @@ EMAIL_SLIDE_SOURCE_OVERRIDES = {
     ],
     "moho_ml": [
         ("Updated North Slope Word doc", "use parameter definitions, model families, and validation language"),
-        ("Updated North Slope slides", "use the ML methodology architecture and well-log scaffold"),
+        ("FINAL 9-slide North Slope deck", "use the slide 4 parameter grid and slide 7 decision map as the visible ML architecture evidence"),
         ("Chong et al. gas hydrate ANN paper", "use as the ML backbone reference"),
     ],
     "stock_workflow": [
@@ -2269,6 +2271,356 @@ EMAIL_AI_WORKFLOW_EVIDENCE_OVERRIDES = {
         "produced": "A current public navigator topic instead of the old stock-prediction visual.",
         "validated": "Train/test split, leakage, metric meaning, and finance-language boundaries remain human-reviewed.",
         "future": "Pipeline refreshes, drift monitoring, and unseen-data testing make the app more honest.",
+    },
+}
+
+
+SOURCE_BACKED_TOPIC_ASSETS = {
+    "ai_workflow": [
+        {
+            "title": "Prompt and rubric screenshot",
+            "path": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-17 233055.png",
+            "source": "Gmail screenshot package",
+            "note": "Use this as the concrete evidence for human instructions becoming training traces.",
+        },
+        {
+            "title": "Agent workflow architecture",
+            "path": "assets/topic_visuals/agent_supervised_workflows.svg",
+            "source": "Portfolio topic visual",
+            "note": "Shows prompt, recording, rubric gate, and supervised agent-training output.",
+        },
+        {
+            "title": "Additional AI-workflow screenshot",
+            "path": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-10 142643.png",
+            "source": "Gmail screenshot package",
+            "note": "Secondary local proof image, not an external link.",
+        },
+    ],
+    "thesis_graph": [
+        {
+            "title": "REE map and spider diagram",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_map_spider_diagram.png",
+            "source": "Thesis Ch.1 / critical-minerals slide export",
+            "note": "Grounds the graph topic in actual map and geochemical-pattern evidence.",
+        },
+        {
+            "title": "Bayan Obo interpretation drawing",
+            "path": "assets/project_visuals/ree_bayan_obo_main.png",
+            "source": "Local REE visual export",
+            "note": "Use as the evidence-backed drawing behind the knowledge-graph structure.",
+        },
+        {
+            "title": "Deposit-model slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_deposit_model.png",
+            "source": "Thesis Ch.1 / critical-minerals slide export",
+            "note": "Supports the source-backed, AI-suggested, and human-interpreted edge split.",
+        },
+    ],
+    "processing_earthquake": [
+        {
+            "title": "Processing earthquake poster",
+            "path": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
+            "source": "LinkedIn/Processing evidence export",
+            "note": "This is the real visual anchor for the ChatGPT-to-Processing workflow.",
+        },
+        {
+            "title": "Globe to variable diagram",
+            "path": "assets/topic_visuals/data_variable_transform.svg",
+            "source": "Portfolio topic visual",
+            "note": "Connects the 3D visual to 2D time-window features and model inputs.",
+        },
+        {
+            "title": "Earthquake signal sketch",
+            "path": "assets/topic_visuals/earthquake_globe_signal.svg",
+            "source": "Portfolio topic visual",
+            "note": "Keeps the future variable-extraction idea visible without forecast claims.",
+        },
+    ],
+    "seismic": [
+        {
+            "title": "Pondicherry near-offset interpretation",
+            "path": "assets/project_visuals/pondicherry_near_offset_reannotated.png",
+            "source": "Exploration seismology project export",
+            "note": "Real seismic figure for the large-data processing and QA story.",
+        },
+        {
+            "title": "Marine stack bands",
+            "path": "assets/project_visuals/pondicherry_marine_stack_bands.png",
+            "source": "Exploration seismology project export",
+            "note": "Use as local proof that the pipeline handles scientific image outputs.",
+        },
+        {
+            "title": "EarthScope slide export",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_04.jpg",
+            "source": "EarthScope / seismic slide export",
+            "note": "Supports cloud, station, and collaboration context.",
+        },
+    ],
+    "north_slope": [
+        {
+            "title": "Latest parameter signal grid",
+            "path": "assets/drive_slide_thumbnails/north_slope_parameter_grid_slide.png",
+            "source": "FINAL 9-slide North Slope deck, slide 4",
+            "note": "Newest deck snapshot with resistivity, NMR, sonic, density, GR, caliper, core, and PT caveats.",
+        },
+        {
+            "title": "North Slope public map",
+            "path": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
+            "source": "North Slope public-source visual export",
+            "note": "Local image for the public data and provenance workbench story.",
+        },
+        {
+            "title": "ML decision map slide",
+            "path": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+            "source": "FINAL 9-slide North Slope deck, slide 7",
+            "note": "Actual deck screenshot for the leakage-safe architecture and review gates.",
+        },
+        {
+            "title": "Model panel export",
+            "path": "assets/project_visuals/north_slope_presentation_model_panels.png",
+            "source": "North Slope presentation export",
+            "note": "Keeps the portfolio grounded in the existing deck visuals.",
+        },
+    ],
+    "rock_classification": [
+        {
+            "title": "Rock raster classification map",
+            "path": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
+            "source": "ADV GIS / rock-classification slide export",
+            "note": "Primary image for satellite and GIS variables becoming rock classes.",
+        },
+        {
+            "title": "Chemical classification chart",
+            "path": "assets/project_visuals/rock_classification_slides/rock_chemical_classification_chart.jpg",
+            "source": "Rock-classification slide export",
+            "note": "Used as supporting complexity evidence, not as the satellite model input.",
+        },
+        {
+            "title": "Formation classification outputs",
+            "path": "assets/project_visuals/rock_classification_slides/rock_formation_classification_outputs.png",
+            "source": "Rock-classification slide export",
+            "note": "Shows labels and output structure that future ML would need to audit.",
+        },
+    ],
+    "valles": [
+        {
+            "title": "Valles Bouguer map",
+            "path": "assets/project_visuals/valles_bouguer.png",
+            "source": "SAGE / Valles project export",
+            "note": "Replaces generic imagery with a real field-geophysics map.",
+        },
+        {
+            "title": "SAGE Valles slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_04.jpg",
+            "source": "SAGE / Valles slide export",
+            "note": "Supports method comparison and field context.",
+        },
+        {
+            "title": "Valles free-air map",
+            "path": "assets/project_visuals/valles_freeair.png",
+            "source": "SAGE / Valles project export",
+            "note": "A second real map for comparing imperfect geophysical products.",
+        },
+    ],
+    "near_surface": [
+        {
+            "title": "Near-surface field screenshot",
+            "path": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png",
+            "source": "Gmail screenshot package",
+            "note": "Local field-method evidence for the Near-Surface Dwellers topic.",
+        },
+        {
+            "title": "SAGE Valles method slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
+            "source": "SAGE / Valles slide export",
+            "note": "Use to show lines, methods, and uncertainty instead of a generic profile image.",
+        },
+        {
+            "title": "Near-surface method board",
+            "path": "assets/topic_visuals/near_surface_ai.svg",
+            "source": "Portfolio topic visual",
+            "note": "Shows hammer seismic, ERT, TEM, unit candidates, and conflict zones.",
+        },
+    ],
+    "moho_ml": [
+        {
+            "title": "Latest ML decision map",
+            "path": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+            "source": "FINAL 9-slide North Slope deck, slide 7",
+            "note": "The newest architecture image for feature store, split policy, heads, uncertainty, and leakage barrier.",
+        },
+        {
+            "title": "North Slope ML architecture",
+            "path": "assets/topic_visuals/north_slope_ml_architecture.svg",
+            "source": "Portfolio architecture diagram",
+            "note": "Expanded with source keywords from the ML notes and hydrate deck.",
+        },
+        {
+            "title": "Moho transfer legacy map",
+            "path": "assets/project_visuals/valles_moho.png",
+            "source": "Moho / supervised ML project export",
+            "note": "Keeps the original supervised-transfer example visible while the page now emphasizes hydrate architecture.",
+        },
+    ],
+    "ambient_noise": [
+        {
+            "title": "NoisePy monitoring slide",
+            "path": "assets/drive_slide_thumbnails/noisepy_monitoring_slide.png",
+            "source": "NoisePy Google Slides deck",
+            "note": "Local snapshot showing the monitoring heatmap from the source deck.",
+        },
+        {
+            "title": "Ambient-noise processing workflow",
+            "path": "assets/topic_visuals/ambient_noise_processing.svg",
+            "source": "Portfolio topic visual",
+            "note": "Shows windowing, station pairs, cross-correlation, stacking, monitoring, compute, and QA.",
+        },
+        {
+            "title": "EarthScope station context",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_03.jpg",
+            "source": "EarthScope / seismic slide export",
+            "note": "Supports the continuous-data and station-network framing.",
+        },
+    ],
+    "stock_workflow": [
+        {
+            "title": "Current all-tickers chart",
+            "path": "assets/project_visuals/stock_all_tickers_chart.svg",
+            "source": "Updated Streamlit stock app export",
+            "note": "Replaces the older stock navigator image with a current app screenshot/export.",
+        },
+        {
+            "title": "Saved-data chart",
+            "path": "assets/project_visuals/stock_saved_data_chart.svg",
+            "source": "Updated Streamlit stock app export",
+            "note": "Shows the app's actual local-data view.",
+        },
+        {
+            "title": "Codex app pipeline",
+            "path": "assets/topic_visuals/app_pipeline.svg",
+            "source": "Portfolio topic visual",
+            "note": "Connects app building to train/test separation, drift, and leakage checks.",
+        },
+    ],
+    "sem_petrography": [
+        {
+            "title": "Thin-section / petrography slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/rock_thin_section_slide_01.jpg",
+            "source": "SEM petrography / thin-section slide export",
+            "note": "Local image evidence for visual mineral and texture labels.",
+        },
+        {
+            "title": "SEM proxy workflow",
+            "path": "assets/topic_visuals/sem_petrography_ai.svg",
+            "source": "Portfolio topic visual",
+            "note": "Separates visible SEM labels from interpreted climate-proxy claims.",
+        },
+        {
+            "title": "Chemical classification reference",
+            "path": "assets/project_visuals/rock_chemical_classification_reference.jpg",
+            "source": "Rock classification local evidence",
+            "note": "Supports the broader multimodal label-and-review workflow.",
+        },
+    ],
+}
+
+
+ML_PIPELINE_CONTRACTS = {
+    "ai_workflow": {
+        "title": "Supervised Agent-Training Pipeline",
+        "summary": "Treat prompts, recordings, rubrics, and corrections as training examples with review labels.",
+        "features": ["prompt text", "rubric criteria", "screen actions", "file state", "human correction"],
+        "pipeline": ["ingest demonstrations", "normalize action traces", "label pass/fail steps", "train GUI/action baseline", "evaluate with held-out tasks"],
+        "validation": ["rubric-based scoring", "task replay success", "failure-case review", "no final-screenshot-only labels"],
+        "failure_modes": ["ambiguous rubric", "missing file state", "shortcut memorization", "unsafe desktop action"],
+    },
+    "thesis_graph": {
+        "title": "Critical-Mineral Graph Pipeline",
+        "summary": "Turn papers, slides, tables, and drawings into a source-weighted graph before using graph ML or GraphRAG.",
+        "features": ["deposit", "mineral", "host rock", "paragenetic stage", "source weight"],
+        "pipeline": ["extract entities", "dedupe node names", "separate observed/inferred/conceptual edges", "load Neo4j", "rank relationships"],
+        "validation": ["expert edge review", "source-backed edge audit", "uncertainty style check", "queryable schema test"],
+        "failure_modes": ["AI-suggested edge treated as fact", "synonym duplication", "source loss", "overweighted attractive diagram"],
+    },
+    "processing_earthquake": {
+        "title": "Visualization-To-Feature Pipeline",
+        "summary": "Use the globe as feature engineering: event attributes become time-window variables before any model claim.",
+        "features": ["event count", "magnitude bins", "depth bins", "cluster density", "lagged windows"],
+        "pipeline": ["pull event catalog", "clean coordinates and time", "make 2D windows", "train baseline regression", "compare nonlinear challenger"],
+        "validation": ["train on past/test future", "no forecasting claim from visualization", "residual review", "region-window sensitivity"],
+        "failure_modes": ["look-ahead leakage", "visual cluster overread", "imbalanced rare events", "tectonic context ignored"],
+    },
+    "seismic": {
+        "title": "Large Seismic Processing Pipeline",
+        "summary": "Codex, GitHub, and cloud compute organize big runs, but scientific QA remains the acceptance gate.",
+        "features": ["waveform metadata", "processing parameters", "station/event context", "pick confidence", "run logs"],
+        "pipeline": ["stage large data", "run cloud notebook", "save artifacts", "summarize QA", "commit reviewed outputs"],
+        "validation": ["parameter provenance", "sample output inspection", "noise and missingness flags", "reproducible commit history"],
+        "failure_modes": ["environment drift", "silent missing files", "wrong CRS/station metadata", "AI summary hides weak signal"],
+    },
+    "north_slope": {
+        "title": "Public-Source Energy Workspace Pipeline",
+        "summary": "Scrape and organize public maps, reports, shapefiles, and APIs without crossing into restricted well data.",
+        "features": ["source URL", "license/status", "coordinate system", "formation tag", "confidence flag"],
+        "pipeline": ["discover public sources", "parse files and metadata", "spatially align layers", "build public-safe scaffold", "publish review workspace"],
+        "validation": ["provenance check", "public-safe boundary check", "CRS review", "expert geologic review"],
+        "failure_modes": ["restricted data leak", "coordinate mismatch", "stale API result", "source link without local evidence"],
+    },
+    "rock_classification": {
+        "title": "Satellite Rock-Classification Pipeline",
+        "summary": "ADV GIS and satellite variables drive the classifier; geochemical figures explain complexity but do not become hidden inputs.",
+        "features": ["spectral bands", "DEM derivatives", "texture", "slope", "mapped context"],
+        "pipeline": ["assemble rasters", "clean labels", "extract spatial features", "train baseline/forest/boosted model", "map uncertainty"],
+        "validation": ["spatial cross-validation", "mixed-pixel review", "label audit", "class-imbalance check"],
+        "failure_modes": ["random-pixel leakage", "bad geologic labels", "overconfident map colors", "geochemical plot mistaken for satellite input"],
+    },
+    "valles": {
+        "title": "Field-Method Comparison Pipeline",
+        "summary": "AI compares gravity, seismic, ERT, and TEM while preserving conflict and method-specific uncertainty.",
+        "features": ["line geometry", "method type", "signal strength", "possible unit", "field note"],
+        "pipeline": ["register survey lines", "normalize method outputs", "mark intersections", "tag agreement/conflict", "generate review board"],
+        "validation": ["field geometry check", "method sensitivity review", "uncertainty mask", "expert unit decision"],
+        "failure_modes": ["method disagreement erased", "line misregistration", "acquisition artifact", "false unified subsurface"],
+    },
+    "near_surface": {
+        "title": "Near-Surface Method Fusion Pipeline",
+        "summary": "Hammer seismic, ERT, TEM, possible units, and fen context become a conflict-aware review workflow.",
+        "features": ["hammer-seismic velocity", "ERT resistivity", "TEM conductivity", "line intersection", "unit candidate"],
+        "pipeline": ["crop source slides", "georeference line context", "build method layers", "flag conflicts", "summarize review decisions"],
+        "validation": ["line-intersection QA", "field-note review", "method-limit explanation", "striped unresolved zones"],
+        "failure_modes": ["clean overlay overclaim", "wrong unit label", "instrument physics ignored", "field error hidden"],
+    },
+    "moho_ml": {
+        "title": "Gas-Hydrate ML Architecture Pipeline",
+        "summary": "Use the newest North Slope ML deck and source notes: measured logs, derived physics features, targets, and split policy stay separate.",
+        "features": ["Vsh", "phi_den", "Vp/Vs", "acoustic impedance", "lambda-rho", "mu-rho", "QC flags"],
+        "pipeline": ["intake logs", "run QC gates", "fit feature transforms on training wells", "compare baseline/tree/ANN models", "score held-out wells"],
+        "validation": ["complete-well validation", "MAE/RMSE/R2 for saturation", "precision/recall/F1 for occurrence", "calibration and abstention review"],
+        "failure_modes": ["target leakage", "random depth-row overfit", "missing NMR/shear sonic", "gas/ice/cement lookalike"],
+    },
+    "ambient_noise": {
+        "title": "Ambient-Noise Monitoring Pipeline",
+        "summary": "Continuous records become windows, station-pair CCFs, stacks, and monitoring summaries with compute and QC logs.",
+        "features": ["station pair", "window quality", "lag-time CCF", "stack stability", "seasonal flag"],
+        "pipeline": ["window continuous noise", "preprocess traces", "cross-correlate station pairs", "stack stable signals", "triage monitoring changes"],
+        "validation": ["metadata check", "stack stability review", "parameter audit trail", "seasonal and instrument-change review"],
+        "failure_modes": ["weak correlation treated as signal", "unstable stack", "station metadata error", "compute cost hides bad QC"],
+    },
+    "stock_workflow": {
+        "title": "Current Stock App Risk Pipeline",
+        "summary": "The app is a Codex-built workflow example; model claims need leakage-safe splits, baselines, and drift checks.",
+        "features": ["ticker", "date", "price window", "technical feature", "refresh timestamp"],
+        "pipeline": ["load saved data", "separate training/evaluation dates", "compare baseline/challenger", "render Streamlit charts", "monitor drift"],
+        "validation": ["walk-forward testing", "leakage check", "baseline comparison", "finance-language review"],
+        "failure_modes": ["future data leakage", "overfit dashboard", "stale refresh", "prediction language overclaims usefulness"],
+    },
+    "sem_petrography": {
+        "title": "SEM Label-And-Proxy Pipeline",
+        "summary": "SEM crops and mineral labels become reviewable examples, while climate proxy claims remain separate evidence.",
+        "features": ["grain texture", "mineral label", "kaolinite form", "detrital/authigenic tag", "literature source"],
+        "pipeline": ["crop SEM fields", "propose visible labels", "separate observation from interpretation", "link literature support", "queue expert review"],
+        "validation": ["label visibility check", "proxy-claim audit", "expert petrography review", "ambiguous example bucket"],
+        "failure_modes": ["texture label overclaim", "proxy meaning inferred from image alone", "detrital/authigenic confusion", "missing scale/context"],
     },
 }
 
@@ -4332,6 +4684,63 @@ st.markdown(
         text-decoration: none;
         font-weight: 750;
     }
+    .pipeline-contract {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    .pipeline-contract h3 {
+        margin: 0 0 0.35rem;
+        color: #0b1f3a;
+        font-size: 1.2rem;
+        line-height: 1.25;
+    }
+    .pipeline-contract p {
+        color: #475569 !important;
+        margin: 0 0 0.75rem;
+    }
+    .pipeline-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+    .pipeline-cell {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        padding: 0.85rem;
+        min-height: 12rem;
+    }
+    .pipeline-cell strong {
+        display: block;
+        color: #0f766e;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.55rem;
+        text-transform: uppercase;
+    }
+    .pipeline-cell ul {
+        margin: 0;
+        padding-left: 1.05rem;
+    }
+    .pipeline-cell li {
+        color: #334155;
+        margin: 0.38rem 0;
+        font-size: 0.9rem;
+        line-height: 1.35;
+    }
+    .source-panel-note {
+        color: #64748b !important;
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+    }
+    @media (max-width: 900px) {
+        .pipeline-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
     """,
     unsafe_allow_html=True,
@@ -5486,6 +5895,70 @@ def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
     </div>
   </div>
   <div class="ai-future-line"><strong>Future ML version:</strong> {escape(evidence["future"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_source_backed_asset_panel(topic: dict) -> None:
+    assets = SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])
+    if not assets:
+        return
+    st.subheader("Source images on deck")
+    st.markdown(
+        "<p class='source-panel-note'>Local screenshots, slide thumbnails, and exported visuals are shown here directly. "
+        "External links stay in evidence leads only for provenance.</p>",
+        unsafe_allow_html=True,
+    )
+    columns = st.columns(min(3, len(assets)))
+    for idx, asset in enumerate(assets):
+        with columns[idx % len(columns)]:
+            with st.container(border=True):
+                st.markdown(f"**{escape(asset['title'])}**")
+                asset_path = project_asset(asset["path"])
+                if asset_path.exists():
+                    st.image(
+                        str(asset_path),
+                        caption=f"{asset['source']}: {asset['note']}",
+                        use_container_width=True,
+                    )
+                else:
+                    st.warning(f"Missing local source image: {asset_path.name}")
+                    st.caption(f"{asset['source']}: {asset['note']}")
+
+
+def render_ml_pipeline_contract(topic: dict) -> None:
+    contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
+    if contract is None:
+        return
+
+    def list_items(values: list[str]) -> str:
+        return "".join(f"<li>{escape(value)}</li>" for value in values)
+
+    st.markdown(
+        f"""
+<div class="pipeline-contract">
+  <h3>{escape(contract["title"])}</h3>
+  <p>{escape(contract["summary"])}</p>
+  <div class="pipeline-grid">
+    <div class="pipeline-cell">
+      <strong>Feature Set</strong>
+      <ul>{list_items(contract["features"])}</ul>
+    </div>
+    <div class="pipeline-cell">
+      <strong>Pipeline Changes</strong>
+      <ul>{list_items(contract["pipeline"])}</ul>
+    </div>
+    <div class="pipeline-cell">
+      <strong>Validation Gates</strong>
+      <ul>{list_items(contract["validation"])}</ul>
+    </div>
+    <div class="pipeline-cell">
+      <strong>Failure Modes</strong>
+      <ul>{list_items(contract["failure_modes"])}</ul>
+    </div>
+  </div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -6817,11 +7290,15 @@ elif section == "Think Tank Topics":
                     mime="text/markdown",
                 )
         render_north_slope_ml_update()
+        render_source_backed_asset_panel(topic)
+        render_ml_pipeline_contract(topic)
         render_slide_source_updates(topic["slug"])
     else:
         if not render_project_visual_stage(topic):
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
         render_current_future_board(topic, topic_roadmap)
+        render_source_backed_asset_panel(topic)
+        render_ml_pipeline_contract(topic)
         render_topic_update_panel(topic["slug"])
         render_slide_source_updates(topic["slug"])
     render_workflow_blueprint(topic)
@@ -7023,7 +7500,7 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
     st.subheader("Visual evidence")
     visual_cols = st.columns(3)
     if non_slide_visuals.empty:
-        st.info("No extra visual has been selected for this topic yet.")
+        st.info("The source-backed image panel above is the primary visual evidence for this topic.")
     for idx, visual in enumerate(non_slide_visuals.itertuples(index=False)):
         with visual_cols[idx % 3]:
             visual_path = project_asset(visual.asset_path)
@@ -7035,7 +7512,7 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
 
     st.subheader("Embedded or linked evidence")
     if related_evidence.empty:
-        st.info("No direct LinkedIn/evidence manifest rows are attached to this topic yet.")
+        st.info("No separate LinkedIn manifest row is attached; use the local source images above as the primary evidence.")
     else:
         evidence_cols = st.columns(2)
         for idx, evidence in enumerate(related_evidence.itertuples(index=False)):

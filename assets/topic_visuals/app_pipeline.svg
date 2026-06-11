@@ -1,16 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Codex app building pipeline with GitHub and model risk check">
-  <rect width="720" height="300" rx="18" fill="#f8fafc"/>
-  <rect x="36" y="54" width="134" height="138" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="3"/>
-  <path d="M58 92h86M58 126h64M58 160h98" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
-  <text x="54" y="232" font-family="Arial" font-size="18" font-weight="700" fill="#334155">downloads</text>
-  <path d="M190 126h72" stroke="#94a3b8" stroke-width="5" stroke-dasharray="9 8"/><polygon points="262,126 244,116 244,136" fill="#94a3b8"/>
-  <rect x="282" y="54" width="138" height="138" rx="14" fill="#111827"/>
-  <text x="318" y="118" font-family="Arial" font-size="26" font-weight="700" fill="#7dd3fc">Codex</text>
-  <text x="306" y="150" font-family="Arial" font-size="14" fill="#cbd5e1">organize + build</text>
-  <path d="M440 126h72" stroke="#94a3b8" stroke-width="5" stroke-dasharray="9 8"/><polygon points="512,126 494,116 494,136" fill="#94a3b8"/>
-  <rect x="532" y="54" width="142" height="138" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
-  <path d="M556 142h94M556 112h70M556 82h84" stroke="#16a34a" stroke-width="7" stroke-linecap="round"/>
-  <text x="554" y="232" font-family="Arial" font-size="18" font-weight="700" fill="#14532d">GitHub + app</text>
-  <rect x="282" y="220" width="150" height="36" rx="18" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
-  <text x="304" y="244" font-family="Arial" font-size="16" font-weight="700" fill="#9a3412">leakage check</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" role="img" aria-labelledby="title desc">
+  <title id="title">Current stock app pipeline with model-risk gates</title>
+  <desc id="desc">A Streamlit stock app workflow showing local data, Codex, GitHub, feature creation, walk-forward validation, drift monitoring, and a leakage gate.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="520" rx="22" fill="#f8fafc"/>
+  <text x="44" y="58" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="28" font-weight="800">Current Stock App Workflow</text>
+  <text x="46" y="88" fill="#475569" font-family="Arial, sans-serif" font-size="15">Codex can build the app quickly, but the pipeline must separate dates, baselines, drift, and claims.</text>
+
+  <g fill="#ffffff" stroke="#cbd5e1" stroke-width="2">
+    <rect x="42" y="132" width="150" height="110" rx="12"/>
+    <rect x="232" y="132" width="150" height="110" rx="12"/>
+    <rect x="422" y="132" width="150" height="110" rx="12"/>
+    <rect x="612" y="132" width="150" height="110" rx="12"/>
+    <rect x="802" y="132" width="150" height="110" rx="12"/>
+  </g>
+  <g font-family="Arial, sans-serif">
+    <text x="65" y="165" fill="#0b1f3a" font-size="16" font-weight="800">Saved Data</text>
+    <text x="65" y="193" fill="#52616d" font-size="12">ticker, date, prices</text>
+    <text x="65" y="211" fill="#52616d" font-size="12">refresh timestamp</text>
+
+    <text x="262" y="165" fill="#0b1f3a" font-size="16" font-weight="800">Codex Build</text>
+    <text x="262" y="193" fill="#52616d" font-size="12">inspect files</text>
+    <text x="262" y="211" fill="#52616d" font-size="12">repair Streamlit UI</text>
+
+    <text x="445" y="165" fill="#0b1f3a" font-size="16" font-weight="800">Feature Lane</text>
+    <text x="445" y="193" fill="#52616d" font-size="12">rolling windows</text>
+    <text x="445" y="211" fill="#52616d" font-size="12">no future values</text>
+
+    <text x="632" y="165" fill="#0b1f3a" font-size="16" font-weight="800">Validation</text>
+    <text x="632" y="193" fill="#52616d" font-size="12">walk-forward split</text>
+    <text x="632" y="211" fill="#52616d" font-size="12">baseline first</text>
+
+    <text x="826" y="165" fill="#0b1f3a" font-size="16" font-weight="800">Streamlit App</text>
+    <text x="826" y="193" fill="#52616d" font-size="12">charts and metrics</text>
+    <text x="826" y="211" fill="#52616d" font-size="12">claim guardrails</text>
+  </g>
+  <g stroke="#334155" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M192 187h40"/>
+    <path d="M382 187h40"/>
+    <path d="M572 187h40"/>
+    <path d="M762 187h40"/>
+  </g>
+
+  <g transform="translate(110 300)">
+    <rect width="230" height="120" rx="16" fill="#ecfdf5" stroke="#99f6e4" stroke-width="2"/>
+    <text x="22" y="37" fill="#134e4a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Monitoring</text>
+    <text x="22" y="68" fill="#334155" font-family="Arial, sans-serif" font-size="13">freshness, row counts, nulls</text>
+    <text x="22" y="91" fill="#334155" font-family="Arial, sans-serif" font-size="13">feature drift and segment checks</text>
+  </g>
+  <g transform="translate(435 300)">
+    <rect width="230" height="120" rx="16" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+    <text x="22" y="37" fill="#9a3412" font-family="Arial, sans-serif" font-size="17" font-weight="800">Risk Gate</text>
+    <text x="22" y="68" fill="#334155" font-family="Arial, sans-serif" font-size="13">block future-data leakage</text>
+    <text x="22" y="91" fill="#334155" font-family="Arial, sans-serif" font-size="13">compare to naive baseline</text>
+  </g>
+  <g transform="translate(760 300)">
+    <rect width="230" height="120" rx="16" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+    <text x="22" y="37" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="17" font-weight="800">GitHub Trail</text>
+    <text x="22" y="68" fill="#334155" font-family="Arial, sans-serif" font-size="13">commits, issues, app changes</text>
+    <text x="22" y="91" fill="#334155" font-family="Arial, sans-serif" font-size="13">reproducible review history</text>
+  </g>
+
+  <path d="M225 300V244" stroke="#14b8a6" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M550 300V244" stroke="#f97316" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M875 300V244" stroke="#2563eb" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <rect x="40" y="462" width="1020" height="26" rx="13" fill="#fff1f2" stroke="#fecdd3"/>
+  <text x="62" y="480" fill="#991b1b" font-family="Arial, sans-serif" font-size="13" font-weight="800">Rule: the app can demonstrate AI-assisted building, not reliable investment advice, unless unseen-data evaluation and monitoring support the claim.</text>
 </svg>

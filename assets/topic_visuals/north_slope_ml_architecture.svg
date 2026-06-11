@@ -1,65 +1,122 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" role="img" aria-labelledby="title desc">
-  <title id="title">North Slope gas hydrate ML architecture</title>
-  <desc id="desc">A diagram showing gas hydrate well-log inputs, feature separation, model families, complete-well validation, and leakage controls.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Leakage-safe North Slope gas hydrate ML architecture</title>
+  <desc id="desc">A detailed architecture separating log intake, QC gates, feature engineering, split policy, target registry, model heads, leakage barrier, geologic review, and public-safe outputs.</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M0 0l10 5-10 5z" fill="#0b1f3a"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.4" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0l10 5-10 5z" fill="#45616e"/>
     </marker>
+    <style>
+      .bg { fill: #071925; }
+      .title { fill: #f8fafc; font: 800 31px Arial, sans-serif; }
+      .sub { fill: #78d9e8; font: 500 14px Arial, sans-serif; }
+      .box { fill: #f8fafc; stroke: #b7c7ce; stroke-width: 2; }
+      .boxText { fill: #0b2533; font: 700 15px Arial, sans-serif; }
+      .body { fill: #50636e; font: 12px Arial, sans-serif; }
+      .small { fill: #dce8ec; font: 11px Arial, sans-serif; }
+      .laneTeal { fill: #1497a6; }
+      .laneBlue { fill: #3b82c4; }
+      .laneGreen { fill: #26b99a; }
+      .laneRed { fill: #dd5052; }
+      .laneGold { fill: #f3b34e; }
+      .line { stroke: #8aa5af; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .barrier { stroke: #dd5052; stroke-width: 6; stroke-dasharray: 10 9; }
+    </style>
   </defs>
-  <rect width="980" height="560" rx="28" fill="#f8fafc"/>
-  <text x="56" y="66" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="27" font-weight="800">Gas hydrate ML architecture</text>
-  <text x="58" y="98" fill="#475569" font-family="Arial, sans-serif" font-size="15">The website shows the scaffold: public-safe variables, leakage gates, and complete-well validation.</text>
+  <rect class="bg" width="1200" height="675"/>
+  <text class="title" x="42" y="54">North Slope Hydrate ML Architecture</text>
+  <text class="sub" x="43" y="79">Measured logs, derived physics features, targets, validation, and caveats stay separated before any hydrate claim.</text>
 
-  <g transform="translate(48 132)">
-    <rect width="238" height="310" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="26" y="42" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="18" font-weight="800">Inputs</text>
-    <text x="26" y="72" fill="#f28c28" font-family="Arial, sans-serif" font-size="13" font-weight="800">depth stays raw</text>
-    <text x="26" y="99" fill="#536171" font-family="Arial, sans-serif" font-size="13">location</text>
-    <text x="26" y="126" fill="#536171" font-family="Arial, sans-serif" font-size="13">gamma ray, density, porosity</text>
-    <text x="26" y="153" fill="#536171" font-family="Arial, sans-serif" font-size="13">resistivity, caliper, NMR</text>
-    <text x="26" y="180" fill="#536171" font-family="Arial, sans-serif" font-size="13">Vp, Vs, Vp/Vs, impedance</text>
-    <text x="26" y="207" fill="#536171" font-family="Arial, sans-serif" font-size="13">core porosity/permeability</text>
-    <rect x="26" y="238" width="178" height="36" rx="18" fill="#eff6ff" stroke="#bfdbfe"/>
-    <text x="48" y="261" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="13" font-weight="800">other logs normalized</text>
+  <g transform="translate(50 116)">
+    <rect class="box" width="200" height="92" rx="14"/>
+    <rect class="laneTeal" width="200" height="7"/>
+    <text class="boxText" x="15" y="28">Log Intake</text>
+    <text class="body" x="15" y="57">GR, RHOB, Rt, DT, DTS</text>
+    <text class="body" x="15" y="75">NMRPHI, caliper, depth</text>
+  </g>
+  <g transform="translate(290 116)">
+    <rect class="box" width="200" height="92" rx="14"/>
+    <rect class="laneBlue" width="200" height="7"/>
+    <text class="boxText" x="15" y="28">QC Gates</text>
+    <text class="body" x="15" y="57">units, nulls, washout</text>
+    <text class="body" x="15" y="75">depth shift, provenance</text>
+  </g>
+  <g transform="translate(530 116)">
+    <rect class="box" width="220" height="92" rx="14"/>
+    <rect class="laneGreen" width="220" height="7"/>
+    <text class="boxText" x="15" y="28">Feature Store</text>
+    <text class="body" x="15" y="57">Vsh, phi_den, Vp/Vs, AI</text>
+    <text class="body" x="15" y="75">lambda-rho, mu-rho, flags</text>
+  </g>
+  <g transform="translate(790 116)">
+    <rect class="box" width="200" height="92" rx="14"/>
+    <rect class="laneRed" width="200" height="7"/>
+    <text class="boxText" x="15" y="28">Split Policy</text>
+    <text class="body" x="15" y="57">group by complete well</text>
+    <text class="body" x="15" y="75">fit transforms on train only</text>
+  </g>
+  <g transform="translate(1025 116)">
+    <rect class="box" width="140" height="92" rx="14"/>
+    <rect class="laneGold" width="140" height="7"/>
+    <text class="boxText" x="15" y="28">Target Registry</text>
+    <text class="body" x="15" y="57">occurrence class</text>
+    <text class="body" x="15" y="75">saturation target</text>
   </g>
 
-  <g stroke="#0b1f3a" stroke-width="3.2" marker-end="url(#arrow)" fill="none">
-    <path d="M300 286h76"/>
-    <path d="M558 286h78"/>
-    <path d="M812 286h70"/>
+  <path class="line" d="M250 162h40"/>
+  <path class="line" d="M490 162h40"/>
+  <path class="line" d="M750 162h40"/>
+  <path class="line" d="M990 162h35"/>
+
+  <g transform="translate(95 285)">
+    <rect class="box" width="290" height="105" rx="14"/>
+    <rect class="laneTeal" width="290" height="7"/>
+    <text class="boxText" x="15" y="31">Classification Head</text>
+    <text class="body" x="15" y="63">hydrate/no-hydrate or phase class</text>
+    <text class="body" x="15" y="82">precision, recall, F1, confusion matrix</text>
+  </g>
+  <g transform="translate(455 285)">
+    <rect class="box" width="310" height="105" rx="14"/>
+    <rect class="laneGreen" width="310" height="7"/>
+    <text class="boxText" x="15" y="31">Saturation Regression Head</text>
+    <text class="body" x="15" y="63">continuous hydrate saturation</text>
+    <text class="body" x="15" y="82">MAE, RMSE, R2, calibration by well</text>
+  </g>
+  <g transform="translate(835 285)">
+    <rect class="box" width="305" height="105" rx="14"/>
+    <rect class="laneRed" width="305" height="7"/>
+    <text class="boxText" x="15" y="31">Uncertainty And Abstention</text>
+    <text class="body" x="15" y="63">missing curves, low confidence, OOD lithology</text>
+    <text class="body" x="15" y="82">bad hole, gas/ice/cement lookalikes</text>
   </g>
 
-  <g transform="translate(388 136)">
-    <rect width="158" height="306" rx="18" fill="#0b1f3a"/>
-    <text x="28" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="800">Feature lanes</text>
-    <rect x="24" y="76" width="110" height="36" rx="18" fill="#7ed6df"/>
-    <text x="42" y="99" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="13" font-weight="800">measured</text>
-    <rect x="24" y="132" width="110" height="36" rx="18" fill="#f28c28"/>
-    <text x="46" y="155" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="13" font-weight="800">derived</text>
-    <rect x="24" y="188" width="110" height="36" rx="18" fill="#ffffff"/>
-    <text x="59" y="211" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="13" font-weight="800">QC</text>
-    <rect x="24" y="244" width="110" height="36" rx="18" fill="#fecdd3"/>
-    <text x="44" y="267" fill="#991b1b" font-family="Arial, sans-serif" font-size="13" font-weight="800">targets</text>
+  <path class="line" d="M640 208L260 285"/>
+  <path class="line" d="M890 208L610 285"/>
+  <path class="line" d="M1095 208L990 285"/>
+
+  <line class="barrier" x1="70" y1="460" x2="1130" y2="460"/>
+  <text x="85" y="446" fill="#ffb4b4" font-family="Arial, sans-serif" font-size="15" font-weight="800">LEAKAGE BARRIER: targets, post-outcome interpretation, and fitted preprocessors never cross into training inputs</text>
+
+  <g transform="translate(90 500)">
+    <rect class="box" width="330" height="90" rx="14"/>
+    <rect class="laneRed" width="8" height="90"/>
+    <text class="boxText" x="20" y="33">Blocked Inputs</text>
+    <text class="body" x="20" y="62">target-derived variables, validation/test well transforms,</text>
+    <text class="body" x="20" y="79">unapproved restricted runtime outputs</text>
+  </g>
+  <g transform="translate(455 500)">
+    <rect class="box" width="330" height="90" rx="14"/>
+    <rect class="laneGold" width="8" height="90"/>
+    <text class="boxText" x="20" y="33">Geologic Review</text>
+    <text class="body" x="20" y="62">gas, ice, shale, carbonate/cement, salinity, invasion,</text>
+    <text class="body" x="20" y="79">compaction, overburden, bad-hole caveats</text>
+  </g>
+  <g transform="translate(820 500)">
+    <rect class="box" width="330" height="90" rx="14"/>
+    <rect class="laneGreen" width="8" height="90"/>
+    <text class="boxText" x="20" y="33">Public-Safe Output</text>
+    <text class="body" x="20" y="62">well-by-well prediction, confidence class, reason codes,</text>
+    <text class="body" x="20" y="79">sweet-spot candidates for expert review</text>
   </g>
 
-  <g transform="translate(648 128)">
-    <rect width="150" height="320" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
-    <text x="27" y="42" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="18" font-weight="800">Models</text>
-    <rect x="24" y="72" width="102" height="46" rx="12" fill="#e7f7f8"/>
-    <text x="44" y="100" fill="#0b1f3a" font-family="Arial, sans-serif" font-size="13" font-weight="800">baseline</text>
-    <rect x="24" y="136" width="102" height="46" rx="12" fill="#fff7ed"/>
-    <text x="38" y="164" fill="#9a3412" font-family="Arial, sans-serif" font-size="13" font-weight="800">classifier</text>
-    <rect x="24" y="200" width="102" height="46" rx="12" fill="#eff6ff"/>
-    <text x="40" y="228" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="13" font-weight="800">regressor</text>
-    <rect x="24" y="264" width="102" height="32" rx="16" fill="#0b1f3a"/>
-    <text x="54" y="285" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="800">ANN</text>
-  </g>
-
-  <g transform="translate(888 158)">
-    <rect width="64" height="252" rx="18" fill="#fff1f2" stroke="#fecdd3"/>
-    <text transform="translate(24 218) rotate(-90)" fill="#991b1b" font-family="Arial, sans-serif" font-size="15" font-weight="900">held-out complete wells</text>
-  </g>
-
-  <rect x="118" y="486" width="744" height="34" rx="17" fill="#fff7ed" stroke="#fed7aa"/>
-  <text x="154" y="508" fill="#9a3412" font-family="Arial, sans-serif" font-size="14" font-weight="800">Rule: separate measured inputs, derived features, QC flags, and targets before any model score is trusted.</text>
+  <text class="small" x="42" y="642">Source keywords: latest North Slope 9-slide deck, ML source notes, wireline equation map, leakage-safe validation, and public-source restrictions.</text>
 </svg>
