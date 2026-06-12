@@ -10,7 +10,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "deliverables" / "DOE_AI_Portfolio_Presenter_Guide.docx"
+OUT = ROOT / "deliverables" / "DOE_AI_Portfolio_Presenter_Guide_v2.docx"
 
 
 BLUE = "2E74B5"
@@ -429,6 +429,151 @@ TOPICS = [
 ]
 
 
+FULL_TOUR_SCRIPT = [
+    "Thank you for looking through this portfolio with me. I am going to move quickly across the whole website first, because the projects are different on the surface, but they are really connected by one workflow: take messy scientific artifacts, organize them into evidence, use AI or machine learning where it helps, and keep the human review step visible.",
+    "The first topic, AI agents learning scientific software, is about how tools like Codex could eventually learn from expert demonstrations. In a DOE context, that matters because scientific work often happens inside specialized software, not just in clean text prompts. A useful agent would need to see files, screen states, map layers, errors, and final outputs, then be scored against a rubric.",
+    "The critical-minerals knowledge graph topic is about turning papers, deposits, minerals, host rocks, and evidence into a connected map. I would not present this as AI magically discovering minerals. I would present it as a reviewable way to trace relationships and ask better questions about supply chains and energy-relevant materials.",
+    "The earthquake globe is the creative origin point. It shows how spatial-temporal data can become understandable through position, color, magnitude, depth, time, and even sound. The important point is not earthquake prediction. The important point is moving from an exciting visualization toward a reproducible scientific communication tool.",
+    "The seismic notebooks topic shows how exploratory geophysics can become a repeatable workflow: catalog search, waveform download, arrival picking, quality control, velocity interpretation, and uncertainty. Machine learning can help with triage and phase picking, but the expert still decides what is geologically defensible.",
+    "For North Slope energy screening, the website starts to look very DOE-relevant. The question is whether public geology, maps, source libraries, and ML planning can become a screening atlas for hydrate or subsurface energy intervals. The model is not the whole answer. The value is in the feature table, the validation plan, and showing uncertainty before anyone makes a decision.",
+    "The rock classification topic connects petrography, geochemistry, diagrams, and labeled examples. I would explain this as a multimodal classification problem: images, chemistry, texture, and expert labels need to be stored together before any model becomes useful.",
+    "The Valles Caldera and near-surface topics are about comparing imperfect geophysical methods. Gravity, EM, ERT, seismic, field notes, and geologic maps do not always agree. AI can help rank conflicts, align lines, and flag uncertainty, but it should not erase disagreement just to make a clean-looking map.",
+    "The Moho depth mapping topic is the clearest machine-learning validation story. Training on Australia and testing transfer to the United States asks whether a model learned a real geophysical relationship or just memorized a region. That is a very useful point for DOE, because energy and subsurface models often have to move across regions where data quality changes.",
+    "The ambient-noise topic is about scale. Continuous seismic records generate huge numbers of station pairs, cross-correlations, stacks, and monitoring outputs. AI can help decide which correlations are trustworthy enough to review first, but the pipeline must keep compute choices, station metadata, and QC flags visible.",
+    "The stock workflow is included because it shows the workforce side of AI: using Codex to build real apps quickly while still respecting baselines, leakage, validation, and model risk. Even outside geoscience, the same discipline applies: build fast, test honestly, and do not let a polished dashboard hide weak assumptions.",
+    "The SEM petrography topic is about image-based scientific labeling. A model might label visible textures or mineral candidates, but it should not jump straight to climate or reservoir claims. I would say: visible label first, proxy claim later.",
+    "So if I summarize the whole website in one sentence, it is this: AI should help move scientific work from scattered artifacts into reviewable systems, where evidence, models, uncertainty, and human judgment are all visible.",
+]
+
+
+TOPIC_READALOUD = {
+    "ai_workflow": [
+        "For this topic, I would say: this is about training AI agents on the actual work scientists do in software. A lot of science is not just text. It is opening files, checking coordinate systems, moving between notebooks and maps, exporting figures, and deciding whether the output is scientifically acceptable.",
+        "The model idea here is behavior cloning. Instead of only asking a model a question, we record expert demonstrations: what was on the screen, what file was open, what action happened next, and what counted as success. The DOE angle is that scientific software workflows are expensive to teach and easy to break, so the evaluation rubric matters as much as the agent.",
+    ],
+    "thesis_graph": [
+        "For the critical-minerals graph, I would frame it like this: papers and reports contain valuable relationships, but those relationships are locked inside prose. A graph turns them into a structure: deposit, mineral, host rock, alteration, source, confidence, and evidence.",
+        "The model is not replacing a geologist. It is helping extract entities, rank relationships, and connect every claim back to a source. That is why GraphRAG is useful here: it gives an answer by walking through evidence links instead of just producing a fluent paragraph.",
+    ],
+    "processing_earthquake": [
+        "For the earthquake globe, I would say this is my first example of turning data into intuition. Earthquakes have location, depth, magnitude, and time, and a 3D globe makes those variables easier to discuss than a table.",
+        "The careful part is the boundary. This is not prediction. If I add machine learning, it would be for clustering, anomaly ranking, or summarizing patterns for review. The value is reproducible communication: same data pull, same encoding rules, clear source, and no overclaiming.",
+    ],
+    "seismic": [
+        "For the seismic notebooks, I would explain that the workflow starts as exploration but should mature into a pipeline. You search a catalog, download waveforms, inspect quality, pick arrivals, calculate outputs, and document uncertainty.",
+        "The ML models here, like PhaseNet or EQTransformer, can propose arrival picks. But I would tell the audience that the model is an assistant. It can speed up repetitive picks and flag weak waveforms, while the expert still handles ambiguous signals and geologic interpretation.",
+    ],
+    "north_slope": [
+        "For the North Slope section, I would slow down because this is one of the strongest DOE connections. The question is whether public geology, maps, literature, stratigraphy, and ML planning can become a screening workflow for hydrate or subsurface energy targets.",
+        "The model I would describe first is a baseline, like Ridge or ElasticNet, because it is easier to explain and audit. Then I would compare it to XGBoost or a neural network. The key is leave-well-out validation: can the model make a reasonable estimate on wells it did not see, instead of memorizing a known location?",
+    ],
+    "rock_classification": [
+        "For rock classification, I would say the website is showing the raw ingredients of a future model: thin sections, chemical diagrams, formation tables, and labels. The important step is not throwing all of that into AI immediately. It is defining what the label means.",
+        "A good workflow could combine an image model for visual texture, a tree model for chemistry, and a fusion model that uses both. I would explain that multimodal AI only works if the examples are aligned: the image, the chemistry, the location, the expert label, and the uncertainty all need to refer to the same sample.",
+    ],
+    "valles": [
+        "For Valles Caldera, I would say this is about field geophysics and interpretation under uncertainty. Different methods see different parts of the subsurface, and they do not always agree.",
+        "The model concept is data fusion with uncertainty. A U-Net might segment anomalies on a map, a Gaussian Process might show where uncertainty is high, and a conflict ranker might tell the interpreter which locations deserve attention first. The goal is not a prettier map; the goal is a more honest comparison.",
+    ],
+    "near_surface": [
+        "For near-surface geophysics, I would make the same idea more concrete. Hammer seismic, ERT, TEM, geologic units, and line intersections all provide partial views. The question is where they agree and where they contradict each other.",
+        "A useful model would not just predict a layer. It would flag line intersections that do not line up, show method limits, and identify which areas need more field review. That is valuable because shallow decisions can affect environmental work, infrastructure, geothermal siting, and water questions.",
+    ],
+    "moho_ml": [
+        "For Moho ML, I would say this is my cleanest example of honest machine-learning testing. Training on Australia and testing on the United States asks a hard question: did the model learn physics-related structure, or did it learn regional shortcuts?",
+        "That is why I would start with a simple model, then compare it to LightGBM or a neural network. The residual map becomes a scientific tool. Where the model is wrong, the error is not just failure; it may point to geology, missing features, or transfer limits.",
+    ],
+    "ambient_noise": [
+        "For ambient-noise seismology, I would explain the scale problem. Continuous station data becomes station pairs, cross-correlations, stacks, monitoring windows, and quality-control decisions. The number of files can explode before the scientist even knows what is trustworthy.",
+        "The ML idea is a quality gate. A model can rank which cross-correlations look stable, which station pairs are suspicious, and which changes might be seasonal or instrument-related. The expert still decides what becomes a scientific interpretation.",
+    ],
+    "stock_workflow": [
+        "For the stock workflow, I would say this is not here because stock prediction is the same as geoscience. It is here because the workflow discipline transfers: build an app, define features, set a baseline, avoid leakage, validate over time, and show risk.",
+        "This is also a jobs topic. The new skill is not only coding a model; it is building a usable tool with version control, data provenance, tests, and a clear explanation of what the model can and cannot support.",
+    ],
+    "sem_petrography": [
+        "For SEM petrography, I would say the main discipline is separating observation from interpretation. A model can help label visible textures, pores, grains, or mineral candidates, but climate-proxy or reservoir conclusions require more evidence.",
+        "The useful workflow is expert-reviewed image crops, scale bars, sample metadata, and literature-linked definitions. My phrase for this slide would be: visible label first, proxy claim later.",
+    ],
+}
+
+
+SPECIFIC_PIVOTS = {
+    "ai_workflow": [
+        "Finance: an agent watches a senior analyst build a credit memo in Excel, Bloomberg, SEC filings, and PowerPoint, then later recreates the packet with every source and formula logged.",
+        "Marketing operations: an agent learns the exact workflow for pulling Meta, Google Ads, Shopify, and HubSpot data into a weekly campaign report, then flags missing UTMs or broken dashboards before a manager reviews it.",
+        "Healthcare administration: the same screen-and-rubric approach could train agents to prepare prior-authorization packets, with humans approving anything patient-specific.",
+        "Startup opportunity: vertical AI agents for expensive niche software such as GIS, CAD, lab instruments, and compliance tools, sold with audit trails instead of generic chat.",
+    ],
+    "thesis_graph": [
+        "Finance: a supply-chain risk graph connecting mining companies, refineries, customers, tariffs, shipping chokepoints, and SEC risk disclosures for battery or rare-earth exposure.",
+        "Marketing: a customer evidence graph linking persona, pain point, campaign touch, product feature, sales objection, and conversion outcome so teams see why messages work.",
+        "AI startup ecosystem: graph products for regulated markets where every generated answer must cite the relationship and the original document, such as energy permitting or insurance.",
+        "Jobs: ontology designer, evidence librarian, graph QA analyst, and domain data curator become practical roles because the schema determines whether AI output is trustworthy.",
+    ],
+    "processing_earthquake": [
+        "Finance: event-globe logic becomes a market-shock room showing where earnings misses, rate changes, oil shocks, and volatility clusters happened over time without claiming prediction.",
+        "Retail and commerce: a live order-delay map showing where warehouse delays, weather, and carrier exceptions cluster so teams can triage customer messaging.",
+        "Marketing: launch monitoring that visualizes attention spikes by city, channel, influencer, and time, then separates real demand from noisy one-time bursts.",
+        "Public-sector operations: emergency dashboards for inspections, infrastructure calls, or outage reports where visual triage matters before formal modeling.",
+    ],
+    "seismic": [
+        "Energy operations: a waveform-QA pipeline for geothermal or carbon-storage monitoring where weak signals are ranked before expert review.",
+        "Finance/compliance analogy: transaction-monitoring alerts use the same pattern: rank noisy events, show confidence, preserve the human decision, and audit the review.",
+        "Manufacturing: vibration sensors on machines can use similar signal models to flag bearing failures or abnormal cycles before downtime.",
+        "Jobs: signal-QA analyst and scientific pipeline operator, combining domain judgment with model monitoring.",
+    ],
+    "north_slope": [
+        "Energy finance: lenders or investors could use a transparent screening atlas to compare acreage, public geology, infrastructure distance, and uncertainty before funding diligence.",
+        "Insurance: subsurface risk scoring for pipelines, permafrost exposure, or infrastructure planning, using maps plus uncertainty instead of a single black-box score.",
+        "AI startup: a commercial due-diligence product that turns public geology and documents into first-pass screening dashboards for geothermal, minerals, hydrogen storage, or carbon storage.",
+        "Workforce: energy data product manager, geoscience ML validator, and public-data integration specialist are realistic job lanes.",
+    ],
+    "rock_classification": [
+        "Mining and materials: ore sorting or core logging workflows where images, chemistry, and location are fused to prioritize samples for expert review.",
+        "Construction commerce: aggregate suppliers could classify material quality from photos plus lab chemistry before sending batches to infrastructure projects.",
+        "Marketing/content: product teams selling lab instruments could use labeled visual examples to explain which measurements matter to non-experts.",
+        "Jobs: multimodal dataset builder, lab-data label manager, and geoscience annotation lead.",
+    ],
+    "valles": [
+        "Geothermal development: ranking areas where gravity, resistivity, and geologic maps agree or conflict before drilling money is spent.",
+        "Infrastructure: city planners comparing shallow hazard maps, utility maps, and geotechnical surveys before road, bridge, or tunnel work.",
+        "Insurance and risk: uncertainty-aware maps for wildfire recovery, landslide exposure, or subsidence risk where a clean map can be misleading.",
+        "Startup: field-data fusion software that sells the disagreement view, not just the final interpreted map.",
+    ],
+    "near_surface": [
+        "Environmental consulting: comparing ERT, TEM, soil borings, and field notes for contamination plumes or wetland boundaries.",
+        "Real estate and infrastructure: shallow subsurface screening before solar farms, data centers, highways, or water projects.",
+        "Agriculture and water: mapping shallow moisture or salinity patterns by fusing sensor lines, soil maps, and field observations.",
+        "Jobs: near-surface data integrator, field QA technologist, and uncertainty map reviewer.",
+    ],
+    "moho_ml": [
+        "Finance: model-transfer testing is like training a credit model in one economic cycle and testing it in another; the transfer split is the real honesty check.",
+        "Marketing: a conversion model trained on one region or audience must be tested on a new region before a company trusts the budget recommendation.",
+        "Energy exploration: models trained in one basin need leave-region-out validation before being used to screen a new basin.",
+        "AI startups: selling model-validation services that produce residual maps, failure modes, and transfer-risk reports instead of only accuracy scores.",
+    ],
+    "ambient_noise": [
+        "Industrial IoT: continuous sensor streams from factories can use similar quality gates to decide which machine signals deserve human maintenance review.",
+        "Cybersecurity: log streams become event correlations; models rank which correlations are stable threats versus routine or seasonal noise.",
+        "E-commerce operations: continuous traffic, checkout errors, inventory changes, and ad spend can be monitored with anomaly gates before managers react.",
+        "Jobs: monitoring-ML operator, alert-quality analyst, and model-drift reviewer.",
+    ],
+    "stock_workflow": [
+        "Marketing analytics: a campaign forecast app should compare against a simple baseline, use holdout periods, and warn when new channels make old patterns unreliable.",
+        "Retail commerce: demand forecasting for inventory should include leakage checks so future promotions or future stockouts do not accidentally enter training data.",
+        "AI startup operations: founders can use Codex-style workflows to build internal tools quickly, but investor-ready products need testing, logging, and repeatable deployment.",
+        "Jobs: AI product operator, validation-focused app builder, model-risk analyst, and GitHub-literate business analyst.",
+    ],
+    "sem_petrography": [
+        "Materials manufacturing: SEM defect detection for battery materials, semiconductors, coatings, or catalysts, with expert confirmation before process changes.",
+        "Healthcare analogy: pathology image triage has the same boundary: model labels visible patterns, but diagnosis remains expert-reviewed.",
+        "Carbon and climate tech: mineral texture labeling can support weathering or sequestration research if the proxy claim links back to sample context and literature.",
+        "Jobs: microscopy data curator, image-label QA specialist, scientific annotation lead, and lab-AI workflow designer.",
+    ],
+}
+
+
 def configure_document(doc):
     sec = doc.sections[0]
     sec.top_margin = Inches(1)
@@ -521,6 +666,24 @@ def add_quick_pass(doc):
     )
 
 
+def add_full_tour_script(doc):
+    add_heading(doc, "10-15 Minute Read-Aloud Website Tour", 1)
+    add_callout(
+        doc,
+        "How to use this",
+        "Read this straight through if you need to cover the whole website in one pass. It is written for about 10 to 15 minutes depending on how much you pause on the visuals.",
+        fill=LIGHT_BLUE,
+    )
+    for paragraph in FULL_TOUR_SCRIPT:
+        add_number(doc, paragraph)
+    add_callout(
+        doc,
+        "Bridge into questions",
+        "After the tour, say: I can go deeper on any one of these, but the main thing I want you to notice is that the same AI pattern keeps repeating: evidence in, model or workflow in the middle, uncertainty out, and human review before decisions.",
+        fill=LIGHT_GRAY,
+    )
+
+
 def add_deep_order(doc):
     add_heading(doc, "Recommended DOE Deep-Dive Order", 1)
     add_body(doc, "If time is limited, use this order because it moves from DOE-relevant energy data into scientific ML validation and then workforce implications.")
@@ -538,7 +701,11 @@ def add_topic_section(doc, topic):
     add_heading(doc, topic["title"], 1)
     add_callout(doc, "One-sentence anchor", topic["quick"], fill=LIGHT_BLUE)
 
-    add_heading(doc, "Speaker Script", 2)
+    add_heading(doc, "Read-Aloud Topic Script", 2)
+    for paragraph in TOPIC_READALOUD.get(topic["slug"], [topic["deep"]]):
+        add_body(doc, paragraph)
+
+    add_heading(doc, "Backup Speaker Notes", 2)
     add_body(doc, topic["deep"])
     add_body(doc, topic["doe"], bold_prefix="DOE relevance:")
     add_body(doc, "Fresh angle: " + topic["fresh"], bold_prefix="Fresh angle:")
@@ -564,8 +731,8 @@ def add_topic_section(doc, topic):
         row[1].text = answer
     doc.add_paragraph()
 
-    add_heading(doc, "Cross-Sector Pivots", 2)
-    for sector in topic["sectors"]:
+    add_heading(doc, "Specific Cross-Sector Pivots", 2)
+    for sector in SPECIFIC_PIVOTS.get(topic["slug"], topic["sectors"]):
         add_bullet(doc, sector)
 
     add_heading(doc, "Safe Claim Boundary", 2)
@@ -597,6 +764,7 @@ def build():
     configure_document(doc)
     add_title(doc)
     add_quick_pass(doc)
+    add_full_tour_script(doc)
     add_deep_order(doc)
     doc.add_page_break()
     add_heading(doc, "Deep Topic-by-Topic Script", 1)
