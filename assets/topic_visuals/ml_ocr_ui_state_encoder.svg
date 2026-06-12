@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">OCR and UI state encoder diagram</title>
+  <desc id="desc">A visual explanation of how a software screenshot becomes OCR text, UI element boxes, model state, action choice, and validation.</desc>
+  <defs>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eff6ff"/>
+      <stop offset="1" stop-color="#ecfdf5"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="675" fill="#f7f8f4"/>
+  <text x="52" y="54" fill="#0f172a" font-family="Arial, sans-serif" font-size="31" font-weight="800">How a UI screenshot becomes model-ready state</text>
+  <text x="54" y="86" fill="#475569" font-family="Arial, sans-serif" font-size="15">OCR reads visible text. UI detection finds buttons, menus, fields, and panels. The model only acts after both are encoded and checked.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="52" y="128" width="300" height="390" rx="18" fill="white" stroke="#cbd5e1"/>
+    <rect x="74" y="158" width="256" height="198" rx="10" fill="url(#screenGrad)" stroke="#94a3b8"/>
+    <rect x="74" y="158" width="256" height="27" rx="10" fill="#0f172a"/>
+    <circle cx="94" cy="172" r="4" fill="#ef4444"/>
+    <circle cx="110" cy="172" r="4" fill="#f59e0b"/>
+    <circle cx="126" cy="172" r="4" fill="#10b981"/>
+
+    <rect x="92" y="207" width="92" height="116" rx="7" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="104" y="229" fill="#0f172a" font-family="Arial, sans-serif" font-size="13" font-weight="700">Layer panel</text>
+    <rect x="105" y="248" width="55" height="9" rx="4" fill="#60a5fa"/>
+    <rect x="105" y="270" width="66" height="9" rx="4" fill="#34d399"/>
+    <rect x="105" y="292" width="45" height="9" rx="4" fill="#f59e0b"/>
+
+    <rect x="205" y="207" width="97" height="48" rx="8" fill="#ecfdf5" stroke="#0f766e"/>
+    <text x="223" y="236" fill="#134e4a" font-family="Arial, sans-serif" font-size="13" font-weight="800">Run tool</text>
+    <rect x="205" y="275" width="97" height="48" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+    <text x="226" y="304" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="13" font-weight="800">Output</text>
+
+    <text x="74" y="391" fill="#0f766e" font-family="Arial, sans-serif" font-size="13" font-weight="800">Raw screen</text>
+    <text x="74" y="415" fill="#334155" font-family="Arial, sans-serif" font-size="13">Pixels, visible labels, cursor,</text>
+    <text x="74" y="435" fill="#334155" font-family="Arial, sans-serif" font-size="13">menus, maps, panels, errors,</text>
+    <text x="74" y="455" fill="#334155" font-family="Arial, sans-serif" font-size="13">and final output preview.</text>
+  </g>
+
+  <path d="M370 318 H425" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+  <g filter="url(#shadow)">
+    <rect x="435" y="118" width="295" height="185" rx="16" fill="#ffffff" stroke="#bfdbfe"/>
+    <text x="459" y="153" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="20" font-weight="800">OCR text layer</text>
+    <text x="459" y="179" fill="#475569" font-family="Arial, sans-serif" font-size="13">OCR means optical character recognition:</text>
+    <text x="459" y="198" fill="#475569" font-family="Arial, sans-serif" font-size="13">turn screenshot text into tokens the model can read.</text>
+    <rect x="459" y="224" width="82" height="31" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+    <text x="477" y="245" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="12" font-weight="800">Run tool</text>
+    <rect x="551" y="224" width="96" height="31" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+    <text x="572" y="245" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="12" font-weight="800">Layer panel</text>
+    <rect x="459" y="263" width="119" height="31" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+    <text x="478" y="284" fill="#1e3a8a" font-family="Arial, sans-serif" font-size="12" font-weight="800">Output preview</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="435" y="328" width="295" height="190" rx="16" fill="#ffffff" stroke="#99f6e4"/>
+    <text x="459" y="363" fill="#134e4a" font-family="Arial, sans-serif" font-size="20" font-weight="800">UI element layer</text>
+    <text x="459" y="389" fill="#475569" font-family="Arial, sans-serif" font-size="13">UI means user interface: buttons, fields, menus,</text>
+    <text x="459" y="408" fill="#475569" font-family="Arial, sans-serif" font-size="13">map panes, file lists, warnings, and coordinates.</text>
+    <rect x="459" y="432" width="68" height="48" rx="8" fill="#ecfdf5" stroke="#0f766e"/>
+    <text x="476" y="461" fill="#134e4a" font-family="Arial, sans-serif" font-size="12" font-weight="800">button</text>
+    <rect x="539" y="432" width="76" height="48" rx="8" fill="#ecfdf5" stroke="#0f766e"/>
+    <text x="559" y="461" fill="#134e4a" font-family="Arial, sans-serif" font-size="12" font-weight="800">menu</text>
+    <rect x="627" y="432" width="72" height="48" rx="8" fill="#ecfdf5" stroke="#0f766e"/>
+    <text x="643" y="461" fill="#134e4a" font-family="Arial, sans-serif" font-size="12" font-weight="800">panel</text>
+  </g>
+
+  <path d="M750 212 H800" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+  <path d="M750 423 H800" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+  <g filter="url(#shadow)">
+    <rect x="812" y="160" width="148" height="300" rx="18" fill="#0f766e" stroke="#0f766e"/>
+    <text x="838" y="202" fill="#ffffff" font-family="Arial, sans-serif" font-size="21" font-weight="800">State</text>
+    <text x="826" y="229" fill="#ccfbf1" font-family="Arial, sans-serif" font-size="13">encoder</text>
+    <line x1="837" y1="258" x2="935" y2="258" stroke="#99f6e4" stroke-width="2"/>
+    <circle cx="852" cy="292" r="10" fill="#ccfbf1"/>
+    <circle cx="886" cy="292" r="10" fill="#ccfbf1"/>
+    <circle cx="920" cy="292" r="10" fill="#ccfbf1"/>
+    <circle cx="869" cy="330" r="10" fill="#ccfbf1"/>
+    <circle cx="903" cy="330" r="10" fill="#ccfbf1"/>
+    <text x="831" y="382" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="700">Combines OCR, UI boxes,</text>
+    <text x="831" y="402" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="700">action history, and files</text>
+    <text x="831" y="422" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="700">into model state.</text>
+  </g>
+
+  <path d="M975 310 H1025" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1038" y="118" width="112" height="104" rx="16" fill="#ffffff" stroke="#ddd6fe"/>
+    <text x="1063" y="152" fill="#4c1d95" font-family="Arial, sans-serif" font-size="17" font-weight="800">Policy</text>
+    <text x="1058" y="176" fill="#4c1d95" font-family="Arial, sans-serif" font-size="17" font-weight="800">model</text>
+    <text x="1054" y="202" fill="#64748b" font-family="Arial, sans-serif" font-size="11">chooses next</text>
+    <text x="1068" y="216" fill="#64748b" font-family="Arial, sans-serif" font-size="11">action</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1038" y="254" width="112" height="104" rx="16" fill="#ffffff" stroke="#fbbf24"/>
+    <text x="1061" y="288" fill="#92400e" font-family="Arial, sans-serif" font-size="17" font-weight="800">Action</text>
+    <text x="1057" y="313" fill="#64748b" font-family="Arial, sans-serif" font-size="11">click, type,</text>
+    <text x="1055" y="329" fill="#64748b" font-family="Arial, sans-serif" font-size="11">open file, run</text>
+    <text x="1074" y="345" fill="#64748b" font-family="Arial, sans-serif" font-size="11">tool</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1038" y="390" width="112" height="104" rx="16" fill="#ffffff" stroke="#fecaca"/>
+    <text x="1058" y="424" fill="#991b1b" font-family="Arial, sans-serif" font-size="17" font-weight="800">Review</text>
+    <text x="1052" y="449" fill="#64748b" font-family="Arial, sans-serif" font-size="11">rubric, replay,</text>
+    <text x="1054" y="465" fill="#64748b" font-family="Arial, sans-serif" font-size="11">held-out task</text>
+  </g>
+
+  <path d="M1094 222 V250" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+  <path d="M1094 358 V386" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+  <g>
+    <rect x="74" y="560" width="1052" height="58" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="99" y="595" fill="#0f172a" font-family="Arial, sans-serif" font-size="15" font-weight="800">Important:</text>
+    <text x="178" y="595" fill="#334155" font-family="Arial, sans-serif" font-size="15">A final screenshot is not training data by itself. The model needs the screen state, OCR tokens, UI boxes, action taken, result, and human pass/fail label.</text>
+  </g>
+</svg>

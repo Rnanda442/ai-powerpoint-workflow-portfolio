@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-11 / final-email-source-pass"
+DEPLOY_BUILD_ID = "2026-06-11 / ml-visual-parts-pass"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -6967,6 +6967,206 @@ st.markdown(
         font-size: 0.8rem;
         margin-top: 0.25rem;
     }
+    .ml-part-explainer {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .ml-part-explainer.compact {
+        padding: 0.85rem;
+    }
+    .ml-part-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.82fr) minmax(20rem, 1.18fr);
+        gap: 0.9rem;
+        align-items: stretch;
+    }
+    .ml-part-kicker {
+        color: #0f766e;
+        font-size: 0.74rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .ml-part-head h3 {
+        color: #0b1f3a;
+        font-size: clamp(1.1rem, 2vw, 1.55rem);
+        line-height: 1.12;
+        margin: 0.18rem 0 0.45rem;
+    }
+    .ml-part-head p {
+        color: #475569 !important;
+        font-size: 0.92rem;
+        line-height: 1.38;
+        margin: 0;
+    }
+    .ml-part-asset {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #f8fafc;
+        min-height: 15rem;
+        padding: 0.55rem;
+    }
+    .ml-part-asset img {
+        border-radius: 6px;
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+    .ml-part-grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin-top: 0.75rem;
+    }
+    .ml-part-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #f8fafc;
+        min-height: 13.2rem;
+        padding: 0.62rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+    .ml-part-card strong {
+        color: #0b1f3a;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+    .ml-part-card p {
+        color: #475569 !important;
+        font-size: 0.78rem;
+        line-height: 1.25;
+        margin: 0;
+    }
+    .part-mini {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        min-height: 5.5rem;
+        overflow: hidden;
+        padding: 0.5rem;
+        position: relative;
+    }
+    .mini-screen {
+        background: linear-gradient(135deg, #eff6ff, #ecfdf5);
+        border: 1px solid #94a3b8;
+        border-radius: 7px;
+        height: 4.5rem;
+        padding: 0.4rem;
+    }
+    .mini-window-bar {
+        background: #0f172a;
+        border-radius: 999px;
+        height: 0.35rem;
+        margin-bottom: 0.45rem;
+        width: 70%;
+    }
+    .mini-screen-row {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 5px;
+        height: 0.72rem;
+        margin: 0.28rem 0;
+        width: 78%;
+    }
+    .mini-screen-row.short { width: 50%; }
+    .ocr-token {
+        background: #eff6ff;
+        border: 1px solid #2563eb;
+        border-radius: 999px;
+        color: #1e3a8a;
+        display: inline-block;
+        font-size: 0.66rem;
+        font-weight: 850;
+        margin: 0.12rem;
+        padding: 0.18rem 0.35rem;
+    }
+    .ui-outline {
+        border: 2px solid #0f766e;
+        border-radius: 7px;
+        color: #134e4a;
+        font-size: 0.68rem;
+        font-weight: 850;
+        padding: 0.28rem 0.32rem;
+        position: absolute;
+    }
+    .ui-outline.button { left: 0.65rem; top: 1rem; }
+    .ui-outline.menu { right: 0.65rem; top: 1.05rem; }
+    .ui-outline.panel { bottom: 0.7rem; left: 1.1rem; width: 58%; }
+    .state-vector {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.22rem;
+        height: 4.5rem;
+    }
+    .state-vector span {
+        border-radius: 999px;
+        height: 0.9rem;
+    }
+    .state-vector span:nth-child(odd) { background: #99f6e4; }
+    .state-vector span:nth-child(even) { background: #bfdbfe; }
+    .policy-core {
+        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.3rem;
+        height: 4.5rem;
+    }
+    .policy-core span {
+        background: #0f766e;
+        border-radius: 50%;
+        box-shadow: 0 0 0 5px #ccfbf1;
+        height: 1.25rem;
+        justify-self: center;
+        width: 1.25rem;
+    }
+    .action-choice {
+        display: grid;
+        gap: 0.34rem;
+    }
+    .action-choice span {
+        background: #fffbeb;
+        border: 1px solid #f59e0b;
+        border-radius: 7px;
+        color: #92400e;
+        font-size: 0.72rem;
+        font-weight: 850;
+        padding: 0.36rem 0.42rem;
+    }
+    .review-mini {
+        display: grid;
+        gap: 0.34rem;
+    }
+    .review-mini span {
+        border-radius: 7px;
+        font-size: 0.72rem;
+        font-weight: 850;
+        padding: 0.36rem 0.42rem;
+    }
+    .review-mini .pass { background: #ecfdf5; border: 1px solid #0f766e; color: #134e4a; }
+    .review-mini .fail { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; }
+    .review-mini .holdout { background: #f5f3ff; border: 1px solid #7c3aed; color: #4c1d95; }
+    .ml-part-strip {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-left: 5px solid #0f766e;
+        border-radius: 8px;
+        color: #334155;
+        font-size: 0.88rem;
+        line-height: 1.35;
+        margin-top: 0.75rem;
+        padding: 0.62rem 0.75rem;
+    }
+    .ml-part-strip strong {
+        color: #0b1f3a;
+    }
     .ml-model-detail {
         display: grid;
         gap: 0.65rem;
@@ -7084,11 +7284,13 @@ st.markdown(
         .pipeline-grid,
         .ml-visual-head,
         .ml-visual-board,
+        .ml-part-head,
         .ml-source-map {
             grid-template-columns: 1fr;
         }
         .ml-model-stack,
-        .ml-model-checks {
+        .ml-model-checks,
+        .ml-part-grid {
             grid-template-columns: 1fr;
         }
         .ml-source-ribbons {
@@ -8145,6 +8347,101 @@ def render_node_movement(row: pd.Series, title: str = "What moves through the ML
     </div>
   </div>
   <div class="bottleneck-chip"><strong>Bottleneck:</strong> {escape(str(row["bottleneck"]))}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_ml_model_part_explainer(compact: bool = False) -> None:
+    """Show the concrete meaning of OCR, UI, state, model, actions, and labels."""
+    asset_path = project_asset("assets/topic_visuals/ml_ocr_ui_state_encoder.svg")
+    asset_uri = asset_data_uri(asset_path, max_bytes=950_000)
+    asset_html = (
+        f"<img src='{asset_uri}' alt='OCR and UI state encoder diagram'>"
+        if asset_uri
+        else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
+    )
+    compact_class = " compact" if compact else ""
+    st.markdown(
+        f"""
+<div class="ml-part-explainer{compact_class}">
+  <div class="ml-part-head">
+    <div>
+      <div class="ml-part-kicker">ML model parts / visual glossary</div>
+      <h3>What OCR, UI state, and the model actually mean</h3>
+      <p>
+        These diagrams should show what the model sees before it acts. A GUI agent does not only
+        "look at a screenshot." It turns screen text, interface controls, files, prior actions,
+        and human labels into a state representation, then chooses an action that must be reviewed.
+      </p>
+    </div>
+    <div class="ml-part-asset">{asset_html}</div>
+  </div>
+  <div class="ml-part-grid">
+    <div class="ml-part-card">
+      <strong>1. Raw screen</strong>
+      <div class="part-mini">
+        <div class="mini-screen">
+          <div class="mini-window-bar"></div>
+          <div class="mini-screen-row"></div>
+          <div class="mini-screen-row short"></div>
+        </div>
+      </div>
+      <p>The visible software state: map, panel, dialog, error, file tree, cursor, and output preview.</p>
+    </div>
+    <div class="ml-part-card">
+      <strong>2. OCR text</strong>
+      <div class="part-mini">
+        <span class="ocr-token">Run tool</span>
+        <span class="ocr-token">Layer panel</span>
+        <span class="ocr-token">Output</span>
+        <span class="ocr-token">Error</span>
+      </div>
+      <p>OCR reads letters and numbers from the screen so the model can use visible labels as tokens.</p>
+    </div>
+    <div class="ml-part-card">
+      <strong>3. UI objects</strong>
+      <div class="part-mini">
+        <span class="ui-outline button">button</span>
+        <span class="ui-outline menu">menu</span>
+        <span class="ui-outline panel">panel</span>
+      </div>
+      <p>UI means user interface controls: buttons, fields, menus, panels, map regions, and alerts.</p>
+    </div>
+    <div class="ml-part-card">
+      <strong>4. State encoder</strong>
+      <div class="part-mini">
+        <div class="state-vector">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <p>The encoder compresses OCR, UI boxes, files, and action history into model-ready features.</p>
+    </div>
+    <div class="ml-part-card">
+      <strong>5. Policy model</strong>
+      <div class="part-mini">
+        <div class="policy-core"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <p>The policy chooses the next action: click, type, open file, run tool, inspect output, or stop.</p>
+    </div>
+    <div class="ml-part-card">
+      <strong>6. Labels and gates</strong>
+      <div class="part-mini">
+        <div class="review-mini">
+          <span class="pass">rubric pass</span>
+          <span class="fail">correction needed</span>
+          <span class="holdout">held-out replay</span>
+        </div>
+      </div>
+      <p>Human review turns a demo into training data and blocks shortcuts, unsafe actions, or fake success.</p>
+    </div>
+  </div>
+  <div class="ml-part-strip">
+    <strong>Website rule:</strong> when a topic says ML model, show the evidence, the variables, the model part,
+    the validation gate, and the human review step in the same visual path.
+  </div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -10733,6 +11030,8 @@ elif section == "Think Tank Topics":
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
         render_current_future_board(topic, topic_roadmap)
         render_source_backed_asset_panel(topic)
+        if topic["slug"] == "ai_workflow":
+            render_ml_model_part_explainer(compact=True)
         render_ml_pipeline_contract(topic)
         render_topic_update_panel(topic["slug"])
         render_slide_source_updates(topic["slug"])
@@ -11047,6 +11346,9 @@ elif section == "Processing Visual Lab":
                 st.markdown(f"**{label}**")
                 st.caption(meaning)
 
+    st.subheader("ML model parts")
+    render_ml_model_part_explainer(compact=True)
+
     with st.expander("Research backbone for the visual lab"):
         st.write(
             "These sources support the direction of the sketches: knowledge graphs and GraphRAG for critical minerals, "
@@ -11095,6 +11397,7 @@ elif section == "Machine Learning Future":
         "Use this page as the high-level map: the same structure appears under each think tank topic, "
         "so the audience can see inputs, variables, models, and outputs without reading a wall of text."
     )
+    render_ml_model_part_explainer()
 
     st.subheader("New ML and design source notes")
     st.caption(
