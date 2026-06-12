@@ -640,6 +640,345 @@ ML_DIAGRAM_BLUEPRINTS = {
     },
 }
 
+MANUAL_VISUAL_ARCHITECTURES = {
+    "ai_workflow": {
+        "name": "Trace Factory",
+        "kicker": "future scientific software agent",
+        "source": [
+            "prompt + rubric",
+            "screen recording",
+            "file tree",
+            "accepted output",
+        ],
+        "flow": [
+            "UI tokens",
+            "action trace encoder",
+            "supervised labels",
+            "behavior-cloning transformer",
+            "replay simulator",
+            "held-out task score",
+        ],
+        "model": "CLIP/OCR state encoder + behavior-cloning transformer",
+        "vocab": ["UI token", "action trace", "rubric label", "held-out task"],
+        "gates": [
+            "hidden state",
+            "shortcut memorization",
+            "ambiguous rubric",
+            "unsafe file action",
+        ],
+        "output": "reviewed replay or human approval queue",
+        "prompt": "Convert recordings, screenshots, prompts, rubrics, and file trees into UI tokens and action traces before training or evaluating an agent.",
+    },
+    "thesis_graph": {
+        "name": "Source-To-Graph AI Hub",
+        "kicker": "critical-mineral graph reasoning",
+        "source": [
+            "thesis slides",
+            "Gephi exports",
+            "CSV node tables",
+            "figure captions",
+        ],
+        "flow": [
+            "entity extraction",
+            "ontology cleanup",
+            "edge ranking",
+            "GraphRAG retrieval",
+            "human edge audit",
+            "queryable graph",
+        ],
+        "model": "SciBERT entity extractor + relation cross-encoder + GraphSAGE/R-GCN",
+        "vocab": ["source-backed edge", "inferred edge", "ontology", "GraphRAG"],
+        "gates": [
+            "hallucinated edge",
+            "duplicate entity",
+            "unsupported relation",
+            "graph leakage",
+        ],
+        "output": "source-backed graph query and reviewable architecture diagram",
+        "prompt": "Separate observed, inferred, conceptual, and AI-suggested edges so the graph teaches evidence strength.",
+    },
+    "processing_earthquake": {
+        "name": "3D Visualization To Feature Table",
+        "kicker": "creative visualization into model-ready rows",
+        "source": [
+            "USGS events",
+            "lat/lon",
+            "depth",
+            "magnitude/time",
+        ],
+        "flow": [
+            "globe encoding",
+            "flattening lens",
+            "region-time windows",
+            "lagged features",
+            "count baseline",
+            "chronological validation",
+        ],
+        "model": "Poisson/negative-binomial count model + LightGBM anomaly ranker",
+        "vocab": ["lagged feature", "time split", "feature row", "no forecast gate"],
+        "gates": [
+            "look-ahead leakage",
+            "bad event",
+            "rare-event imbalance",
+            "visual overclaim",
+        ],
+        "output": "event-pattern or anomaly view, not an unsupported forecast",
+        "prompt": "Show the globe as feature engineering: visual points become evaluated rows before any prediction claim appears.",
+    },
+    "seismic": {
+        "name": "Seismic Notebook To QA Pipeline",
+        "kicker": "waveform QA and reviewed arrival picks",
+        "source": [
+            "catalog search",
+            "station metadata",
+            "waveform windows",
+            "notebook cells",
+        ],
+        "flow": [
+            "metadata QA",
+            "SNR check",
+            "LightGBM QA",
+            "PhaseNet/EQTransformer",
+            "uncertainty band",
+            "reviewed velocity table",
+        ],
+        "model": "LightGBM waveform QA + PhaseNet/EQTransformer pick proposal",
+        "vocab": ["waveform window", "pick proposal", "uncertainty band", "human pick"],
+        "gates": [
+            "station mismatch",
+            "weak waveform",
+            "bad metadata",
+            "unreviewed interpretation",
+        ],
+        "output": "reviewed pick and velocity output with caveat tags",
+        "prompt": "Make the pick line and uncertainty band visible before showing velocity or aquifer interpretation.",
+    },
+    "north_slope": {
+        "name": "Leakage-Safe Hydrate Architecture",
+        "kicker": "source-backed energy screening",
+        "source": [
+            "public geology",
+            "well IDs",
+            "GR/Rt/Vp/Vs",
+            "NMR Sgh target",
+        ],
+        "flow": [
+            "CRS/depth QC",
+            "caliper washout",
+            "GLOSS outliers",
+            "train-only normalization",
+            "Keras ANN Sgh",
+            "well-held-out validation",
+        ],
+        "model": "Ridge/ElasticNet reference + Keras ANN + XGBoost challenger",
+        "vocab": ["Sgh", "caliper washout", "GLOSS", "leave-well-out"],
+        "gates": [
+            "target leakage",
+            "random depth split",
+            "missing logs",
+            "gas/ice/cement lookalike",
+        ],
+        "output": "calibrated hydrate screen with abstention and geologist review",
+        "prompt": "Use the hydrate paper vocabulary directly and keep a red leakage barrier between targets and feature generation.",
+    },
+    "rock_classification": {
+        "name": "Multimodal Rock Label Pipeline",
+        "kicker": "image + chemistry + text labels",
+        "source": [
+            "thin sections",
+            "classification charts",
+            "spider diagrams",
+            "formation tables",
+        ],
+        "flow": [
+            "metadata audit",
+            "image branch",
+            "chemistry branch",
+            "text/source branch",
+            "late fusion",
+            "expert correction",
+        ],
+        "model": "EfficientNet/ResNet image branch + XGBoost chemistry branch",
+        "vocab": ["sample-held-out", "weak label", "VIF check", "ambiguous bucket"],
+        "gates": [
+            "same-sample leakage",
+            "missing scale",
+            "mixed classes",
+            "overconfident label",
+        ],
+        "output": "ranked rock/mineral labels and expert review queue",
+        "prompt": "Keep image, chemistry, and source-text branches separate until labels and metadata are visible.",
+    },
+    "valles": {
+        "name": "Geophysical Disagreement Board",
+        "kicker": "field methods without false consensus",
+        "source": [
+            "gravity",
+            "EM/TEM",
+            "ERT/seismic",
+            "field notes",
+        ],
+        "flow": [
+            "method lanes",
+            "shared spatial frame",
+            "uncertainty ribbons",
+            "conflict classifier",
+            "GP uncertainty",
+            "expert board",
+        ],
+        "model": "LightGBM conflict ranker + Gaussian Process uncertainty surface",
+        "vocab": ["method lane", "misregistration", "conflict zone", "false consensus"],
+        "gates": [
+            "misregistration",
+            "acquisition artifact",
+            "physics ignored",
+            "smooth map overclaim",
+        ],
+        "output": "review-priority board, not one final subsurface truth",
+        "prompt": "Use striped conflict zones where methods disagree; do not visually average them away.",
+    },
+    "near_surface": {
+        "name": "Fen Method Fusion Cross-Section",
+        "kicker": "line-scale shallow geophysics review",
+        "source": [
+            "hammer seismic",
+            "ERT",
+            "TEM",
+            "field notes",
+        ],
+        "flow": [
+            "line geometry",
+            "velocity lane",
+            "resistivity lane",
+            "conductivity lane",
+            "conflict ranker",
+            "leave-line-out test",
+        ],
+        "model": "LightGBM method-conflict ranker + GP method uncertainty",
+        "vocab": ["line-aware split", "possible unit", "field note", "review target"],
+        "gates": [
+            "wrong intersection",
+            "field-note loss",
+            "unit drift",
+            "clean overlay overclaim",
+        ],
+        "output": "agreement/conflict review targets",
+        "prompt": "Show hammer seismic, ERT, and TEM as separate layers with conflict hatching, not one clean fused map.",
+    },
+    "moho_ml": {
+        "name": "Regional Transfer Evaluation",
+        "kicker": "geoscience ML must transfer honestly",
+        "source": [
+            "Australia training",
+            "gravity features",
+            "Moho target",
+            "USA test region",
+        ],
+        "flow": [
+            "Ridge/GAM reference",
+            "LightGBM regressor",
+            "ANN challenger",
+            "transfer bridge",
+            "residual map",
+            "risk checklist",
+        ],
+        "model": "Ridge/GAM reference + LightGBM/XGBoost + ANN challenger",
+        "vocab": ["transfer test", "residual", "spatial leakage", "coordinate memorization"],
+        "gates": [
+            "spatial leakage",
+            "biased split",
+            "variable mismatch",
+            "high score without transfer",
+        ],
+        "output": "residual map and transfer score, not just accuracy",
+        "prompt": "Make the Australia-to-USA transfer bridge and residual failures the visual center.",
+    },
+    "ambient_noise": {
+        "name": "Ambient Noise Monitoring Ladder",
+        "kicker": "station-pair stability before alerts",
+        "source": [
+            "continuous records",
+            "station metadata",
+            "window params",
+            "station pairs",
+        ],
+        "flow": [
+            "preprocessing",
+            "station-pair CCF",
+            "stable stack",
+            "change metric",
+            "anomaly triage",
+            "alert review",
+        ],
+        "model": "LightGBM CCF-quality classifier + Isolation Forest anomaly triage",
+        "vocab": ["stable CCF", "stack count", "seasonal flag", "freshness check"],
+        "gates": [
+            "weak correlation",
+            "seasonal noise",
+            "metadata error",
+            "instrument change",
+        ],
+        "output": "reviewed monitoring alert with provenance",
+        "prompt": "Show stable correlations brightening and unstable station pairs fading into QC.",
+    },
+    "stock_workflow": {
+        "name": "App Risk And Leakage Gate",
+        "kicker": "honest dashboard model risk",
+        "source": [
+            "saved ticker data",
+            "refresh time",
+            "past prices",
+            "dashboard outputs",
+        ],
+        "flow": [
+            "shift-before-rolling",
+            "chronological split",
+            "persistence baseline",
+            "ElasticNet/LightGBM",
+            "walk-forward test",
+            "claim gate",
+        ],
+        "model": "persistence baseline + ElasticNet/LightGBM challenger",
+        "vocab": ["past-only feature", "walk-forward", "PSI drift", "fallback path"],
+        "gates": [
+            "future leakage",
+            "stale refresh",
+            "no baseline",
+            "overclaiming",
+        ],
+        "output": "research dashboard with cautious claim language",
+        "prompt": "Draw the red gate before prediction language; the app must prove past-only features and walk-forward validation.",
+    },
+    "sem_petrography": {
+        "name": "Observation Vs Interpretation Gate",
+        "kicker": "visible labels before proxy claims",
+        "source": [
+            "SEM crop",
+            "scale bar",
+            "sample metadata",
+            "literature note",
+        ],
+        "flow": [
+            "visible label proposal",
+            "patch classifier",
+            "segmentation/retrieval",
+            "expert correction",
+            "literature link",
+            "proxy claim gate",
+        ],
+        "model": "EfficientNet/ResNet patch classifier + U-Net/Mask R-CNN + CLIP retrieval",
+        "vocab": ["visible label", "interpretation label", "literature support", "ambiguous crop"],
+        "gates": [
+            "texture overclaim",
+            "missing scale",
+            "proxy from image",
+            "literature mismatch",
+        ],
+        "output": "accepted observation or blocked interpretation",
+        "prompt": "Let image models propose visible labels only; paleoclimate or reservoir claims need expert and literature support.",
+    },
+}
+
 ML_MODEL_DETAIL_DIAGRAMS = {
     "ai_workflow": {
         "reference": {
@@ -4957,6 +5296,1137 @@ st.markdown(
         font-size: 0.9rem;
         line-height: 1.32;
     }
+    .manual-architecture {
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background:
+            linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.96));
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+        padding: 1rem;
+        margin: 1rem 0 1.25rem;
+    }
+    .manual-architecture.priority {
+        border-color: rgba(15, 118, 110, 0.55);
+        box-shadow: 0 18px 42px rgba(15, 118, 110, 0.13);
+    }
+    .manual-head {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.9rem;
+    }
+    .manual-kicker {
+        color: #0f766e;
+        font-size: 0.75rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .manual-head h3 {
+        margin: 0.25rem 0 0;
+        color: #172033;
+        font-size: 1.22rem;
+        line-height: 1.2;
+    }
+    .manual-output {
+        border: 1px solid #fde68a;
+        border-left: 5px solid #f59e0b;
+        border-radius: 8px;
+        background: #fffbeb;
+        color: #78350f;
+        flex: 0 1 18rem;
+        padding: 0.62rem 0.72rem;
+        font-size: 0.86rem;
+        line-height: 1.32;
+    }
+    .manual-board {
+        display: grid;
+        grid-template-columns: minmax(13rem, 0.85fr) minmax(0, 1.6fr) minmax(13rem, 0.9fr);
+        gap: 0.8rem;
+        align-items: stretch;
+    }
+    .manual-panel {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.78rem;
+        min-height: 13rem;
+    }
+    .manual-panel h4 {
+        color: #172033;
+        font-size: 0.84rem;
+        margin: 0 0 0.55rem;
+        text-transform: uppercase;
+    }
+    .manual-source-grid,
+    .manual-gate-list {
+        display: grid;
+        gap: 0.42rem;
+    }
+    .manual-source-item,
+    .manual-gate-item {
+        border-radius: 8px;
+        color: #1f2937;
+        font-size: 0.82rem;
+        font-weight: 750;
+        line-height: 1.24;
+        padding: 0.48rem 0.55rem;
+    }
+    .manual-source-item {
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+    }
+    .manual-gate-item {
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #7f1d1d;
+    }
+    .manual-model {
+        border: 1px solid #0f766e;
+        border-radius: 8px;
+        background: #0f766e;
+        color: #ffffff;
+        padding: 0.7rem 0.78rem;
+        margin-bottom: 0.68rem;
+        text-align: center;
+        font-size: 0.9rem;
+        line-height: 1.28;
+        font-weight: 850;
+    }
+    .manual-flow {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.42rem;
+        align-items: stretch;
+    }
+    .manual-flow-node {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #f8fafc;
+        min-height: 6.6rem;
+        padding: 0.54rem 0.5rem;
+        position: relative;
+        text-align: center;
+    }
+    .manual-flow-node:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: -0.48rem;
+        top: 50%;
+        width: 0.52rem;
+        border-top: 2px solid #94a3b8;
+    }
+    .manual-flow-node.gate {
+        border-color: #fca5a5;
+        background: #fff7ed;
+    }
+    .manual-node-icon {
+        color: #0f766e;
+        height: 2rem;
+        margin-bottom: 0.3rem;
+    }
+    .manual-node-icon svg {
+        width: 2rem;
+        height: 2rem;
+    }
+    .manual-flow-node strong {
+        display: block;
+        color: #172033;
+        font-size: 0.72rem;
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+    }
+    .manual-flow-node span {
+        color: #475569;
+        display: block;
+        font-size: 0.78rem;
+        line-height: 1.22;
+    }
+    .manual-vocab-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.38rem;
+        margin-top: 0.75rem;
+    }
+    .manual-vocab {
+        border: 1px solid #99f6e4;
+        border-radius: 999px;
+        background: #ecfdf5;
+        color: #134e4a;
+        font-size: 0.75rem;
+        font-weight: 850;
+        padding: 0.28rem 0.48rem;
+    }
+    .manual-prompt {
+        border-left: 4px solid #2563eb;
+        background: #eff6ff;
+        color: #1e3a8a;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        line-height: 1.35;
+        margin-top: 0.8rem;
+        padding: 0.62rem 0.72rem;
+    }
+    .manual-prompt strong {
+        display: block;
+        margin-bottom: 0.18rem;
+        text-transform: uppercase;
+        font-size: 0.76rem;
+    }
+    .rich-manual {
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.95rem;
+    }
+    .rich-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.85rem;
+        margin-bottom: 0.85rem;
+    }
+    .rich-kicker {
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .rich-head h3 {
+        color: #111827;
+        font-size: 1.2rem;
+        line-height: 1.18;
+        margin: 0.18rem 0 0;
+    }
+    .rich-output {
+        border: 1px solid #fbbf24;
+        border-left: 5px solid #d97706;
+        border-radius: 8px;
+        background: #fffbeb;
+        color: #78350f;
+        flex: 0 1 18rem;
+        font-size: 0.82rem;
+        font-weight: 750;
+        line-height: 1.25;
+        padding: 0.58rem 0.65rem;
+    }
+    .rich-diagram {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.82rem;
+    }
+    .rich-stage-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 2.4rem minmax(0, 1.12fr) 2.4rem minmax(0, 1fr);
+        gap: 0.55rem;
+        align-items: stretch;
+    }
+    .rich-stage {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        min-width: 0;
+        padding: 0.68rem;
+    }
+    .rich-stage h4 {
+        color: #172033;
+        font-size: 0.76rem;
+        letter-spacing: 0.04em;
+        line-height: 1.18;
+        margin: 0 0 0.52rem;
+        text-transform: uppercase;
+    }
+    .rich-arrow {
+        align-self: center;
+        height: 2px;
+        position: relative;
+        background: #64748b;
+    }
+    .rich-arrow::after {
+        border-right: 2px solid #64748b;
+        border-top: 2px solid #64748b;
+        content: "";
+        height: 0.48rem;
+        position: absolute;
+        right: -0.02rem;
+        top: -0.25rem;
+        transform: rotate(45deg);
+        width: 0.48rem;
+    }
+    .diagram-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.32rem;
+    }
+    .diagram-chip {
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        background: #f8fafc;
+        color: #1f2937;
+        display: inline-flex;
+        font-size: 0.72rem;
+        font-weight: 850;
+        line-height: 1.15;
+        min-height: 1.65rem;
+        padding: 0.33rem 0.44rem;
+        align-items: center;
+    }
+    .diagram-chip.source { border-color: #bfdbfe; background: #eff6ff; color: #1e3a8a; }
+    .diagram-chip.model { border-color: #99f6e4; background: #ecfdf5; color: #134e4a; }
+    .diagram-chip.target { border-color: #ddd6fe; background: #f5f3ff; color: #4c1d95; }
+    .diagram-chip.gate { border-color: #fecaca; background: #fef2f2; color: #7f1d1d; }
+    .diagram-chip.review { border-color: #fde68a; background: #fffbeb; color: #78350f; }
+    .gate-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.45rem;
+        margin-top: 0.62rem;
+    }
+    .gate-box {
+        border: 1px solid #fecaca;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #7f1d1d;
+        font-size: 0.72rem;
+        font-weight: 850;
+        line-height: 1.15;
+        min-height: 3.1rem;
+        padding: 0.48rem;
+    }
+    .gate-box strong {
+        display: block;
+        font-size: 0.65rem;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+    }
+    .mini-table {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .mini-table div {
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+        display: grid;
+        font-size: 0.72rem;
+        font-weight: 780;
+        grid-template-columns: 1fr 1fr;
+        line-height: 1.15;
+        min-height: 2rem;
+        padding: 0.38rem 0.44rem;
+    }
+    .mini-table div:last-child { border-bottom: 0; }
+    .mini-table b { color: #111827; }
+    .leakage-wall {
+        align-self: stretch;
+        border: 2px solid #dc2626;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #991b1b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 950;
+        line-height: 1.05;
+        padding: 0.35rem;
+        text-align: center;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+    }
+    .hydrate-log-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.32rem;
+        margin-top: 0.48rem;
+    }
+    .hydrate-log-grid span {
+        border: 1px solid #bfdbfe;
+        border-radius: 6px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        font-size: 0.72rem;
+        font-weight: 900;
+        padding: 0.34rem;
+        text-align: center;
+    }
+    .borehole-sketch {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: 2.2rem 1fr;
+        gap: 0.48rem;
+        margin-top: 0.48rem;
+        padding: 0.5rem;
+    }
+    .borehole-track {
+        border-left: 8px solid #64748b;
+        border-right: 8px solid #64748b;
+        border-radius: 999px;
+        height: 5.6rem;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        width: 2.55rem;
+    }
+    .borehole-track::before {
+        background: #f59e0b;
+        border: 2px solid #b45309;
+        border-radius: 999px;
+        content: "";
+        height: 1.35rem;
+        left: 0.08rem;
+        position: absolute;
+        top: 2.35rem;
+        width: 2.35rem;
+    }
+    .borehole-track::after {
+        background: #dc2626;
+        content: "";
+        height: 2px;
+        left: 0.02rem;
+        position: absolute;
+        top: 3.02rem;
+        transform: rotate(-25deg);
+        width: 2.45rem;
+    }
+    .qc-stack {
+        display: grid;
+        gap: 0.38rem;
+    }
+    .qc-tile {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 820;
+        line-height: 1.15;
+        padding: 0.46rem;
+    }
+    .qc-tile b { color: #111827; display: block; margin-bottom: 0.15rem; }
+    .gloss-points {
+        border: 1px dashed #94a3b8;
+        border-radius: 8px;
+        height: 4.3rem;
+        margin-top: 0.4rem;
+        position: relative;
+    }
+    .gloss-points span {
+        background: #0f766e;
+        border-radius: 50%;
+        height: 0.42rem;
+        position: absolute;
+        width: 0.42rem;
+    }
+    .gloss-points .outlier {
+        background: #dc2626;
+        box-shadow: 0 0 0 4px #fee2e2;
+        height: 0.58rem;
+        width: 0.58rem;
+    }
+    .ann-layer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.24rem;
+        margin: 0.42rem 0;
+    }
+    .ann-layer span {
+        border: 1px solid #0f766e;
+        border-radius: 999px;
+        background: #ccfbf1;
+        height: 0.78rem;
+    }
+    .model-stack {
+        display: grid;
+        gap: 0.38rem;
+    }
+    .model-block {
+        border: 1px solid #99f6e4;
+        border-radius: 8px;
+        background: #ecfdf5;
+        color: #134e4a;
+        font-size: 0.72rem;
+        font-weight: 850;
+        line-height: 1.15;
+        padding: 0.48rem;
+    }
+    .model-block.main {
+        border-color: #0f766e;
+        background: #0f766e;
+        color: #ffffff;
+    }
+    .well-validation {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.3rem;
+        margin-top: 0.45rem;
+    }
+    .well-validation span {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        background: #f1f5f9;
+        color: #334155;
+        font-size: 0.68rem;
+        font-weight: 850;
+        padding: 0.45rem 0.3rem;
+        text-align: center;
+    }
+    .well-validation span:last-child {
+        border-color: #dc2626;
+        background: #fef2f2;
+        color: #991b1b;
+    }
+    .abstain-bin {
+        border: 1px solid #fbbf24;
+        border-radius: 8px;
+        background: #fffbeb;
+        color: #78350f;
+        font-size: 0.72rem;
+        font-weight: 860;
+        line-height: 1.15;
+        margin-top: 0.5rem;
+        padding: 0.48rem;
+    }
+    .trace-input-stack {
+        display: grid;
+        gap: 0.38rem;
+    }
+    .trace-frame {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        background: #f8fafc;
+        min-height: 6.2rem;
+        padding: 0.44rem;
+        position: relative;
+    }
+    .screen-bar {
+        background: #334155;
+        border-radius: 999px;
+        height: 0.45rem;
+        margin-bottom: 0.52rem;
+        width: 72%;
+    }
+    .ui-token {
+        border: 1px solid #2563eb;
+        border-radius: 5px;
+        background: #dbeafe;
+        color: #1e3a8a;
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 900;
+        margin: 0.12rem;
+        padding: 0.2rem 0.32rem;
+    }
+    .trace-path {
+        display: grid;
+        gap: 0.34rem;
+    }
+    .trace-step {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 850;
+        line-height: 1.12;
+        padding: 0.45rem;
+        position: relative;
+    }
+    .trace-step:not(:last-child)::after {
+        border-left: 2px solid #64748b;
+        bottom: -0.38rem;
+        content: "";
+        height: 0.38rem;
+        left: 1rem;
+        position: absolute;
+    }
+    .encoder-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.36rem;
+    }
+    .encoder-box {
+        border: 1px solid #99f6e4;
+        border-radius: 8px;
+        background: #ecfdf5;
+        color: #134e4a;
+        font-size: 0.72rem;
+        font-weight: 880;
+        min-height: 3.2rem;
+        padding: 0.45rem;
+    }
+    .transformer-stack {
+        border: 1px solid #0f766e;
+        border-radius: 8px;
+        background: #0f766e;
+        color: #ffffff;
+        font-size: 0.76rem;
+        font-weight: 900;
+        line-height: 1.18;
+        margin-top: 0.42rem;
+        padding: 0.52rem;
+        text-align: center;
+    }
+    .replay-panel {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        margin-bottom: 0.42rem;
+        padding: 0.48rem;
+    }
+    .replay-score {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.35rem;
+    }
+    .score-box {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        color: #334155;
+        font-size: 0.7rem;
+        font-weight: 860;
+        padding: 0.42rem;
+        text-align: center;
+    }
+    .score-box.pass { border-color: #86efac; background: #f0fdf4; color: #166534; }
+    .score-box.fail { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
+    .graph-source-stack {
+        display: grid;
+        gap: 0.35rem;
+    }
+    .source-doc {
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        font-size: 0.72rem;
+        font-weight: 850;
+        line-height: 1.12;
+        padding: 0.45rem;
+    }
+    .entity-clusters {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.28rem;
+        margin-bottom: 0.45rem;
+    }
+    .entity-node {
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        background: #f8fafc;
+        color: #334155;
+        font-size: 0.66rem;
+        font-weight: 850;
+        padding: 0.32rem;
+        text-align: center;
+    }
+    .ontology-merge {
+        border: 1px solid #ddd6fe;
+        border-radius: 8px;
+        background: #f5f3ff;
+        color: #4c1d95;
+        display: grid;
+        gap: 0.24rem;
+        font-size: 0.7rem;
+        font-weight: 850;
+        margin-bottom: 0.42rem;
+        padding: 0.46rem;
+    }
+    .edge-visuals {
+        display: grid;
+        gap: 0.4rem;
+    }
+    .edge-row {
+        align-items: center;
+        display: grid;
+        grid-template-columns: 1fr 3.2rem 1fr;
+        gap: 0.25rem;
+        min-width: 0;
+    }
+    .graph-dot {
+        border: 1px solid #475569;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #1f2937;
+        font-size: 0.62rem;
+        font-weight: 900;
+        padding: 0.32rem 0.2rem;
+        text-align: center;
+    }
+    .edge-line {
+        border-top: 3px solid #0f766e;
+        position: relative;
+    }
+    .edge-line::after {
+        background: #ecfdf5;
+        border: 1px solid #0f766e;
+        border-radius: 4px;
+        color: #134e4a;
+        content: "cite";
+        font-size: 0.58rem;
+        font-weight: 900;
+        left: 50%;
+        padding: 0.05rem 0.15rem;
+        position: absolute;
+        top: -0.78rem;
+        transform: translateX(-50%);
+    }
+    .edge-line.dashed {
+        border-top-style: dashed;
+        border-top-color: #d97706;
+    }
+    .edge-line.dashed::after {
+        background: #fffbeb;
+        border-color: #d97706;
+        color: #78350f;
+        content: "review";
+    }
+    .graphrag-path {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 840;
+        line-height: 1.15;
+        margin-top: 0.48rem;
+        padding: 0.48rem;
+    }
+    .audit-chain {
+        display: grid;
+        gap: 0.36rem;
+    }
+    .audit-node {
+        border: 1px solid #99f6e4;
+        border-radius: 8px;
+        background: #ecfdf5;
+        color: #134e4a;
+        font-size: 0.72rem;
+        font-weight: 870;
+        line-height: 1.15;
+        padding: 0.45rem;
+    }
+    .audit-node.review {
+        border-color: #fbbf24;
+        background: #fffbeb;
+        color: #78350f;
+    }
+    .audit-node.gate {
+        border-color: #fecaca;
+        background: #fef2f2;
+        color: #991b1b;
+    }
+    .globe-panel {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        background: #f8fafc;
+        display: grid;
+        grid-template-columns: 6.6rem 1fr;
+        gap: 0.52rem;
+        min-height: 8rem;
+        padding: 0.55rem;
+    }
+    .globe-orb {
+        border: 2px solid #334155;
+        border-radius: 50%;
+        height: 6rem;
+        position: relative;
+        width: 6rem;
+    }
+    .globe-orb::before,
+    .globe-orb::after {
+        border: 1px solid #94a3b8;
+        border-radius: 50%;
+        content: "";
+        position: absolute;
+    }
+    .globe-orb::before {
+        height: 4.9rem;
+        left: 0.45rem;
+        top: 0.45rem;
+        width: 4.9rem;
+    }
+    .globe-orb::after {
+        border-left: 0;
+        border-right: 0;
+        height: 2rem;
+        left: 0.25rem;
+        top: 1.95rem;
+        width: 5.5rem;
+    }
+    .event-dot {
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        position: absolute;
+    }
+    .event-dot.shallow { background: #2563eb; height: 0.45rem; width: 0.45rem; }
+    .event-dot.deep { background: #dc2626; height: 0.75rem; width: 0.75rem; }
+    .event-dot.mid { background: #d97706; height: 0.6rem; width: 0.6rem; }
+    .feature-row-grid {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .feature-row-grid div {
+        align-items: center;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+        display: grid;
+        font-size: 0.68rem;
+        font-weight: 830;
+        gap: 0.18rem;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        min-height: 1.95rem;
+        padding: 0.3rem;
+    }
+    .feature-row-grid div:first-child {
+        background: #e2e8f0;
+        color: #111827;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+    }
+    .feature-row-grid div:last-child { border-bottom: 0; }
+    .chronology-strip {
+        display: grid;
+        grid-template-columns: 1.2fr 0.18fr 0.85fr;
+        gap: 0.3rem;
+        margin-top: 0.45rem;
+    }
+    .chronology-strip span {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.68rem;
+        font-weight: 850;
+        padding: 0.38rem;
+        text-align: center;
+    }
+    .chronology-strip span.lock {
+        border-color: #dc2626;
+        background: #fef2f2;
+        color: #991b1b;
+    }
+    .waveform-panel {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.45rem;
+    }
+    .waveform-svg {
+        color: #334155;
+        display: block;
+        height: 4.7rem;
+        width: 100%;
+    }
+    .pick-band {
+        align-items: center;
+        display: grid;
+        gap: 0.24rem;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 0.4rem;
+    }
+    .pick-band span {
+        border: 1px solid #fbbf24;
+        border-radius: 8px;
+        background: #fffbeb;
+        color: #78350f;
+        font-size: 0.68rem;
+        font-weight: 850;
+        padding: 0.36rem;
+        text-align: center;
+    }
+    .modality-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.36rem;
+    }
+    .modality-card {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.68rem;
+        font-weight: 850;
+        line-height: 1.12;
+        min-height: 5.4rem;
+        padding: 0.45rem;
+    }
+    .modality-card b {
+        color: #111827;
+        display: block;
+        font-size: 0.72rem;
+        margin-bottom: 0.25rem;
+    }
+    .fusion-node {
+        border: 2px solid #0f766e;
+        border-radius: 8px;
+        background: #ecfdf5;
+        color: #134e4a;
+        font-size: 0.76rem;
+        font-weight: 900;
+        line-height: 1.15;
+        margin-top: 0.45rem;
+        padding: 0.52rem;
+        text-align: center;
+    }
+    .method-lanes {
+        display: grid;
+        gap: 0.32rem;
+    }
+    .method-lane {
+        align-items: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        display: grid;
+        font-size: 0.68rem;
+        font-weight: 850;
+        gap: 0.3rem;
+        grid-template-columns: 5.4rem 1fr 4.6rem;
+        min-height: 2.6rem;
+        padding: 0.36rem;
+    }
+    .method-bar {
+        border-radius: 999px;
+        height: 0.72rem;
+    }
+    .method-bar.gravity { background: #2563eb; }
+    .method-bar.em { background: #0f766e; }
+    .method-bar.ert { background: #d97706; }
+    .method-bar.seismic { background: #7c3aed; }
+    .method-bar.notes { background: #475569; }
+    .conflict-zone {
+        border: 1px solid #dc2626;
+        border-radius: 8px;
+        background: repeating-linear-gradient(45deg, #fef2f2 0, #fef2f2 6px, #fecaca 6px, #fecaca 12px);
+        color: #7f1d1d;
+        font-size: 0.7rem;
+        font-weight: 900;
+        line-height: 1.15;
+        margin-top: 0.45rem;
+        padding: 0.5rem;
+        text-align: center;
+    }
+    .agreement-zone {
+        border: 1px solid #86efac;
+        border-radius: 8px;
+        background: #f0fdf4;
+        color: #166534;
+        font-size: 0.7rem;
+        font-weight: 900;
+        line-height: 1.15;
+        margin-top: 0.45rem;
+        padding: 0.5rem;
+        text-align: center;
+    }
+    .cross-section {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        background: #ffffff;
+        display: grid;
+        gap: 0.24rem;
+        overflow: hidden;
+        padding: 0.45rem;
+        position: relative;
+    }
+    .cross-section::before,
+    .cross-section::after {
+        background: #dc2626;
+        content: "";
+        height: 100%;
+        opacity: 0.85;
+        position: absolute;
+        top: 0;
+        width: 2px;
+    }
+    .cross-section::before { left: 34%; }
+    .cross-section::after { left: 69%; }
+    .section-layer {
+        align-items: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        color: #1f2937;
+        display: flex;
+        font-size: 0.68rem;
+        font-weight: 850;
+        min-height: 2.1rem;
+        padding-left: 0.42rem;
+    }
+    .section-layer.velocity { background: #dbeafe; }
+    .section-layer.resistivity { background: #ecfdf5; }
+    .section-layer.conductivity { background: #fffbeb; }
+    .section-layer.possible {
+        background: repeating-linear-gradient(135deg, #f8fafc 0, #f8fafc 7px, #e2e8f0 7px, #e2e8f0 14px);
+    }
+    .region-transfer {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr);
+        gap: 0.42rem;
+        align-items: center;
+        min-width: 0;
+    }
+    .region-card {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #334155;
+        font-size: 0.72rem;
+        font-weight: 850;
+        min-height: 5.9rem;
+        padding: 0.5rem;
+        position: relative;
+    }
+    .region-card b { color: #111827; display: block; margin-bottom: 0.3rem; }
+    .residual-map {
+        border: 1px solid #94a3b8;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.22rem;
+        margin-top: 0.42rem;
+        padding: 0.35rem;
+    }
+    .residual-map span {
+        border-radius: 50%;
+        display: block;
+        height: 0.72rem;
+        width: 0.72rem;
+    }
+    .residual-map .cold { background: #2563eb; }
+    .residual-map .hot { background: #dc2626; }
+    .residual-map .ok { background: #94a3b8; }
+    .station-network {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        height: 8.2rem;
+        margin-bottom: 0.45rem;
+        position: relative;
+    }
+    .station-node {
+        background: #ffffff;
+        border: 2px solid #334155;
+        border-radius: 50%;
+        height: 1.1rem;
+        position: absolute;
+        width: 1.1rem;
+    }
+    .station-arc {
+        border-top: 3px solid #0f766e;
+        height: 2rem;
+        position: absolute;
+        transform-origin: left center;
+        width: 4.6rem;
+    }
+    .ccf-stack {
+        display: grid;
+        gap: 0.26rem;
+    }
+    .ccf-line {
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        height: 0.58rem;
+    }
+    .ccf-line.stable { background: #0f766e; }
+    .ccf-line.weak { background: #e2e8f0; border-style: dashed; }
+    .drift-gauge {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.48rem;
+    }
+    .gauge-track {
+        background: #e2e8f0;
+        border-radius: 999px;
+        height: 0.75rem;
+        overflow: hidden;
+    }
+    .gauge-fill {
+        background: #d97706;
+        height: 100%;
+        width: 64%;
+    }
+    .walk-forward {
+        display: grid;
+        gap: 0.28rem;
+        margin-top: 0.45rem;
+    }
+    .walk-row {
+        display: grid;
+        gap: 0.18rem;
+        grid-template-columns: 1.3fr 0.65fr 0.55fr;
+    }
+    .walk-row span {
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        color: #334155;
+        font-size: 0.62rem;
+        font-weight: 850;
+        padding: 0.28rem;
+        text-align: center;
+    }
+    .walk-row .train { background: #dbeafe; }
+    .walk-row .test { background: #fffbeb; }
+    .walk-row .gate { background: #fef2f2; color: #991b1b; }
+    .sem-crop {
+        border: 1px solid #64748b;
+        border-radius: 8px;
+        background: #94a3b8;
+        height: 7rem;
+        position: relative;
+    }
+    .sem-crop::before {
+        border-bottom: 2px solid #e5e7eb;
+        border-top: 2px solid #64748b;
+        content: "";
+        height: 3.6rem;
+        left: 1rem;
+        position: absolute;
+        top: 1.1rem;
+        transform: rotate(-12deg);
+        width: 70%;
+    }
+    .scale-bar {
+        background: #111827;
+        bottom: 0.55rem;
+        height: 0.28rem;
+        left: 0.55rem;
+        position: absolute;
+        width: 2.6rem;
+    }
+    .label-pins {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.28rem;
+        margin-top: 0.42rem;
+    }
+    .label-pins span {
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        font-size: 0.68rem;
+        font-weight: 850;
+        padding: 0.28rem 0.38rem;
+    }
+    .proxy-gate {
+        border: 2px solid #dc2626;
+        border-radius: 8px;
+        background: #fef2f2;
+        color: #991b1b;
+        font-size: 0.76rem;
+        font-weight: 950;
+        line-height: 1.15;
+        margin-top: 0.45rem;
+        padding: 0.55rem;
+        text-align: center;
+    }
     @media (max-width: 900px) {
         .block-container {
             padding: 2.75rem 0.85rem 2rem;
@@ -4982,9 +6452,65 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
-        .pipeline-node:not(:last-child)::after { display: none; }
+        .pipeline-node:not(:last-child)::after,
+        .manual-flow-node:not(:last-child)::after { display: none; }
+        .manual-head {
+            flex-direction: column;
+        }
+        .manual-output {
+            flex: 1 1 auto;
+            width: 100%;
+        }
+        .rich-head {
+            flex-direction: column;
+        }
+        .rich-output {
+            flex: 1 1 auto;
+            width: 100%;
+        }
+        .rich-stage-grid,
+        .hydrate-log-grid,
+        .gate-strip,
+        .encoder-grid,
+        .replay-score,
+        .entity-clusters,
+        .well-validation,
+        .globe-panel,
+        .modality-grid,
+        .region-transfer {
+            grid-template-columns: 1fr;
+        }
+        .feature-row-grid div,
+        .method-lane,
+        .walk-row {
+            grid-template-columns: 1fr;
+        }
+        .chronology-strip {
+            grid-template-columns: 1fr;
+        }
+        .rich-arrow {
+            background: transparent;
+            border-left: 2px solid #64748b;
+            height: 1.7rem;
+            justify-self: center;
+            width: 1rem;
+        }
+        .rich-arrow::after {
+            border-bottom: 2px solid #64748b;
+            border-right: 2px solid #64748b;
+            border-top: 0;
+            bottom: 0;
+            left: -0.02rem;
+            right: auto;
+            top: auto;
+            transform: rotate(45deg);
+        }
+        .leakage-wall {
+            writing-mode: horizontal-tb;
+            min-height: 2.5rem;
+        }
         .agent-lanes { grid-template-columns: 1fr; }
         .agent-stage { min-height: 640px; }
         .guidance-gate {
@@ -6938,7 +8464,884 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
     )
 
 
+def _diagram_chip_html(items: list[str], class_name: str = "") -> str:
+    classes = f"diagram-chip {class_name}".strip()
+    return "".join(f"<span class='{classes}'>{escape(item)}</span>" for item in items)
+
+
+def _gate_box_html(label: str, detail: str) -> str:
+    return f"<div class='gate-box'><strong>{escape(label)}</strong>{escape(detail)}</div>"
+
+
+def _render_rich_manual_shell(manual: dict, body_html: str) -> None:
+    st.markdown(
+        f"""
+<div class="manual-architecture priority rich-manual">
+  <div class="rich-head">
+    <div>
+      <div class="rich-kicker">Visual-first manual / {escape(manual["kicker"])}</div>
+      <h3>{escape(manual["name"])}</h3>
+    </div>
+    <div class="rich-output">Honest output: {escape(manual["output"])}</div>
+  </div>
+  {body_html}
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_priority_manual_visual_architecture(slug: str, manual: dict) -> bool:
+    renderers = {
+        "north_slope": render_hydrate_architecture_diagram,
+        "ai_workflow": render_trace_factory_diagram,
+        "thesis_graph": render_source_to_graph_diagram,
+        "processing_earthquake": render_earthquake_feature_diagram,
+        "seismic": render_seismic_qa_diagram,
+        "rock_classification": render_rock_label_diagram,
+        "valles": render_geophysical_disagreement_diagram,
+        "near_surface": render_fen_fusion_diagram,
+        "moho_ml": render_regional_transfer_diagram,
+        "ambient_noise": render_ambient_noise_diagram,
+        "stock_workflow": render_app_risk_diagram,
+        "sem_petrography": render_sem_interpretation_diagram,
+    }
+    renderer = renderers.get(slug)
+    if renderer is None:
+        return False
+    renderer(manual)
+    return True
+
+
+def render_hydrate_architecture_diagram(manual: dict) -> None:
+    source_chips = _diagram_chip_html(
+        ["public sources", "well IDs", "formation tops", "source library"],
+        "source",
+    )
+    log_chips = "".join(
+        f"<span>{escape(label)}</span>"
+        for label in ["density", "porosity", "GR", "Rt", "Vp", "Vs"]
+    )
+    gates = "".join(
+        [
+            _gate_box_html("Leakage", "leakage barrier blocks NMR Sgh from feature transforms."),
+            _gate_box_html("Split", "Random depth-row split blocked; use leave-well-out."),
+            _gate_box_html("QC", "caliper washout and GLOSS outliers are removed before fit."),
+            _gate_box_html("Claim", "low confidence intervals route to abstention and review."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram hydrate-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Source, log, and target lanes</h4>
+      <div class="diagram-chip-row">{source_chips}</div>
+      <div class="mini-table" style="margin-top:0.48rem;">
+        <div><b>Training unit</b><span>depth point</span></div>
+        <div><b>NMR target</b><span>Sgh saturation</span></div>
+        <div><b>Review unit</b><span>complete well interval</span></div>
+      </div>
+      <div class="hydrate-log-grid">{log_chips}</div>
+      <div class="borehole-sketch">
+        <div class="borehole-track"></div>
+        <div class="qc-stack">
+          <div class="qc-tile"><b>Sgh</b>NMR-derived target interval, kept separate from features.</div>
+          <div class="qc-tile"><b>caliper washout</b>Widened borehole segment is crossed out before training.</div>
+        </div>
+      </div>
+    </div>
+    <div class="leakage-wall">leakage barrier</div>
+    <div class="rich-stage">
+      <h4>QC and train-only feature work</h4>
+      <div class="qc-stack">
+        <div class="qc-tile"><b>CRS/depth QC</b>Align wells, depth rows, and public geology before feature rows exist.</div>
+        <div class="qc-tile"><b>missing log gate</b>Rows without high-value logs are flagged or removed.</div>
+        <div class="qc-tile"><b>train-only normalization</b>Min-max scaling is fit inside training wells only.</div>
+      </div>
+      <div class="gloss-points" aria-hidden="true">
+        <span style="left:18%;top:26%;"></span>
+        <span style="left:34%;top:42%;"></span>
+        <span style="left:48%;top:32%;"></span>
+        <span style="left:58%;top:55%;"></span>
+        <span style="left:28%;top:62%;"></span>
+        <span class="outlier" style="left:78%;top:20%;"></span>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["GLOSS outlier", "feature combinations", "GR + Vp", "Rt + Vp"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Models, validation, and review</h4>
+      <div class="model-stack">
+        <div class="model-block">Ridge / ElasticNet reference for Sgh</div>
+        <div class="model-block main">
+          Keras/TensorFlow ANN Sgh regressor
+          <div class="ann-layer"><span></span><span></span><span></span><span></span></div>
+          two hidden layers, 40 nodes each
+        </div>
+        <div class="model-block">XGBoost challenger for nonlinear interactions</div>
+      </div>
+      <div class="well-validation">
+        <span>train well</span><span>train well</span><span>sealed test well</span>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["leave-well-out validation", "R2", "MAE", "RMSE"], "model")}
+      </div>
+      <div class="abstain-bin">calibration -> abstention bin -> geologist review</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_trace_factory_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("State", "Hidden state missing from video pauses labeling."),
+            _gate_box_html("Shortcut", "Screen-layout memorization fails replay."),
+            _gate_box_html("Rubric", "Ambiguous prompt/rubric goes to relabeling."),
+            _gate_box_html("Unsafe", "Unsafe action gate blocks delete, upload, overwrite."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram trace-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Demonstration evidence</h4>
+      <div class="trace-input-stack">
+        <div class="qc-tile"><b>prompt/rubric</b>Task goal plus pass/fail label source.</div>
+        <div class="qc-tile"><b>screen recording</b>Frames become observable states.</div>
+        <div class="qc-tile"><b>file tree</b>Allowed project files and paths.</div>
+      </div>
+      <div class="trace-frame">
+        <div class="screen-bar"></div>
+        <span class="ui-token">button</span>
+        <span class="ui-token">menu</span>
+        <span class="ui-token">layer</span>
+        <span class="ui-token">filepath</span>
+        <span class="ui-token">CRS</span>
+        <span class="ui-token">parameter</span>
+        <span class="ui-token">output</span>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Trace encoder and policy</h4>
+      <div class="trace-path">
+        <div class="trace-step">t0 observe state</div>
+        <div class="trace-step">t1 click/tool action</div>
+        <div class="trace-step">t2 inspect output</div>
+        <div class="trace-step">t3 correction reason</div>
+      </div>
+      <div class="encoder-grid" style="margin-top:0.5rem;">
+        <div class="encoder-box">CLIP/OCR state encoder</div>
+        <div class="encoder-box">UI tokens + file-tree metadata</div>
+      </div>
+      <div class="transformer-stack">behavior-cloning transformer predicts action, target, parameter, stop/review</div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Replay validation and stop gates</h4>
+      <div class="replay-panel">
+        <div class="diagram-chip-row">
+          {_diagram_chip_html(["replay simulator", "scientific software task", "held-out project"], "source")}
+        </div>
+      </div>
+      <div class="replay-score">
+        <div class="score-box pass">held-out task score</div>
+        <div class="score-box fail">unsafe action gate</div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["action trace", "rubric label", "pass/fail", "human approval"], "review")}
+      </div>
+      <div class="abstain-bin">failed replay -> human review queue</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_source_to_graph_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Edge", "Hallucinated or unsupported edge is blocked."),
+            _gate_box_html("Entity", "Duplicate entity names merge during ontology cleanup."),
+            _gate_box_html("Leakage", "Graph leakage checked before link ranking."),
+            _gate_box_html("Evidence", "Visually strong edge still needs source support."),
+        ]
+    )
+    entity_nodes = "".join(
+        f"<span class='entity-node'>{escape(label)}</span>"
+        for label in ["mineral", "host rock", "deposit", "process", "location", "age"]
+    )
+    body_html = f"""
+<div class="rich-diagram graph-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Source evidence entering the hub</h4>
+      <div class="graph-source-stack">
+        <div class="source-doc">papers + thesis chunks</div>
+        <div class="source-doc">slides + figure captions</div>
+        <div class="source-doc">CSV nodes and edge tables</div>
+        <div class="source-doc">Gephi / Adobe graphics</div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.48rem;">
+        {_diagram_chip_html(["source-backed edge", "evidence source", "schema validity"], "source")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Entity, ontology, and relation layers</h4>
+      <div class="entity-clusters">{entity_nodes}</div>
+      <div class="ontology-merge">
+        <span>ontology cleanup</span>
+        <span>REE mineral + rare earth mineral -> mineral</span>
+      </div>
+      <div class="edge-visuals">
+        <div class="edge-row">
+          <div class="graph-dot">source</div><div class="edge-line"></div><div class="graph-dot">edge</div>
+        </div>
+        <div class="edge-row">
+          <div class="graph-dot">AI idea</div><div class="edge-line dashed"></div><div class="graph-dot">review</div>
+        </div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["entity extraction", "relation cross-encoder", "source-backed edge", "inferred edge"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Retrieval, graph ML, and audit</h4>
+      <div class="audit-chain">
+        <div class="audit-node">GraphRAG retrieval: question node follows cited graph paths</div>
+        <div class="audit-node">GraphSAGE / R-GCN ranks candidate relationships</div>
+        <div class="audit-node review">human edge audit approves, edits, or rejects</div>
+        <div class="audit-node gate">queryable graph publishes only reviewed evidence states</div>
+      </div>
+      <div class="graphrag-path">question -> graph path -> source chunks -> cited answer</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_earthquake_feature_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Look-ahead", "future windows are locked before feature generation."),
+            _gate_box_html("Events", "duplicate or bad USGS events fail cleanup."),
+            _gate_box_html("Imbalance", "rare anomaly labels need PR-AUC/F1 checks."),
+            _gate_box_html("Claim", "no forecast language without future-window validation."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram earthquake-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>USGS event source</h4>
+      <div class="globe-panel">
+        <div class="globe-orb">
+          <span class="event-dot shallow" style="left:62%;top:22%;"></span>
+          <span class="event-dot mid" style="left:30%;top:46%;"></span>
+          <span class="event-dot deep" style="left:52%;top:67%;"></span>
+          <span class="event-dot shallow" style="left:41%;top:18%;"></span>
+        </div>
+        <div class="qc-stack">
+          <div class="qc-tile"><b>globe/sound encoding</b>latitude, longitude, depth, magnitude, event time.</div>
+          <div class="qc-tile"><b>flattening lens</b>visual marks become region-time feature rows.</div>
+        </div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.48rem;">
+        {_diagram_chip_html(["USGS events", "magnitude bins", "depth bins", "lagged history"], "source")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Region-time feature table</h4>
+      <div class="feature-row-grid">
+        <div><span>region</span><span>window</span><span>count</span><span>lag</span></div>
+        <div><span>A12</span><span>t-2</span><span>03</span><span>past only</span></div>
+        <div><span>A12</span><span>t-1</span><span>07</span><span>past only</span></div>
+        <div><span>A12</span><span>t</span><span>locked</span><span>target</span></div>
+      </div>
+      <div class="chronology-strip">
+        <span>train older windows</span><span class="lock">time boundary</span><span>test newer windows</span>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["lagged feature", "chronological split", "spatial autocorrelation check"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Models and honest output</h4>
+      <div class="model-stack">
+        <div class="model-block">Poisson GLM event-count reference</div>
+        <div class="model-block">negative-binomial model for overdispersed counts</div>
+        <div class="model-block main">LightGBM anomaly ranker after target is defined</div>
+      </div>
+      <div class="abstain-bin">output: anomaly pattern view, not an unsupported earthquake forecast</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_seismic_qa_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Station", "station mismatch blocks pick propagation."),
+            _gate_box_html("Signal", "weak waveform routes to QA, not interpretation."),
+            _gate_box_html("Metadata", "bad channel or distance metadata fails ETL."),
+            _gate_box_html("Review", "velocity table waits for human-reviewed picks."),
+        ]
+    )
+    waveform_svg = """
+<svg class="waveform-svg" viewBox="0 0 320 95" aria-hidden="true" fill="none">
+  <path d="M5 50 C20 48 24 54 34 50 C44 43 52 58 62 50 C75 35 82 65 92 50 C106 25 116 76 128 50 C143 20 154 80 168 50 C184 35 194 61 210 50 C226 42 238 56 250 50 C270 47 288 53 315 50" stroke="currentColor" stroke-width="3"/>
+  <rect x="116" y="10" width="34" height="75" fill="#fef3c7" stroke="#f59e0b"/>
+  <line x1="132" y1="8" x2="132" y2="87" stroke="#dc2626" stroke-width="3"/>
+  <line x1="214" y1="8" x2="214" y2="87" stroke="#2563eb" stroke-width="3"/>
+</svg>
+    """
+    body_html = f"""
+<div class="rich-diagram seismic-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Notebook and waveform evidence</h4>
+      <div class="qc-stack">
+        <div class="qc-tile"><b>catalog search</b>event id, magnitude, expected arrival window.</div>
+        <div class="qc-tile"><b>station metadata</b>station, channel, distance, completeness.</div>
+        <div class="qc-tile"><b>waveform windows</b>event-station-channel training unit.</div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["ObsPy window", "SNR", "channel check", "notebook cell"], "source")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>QA model and pick proposal</h4>
+      <div class="waveform-panel">{waveform_svg}</div>
+      <div class="pick-band"><span>P pick band</span><span>S pick line</span></div>
+      <div class="model-stack" style="margin-top:0.45rem;">
+        <div class="model-block">LightGBM waveform QA classifier</div>
+        <div class="model-block main">PhaseNet / EQTransformer pick proposal</div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Uncertainty and reviewed output</h4>
+      <div class="mini-table">
+        <div><b>target</b><span>usable waveform / P-S pick</span></div>
+        <div><b>split</b><span>held-out event or station</span></div>
+        <div><b>metrics</b><span>pick-time error, precision/recall</span></div>
+      </div>
+      <div class="abstain-bin">uncertainty band -> human-reviewed velocity table</div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["uncertain manual pick", "reviewer mark", "caveat tag"], "review")}
+      </div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_rock_label_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Leakage", "same-sample crops stay together in sample-held-out split."),
+            _gate_box_html("Label", "weak labels and mixed definitions pause fusion."),
+            _gate_box_html("Scale", "missing scale/context routes to ambiguous bucket."),
+            _gate_box_html("Causation", "VIF/correlation gate blocks chemistry overclaim."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram rock-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Evidence and label audit</h4>
+      <div class="diagram-chip-row">
+        {_diagram_chip_html(["thin sections", "classification charts", "spider diagrams", "formation tables"], "source")}
+      </div>
+      <div class="mini-table" style="margin-top:0.5rem;">
+        <div><b>training unit</b><span>sample / crop / mapped unit</span></div>
+        <div><b>label state</b><span>strong, weak, ambiguous</span></div>
+        <div><b>split</b><span>sample-held-out</span></div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Separate model branches</h4>
+      <div class="modality-grid">
+        <div class="modality-card"><b>image branch</b>EfficientNet / ResNet embedding from thin-section or map crop.</div>
+        <div class="modality-card"><b>chemistry branch</b>XGBoost / LightGBM on ratios, spider values, formation variables.</div>
+        <div class="modality-card"><b>text branch</b>caption, source label, and formation context embedding.</div>
+      </div>
+      <div class="fusion-node">late-fusion label ranker only after metadata audit</div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["weak label", "VIF/correlation check", "ambiguous bucket"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Ranked labels and correction loop</h4>
+      <div class="model-stack">
+        <div class="model-block">logistic regression / linear SVM reference</div>
+        <div class="model-block main">late-fusion MLP ranks rock or mineral label</div>
+        <div class="model-block">CLIP retrieval challenger for similar reviewed examples</div>
+      </div>
+      <div class="abstain-bin">expert correction queue feeds revised training examples</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_geophysical_disagreement_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Registration", "shifted layers keep red offset warning."),
+            _gate_box_html("Artifact", "acquisition artifact cannot become geologic signal."),
+            _gate_box_html("Physics", "method physics stays visible by lane."),
+            _gate_box_html("Consensus", "false consensus gate blocks smoothed overclaim."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram valles-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Method-specific evidence lanes</h4>
+      <div class="method-lanes">
+        <div class="method-lane"><span>gravity</span><span class="method-bar gravity"></span><span>density</span></div>
+        <div class="method-lane"><span>EM/TEM</span><span class="method-bar em"></span><span>conductivity</span></div>
+        <div class="method-lane"><span>ERT</span><span class="method-bar ert"></span><span>resistivity</span></div>
+        <div class="method-lane"><span>seismic</span><span class="method-bar seismic"></span><span>velocity</span></div>
+        <div class="method-lane"><span>field notes</span><span class="method-bar notes"></span><span>context</span></div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Shared frame with conflict preserved</h4>
+      <div class="agreement-zone">agreement zone: methods align in the same spatial frame</div>
+      <div class="conflict-zone">conflict zone: striped method disagreement stays visible</div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["misregistration", "uncertainty ribbon", "conflict classifier"], "target")}
+      </div>
+      <div class="model-stack" style="margin-top:0.45rem;">
+        <div class="model-block main">LightGBM conflict ranker</div>
+        <div class="model-block">Gaussian Process uncertainty surfaces</div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Expert disagreement board</h4>
+      <div class="mini-table">
+        <div><b>training unit</b><span>grid cell / zone / line intersection</span></div>
+        <div><b>split</b><span>leave-area-out or leave-line-out</span></div>
+        <div><b>output</b><span>review-priority rank</span></div>
+      </div>
+      <div class="abstain-bin">not final subsurface truth; review conflict zones first</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_fen_fusion_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Geometry", "wrong line intersection blocks feature row."),
+            _gate_box_html("Context", "field-note loss creates missing-context status."),
+            _gate_box_html("Unit", "possible unit cannot become asserted unit."),
+            _gate_box_html("Validation", "leave-line-out failure routes to review."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram fen-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Line geometry and field evidence</h4>
+      <div class="diagram-chip-row">
+        {_diagram_chip_html(["hammer seismic", "ERT", "TEM", "field notes", "line intersections"], "source")}
+      </div>
+      <div class="cross-section" style="margin-top:0.52rem;">
+        <div class="section-layer velocity">hammer seismic velocity lane</div>
+        <div class="section-layer resistivity">ERT resistivity lane</div>
+        <div class="section-layer conductivity">TEM conductivity lane</div>
+        <div class="section-layer possible">possible unit labels + field-note context</div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Agreement and conflict ranking</h4>
+      <div class="feature-row-grid">
+        <div><span>line</span><span>velocity</span><span>resistivity</span><span>conductivity</span></div>
+        <div><span>L01</span><span>high</span><span>low</span><span>high</span></div>
+        <div><span>L02</span><span>mid</span><span>mid</span><span>missing</span></div>
+      </div>
+      <div class="conflict-zone">striped conflict target, not clean fused geology</div>
+      <div class="model-stack" style="margin-top:0.45rem;">
+        <div class="model-block main">LightGBM method-conflict ranker</div>
+        <div class="model-block">GP method-specific uncertainty</div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Validation and review target</h4>
+      <div class="mini-table">
+        <div><b>training unit</b><span>line interval / intersection</span></div>
+        <div><b>split</b><span>leave-line-out validation</span></div>
+        <div><b>output</b><span>review target, not final unit</span></div>
+      </div>
+      <div class="abstain-bin">possible unit -> field review queue</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_regional_transfer_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Spatial", "nearby train/test cells trigger spatial leakage warning."),
+            _gate_box_html("Boundary", "biased split boundary invalidates score."),
+            _gate_box_html("Variables", "hidden variable mismatch checked before transfer claim."),
+            _gate_box_html("Coordinates", "coordinate memorization is blocked or flagged."),
+        ]
+    )
+    residual_points = "".join(
+        f"<span class='{cls}'></span>"
+        for cls in ["ok", "hot", "cold", "ok", "hot", "ok", "cold", "ok"]
+    )
+    body_html = f"""
+<div class="rich-diagram moho-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Training region and features</h4>
+      <div class="region-transfer">
+        <div class="region-card"><b>Australia training</b>Moho target + gravity/topography/crustal features</div>
+        <div class="rich-arrow"></div>
+        <div class="region-card"><b>USA test region</b>sealed transfer geography</div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["gravity anomaly", "topography", "crustal proxy", "region id"], "source")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Model ladder and transfer bridge</h4>
+      <div class="model-stack">
+        <div class="model-block">Ridge / GAM reference model</div>
+        <div class="model-block main">LightGBM / XGBoost Moho regressor</div>
+        <div class="model-block">ANN challenger after transfer design is credible</div>
+      </div>
+      <div class="chronology-strip">
+        <span>train region</span><span class="lock">transfer bridge</span><span>held-out region</span>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["leave-region-out", "Australia-to-USA transfer", "coordinate memorization"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Residual map as the main output</h4>
+      <div class="residual-map">{residual_points}</div>
+      <div class="mini-table" style="margin-top:0.45rem;">
+        <div><b>target</b><span>Moho depth</span></div>
+        <div><b>metrics</b><span>RMSE, MAE, R2, residual bias</span></div>
+        <div><b>output</b><span>failure zones + transfer score</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_ambient_noise_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Signal", "weak correlation is QC, not subsurface change."),
+            _gate_box_html("Season", "seasonal noise gets a calendar flag."),
+            _gate_box_html("Metadata", "station metadata error blocks alert."),
+            _gate_box_html("Instrument", "instrument change pauses anomaly interpretation."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram ambient-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Continuous records to station pairs</h4>
+      <div class="station-network">
+        <span class="station-node" style="left:14%;top:26%;"></span>
+        <span class="station-node" style="left:66%;top:22%;"></span>
+        <span class="station-node" style="left:38%;top:68%;"></span>
+        <span class="station-arc" style="left:22%;top:32%;transform:rotate(-7deg);"></span>
+        <span class="station-arc" style="left:42%;top:55%;transform:rotate(-34deg);border-color:#d97706;"></span>
+      </div>
+      <div class="diagram-chip-row">
+        {_diagram_chip_html(["continuous station records", "windows", "preprocessing", "station-pair CCF"], "source")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Stable stack and anomaly models</h4>
+      <div class="ccf-stack">
+        <div class="ccf-line weak"></div>
+        <div class="ccf-line stable"></div>
+        <div class="ccf-line stable"></div>
+        <div class="ccf-line weak"></div>
+      </div>
+      <div class="agreement-zone">stable stack: repeatable station-pair CCF brightens</div>
+      <div class="model-stack" style="margin-top:0.55rem;">
+        <div class="model-block main">LightGBM CCF-quality classifier</div>
+        <div class="model-block">Isolation Forest anomaly triage</div>
+        <div class="model-block">SeisLM-style embedding challenger</div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["stable CCF", "stack count", "change metric"], "target")}
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Freshness and alert review</h4>
+      <div class="drift-gauge">
+        <div class="gauge-track"><div class="gauge-fill"></div></div>
+        <div class="diagram-chip-row" style="margin-top:0.42rem;">
+          {_diagram_chip_html(["freshness check", "seasonal flag", "human alert review"], "review")}
+        </div>
+      </div>
+      <div class="abstain-bin">reviewed monitoring alert with provenance</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_app_risk_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Future", "shift-before-rolling blocks current row leakage."),
+            _gate_box_html("Refresh", "stale refresh timestamp triggers fallback path."),
+            _gate_box_html("Baseline", "no persistence baseline means challenger cannot claim value."),
+            _gate_box_html("Claim", "claim-language gate blocks investment overclaim."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram app-risk-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Saved data and past-only features</h4>
+      <div class="mini-table">
+        <div><b>source</b><span>saved ticker data</span></div>
+        <div><b>freshness</b><span>refresh time</span></div>
+        <div><b>feature rule</b><span>shift(1) before rolling</span></div>
+      </div>
+      <div class="diagram-chip-row" style="margin-top:0.45rem;">
+        {_diagram_chip_html(["past-only feature window", "ticker universe", "stale-data flag"], "source")}
+      </div>
+    </div>
+    <div class="leakage-wall">future leakage gate</div>
+    <div class="rich-stage">
+      <h4>Walk-forward model ladder</h4>
+      <div class="walk-forward">
+        <div class="walk-row"><span class="train">train past</span><span class="test">test future</span><span class="gate">gate</span></div>
+        <div class="walk-row"><span class="train">train past + 1</span><span class="test">test next</span><span class="gate">gate</span></div>
+      </div>
+      <div class="model-stack" style="margin-top:0.55rem;">
+        <div class="model-block">persistence / moving-average baseline</div>
+        <div class="model-block main">ElasticNet / LightGBM challenger</div>
+      </div>
+      <div class="drift-gauge" style="margin-top:0.45rem;">
+        <div class="gauge-track"><div class="gauge-fill"></div></div>
+        <div class="diagram-chip-row" style="margin-top:0.42rem;">
+          {_diagram_chip_html(["PSI drift", "KS drift", "segment monitoring"], "target")}
+        </div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Dashboard output control</h4>
+      <div class="model-stack">
+        <div class="model-block">fallback model when drift or staleness fails</div>
+        <div class="model-block main">calibrated score only after walk-forward validation</div>
+      </div>
+      <div class="proxy-gate">claim-language gate: demo/research tool, not investment advice</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_sem_interpretation_diagram(manual: dict) -> None:
+    gates = "".join(
+        [
+            _gate_box_html("Texture", "visible texture label cannot become proxy claim."),
+            _gate_box_html("Scale", "missing scale blocks label confidence."),
+            _gate_box_html("Origin", "detrital/authigenic interpretation needs extra evidence."),
+            _gate_box_html("Literature", "proxy claim waits for expert and source support."),
+        ]
+    )
+    body_html = f"""
+<div class="rich-diagram sem-diagram">
+  <div class="rich-stage-grid">
+    <div class="rich-stage">
+      <h4>Observation evidence</h4>
+      <div class="sem-crop"><div class="scale-bar"></div></div>
+      <div class="label-pins">
+        <span>SEM crop</span><span>scale bar</span><span>sample metadata</span>
+      </div>
+      <div class="mini-table" style="margin-top:0.45rem;">
+        <div><b>training unit</b><span>image crop</span></div>
+        <div><b>split</b><span>sample-held-out</span></div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Visible labels and model support</h4>
+      <div class="diagram-chip-row">
+        {_diagram_chip_html(["grain", "pore/fracture", "clay morphology", "mineral texture", "ambiguous crop"], "target")}
+      </div>
+      <div class="model-stack" style="margin-top:0.55rem;">
+        <div class="model-block">linear SVM / logistic texture reference</div>
+        <div class="model-block main">EfficientNet / ResNet patch classifier</div>
+        <div class="model-block">U-Net / Mask R-CNN segmentation if masks exist</div>
+        <div class="model-block">CLIP retrieval of similar expert-labeled examples</div>
+      </div>
+    </div>
+    <div class="rich-arrow"></div>
+    <div class="rich-stage">
+      <h4>Interpretation gate</h4>
+      <div class="mini-table">
+        <div><b>visible label</b><span>observable texture</span></div>
+        <div><b>interpretation label</b><span>detrital/authigenic, proxy</span></div>
+        <div><b>support</b><span>expert correction + literature link</span></div>
+      </div>
+      <div class="proxy-gate">proxy claim gate blocks image-only climate or reservoir claims</div>
+      <div class="abstain-bin">accepted observation or blocked interpretation</div>
+    </div>
+  </div>
+  <div class="gate-strip">{gates}</div>
+</div>
+    """
+    _render_rich_manual_shell(manual, body_html)
+
+
+def render_manual_visual_architecture(topic: dict) -> None:
+    manual = MANUAL_VISUAL_ARCHITECTURES.get(topic["slug"])
+    if manual is None:
+        return
+    if render_priority_manual_visual_architecture(topic["slug"], manual):
+        return
+    source_items = "".join(
+        f"<div class='manual-source-item'>{workflow_icon_svg(item, idx)}"
+        f"<span>{escape(item)}</span></div>"
+        for idx, item in enumerate(manual["source"], start=1)
+    )
+    flow_items = []
+    for idx, item in enumerate(manual["flow"], start=1):
+        gate_class = " gate" if any(
+            token in item.lower()
+            for token in ["validation", "score", "audit", "gate", "test", "review"]
+        ) else ""
+        flow_items.append(
+            f"""
+<div class="manual-flow-node{gate_class}">
+  <div class="manual-node-icon">{workflow_icon_svg(item, idx)}</div>
+  <strong>{escape(item)}</strong>
+  <span>{escape(_manual_flow_caption(item))}</span>
+</div>
+            """
+        )
+    vocab_items = "".join(
+        f"<span class='manual-vocab'>{escape(item)}</span>"
+        for item in manual["vocab"]
+    )
+    gate_items = "".join(
+        f"<div class='manual-gate-item'>{workflow_icon_svg(item, idx)}"
+        f"<span>{escape(item)}</span></div>"
+        for idx, item in enumerate(manual["gates"], start=1)
+    )
+    priority_class = (
+        " priority"
+        if topic["slug"] in {"north_slope", "ai_workflow", "thesis_graph"}
+        else ""
+    )
+    st.markdown(
+        f"""
+<div class="manual-architecture{priority_class}">
+  <div class="manual-head">
+    <div>
+      <div class="manual-kicker">Visual-first manual / {escape(manual["kicker"])}</div>
+      <h3>{escape(manual["name"])}</h3>
+    </div>
+    <div class="manual-output"><strong>Honest output:</strong> {escape(manual["output"])}</div>
+  </div>
+  <div class="manual-board">
+    <div class="manual-panel">
+      <h4>Real source evidence</h4>
+      <div class="manual-source-grid">{source_items}</div>
+    </div>
+    <div class="manual-panel">
+      <h4>Architecture to build</h4>
+      <div class="manual-model">{escape(manual["model"])}</div>
+      <div class="manual-flow">{''.join(flow_items)}</div>
+      <div class="manual-vocab-row">{vocab_items}</div>
+    </div>
+    <div class="manual-panel">
+      <h4>Visible failure gates</h4>
+      <div class="manual-gate-list">{gate_items}</div>
+    </div>
+  </div>
+  <div class="manual-prompt"><strong>Execution instruction</strong>{escape(manual["prompt"])}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _manual_flow_caption(value: str) -> str:
+    lower_value = value.lower()
+    if "qc" in lower_value or "g o" in lower_value:
+        return "clean and block bad evidence"
+    if "validation" in lower_value or "test" in lower_value or "score" in lower_value:
+        return "prove it on held-out data"
+    if "review" in lower_value or "audit" in lower_value:
+        return "expert checkpoint stays visible"
+    if "baseline" in lower_value or "reference" in lower_value:
+        return "simple model before complexity"
+    if "feature" in lower_value or "window" in lower_value:
+        return "turn evidence into variables"
+    if "classifier" in lower_value or "regressor" in lower_value or "ann" in lower_value:
+        return "named model layer"
+    if "gate" in lower_value:
+        return "block unsafe claim"
+    return "visual step in the workflow"
+
+
 def render_ml_pipeline_contract(topic: dict) -> None:
+    render_manual_visual_architecture(topic)
     render_ml_visual_diagram(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
