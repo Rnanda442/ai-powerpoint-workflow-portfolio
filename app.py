@@ -10092,31 +10092,75 @@ def render_ai_workflow_panel(topic: dict, compact: bool = False) -> None:
     )
 
 
-def render_source_backed_asset_panel(topic: dict) -> None:
+def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None:
     assets = SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])
     if not assets:
         return
-    st.subheader("Source images on deck")
+    st.subheader("Source evidence strip")
     st.markdown(
-        "<p class='source-panel-note'>Local screenshots, slide thumbnails, and exported visuals are shown here directly. "
-        "External links stay in evidence leads only for provenance.</p>",
+        "<p class='source-panel-note'>The first source images stay visible before the ML diagram so the topic starts from evidence, not generic AI language.</p>",
         unsafe_allow_html=True,
     )
-    columns = st.columns(min(3, len(assets)))
-    for idx, asset in enumerate(assets):
+
+    def render_asset_card(asset: dict) -> None:
+        with st.container(border=True):
+            st.markdown(f"**{escape(asset['title'])}**")
+            asset_path = project_asset(asset["path"])
+            if asset_path.exists():
+                st.image(
+                    str(asset_path),
+                    caption=f"{asset['source']}: {asset['note']}",
+                    use_container_width=True,
+                )
+            else:
+                st.warning(f"Missing local source image: {asset_path.name}")
+                st.caption(f"{asset['source']}: {asset['note']}")
+
+    shown_assets = assets if limit is None else assets[:limit]
+    extra_assets = [] if limit is None else assets[limit:]
+    columns = st.columns(min(3, len(shown_assets)))
+    for idx, asset in enumerate(shown_assets):
         with columns[idx % len(columns)]:
-            with st.container(border=True):
-                st.markdown(f"**{escape(asset['title'])}**")
-                asset_path = project_asset(asset["path"])
-                if asset_path.exists():
-                    st.image(
-                        str(asset_path),
-                        caption=f"{asset['source']}: {asset['note']}",
-                        use_container_width=True,
-                    )
-                else:
-                    st.warning(f"Missing local source image: {asset_path.name}")
-                    st.caption(f"{asset['source']}: {asset['note']}")
+            render_asset_card(asset)
+    if extra_assets:
+        with st.expander(f"More source images ({len(extra_assets)})"):
+            extra_columns = st.columns(min(3, len(extra_assets)))
+            for idx, asset in enumerate(extra_assets):
+                with extra_columns[idx % len(extra_columns)]:
+                    render_asset_card(asset)
+
+
+def render_cross_sector_transfer_panel(topic: dict) -> None:
+    context = ML_PIPELINE_SOURCE_CONTEXT.get(topic["slug"], {})
+    sectors = context.get("sector_advance", [])
+    keywords = context.get("keywords", [])
+    if not sectors and not keywords:
+        return
+    sector_cards = "".join(
+        f"""
+<div class="topic-update-item">
+  <strong>{escape(item.split(' ', 1)[0].title())}</strong>
+  <span>{escape(item)}</span>
+</div>
+        """
+        for item in sectors[:4]
+    )
+    keyword_chips = "".join(
+        f"<span class='manual-vocab'>{escape(item)}</span>"
+        for item in keywords[:4]
+    )
+    st.markdown(
+        f"""
+<div class="topic-update-panel">
+  <span class="topic-update-kicker">Builder guide transfer test</span>
+  <h3>Use outside the original project</h3>
+  <p>The concrete example stays source-backed, but the reusable pattern should be legible to people outside this one geoscience case.</p>
+  <div class="manual-vocab-row">{keyword_chips}</div>
+  <div class="topic-update-grid">{sector_cards}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def ml_diagram_row(slug: str) -> pd.Series | None:
@@ -11063,6 +11107,36 @@ MODEL_TERM_EXPLAINERS = {
             "plain": "Train on the past, test on the next time window, then move forward and repeat.",
             "use": "This is the finance version of proving the app did not peek into the future.",
             "risk": "Random train/test splits can hide leakage and fake performance.",
+        },
+    ],
+    "sem_petrography": [
+        {
+            "name": "EfficientNet / ResNet patch classifier",
+            "kind": "vision",
+            "plain": "An image classifier that learns visible texture patterns from SEM crops, such as grain shape, pore texture, clay form, or ambiguous patches.",
+            "use": "It proposes visible labels first, before any climate or reservoir interpretation appears.",
+            "risk": "Missing scale bars, duplicated crops, or weak labels can make a texture score look more certain than it is.",
+        },
+        {
+            "name": "U-Net / Mask R-CNN segmentation",
+            "kind": "vision",
+            "plain": "A segmentation model marks pixel regions, grains, pores, fractures, or clay patches when reviewed masks exist.",
+            "use": "This turns SEM images into measurable regions instead of one broad image label.",
+            "risk": "Without expert masks, the model can draw convincing boundaries around artifacts.",
+        },
+        {
+            "name": "CLIP retrieval",
+            "kind": "fusion",
+            "plain": "An image-text model finds similar expert-labeled examples and source captions so the reviewer can compare before accepting a label.",
+            "use": "It supports review by similarity rather than forcing an automatic petrography decision.",
+            "risk": "Visual similarity is not proof of detrital/authigenic origin or paleoclimate meaning.",
+        },
+        {
+            "name": "Proxy claim gate",
+            "kind": "gate",
+            "plain": "A review gate separates observable SEM labels from interpretation labels that need sample context and literature support.",
+            "use": "This is the main safeguard for the SEM topic: image evidence can suggest, but not prove, proxy claims.",
+            "risk": "Climate or reservoir language should be blocked when the image is the only support.",
         },
     ],
 }
@@ -12044,7 +12118,7 @@ def render_manual_visual_architecture(topic: dict) -> None:
 
 def _manual_flow_caption(value: str) -> str:
     lower_value = value.lower()
-    if "qc" in lower_value or "g o" in lower_value:
+    if "qc" in lower_value or "gloss" in lower_value or "outlier" in lower_value:
         return "clean and block bad evidence"
     if "validation" in lower_value or "test" in lower_value or "score" in lower_value:
         return "prove it on held-out data"
@@ -12064,7 +12138,7 @@ def _manual_flow_caption(value: str) -> str:
 def render_ml_pipeline_contract(topic: dict) -> None:
     render_manual_visual_architecture(topic)
     render_model_mechanics_panel(topic)
-    render_ml_visual_diagram(topic)
+    render_cross_sector_transfer_panel(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
         return
@@ -12103,6 +12177,7 @@ def render_ml_pipeline_contract(topic: dict) -> None:
         extra_cells += pipeline_cell("Sector Advance", source_context["sector_advance"])
 
     with st.expander("Detailed ML implementation notes"):
+        render_ml_visual_diagram(topic)
         st.markdown(
             f"""
 <div class="pipeline-contract">
@@ -13399,8 +13474,10 @@ elif section == "Think Tank Topics":
 
     topic_roadmap = roadmap_row(topic["project_key"])
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
-    render_presentation_playbook(topic)
+    render_source_backed_asset_panel(topic)
     render_model_term_explainer(topic)
+    render_ml_pipeline_contract(topic)
+    render_slide_source_updates(topic["slug"])
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
         st.caption(
@@ -13463,22 +13540,16 @@ elif section == "Think Tank Topics":
                     mime="text/markdown",
                 )
         render_north_slope_ml_update()
-        render_source_backed_asset_panel(topic)
-        render_ml_pipeline_contract(topic)
-        render_slide_source_updates(topic["slug"])
     else:
         if topic["slug"] == "thesis_graph":
             render_thesis_graph_model_visuals()
         if not render_project_visual_stage(topic):
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
         render_current_future_board(topic, topic_roadmap)
-        render_source_backed_asset_panel(topic)
-        if topic["slug"] == "ai_workflow":
-            render_ml_model_part_explainer(compact=True)
-        render_ml_pipeline_contract(topic)
         render_topic_update_panel(topic["slug"])
-        render_slide_source_updates(topic["slug"])
-    render_workflow_blueprint(topic)
+    with st.expander("Presentation and workflow notes"):
+        render_presentation_playbook(topic)
+        render_workflow_blueprint(topic)
 
     with st.expander("Switch think tank topic"):
         jump_cols = st.columns(4)
@@ -13486,10 +13557,8 @@ elif section == "Think Tank Topics":
             with jump_cols[idx % 4]:
                 st.link_button(TOPIC_FRAMES.get(room["slug"], {}).get("question", room["title"]), topic_url(room["slug"]))
 
-    with st.expander("How AI helped in this example", expanded=topic["slug"] not in MIDDLE_TOPIC_SLUGS):
+    with st.expander("Supporting AI and build-plan notes", expanded=False):
         render_ai_workflow_panel(topic)
-
-    with st.expander("Processing concept and research plan"):
         render_processing_sketch_plan(topic)
         render_detailed_topic_plan(topic)
 
