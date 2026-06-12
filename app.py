@@ -11387,123 +11387,240 @@ def _model_term_processing_sketch(card: dict, topic_slug: str, index: int) -> st
         ("#be123c", "#0f766e", "#2563eb", "#fff1f2"),
     ]
     primary, secondary, alert, background = palettes[seed % len(palettes)]
-    x_shift = seed % 26
-    y_shift = (seed // 7) % 18
-    dot_a = 34 + (seed % 38)
-    dot_b = 94 + ((seed // 5) % 52)
-    dot_c = 208 + ((seed // 11) % 60)
-    label = re.sub(r"[^A-Za-z0-9]+", " ", name).strip().split(" ")
-    label_text = " ".join(label[:2])[:18] or "model sketch"
-    label_html = escape(label_text)
-    sketch_id = escape(f"{topic_slug}-{index + 1}-{kind}")
+    clean_label = re.sub(r"[^A-Za-z0-9]+", " ", name).strip()
+    label_words = clean_label.split()
+    label_text = " ".join(label_words[:2])[:18] or "model sketch"
+    sketch_slug = re.sub(r"[^A-Za-z0-9_-]+", "-", f"{topic_slug}-{index + 1}-{kind}")
+    marker_id = escape(f"arrow-{sketch_slug}")
+    sketch_id = escape(sketch_slug)
+
+    def short_text(value: str, limit: int = 18) -> str:
+        clean = re.sub(r"\s+", " ", str(value)).strip()
+        if len(clean) <= limit:
+            return clean
+        words = clean.split()
+        kept: list[str] = []
+        current = ""
+        for word in words:
+            trial = f"{current} {word}".strip()
+            if len(trial) > limit:
+                break
+            kept.append(word)
+            current = trial
+        return " ".join(kept) if kept else clean[:limit]
+
+    def text(
+        x: int,
+        y: int,
+        value: str,
+        *,
+        limit: int = 18,
+        size: int = 10,
+        fill: str = "#0f172a",
+        weight: int = 850,
+        anchor: str = "middle",
+    ) -> str:
+        return (
+            f'<text x="{x}" y="{y}" text-anchor="{anchor}" fill="{fill}" '
+            f'font-size="{size}" font-weight="{weight}">{escape(short_text(value, limit))}</text>'
+        )
+
+    def pill(
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        value: str,
+        *,
+        fill: str = "#ffffff",
+        stroke: str = primary,
+        text_fill: str = "#0f172a",
+        limit: int = 16,
+    ) -> str:
+        return (
+            f'<rect x="{x}" y="{y}" width="{width}" height="{height}" rx="{height // 2}" '
+            f'fill="{fill}" stroke="{stroke}" stroke-width="2"/>'
+            f'{text(x + width // 2, y + height // 2 + 4, value, limit=limit, fill=text_fill)}'
+        )
+
+    def arrow(x1: int, y1: int, x2: int, y2: int, *, color: str = secondary, width: int = 3) -> str:
+        return (
+            f'<path d="M{x1} {y1} L{x2} {y2}" fill="none" stroke="{color}" '
+            f'stroke-width="{width}" stroke-linecap="round" marker-end="url(#{marker_id})"/>'
+        )
+
+    def dot(cx: int, cy: int, *, fill: str = primary, radius: int = 6) -> str:
+        return f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="{fill}" stroke="#ffffff" stroke-width="2"/>'
+
+    def common_lane_labels() -> str:
+        return (
+            f'{text(54, 28, "input", fill="#475569", size=9)}'
+            f'{text(180, 28, "model", fill="#475569", size=9)}'
+            f'{text(306, 28, "output", fill="#475569", size=9)}'
+        )
 
     if kind == "waveform_foundation":
         motif = f"""
-    <path d="M28 {70 + y_shift} C48 {30 + y_shift}, 68 {112 - y_shift}, 90 {70 + y_shift} S134 {30 + y_shift}, 158 {70 + y_shift} S206 {114 - y_shift}, 232 {70 + y_shift} S286 {32 + y_shift}, 332 {70 + y_shift}" fill="none" stroke="{primary}" stroke-width="4" stroke-linecap="round"/>
-    <rect x="{130 + x_shift}" y="34" width="24" height="78" rx="6" fill="{alert}" opacity="0.18" stroke="{alert}"/>
-    <line x1="{142 + x_shift}" y1="28" x2="{142 + x_shift}" y2="120" stroke="{alert}" stroke-width="4"/>
+    {common_lane_labels()}
+    <path d="M22 78 C34 54, 46 102, 58 78 S82 54, 94 78 S118 102, 130 78" fill="none" stroke="{primary}" stroke-width="3"/>
+    <path d="M22 106 C34 86, 46 122, 58 106 S82 86, 94 106 S118 122, 130 106" fill="none" stroke="{secondary}" stroke-width="3"/>
+    {arrow(132, 90, 158, 90)}
+    <rect x="158" y="58" width="66" height="64" rx="12" fill="{primary}" opacity="0.95"/>
+    {text(191, 84, "shared", fill="#ffffff", size=10)}
+    {text(191, 100, "encoder", fill="#ffffff", size=10)}
+    {arrow(224, 78, 254, 62)}
+    {arrow(224, 92, 254, 92)}
+    {arrow(224, 106, 254, 122)}
+    {pill(258, 48, 72, 24, "detect", fill="#ffffff", stroke=secondary, limit=10)}
+    {pill(258, 80, 72, 24, "pick", fill="#ffffff", stroke=secondary, limit=10)}
+    {pill(258, 112, 72, 24, "class", fill="#ffffff", stroke=secondary, limit=10)}
         """
     elif kind == "transformer":
         motif = f"""
-    <g>
-      <rect x="28" y="{36 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-      <rect x="96" y="{28 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-      <rect x="164" y="{42 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-      <rect x="232" y="{34 + y_shift}" width="78" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-      <path d="M82 {48 + y_shift} H96 M150 {40 + y_shift} H164 M218 {54 + y_shift} H232" stroke="{secondary}" stroke-width="4"/>
-      <rect x="82" y="104" width="196" height="28" rx="12" fill="{primary}" opacity="0.92"/>
-    </g>
+    {common_lane_labels()}
+    {pill(24, 55, 58, 24, "token 1", fill="#ffffff", stroke=primary, limit=8)}
+    {pill(24, 84, 58, 24, "token 2", fill="#ffffff", stroke=primary, limit=8)}
+    {pill(24, 113, 58, 24, "token 3", fill="#ffffff", stroke=primary, limit=8)}
+    {arrow(84, 67, 148, 76)}
+    {arrow(84, 96, 148, 96)}
+    {arrow(84, 125, 148, 116)}
+    <rect x="148" y="58" width="82" height="68" rx="14" fill="{primary}" opacity="0.96"/>
+    <path d="M162 84 C180 64, 198 64, 216 84 M162 101 C180 121, 198 121, 216 101" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.72"/>
+    {text(189, 95, "attention", fill="#ffffff", size=10, limit=12)}
+    {arrow(230, 92, 268, 92)}
+    {pill(272, 76, 66, 32, "next step", fill="#ffffff", stroke=secondary, limit=10)}
         """
     elif kind == "graph":
         motif = f"""
-    <path d="M{dot_a} 52 L178 82 L{dot_c} 46 M178 82 L112 124 M178 82 L292 120" stroke="{secondary}" stroke-width="4" opacity="0.75"/>
-    <circle cx="{dot_a}" cy="52" r="17" fill="#ffffff" stroke="{primary}" stroke-width="4"/>
-    <circle cx="178" cy="82" r="24" fill="{primary}" opacity="0.95"/>
-    <circle cx="{dot_c}" cy="46" r="17" fill="#ffffff" stroke="{alert}" stroke-width="4"/>
-    <circle cx="112" cy="124" r="17" fill="#ffffff" stroke="{secondary}" stroke-width="4"/>
-    <circle cx="292" cy="120" r="17" fill="#ffffff" stroke="{primary}" stroke-width="4"/>
+    {common_lane_labels()}
+    {dot(46, 62, fill=primary)}{dot(70, 84, fill=secondary)}{dot(45, 110, fill=alert)}{dot(84, 116, fill=primary)}
+    {arrow(92, 86, 132, 86)}
+    <path d="M152 68 L192 56 L218 92 L174 116 L142 94 Z" fill="none" stroke="{secondary}" stroke-width="3"/>
+    {dot(152, 68, fill=primary, radius=8)}{dot(192, 56, fill=alert, radius=8)}{dot(218, 92, fill=secondary, radius=8)}{dot(174, 116, fill=primary, radius=8)}{dot(142, 94, fill=secondary, radius=8)}
+    {text(180, 138, "nodes + edges", fill="#334155", size=9, limit=14)}
+    {arrow(226, 92, 268, 92)}
+    {pill(272, 76, 66, 32, "answer", fill="#ffffff", stroke=alert, limit=10)}
         """
     elif kind == "tree":
         motif = f"""
-    <rect x="{126 + x_shift // 2}" y="24" width="96" height="30" rx="8" fill="{primary}"/>
-    <path d="M{174 + x_shift // 2} 54 L106 88 M{174 + x_shift // 2} 54 L256 88" stroke="{secondary}" stroke-width="4"/>
-    <rect x="62" y="88" width="88" height="26" rx="8" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
-    <rect x="216" y="88" width="88" height="26" rx="8" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
-    <circle cx="88" cy="132" r="8" fill="{primary}"/><circle cx="132" cy="132" r="8" fill="{secondary}"/><circle cx="242" cy="132" r="8" fill="{alert}"/><circle cx="286" cy="132" r="8" fill="{primary}"/>
+    {common_lane_labels()}
+    {dot(42, 64, fill=primary)}{dot(66, 64, fill=secondary)}{dot(90, 64, fill=alert)}
+    {dot(42, 92, fill=secondary)}{dot(66, 92, fill=primary)}{dot(90, 92, fill=secondary)}
+    {dot(42, 120, fill=alert)}{dot(66, 120, fill=primary)}{dot(90, 120, fill=secondary)}
+    {arrow(104, 92, 146, 72)}
+    {pill(146, 58, 70, 28, "split?", fill="#ffffff", stroke=primary, limit=8)}
+    <path d="M181 86 L132 118 M181 86 L230 118" fill="none" stroke="{secondary}" stroke-width="3"/>
+    {pill(92, 118, 78, 24, "leaf A", fill="#ffffff", stroke=secondary, limit=8)}
+    {pill(214, 118, 78, 24, "leaf B", fill="#ffffff", stroke=alert, limit=8)}
+    {arrow(292, 130, 324, 116)}
+    {text(326, 92, "rank", fill="#0f172a", size=10, limit=8)}
         """
     elif kind == "vision":
         motif = f"""
-    <rect x="34" y="34" width="92" height="92" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <rect x="48" y="48" width="24" height="24" fill="{primary}" opacity="0.22"/><rect x="78" y="48" width="24" height="24" fill="{secondary}" opacity="0.28"/>
-    <rect x="48" y="78" width="24" height="24" fill="{alert}" opacity="0.22"/><rect x="78" y="78" width="24" height="24" fill="{primary}" opacity="0.35"/>
-    <path d="M142 80 H198" stroke="{secondary}" stroke-width="5" stroke-linecap="round"/>
-    <rect x="212" y="50" width="92" height="60" rx="14" fill="{primary}" opacity="0.94"/>
+    {common_lane_labels()}
+    <rect x="28" y="55" width="76" height="76" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="2"/>
+    <rect x="42" y="68" width="20" height="20" fill="{primary}" opacity="0.24"/><rect x="66" y="68" width="20" height="20" fill="{secondary}" opacity="0.28"/>
+    <rect x="42" y="92" width="20" height="20" fill="{alert}" opacity="0.24"/><rect x="66" y="92" width="20" height="20" fill="{primary}" opacity="0.36"/>
+    {arrow(106, 92, 140, 92)}
+    <rect x="146" y="60" width="22" height="64" rx="7" fill="{primary}" opacity="0.86"/>
+    <rect x="176" y="54" width="22" height="76" rx="7" fill="{secondary}" opacity="0.86"/>
+    <rect x="206" y="68" width="22" height="48" rx="7" fill="{alert}" opacity="0.82"/>
+    {text(187, 142, "features", fill="#334155", size=9, limit=10)}
+    {arrow(230, 92, 268, 92)}
+    {pill(272, 76, 66, 32, "label", fill="#ffffff", stroke=secondary, limit=10)}
         """
     elif kind == "fusion":
         motif = f"""
-    <rect x="28" y="30" width="84" height="24" rx="12" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <rect x="28" y="68" width="84" height="24" rx="12" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
-    <rect x="28" y="106" width="84" height="24" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
-    <path d="M112 42 C158 42, 158 80, 206 80 M112 80 H206 M112 118 C158 118, 158 80, 206 80" fill="none" stroke="{secondary}" stroke-width="4"/>
-    <circle cx="226" cy="80" r="25" fill="{primary}"/><rect x="270" y="62" width="58" height="36" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+    {common_lane_labels()}
+    {pill(24, 54, 72, 22, "image", fill="#ffffff", stroke=primary, limit=8)}
+    {pill(24, 84, 72, 22, "chem", fill="#ffffff", stroke=secondary, limit=8)}
+    {pill(24, 114, 72, 22, "text", fill="#ffffff", stroke=alert, limit=8)}
+    {arrow(98, 65, 160, 88)}
+    {arrow(98, 95, 160, 95)}
+    {arrow(98, 125, 160, 102)}
+    <circle cx="184" cy="95" r="30" fill="{primary}" opacity="0.95"/>
+    {text(184, 99, "merge", fill="#ffffff", size=11, limit=8)}
+    {arrow(214, 95, 270, 95)}
+    {pill(274, 78, 64, 34, "one rank", fill="#ffffff", stroke=secondary, limit=10)}
         """
     elif kind == "uncertainty":
         motif = f"""
-    <path d="M28 110 C68 {74 - y_shift}, 92 {92 + y_shift}, 132 64 S206 {44 + y_shift}, 244 82 S300 116, 334 68" fill="none" stroke="{primary}" stroke-width="4"/>
-    <path d="M28 126 C68 {90 - y_shift}, 92 {108 + y_shift}, 132 80 S206 {60 + y_shift}, 244 98 S300 132, 334 84" fill="none" stroke="{alert}" stroke-width="2" opacity="0.7"/>
-    <circle cx="{dot_b}" cy="94" r="7" fill="{secondary}"/><circle cx="{dot_c}" cy="78" r="7" fill="{alert}"/>
-    <rect x="224" y="28" width="88" height="24" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+    {common_lane_labels()}
+    {dot(42, 116, fill=primary)}{dot(64, 92, fill=secondary)}{dot(86, 104, fill=alert)}{dot(108, 78, fill=primary)}
+    {arrow(116, 95, 150, 95)}
+    <path d="M142 102 C174 60, 206 60, 238 102 S292 116, 322 72" fill="none" stroke="{primary}" stroke-width="4"/>
+    <path d="M142 122 C174 82, 206 82, 238 122 S292 136, 322 92" fill="none" stroke="{alert}" stroke-width="2" opacity="0.65"/>
+    <path d="M142 82 C174 40, 206 40, 238 82 S292 96, 322 52" fill="none" stroke="{alert}" stroke-width="2" opacity="0.65"/>
+    <rect x="250" y="42" width="74" height="24" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="2"/>
+    {text(287, 58, "error band", fill="#9a3412", size=9, limit=12)}
         """
     elif kind == "timeline":
-        split_x = 188 + (seed % 44)
+        split_x = 222
         motif = f"""
-    <rect x="26" y="62" width="80" height="36" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <rect x="118" y="62" width="80" height="36" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <line x1="{split_x}" y1="34" x2="{split_x}" y2="126" stroke="{alert}" stroke-width="5"/>
-    <rect x="236" y="62" width="88" height="36" rx="8" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
-    <path d="M106 80 H118 M198 80 H236" stroke="{secondary}" stroke-width="4"/>
+    {common_lane_labels()}
+    {pill(22, 72, 54, 28, "past 1", fill="#ffffff", stroke=primary, limit=8)}
+    {pill(88, 72, 54, 28, "past 2", fill="#ffffff", stroke=primary, limit=8)}
+    {pill(154, 72, 54, 28, "past 3", fill="#ffffff", stroke=primary, limit=8)}
+    {arrow(76, 86, 88, 86)}{arrow(142, 86, 154, 86)}
+    <line x1="{split_x}" y1="48" x2="{split_x}" y2="128" stroke="{alert}" stroke-width="5"/>
+    {text(split_x, 42, "no peek", fill="#9a3412", size=9, limit=8)}
+    {arrow(232, 86, 266, 86)}
+    {pill(270, 70, 66, 32, "future test", fill="#ffffff", stroke=secondary, limit=12)}
         """
     elif kind == "ann":
         motif = f"""
-    <g stroke="{primary}" stroke-width="3" fill="#ffffff">
-      <circle cx="70" cy="46" r="12"/><circle cx="70" cy="82" r="12"/><circle cx="70" cy="118" r="12"/>
-      <circle cx="178" cy="38" r="12"/><circle cx="178" cy="68" r="12"/><circle cx="178" cy="98" r="12"/><circle cx="178" cy="128" r="12"/>
-      <circle cx="292" cy="82" r="16"/>
+    {common_lane_labels()}
+    <g stroke="{secondary}" stroke-width="1.7" opacity="0.76">
+      <path d="M78 58 L174 48 M78 58 L174 78 M78 58 L174 108 M78 92 L174 48 M78 92 L174 78 M78 92 L174 108 M78 126 L174 48 M78 126 L174 78 M78 126 L174 108"/>
+      <path d="M190 48 L282 92 M190 78 L282 92 M190 108 L282 92"/>
     </g>
-    <path d="M82 46 L166 38 M82 82 L166 68 M82 118 L166 98 M190 38 L276 82 M190 68 L276 82 M190 98 L276 82 M190 128 L276 82" stroke="{secondary}" stroke-width="2" opacity="0.8"/>
+    {dot(66, 58, fill=primary, radius=10)}{dot(66, 92, fill=primary, radius=10)}{dot(66, 126, fill=primary, radius=10)}
+    {dot(184, 48, fill=secondary, radius=10)}{dot(184, 78, fill=secondary, radius=10)}{dot(184, 108, fill=secondary, radius=10)}
+    {dot(296, 92, fill=alert, radius=13)}
+    {text(66, 144, "inputs", fill="#334155", size=9, limit=8)}
+    {text(184, 144, "hidden layer", fill="#334155", size=9, limit=12)}
+    {text(296, 144, "estimate", fill="#334155", size=9, limit=10)}
         """
     elif kind == "spatial":
         motif = f"""
-    <rect x="46" y="28" width="266" height="106" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <path d="M112 28 V134 M178 28 V134 M244 28 V134 M46 63 H312 M46 98 H312" stroke="#cbd5e1" stroke-width="2"/>
-    <rect x="{46 + x_shift}" y="28" width="92" height="70" fill="{primary}" opacity="0.2"/>
-    <rect x="190" y="{72 + y_shift}" width="94" height="38" fill="{secondary}" opacity="0.28"/>
-    <circle cx="{dot_c}" cy="{58 + y_shift}" r="9" fill="{alert}"/>
+    {common_lane_labels()}
+    <rect x="30" y="52" width="152" height="88" rx="9" fill="#ffffff" stroke="{primary}" stroke-width="2"/>
+    <path d="M68 52 V140 M106 52 V140 M144 52 V140 M30 81 H182 M30 111 H182" stroke="#cbd5e1" stroke-width="1.6"/>
+    <rect x="30" y="52" width="76" height="59" fill="{primary}" opacity="0.18"/>
+    <rect x="106" y="111" width="76" height="29" fill="{alert}" opacity="0.22"/>
+    {text(68, 87, "train area", fill="#1e3a8a", size=9, limit=10)}
+    {text(144, 130, "test area", fill="#9a3412", size=9, limit=10)}
+    {arrow(184, 96, 248, 96)}
+    {pill(252, 78, 82, 36, "transfer?", fill="#ffffff", stroke=secondary, limit=10)}
         """
     else:
         motif = f"""
-    <rect x="30" y="54" width="94" height="44" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
-    <rect x="146" y="28" width="30" height="104" rx="8" fill="{alert}" opacity="0.22" stroke="{alert}" stroke-width="4"/>
-    <rect x="214" y="54" width="104" height="44" rx="10" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
-    <path d="M124 76 H146 M176 76 H214" stroke="{secondary}" stroke-width="4"/>
+    {common_lane_labels()}
+    {pill(24, 78, 86, 32, "candidate", fill="#ffffff", stroke=primary, limit=10)}
+    {arrow(112, 94, 148, 94)}
+    <rect x="154" y="54" width="36" height="80" rx="10" fill="#fff7ed" stroke="{alert}" stroke-width="3"/>
+    {text(172, 85, "check", fill="#9a3412", size=9, limit=6)}
+    {text(172, 101, "gate", fill="#9a3412", size=9, limit=6)}
+    {arrow(190, 94, 240, 94)}
+    {pill(244, 78, 92, 32, "reviewed out", fill="#ffffff", stroke=secondary, limit=12)}
         """
 
-    return f"""
-<div class="model-term-visual" data-sketch-id="{sketch_id}">
-  <svg viewBox="0 0 360 160" role="img" aria-label="{escape(name)} Processing-style model term sketch">
-    <rect x="10" y="10" width="340" height="140" rx="14" fill="{background}" stroke="#cbd5e1"/>
-    <g stroke="#dbe3ee" stroke-width="1" opacity="0.72">
-      <path d="M40 20 V142 M90 20 V142 M140 20 V142 M190 20 V142 M240 20 V142 M290 20 V142"/>
-      <path d="M20 42 H340 M20 82 H340 M20 122 H340"/>
-    </g>
-    {motif}
-    <circle cx="{dot_a}" cy="{22 + y_shift}" r="5" fill="{alert}"/>
-    <circle cx="{dot_b}" cy="142" r="5" fill="{secondary}"/>
-    <text x="22" y="148" fill="#334155" font-size="10" font-weight="800">frame {index + 1}</text>
-    <text x="338" y="148" text-anchor="end" fill="#0f172a" font-size="11" font-weight="900">{label_html}</text>
-  </svg>
-</div>
-    """
+    motif = "".join(line.strip() for line in motif.splitlines() if line.strip())
+    svg = (
+        f'<svg viewBox="0 0 360 160" role="img" '
+        f'aria-label="{escape(name)} plain-English Processing-style model definition sketch">'
+        f'<defs><marker id="{marker_id}" markerWidth="8" markerHeight="8" refX="7" refY="4" '
+        f'orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 Z" '
+        f'fill="{secondary}"/></marker></defs>'
+        f'<rect x="10" y="10" width="340" height="140" rx="14" fill="{background}" stroke="#cbd5e1"/>'
+        f'<g stroke="#dbe3ee" stroke-width="1" opacity="0.72">'
+        f'<path d="M120 22 V142 M240 22 V142"/><path d="M20 44 H340 M20 142 H340"/></g>'
+        f'{motif}'
+        f'<text x="22" y="148" fill="#334155" font-size="9" font-weight="800">sketch {index + 1}</text>'
+        f'<text x="338" y="148" text-anchor="end" fill="#0f172a" font-size="10" font-weight="900">'
+        f'{escape(label_text)}</text></svg>'
+    )
+    return f'<div class="model-term-visual" data-sketch-id="{sketch_id}">{svg}</div>'
 
 
 MODEL_TERM_EXPLAINERS = {
