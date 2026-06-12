@@ -270,7 +270,7 @@ TOPIC_ROOMS = [
         "title": "SAGE / Valles Caldera Geophysics",
         "tagline": "Field geophysics, gravity maps, crustal structure visuals, and SAGE presentation evidence.",
         "project_key": "valles_caldera",
-        "hero": "assets/project_visuals/valles_bouguer.png",
+        "hero": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
         "theme": "Field acquisition + geophysical maps + subsurface interpretation + presentation.",
         "bottleneck": "Field geophysics produces multiple imperfect views of the subsurface, and teams must compare gravity, EM/TEM/ERT, seismic, maps, and geology without losing uncertainty.",
         "why_not_done": "The bottleneck is not only computation; it is interpretation across instruments, terrain constraints, noisy data, and project-specific geologic context.",
@@ -285,7 +285,7 @@ TOPIC_ROOMS = [
         "title": "AI For Near-Surface Geophysics",
         "tagline": "A Valles fen investigation topic built from the Near-Surface Dwellers deck: hammer seismic, transient EM, ERT, geologic units, and line intersections.",
         "project_key": "near_surface_geophysics",
-        "hero": "assets/topic_visuals/near_surface_ai.svg",
+        "hero": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
         "theme": "Hammer seismic + ERT/TEM + geologic units + field interpretation.",
         "bottleneck": "Near-surface field surveys produce overlapping but imperfect views of shallow geology, and the hard part is aligning lines, units, method limits, and field context.",
         "why_not_done": "The measurements exist, but turning them into one defensible interpretation is slow because line intersections, method sensitivity, uncertainty, and geologic labels have to be reconciled.",
@@ -493,8 +493,8 @@ TOPIC_VISUALS = {
     "seismic": "assets/topic_visuals/seismic_processing.svg",
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
-    "valles": "assets/topic_visuals/field_geophysics.svg",
-    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
@@ -508,8 +508,8 @@ CARD_VISUALS = {
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
     "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
-    "valles": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_05.jpg",
-    "near_surface": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
@@ -2617,7 +2617,7 @@ EMAIL_TOPIC_ROOM_OVERRIDES = {
     "valles": {
         "title": "AI For Field Geophysics Method Comparison",
         "tagline": "Near-surface Valles evidence replaces the unrelated person image with graphs, lines, methods, and uncertainty.",
-        "hero": "assets/project_visuals/valles_bouguer.png",
+        "hero": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
         "theme": "Hammer seismic + TEM/ERT + gravity context + field uncertainty.",
         "bottleneck": "Field teams need to compare imperfect surveys without pretending one method gives the final answer.",
         "why_not_done": "Each method sees different physics at different resolution, and field errors, line geometry, and possible units complicate the comparison.",
@@ -2732,7 +2732,8 @@ EMAIL_VISUAL_OVERRIDES = {
     "seismic": "assets/topic_visuals/cloud_data_processing.svg",
     "north_slope": "assets/topic_visuals/web_scraping_data_lake.svg",
     "rock_classification": "assets/topic_visuals/satellite_rock_classification.svg",
-    "valles": "assets/topic_visuals/field_geophysics.svg",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
     "moho_ml": "assets/topic_visuals/north_slope_ml_architecture.svg",
     "stock_workflow": "assets/project_visuals/stock_saved_data_chart.svg",
 }
@@ -2744,10 +2745,40 @@ EMAIL_CARD_VISUAL_OVERRIDES = {
     "seismic": "assets/topic_visuals/cloud_data_processing.svg",
     "north_slope": "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png",
     "rock_classification": "assets/topic_visuals/satellite_rock_classification.svg",
-    "valles": "assets/project_visuals/valles_bouguer.png",
-    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
     "moho_ml": "assets/topic_visuals/north_slope_ml_architecture.svg",
+    "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+}
+
+SOURCE_DIVE_VISUAL_OVERRIDES = {
+    "ai_workflow": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-17 233055.png",
+    "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_map_spider_diagram.png",
+    "processing_earthquake": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
+    "seismic": "assets/project_visuals/pondicherry_near_offset_reannotated.png",
+    "north_slope": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+    "rock_classification": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+    "moho_ml": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+    "ambient_noise": "assets/drive_slide_thumbnails/noisepy_monitoring_card.jpg",
+    "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+    "sem_petrography": "assets/project_visuals/linkedin_powerpoint_slides/rock_thin_section_slide_01.jpg",
+}
+
+SOURCE_DIVE_HERO_OVERRIDES = {
+    "ai_workflow": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-17 233055.png",
+    "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_map_spider_diagram.png",
+    "processing_earthquake": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
+    "seismic": "assets/project_visuals/pondicherry_near_offset_reannotated.png",
+    "north_slope": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+    "rock_classification": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
+    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
+    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+    "moho_ml": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+    "ambient_noise": "assets/drive_slide_thumbnails/noisepy_monitoring_slide.png",
     "stock_workflow": "assets/project_visuals/stock_all_tickers_chart.svg",
+    "sem_petrography": "assets/project_visuals/linkedin_powerpoint_slides/rock_thin_section_slide_01.jpg",
 }
 
 EMAIL_WORKFLOW_BLUEPRINT_OVERRIDES = {
@@ -2920,8 +2951,8 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
         ("EarthScope slide export", "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_04.jpg"),
     ],
     "north_slope": [
-        ("Web scraping visual", "assets/topic_visuals/web_scraping_data_lake.svg"),
-        ("North Slope Plotly map", "assets/project_visuals/north_slope_3d_streamlit_plotly_map.png"),
+        ("Latest North Slope ML decision map", "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png"),
+        ("Latest North Slope parameter grid", "assets/drive_slide_thumbnails/north_slope_parameter_grid_slide.png"),
         ("Public data layer notes", "assets/drive_sources/north_slope_source_library/unclassified_local/source_library/06_maps_and_public_data_notes/North Slope Data Layer Map.pdf"),
     ],
     "rock_classification": [
@@ -2929,8 +2960,9 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
         ("Rock raster classification map", "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png"),
     ],
     "valles": [
-        ("Valles Bouguer map", "assets/project_visuals/valles_bouguer.png"),
-        ("SAGE / Valles slide export", "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_04.jpg"),
+        ("SAGE field acquisition map", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png"),
+        ("SeisBench ML workflow slide", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_058_1_slide_58.png"),
+        ("SAGE TEM N/S profile", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png"),
     ],
     "moho_ml": [
         ("North Slope ML architecture visual", "assets/topic_visuals/north_slope_ml_architecture.svg"),
@@ -3467,6 +3499,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
     ],
     "north_slope": [
         {
+            "title": "ML decision map slide",
+            "path": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
+            "source": "FINAL 9-slide North Slope deck, slide 7",
+            "note": "Lead source image for the leakage-safe hydrate architecture: intake, QC, feature store, split policy, model heads, leakage barrier, and geologic review.",
+        },
+        {
             "title": "Latest parameter signal grid",
             "path": "assets/drive_slide_thumbnails/north_slope_parameter_grid_slide.png",
             "source": "FINAL 9-slide North Slope deck, slide 4",
@@ -3477,12 +3515,6 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
             "source": "North Slope public-source visual export",
             "note": "Local image for the public data and provenance workbench story.",
-        },
-        {
-            "title": "ML decision map slide",
-            "path": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
-            "source": "FINAL 9-slide North Slope deck, slide 7",
-            "note": "Actual deck screenshot for the leakage-safe architecture and review gates.",
         },
         {
             "title": "Model panel export",
@@ -3531,42 +3563,48 @@ SOURCE_BACKED_TOPIC_ASSETS = {
     ],
     "valles": [
         {
-            "title": "Valles Bouguer map",
-            "path": "assets/project_visuals/valles_bouguer.png",
-            "source": "SAGE / Valles project export",
-            "note": "Replaces generic imagery with a real field-geophysics map.",
+            "title": "SAGE field acquisition map",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 50",
+            "note": "PowerPoint-derived map showing the Valles field line geometry and station layout that anchor the method-comparison story.",
         },
         {
-            "title": "SAGE Valles slide",
-            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_04.jpg",
-            "source": "SAGE / Valles slide export",
-            "note": "Supports method comparison and field context.",
+            "title": "SeisBench ML workflow",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_058_1_slide_58.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 58",
+            "note": "Keeps the AI connection grounded in the deck's actual earthquake-detection and model-comparison material.",
         },
         {
-            "title": "Valles free-air map",
-            "path": "assets/project_visuals/valles_freeair.png",
-            "source": "SAGE / Valles project export",
-            "note": "A second real map for comparing imperfect geophysical products.",
+            "title": "TEM north/south profile",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 74",
+            "note": "Shows a real resistivity profile from the SAGE deck instead of a generic or low-value placeholder.",
+        },
+        {
+            "title": "TEM/MT site map",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_079_1_location_of_tem_2017_and_mt_2019_sites_in_valle_.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 79",
+            "note": "Adds source-deck location context for the TEM and MT interpretation figures.",
         },
     ],
     "near_surface": [
         {
-            "title": "Near-surface field screenshot",
-            "path": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png",
-            "source": "Gmail screenshot package",
-            "note": "Local field-method evidence for the Near-Surface Dwellers topic.",
+            "title": "TEM north/south profile",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 74",
+            "note": "Lead near-surface visual now comes from the SAGE PowerPoint source and shows a real resistivity profile.",
         },
         {
-            "title": "SAGE Valles method slide",
-            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
-            "source": "SAGE / Valles slide export",
-            "note": "Use to show lines, methods, and uncertainty instead of a generic profile image.",
+            "title": "TEM east/west profile",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_075_1_tem_e_w_profile.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 75",
+            "note": "Provides the companion profile for line-aware comparison across the Valles field area.",
         },
         {
-            "title": "Near-surface method board",
-            "path": "assets/topic_visuals/near_surface_ai.svg",
-            "source": "Portfolio topic visual",
-            "note": "Shows hammer seismic, ERT, TEM, unit candidates, and conflict zones.",
+            "title": "MT station depth curves",
+            "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
+            "source": "VallesCaldera_SAGE22.pptx, slide 95",
+            "note": "Adds a second method family so the topic is about comparing real geophysical evidence, not just one diagram.",
         },
     ],
     "moho_ml": [
@@ -3815,6 +3853,12 @@ def apply_email_instruction_updates() -> None:
     TOPIC_AI_LEVERS.update(EMAIL_AI_LEVER_OVERRIDES)
     TOPIC_VISUALS.update(EMAIL_VISUAL_OVERRIDES)
     CARD_VISUALS.update(EMAIL_CARD_VISUAL_OVERRIDES)
+    TOPIC_VISUALS.update(SOURCE_DIVE_VISUAL_OVERRIDES)
+    CARD_VISUALS.update(SOURCE_DIVE_VISUAL_OVERRIDES)
+    for topic in TOPIC_ROOMS:
+        source_dive_hero = SOURCE_DIVE_HERO_OVERRIDES.get(topic["slug"])
+        if source_dive_hero:
+            topic["hero"] = source_dive_hero
     WORKFLOW_BLUEPRINTS.update(EMAIL_WORKFLOW_BLUEPRINT_OVERRIDES)
     DISCUSSION_PROMPTS.update(EMAIL_DISCUSSION_PROMPT_OVERRIDES)
     EVIDENCE_LEADS.update(EMAIL_EVIDENCE_LEAD_OVERRIDES)
