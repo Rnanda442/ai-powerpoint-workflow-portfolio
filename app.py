@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-12 / per-topic-model-explainers"
+DEPLOY_BUILD_ID = "2026-06-12 / unique-topic-mechanics-visuals"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -10379,6 +10379,213 @@ def _model_mechanic_visual(mode: str) -> str:
     """
 
 
+def _topic_model_mechanic_visual(slug: str, fallback_mode: str) -> str:
+    visuals = {
+        "ai_workflow": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">screen trace to reviewed action</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="UI state, OCR, action trace, and review gate">
+    <rect x="14" y="18" width="82" height="58" rx="9" fill="#e8f3f1" stroke="#0f766e" stroke-width="3"/>
+    <rect x="26" y="30" width="58" height="8" rx="4" fill="#0f766e" opacity="0.35"/>
+    <rect x="26" y="46" width="42" height="8" rx="4" fill="#0f766e" opacity="0.35"/>
+    <text x="55" y="96" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">screen</text>
+    <path d="M98 48h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="136" y="22" width="62" height="50" rx="9" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="167" y="51" text-anchor="middle" fill="#1e3a8a" font-size="12" font-weight="900">OCR</text>
+    <path d="M202 48h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="240" y="18" width="72" height="26" rx="13" fill="#fef3c7" stroke="#d97706"/>
+    <rect x="240" y="52" width="72" height="26" rx="13" fill="#fef3c7" stroke="#d97706"/>
+    <text x="276" y="36" text-anchor="middle" fill="#92400e" font-size="11" font-weight="900">click</text>
+    <text x="276" y="70" text-anchor="middle" fill="#92400e" font-size="11" font-weight="900">review</text>
+  </svg>
+  <div class="mechanic-flow-note">this topic gets a workflow visual: screen state becomes OCR/UI tokens, then action labels are checked by a reviewer.</div>
+</div>
+        """,
+        "thesis_graph": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">paper sentence to graph edge</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Scientific text to entities to graph edge">
+    <rect x="14" y="16" width="92" height="66" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="60" y="36" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">paper text</text>
+    <text x="60" y="58" text-anchor="middle" fill="#0f766e" font-size="10" font-weight="900">mineral + host</text>
+    <path d="M110 50h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="148" y="18" width="70" height="60" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="183" y="44" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">SciBERT</text>
+    <text x="183" y="61" text-anchor="middle" fill="#1e3a8a" font-size="10" font-weight="900">tags</text>
+    <path d="M222 50h26" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="276" cy="36" r="16" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/>
+    <circle cx="316" cy="66" r="16" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+    <path d="M290 46l12 9" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    <text x="296" y="102" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">source-backed edge</text>
+  </svg>
+  <div class="mechanic-flow-note">the repeated graph sketch is replaced by the actual topic logic: text tags become reviewed mineral/deposit edges.</div>
+</div>
+        """,
+        "processing_earthquake": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">globe points to time-window rows</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Earthquake globe points converted into time window features">
+    <circle cx="72" cy="50" r="38" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <path d="M40 50h64M72 12c-18 20-18 56 0 76M72 12c18 20 18 56 0 76" fill="none" stroke="#93c5fd" stroke-width="2"/>
+    <circle cx="58" cy="42" r="4" fill="#dc2626"/><circle cx="82" cy="62" r="5" fill="#d97706"/><circle cx="90" cy="35" r="3" fill="#0f766e"/>
+    <path d="M118 50h36" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#ccfbf1" stroke="#0f766e">
+      <rect x="162" y="30" width="24" height="46" rx="5"/><rect x="194" y="18" width="24" height="58" rx="5"/><rect x="226" y="42" width="24" height="34" rx="5"/>
+    </g>
+    <path d="M258 50h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="300" y="28" width="44" height="44" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+    <text x="322" y="55" text-anchor="middle" fill="#9a3412" font-size="11" font-weight="900">rank</text>
+  </svg>
+  <div class="mechanic-flow-note">this visual shows the Processing globe becoming model-ready region-time rows before any prediction claim.</div>
+</div>
+        """,
+        "seismic": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">waveform QA before pick</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Waveform QA tree before phase pick proposal">
+    <path d="M16 62 C34 28, 52 94, 72 62 S112 28, 132 62 S172 94, 192 62 S232 28, 252 62" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+    <rect x="118" y="30" width="28" height="64" rx="7" fill="#fee2e2" stroke="#ef4444"/>
+    <path d="M262 62h24" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="292" y="24" width="52" height="30" rx="8" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="292" y="66" width="52" height="30" rx="8" fill="#fff7ed" stroke="#f97316"/>
+    <text x="318" y="44" text-anchor="middle" fill="#134e4a" font-size="10" font-weight="900">usable</text>
+    <text x="318" y="86" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="900">review</text>
+  </svg>
+  <div class="mechanic-flow-note">seismic now has its own QA visual: weak traces are filtered before a pick line or velocity interpretation appears.</div>
+</div>
+        """,
+        "north_slope": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">well logs to hydrate interval rank</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Well-log features passing QC and ranking hydrate intervals">
+    <g stroke-width="3">
+      <rect x="20" y="16" width="28" height="76" rx="5" fill="#dbeafe" stroke="#2563eb"/><rect x="56" y="16" width="28" height="76" rx="5" fill="#ccfbf1" stroke="#0f766e"/><rect x="92" y="16" width="28" height="76" rx="5" fill="#fef3c7" stroke="#d97706"/>
+    </g>
+    <path d="M30 78 C36 48, 42 48, 46 30M66 30 C72 66, 78 62, 82 86M102 88 C108 52, 112 46, 118 24" fill="none" stroke="#0f172a" stroke-width="2"/>
+    <path d="M128 54h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="168" y="26" width="58" height="58" rx="12" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+    <text x="197" y="59" text-anchor="middle" fill="#9a3412" font-size="11" font-weight="900">QC</text>
+    <path d="M232 54h32" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="270" y="22" width="64" height="28" rx="14" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="270" y="60" width="64" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="302" y="41" text-anchor="middle" fill="#134e4a" font-size="10" font-weight="900">hydrate</text>
+    <text x="302" y="79" text-anchor="middle" fill="#1e3a8a" font-size="10" font-weight="900">interval</text>
+  </svg>
+  <div class="mechanic-flow-note">the North Slope visual now shows logs, washout/QC, and ranked hydrate intervals instead of a generic ANN picture.</div>
+</div>
+        """,
+        "rock_classification": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">image plus chemistry fusion</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Rock image and chemistry branches merge into label review">
+    <rect x="18" y="22" width="66" height="54" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="3"/>
+    <circle cx="42" cy="48" r="12" fill="#ffffff" stroke="#94a3b8"/>
+    <rect x="104" y="18" width="70" height="62" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+    <path d="M116 38h44M116 54h32M116 68h40" stroke="#92400e" stroke-width="3"/>
+    <path d="M86 48 C126 48, 134 92, 190 92 M176 50 C192 50, 202 70, 218 70" fill="none" stroke="#64748b" stroke-width="4"/>
+    <circle cx="230" cy="78" r="22" fill="#0f172a"/>
+    <text x="230" y="83" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="900">fusion</text>
+    <path d="M254 78h34" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="294" y="58" width="48" height="40" rx="10" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/>
+    <text x="318" y="83" text-anchor="middle" fill="#134e4a" font-size="10" font-weight="900">label</text>
+  </svg>
+  <div class="mechanic-flow-note">the rock topic now gets a multimodal visual: image evidence and chemistry features merge only after label audit.</div>
+</div>
+        """,
+        "valles": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">field-method conflict board</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Gravity, EM, and seismic method lanes with conflict hotspot">
+    <rect x="18" y="18" width="96" height="20" rx="10" fill="#dbeafe" stroke="#2563eb"/><rect x="18" y="48" width="96" height="20" rx="10" fill="#ccfbf1" stroke="#0f766e"/><rect x="18" y="78" width="96" height="20" rx="10" fill="#fef3c7" stroke="#d97706"/>
+    <text x="66" y="33" text-anchor="middle" fill="#1e3a8a" font-size="10" font-weight="900">gravity</text>
+    <text x="66" y="63" text-anchor="middle" fill="#134e4a" font-size="10" font-weight="900">EM / ERT</text>
+    <text x="66" y="93" text-anchor="middle" fill="#92400e" font-size="10" font-weight="900">seismic</text>
+    <g stroke="#64748b" stroke-width="4" fill="none"><path d="M124 28 C170 16, 210 54, 252 36"/><path d="M124 58 C170 78, 216 38, 258 60"/><path d="M124 88 C174 58, 218 98, 268 78"/></g>
+    <circle cx="220" cy="58" r="24" fill="#fee2e2" stroke="#ef4444" stroke-width="4"/>
+    <text x="220" y="63" text-anchor="middle" fill="#991b1b" font-size="10" font-weight="900">conflict</text>
+  </svg>
+  <div class="mechanic-flow-note">Valles gets a field-method board visual so gravity, EM/ERT, and seismic disagreement stays visible.</div>
+</div>
+        """,
+        "near_surface": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">line intersections become review rows</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Near-surface survey line intersections converted into model rows">
+    <path d="M30 28 H320" stroke="#2563eb" stroke-width="4"/><path d="M48 84 H338" stroke="#0f766e" stroke-width="4"/><path d="M86 12 L252 104" stroke="#d97706" stroke-width="4"/>
+    <circle cx="116" cy="28" r="8" fill="#ffffff" stroke="#0f172a" stroke-width="3"/><circle cx="214" cy="84" r="8" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+    <rect x="132" y="42" width="92" height="34" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="178" y="63" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">line row</text>
+    <rect x="262" y="42" width="64" height="34" rx="9" fill="#fff7ed" stroke="#f97316"/>
+    <text x="294" y="63" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="900">review</text>
+  </svg>
+  <div class="mechanic-flow-note">near-surface now shows actual survey-line intersections, not the same generic method-lane chart as Valles.</div>
+</div>
+        """,
+        "moho_ml": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">regional transfer and residuals</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Australia training region, model, USA residual test">
+    <rect x="18" y="24" width="82" height="58" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="59" y="57" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">Australia</text>
+    <path d="M106 54h38" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="150" y="20" width="60" height="66" rx="12" fill="#0f172a"/>
+    <text x="180" y="57" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="900">model</text>
+    <path d="M216 54h38" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="260" y="24" width="82" height="58" rx="10" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/>
+    <circle cx="284" cy="48" r="5" fill="#ef4444"/><circle cx="302" cy="63" r="5" fill="#d97706"/><circle cx="322" cy="42" r="5" fill="#0f766e"/>
+    <text x="301" y="103" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">USA residual map</text>
+  </svg>
+  <div class="mechanic-flow-note">Moho gets a transfer-test visual: train in one region, test in another, then inspect residuals.</div>
+</div>
+        """,
+        "ambient_noise": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">station-pair CCF monitoring</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Station pair, cross correlation stack, and monitoring anomaly">
+    <circle cx="44" cy="48" r="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><circle cx="124" cy="48" r="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <path d="M62 48h44" stroke="#2563eb" stroke-width="4"/><text x="84" y="72" text-anchor="middle" fill="#1e3a8a" font-size="10" font-weight="900">station pair</text>
+    <path d="M152 54h26" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <path d="M190 60 C204 34, 218 86, 232 60 S260 34, 274 60" fill="none" stroke="#0f766e" stroke-width="4"/>
+    <path d="M288 54h24" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="330" cy="58" r="18" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+    <text x="330" y="62" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="900">alert</text>
+  </svg>
+  <div class="mechanic-flow-note">ambient noise now has a station-pair/CCF monitor visual instead of reusing the seismic pick diagram.</div>
+</div>
+        """,
+        "stock_workflow": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">past-only validation gate</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="Past-only stock dashboard windows and claim gate">
+    <rect x="22" y="48" width="52" height="34" rx="8" fill="#dbeafe" stroke="#2563eb"/><rect x="84" y="38" width="52" height="44" rx="8" fill="#dbeafe" stroke="#2563eb"/><rect x="146" y="28" width="52" height="54" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <line x1="218" y1="18" x2="218" y2="98" stroke="#ef4444" stroke-width="5"/>
+    <rect x="238" y="42" width="78" height="36" rx="10" fill="#ccfbf1" stroke="#0f766e"/>
+    <text x="277" y="64" text-anchor="middle" fill="#134e4a" font-size="11" font-weight="900">walk-forward</text>
+    <text x="110" y="104" text-anchor="middle" fill="#0b1f3a" font-size="11" font-weight="900">past windows only</text>
+  </svg>
+  <div class="mechanic-flow-note">the stock workflow gets a time-split dashboard visual so future leakage and claim language stay blocked.</div>
+</div>
+        """,
+        "sem_petrography": """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">SEM label before interpretation claim</span>
+  <svg viewBox="0 0 360 118" width="100%" height="88" role="img" aria-label="SEM crop segmentation and interpretation gate">
+    <rect x="24" y="18" width="74" height="62" rx="8" fill="#e5e7eb" stroke="#64748b" stroke-width="3"/>
+    <path d="M38 60 C50 30, 78 30, 84 58 C72 76, 50 78, 38 60z" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/>
+    <path d="M104 50h32" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="142" y="18" width="74" height="62" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+    <path d="M154 62 C168 32, 194 34, 204 58 C190 72, 170 76, 154 62z" fill="#99f6e4" stroke="#0f766e" stroke-width="3"/>
+    <path d="M222 50h30" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="258" y="26" width="74" height="46" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+    <text x="295" y="54" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="900">claim gate</text>
+  </svg>
+  <div class="mechanic-flow-note">SEM now shows crop, mask, and interpretation gate so texture labels do not become unsupported climate claims.</div>
+</div>
+        """,
+    }
+    return visuals.get(slug, _model_mechanic_visual(fallback_mode))
+
+
 def _model_term_visual(kind: str) -> str:
     if kind == "waveform_foundation":
         return """
@@ -10940,7 +11147,10 @@ def render_model_mechanics_panel(topic: dict) -> None:
         slug,
         "The model turns topic evidence into features, predicts a target, and sends the result through a review gate.",
     )
-    mechanic_visual_html = _model_mechanic_visual(mode_by_slug.get(slug, "default")).strip()
+    mechanic_visual_html = _topic_model_mechanic_visual(
+        slug,
+        mode_by_slug.get(slug, "default"),
+    ).strip()
     main_explainer_html = _model_type_explainer_html(main["name"], compact=True)
     st.markdown(
         f"""
