@@ -211,7 +211,7 @@ TOPIC_ROOMS = [
         "title": "First AI Visualization: Earthquake Globe",
         "tagline": "A Processing-era earthquake visualization and sonification video, used as the origin story for later geoscience dashboards.",
         "project_key": "processing_visuals",
-        "hero": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
+        "hero": "assets/project_visuals/generated_diagrams/processing_earthquake_feature_pipeline.png",
         "theme": "Creative coding + USGS earthquake data + visual/sound encoding.",
         "bottleneck": "Geoscience data can be technically correct but hard to feel, inspect, or communicate, especially when spatial, temporal, magnitude, and depth signals all matter at once.",
         "why_not_done": "Creative scientific visualization takes coding, design, domain knowledge, and data cleanup; many early prototypes never become reproducible tools.",
@@ -241,7 +241,7 @@ TOPIC_ROOMS = [
         "title": "AI For Energy Screening Workflows",
         "tagline": "A GIS and source-library workflow for turning public geoscience material into a dashboard and ML planning scaffold.",
         "project_key": "north_slope",
-        "hero": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
+        "hero": "assets/project_visuals/north_slope_slides/north_slope_3d_map_well_context.jpg",
         "theme": "Public sources + GIS layers + Streamlit atlas + hydrate ML planning.",
         "bottleneck": "Subsurface energy projects often have fragmented public data: maps, papers, well-log concepts, stratigraphy, and ML ideas are spread across many formats.",
         "why_not_done": "Integrating geologic context with machine-learning-ready features is slow because provenance, scale, coordinate systems, and domain assumptions have to be reconciled before modeling.",
@@ -256,7 +256,7 @@ TOPIC_ROOMS = [
         "title": "AI For Visual Geoscience Classification",
         "tagline": "Chemical classification visuals, thin-section decks, formation tables, and graph outputs as future ML training material.",
         "project_key": "rock_classification",
-        "hero": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
+        "hero": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_overlap_heatmaps.jpg",
         "theme": "Petrography + geochemistry diagrams + labeled examples + classification tasks.",
         "bottleneck": "Rock and mineral classification is visually rich but difficult to scale because labels, thin-section context, geochemical diagrams, and expert reasoning are rarely stored together.",
         "why_not_done": "Useful ML needs curated examples, consistent labels, metadata, petrographic context, and validation from experts; a folder of images or plots alone is not enough.",
@@ -507,7 +507,7 @@ CARD_VISUALS = {
     "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_system_overview.png",
     "processing_earthquake": "assets/topic_visuals/earthquake_globe_signal.svg",
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
-    "rock_classification": "assets/gmail_updates/2026-06-08/Screenshot 2026-05-16 203029.png",
+    "rock_classification": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_overlap_heatmaps.jpg",
     "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
     "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
     "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
@@ -2732,7 +2732,7 @@ EMAIL_VISUAL_OVERRIDES = {
     "processing_earthquake": "assets/topic_visuals/data_variable_transform.svg",
     "seismic": "assets/topic_visuals/cloud_data_processing.svg",
     "north_slope": "assets/topic_visuals/web_scraping_data_lake.svg",
-    "rock_classification": "assets/topic_visuals/satellite_rock_classification.svg",
+    "rock_classification": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_overlap_heatmaps.jpg",
     "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
     "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
     "moho_ml": "assets/topic_visuals/north_slope_ml_architecture.svg",
@@ -2944,7 +2944,7 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
     ],
     "processing_earthquake": [
         ("Variable transform visual", "assets/topic_visuals/data_variable_transform.svg"),
-        ("Processing poster", "assets/project_visuals/processing_earthquake_linkedin_poster.jpg"),
+        ("Processing-to-ML workflow", "assets/project_visuals/generated_diagrams/processing_earthquake_feature_pipeline.png"),
     ],
     "seismic": [
         ("Cloud processing visual", "assets/topic_visuals/cloud_data_processing.svg"),
@@ -2964,6 +2964,7 @@ EMAIL_EVIDENCE_LEAD_OVERRIDES = {
         ("SAGE field acquisition map", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png"),
         ("SeisBench ML workflow slide", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_058_1_slide_58.png"),
         ("SAGE TEM N/S profile", "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png"),
+        ("Valles LoupeEM and ERT comparison", "assets/project_visuals/near_surface_dwellers/valles_loupe_ert_comparison.jpg"),
     ],
     "moho_ml": [
         ("North Slope ML architecture visual", "assets/topic_visuals/north_slope_ml_architecture.svg"),
@@ -3484,10 +3485,10 @@ SOURCE_BACKED_TOPIC_ASSETS = {
     ],
     "processing_earthquake": [
         {
-            "title": "Processing earthquake poster",
-            "path": "assets/project_visuals/processing_earthquake_linkedin_poster.jpg",
-            "source": "LinkedIn/Processing evidence export",
-            "note": "This is the real visual anchor for the ChatGPT-to-Processing workflow.",
+            "title": "Processing-to-ML workflow",
+            "path": "assets/project_visuals/generated_diagrams/processing_earthquake_feature_pipeline.png",
+            "source": "Generated from source-dive notes and verified Processing evidence",
+            "note": "Explains how the creative earthquake globe becomes clean event fields, time-window features, ML tasks, and human review.",
         },
         {
             "title": "Globe to variable diagram",
@@ -3626,6 +3627,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Local image for the public data and provenance workbench story.",
         },
         {
+            "title": "North Slope 3D map and well context",
+            "path": "assets/project_visuals/north_slope_slides/north_slope_3d_map_well_context.jpg",
+            "source": "GMAIL VISUAL REVISION 9-slide North Slope deck",
+            "note": "Shows the public map, Streamlit structural explorer, legend logic, and runtime boundary in one presenter-friendly visual.",
+        },
+        {
             "title": "Model panel export",
             "path": "assets/project_visuals/north_slope_presentation_model_panels.png",
             "source": "North Slope presentation export",
@@ -3633,6 +3640,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
         },
     ],
     "rock_classification": [
+        {
+            "title": "Formation overlap heatmaps",
+            "path": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_overlap_heatmaps.jpg",
+            "source": "Critical minerals powerpoint PDF",
+            "note": "The cleanest visual for explaining why rock classification needs uncertainty: many classes overlap in property space.",
+        },
+        {
+            "title": "Property-correlation match regions",
+            "path": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_property_correlation_matches.jpg",
+            "source": "Critical minerals powerpoint PDF",
+            "note": "Connects the same model idea to cross-sector matching: compare measured features to find lookalike regions or cases.",
+        },
         {
             "title": "Rock raster classification map",
             "path": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
@@ -3690,6 +3709,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "PowerPoint-derived map showing the Valles field line geometry and station layout that anchor the method-comparison story.",
         },
         {
+            "title": "Valles LoupeEM and ERT comparison",
+            "path": "assets/project_visuals/near_surface_dwellers/valles_loupe_ert_comparison.jpg",
+            "source": "Near-Surface Dwellers Presentation",
+            "note": "Replaces the unrelated field/person image with an actual cross-method survey comparison.",
+        },
+        {
+            "title": "ERT robust inversion result",
+            "path": "assets/project_visuals/near_surface_dwellers/valles_ert_robust_inversion.jpg",
+            "source": "SMHydroTeam_SAGE2022.pptx",
+            "note": "Shows the interpretation step after acquisition: apparent resistivity becomes a subsurface section.",
+        },
+        {
             "title": "SeisBench ML workflow",
             "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_058_1_slide_58.png",
             "source": "VallesCaldera_SAGE22.pptx, slide 58",
@@ -3714,6 +3745,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
             "source": "VallesCaldera_SAGE22.pptx, slide 74",
             "note": "Lead near-surface visual now comes from the SAGE PowerPoint source and shows a real resistivity profile.",
+        },
+        {
+            "title": "Valles recorded survey routes",
+            "path": "assets/project_visuals/near_surface_dwellers/valles_recorded_routes.jpg",
+            "source": "Near-Surface Dwellers Presentation",
+            "note": "Shows real field geometry, so model outputs can be tied back to where the instruments actually moved.",
+        },
+        {
+            "title": "Near-surface field screenshot",
+            "path": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png",
+            "source": "Gmail screenshot package",
+            "note": "Local field-method evidence for the Near-Surface Dwellers topic.",
         },
         {
             "title": "Field line-index attachment",
