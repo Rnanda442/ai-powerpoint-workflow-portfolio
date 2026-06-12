@@ -4093,50 +4093,98 @@ ML_PIPELINE_SOURCE_CONTEXT = {
     "ai_workflow": {
         "keywords": ["GUI agents", "action traces", "rubric labels", "scientific workflow agents"],
         "sector_advance": ["energy project drafting", "banking operations QA", "startup app delivery", "commerce back-office automation"],
+        "sector_examples": [
+            {"sector": "Commerce operations", "example": "An agent watches a human process refunds, inventory exceptions, and order edits in Shopify or an ERP, then learns the approved click-path.", "why": "The same workflow pattern applies: screen state plus rubric plus human correction becomes supervised training data for a software agent."},
+            {"sector": "AI startups", "example": "A small startup records founder workflows for customer onboarding, CRM cleanup, and support triage so an internal agent can replay the repetitive parts.", "why": "The value is not a generic chatbot; it is turning expert screen work into action traces that can be validated."},
+        ],
     },
     "thesis_graph": {
         "keywords": ["GraphRAG", "knowledge graph schema", "source-weighted edges", "GNN prospectivity"],
         "sector_advance": ["critical-mineral targeting", "banking risk maps", "startup knowledge bases", "marketing relationship graphs"],
+        "sector_examples": [
+            {"sector": "Marketing", "example": "Build a relationship graph linking campaigns, audiences, creators, products, claims, and conversion evidence.", "why": "The same source-backed edge idea helps separate real influence from assumed relationships."},
+            {"sector": "Banking / risk", "example": "Connect companies, suppliers, locations, loans, sanctions, and news sources into a reviewable risk graph.", "why": "Graph models are useful when the question is about relationships, not just one row in a table."},
+        ],
     },
     "processing_earthquake": {
         "keywords": ["feature engineering", "lagged windows", "nonlinear baseline", "held-out future windows"],
         "sector_advance": ["hazard communication", "logistics anomaly windows", "finance volatility windows", "equipment monitoring"],
+        "sector_examples": [
+            {"sector": "Logistics commerce", "example": "Convert delivery events, delays, weather, and warehouse scans into time-window features that flag abnormal shipping days.", "why": "The earthquake workflow turns messy events into region-time windows; logistics has the same event-stream problem."},
+            {"sector": "Equipment monitoring", "example": "Use machine sensor pulses over time to detect unusual vibration or failure windows before sending a technician.", "why": "The model is not forecasting magic; it compares recent windows against normal historical behavior."},
+        ],
     },
     "seismic": {
         "keywords": ["SeisLM", "seismic foundation model", "phase picking", "run provenance"],
         "sector_advance": ["energy cloud processing", "agriculture remote sensing", "insurance geohazard triage", "research collaboration"],
+        "sector_examples": [
+            {"sector": "Healthcare signals", "example": "ECG or EEG review where a model proposes candidate events and a clinician accepts, edits, or rejects them.", "why": "The same idea applies: weak signals need QA, confidence, and human override before interpretation."},
+            {"sector": "Insurance", "example": "Triage claims after earthquakes or floods by ranking sensor and geospatial evidence for review.", "why": "The workflow is large-data filtering plus provenance, not replacing expert judgment."},
+        ],
     },
     "north_slope": {
         "keywords": ["source provenance", "schema matching", "spatial joins", "public-safe scaffold"],
         "sector_advance": ["energy source libraries", "real-estate due diligence", "supply-chain site intelligence", "public-sector data portals"],
+        "sector_examples": [
+            {"sector": "Real-estate due diligence", "example": "Combine zoning maps, flood zones, permits, soil reports, price comps, and inspection notes into a ranked site-review queue.", "why": "It is the same public-source screening pattern: collect messy sources, align locations, preserve provenance, and rank candidates for expert review."},
+            {"sector": "Supply-chain site intelligence", "example": "Screen warehouse or factory locations using roads, utilities, labor data, climate risk, and public incentives.", "why": "The model workflow transfers because the output is a decision-support shortlist, not an automatic final answer."},
+        ],
     },
     "rock_classification": {
         "keywords": ["spatial cross-validation", "GNN prospectivity", "spectral features", "class-imbalance check"],
         "sector_advance": ["resource mapping", "precision agriculture soil classes", "construction material screening", "environmental land-cover QA"],
+        "sector_examples": [
+            {"sector": "Precision agriculture", "example": "Classify soil zones from satellite bands, drone images, moisture data, and sampled lab labels to guide irrigation or fertilizer decisions.", "why": "The same classification risk appears: mixed pixels, weak labels, and spatial validation can make a map look cleaner than it is."},
+            {"sector": "Manufacturing QA", "example": "Classify defects using camera images plus machine settings and material batches.", "why": "The rock workflow's image-plus-chemistry fusion maps directly to image-plus-process-data defect review."},
+        ],
     },
     "valles": {
         "keywords": ["method fusion", "uncertainty mask", "physics-aware review", "line registration"],
         "sector_advance": ["geothermal surveys", "infrastructure corridor risk", "water-resource screening", "site-remediation planning"],
+        "sector_examples": [
+            {"sector": "Infrastructure", "example": "Combine pavement sensors, ground radar, utility maps, inspection notes, and traffic loads to rank bridge or road corridors for inspection.", "why": "Different methods disagree for real reasons; the useful model highlights agreement, conflict, and uncertainty instead of forcing one answer."},
+            {"sector": "Environmental remediation", "example": "Fuse soil samples, groundwater tests, historical site maps, and geophysics to plan where to drill or sample next.", "why": "The Valles workflow transfers because it is conflict-aware field evidence fusion."},
+        ],
     },
     "near_surface": {
         "keywords": ["multimodal fusion", "conflict-aware labels", "ERT/TEM/seismic features", "field-note review"],
         "sector_advance": ["near-surface engineering", "farm drainage mapping", "utility siting", "wetland monitoring"],
+        "sector_examples": [
+            {"sector": "Utility siting", "example": "Combine shallow geophysics, old utility drawings, soil maps, and field notes to identify safe trenching corridors.", "why": "The same line-intersection workflow matters: the model should flag where methods agree or where a human needs to inspect."},
+            {"sector": "Agriculture / drainage", "example": "Map wet zones using field observations, soil conductivity, elevation, and crop-stress imagery.", "why": "Near-surface fusion works anywhere shallow subsurface conditions control operational decisions."},
+        ],
     },
     "moho_ml": {
         "keywords": ["gas hydrate well-log ML", "physics-informed ML", "well-held-out validation", "calibration and abstention"],
         "sector_advance": ["hydrate screening", "reservoir analog ranking", "carbon-storage review", "energy decision support"],
+        "sector_examples": [
+            {"sector": "Carbon storage", "example": "Rank candidate storage intervals using public geology, well logs, seals, depth, and uncertainty before detailed simulation.", "why": "The hydrate screening workflow transfers because it ranks subsurface intervals with physics constraints and abstention."},
+            {"sector": "Energy finance", "example": "Compare reservoir analogs for early-stage investment diligence before expensive data acquisition.", "why": "The model must be validated by held-out locations so it does not memorize basin geography."},
+        ],
     },
     "ambient_noise": {
         "keywords": ["station-pair CCF", "stack stability", "continuous windows", "metadata QC"],
         "sector_advance": ["volcano monitoring", "infrastructure vibration alerts", "industrial equipment monitoring", "city-scale subsurface sensing"],
+        "sector_examples": [
+            {"sector": "Industrial monitoring", "example": "Continuously compare vibration signals from pumps, turbines, or conveyors to flag stable, degraded, or anomalous operating windows.", "why": "Ambient-noise QC transfers because the model watches signal stability over time before claiming a physical change."},
+            {"sector": "Smart cities", "example": "Use distributed vibration or traffic sensors to monitor construction impacts and underground infrastructure changes.", "why": "Station-pair monitoring becomes a city-scale sensor health and anomaly-review workflow."},
+        ],
     },
     "stock_workflow": {
         "keywords": ["walk-forward testing", "drift monitoring", "baseline challenger", "leakage detection"],
         "sector_advance": ["finance dashboards", "sales forecasting", "inventory planning", "marketing spend monitoring"],
+        "sector_examples": [
+            {"sector": "Retail inventory", "example": "Use past sales, promotions, holidays, stockouts, and lead times to forecast SKU reorder risk with walk-forward validation.", "why": "The stock-app workflow transfers because both problems require past-only features and strict leakage control."},
+            {"sector": "Marketing commerce", "example": "Monitor ad spend, conversion rates, creative changes, and seasonality to flag campaign drift.", "why": "A baseline plus challenger model helps decide whether a change is real or just noise."},
+        ],
     },
     "sem_petrography": {
         "keywords": ["image labels", "multimodal classifiers", "proxy-claim audit", "expert review queue"],
         "sector_advance": ["petrography review", "materials QA", "agriculture soil microscopy", "manufacturing defect triage"],
+        "sector_examples": [
+            {"sector": "Materials QA", "example": "Classify microscope images of metal, ceramic, or battery materials while linking each image to batch metadata.", "why": "The SEM workflow transfers because image labels need sample context before making process-quality claims."},
+            {"sector": "Food / agriculture microscopy", "example": "Review soil or food microstructure images for contamination, texture, or quality classes.", "why": "The model can triage images, but expert review is still needed before operational claims."},
+        ],
     },
 }
 
@@ -7291,7 +7339,7 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .other-sector-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow, .talk-track-card { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .other-sector-grid, .sector-example-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow, .talk-track-card { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
         .pipeline-node:not(:last-child)::after,
         .manual-flow-node:not(:last-child)::after { display: none; }
@@ -7847,6 +7895,46 @@ st.markdown(
         line-height: 1.28;
         padding: 0.45rem 0.55rem;
     }
+    .sector-example-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 0.8rem;
+    }
+    .sector-example-card {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        border-top: 4px solid #f59e0b;
+        min-height: 11rem;
+        padding: 0.8rem;
+    }
+    .sector-example-card strong {
+        color: #7c2d12;
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+    .sector-example-card h4 {
+        color: #0b1f3a;
+        font-size: 1.03rem;
+        line-height: 1.15;
+        margin: 0.25rem 0 0.45rem;
+    }
+    .sector-example-card p {
+        color: #475569 !important;
+        font-size: 0.9rem;
+        line-height: 1.34;
+        margin: 0.35rem 0;
+    }
+    .sector-example-card .why {
+        background: #fff7ed;
+        border-left: 4px solid #f59e0b;
+        border-radius: 7px;
+        color: #7c2d12 !important;
+        padding: 0.45rem 0.55rem;
+    }
     .source-explainer-note {
         color: #475569;
         font-size: 0.92rem;
@@ -8134,69 +8222,69 @@ st.markdown(
     }
     .model-term-head h3 {
         color: #0b1f3a;
-        font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+        font-size: 1.55rem;
         line-height: 1.12;
         margin: 0.14rem 0 0;
     }
     .model-term-head p {
         color: #475569 !important;
-        font-size: 0.88rem;
-        line-height: 1.32;
+        font-size: 1rem;
+        line-height: 1.4;
         margin: 0;
-        max-width: 32rem;
+        max-width: 38rem;
     }
     .model-term-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 0.65rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
     }
     .model-term-card {
         background: #f8fafc;
         border: 1px solid #d8dee8;
         border-radius: 8px;
-        min-height: 18.5rem;
-        padding: 0.7rem;
+        min-height: 24rem;
+        padding: 0.9rem;
     }
     .model-term-card strong {
         color: #0b1f3a;
         display: block;
-        font-size: 0.88rem;
+        font-size: 1.08rem;
         line-height: 1.14;
-        margin-top: 0.55rem;
+        margin-top: 0.7rem;
     }
     .model-term-card p {
         color: #475569 !important;
-        font-size: 0.78rem;
-        line-height: 1.28;
-        margin: 0.38rem 0 0;
+        font-size: 0.95rem;
+        line-height: 1.38;
+        margin: 0.45rem 0 0;
     }
     .model-term-card .term-use {
         background: #ecfdf5;
         border-left: 4px solid #0f766e;
         border-radius: 7px;
         color: #134e4a;
-        font-size: 0.76rem;
+        font-size: 0.9rem;
         font-weight: 780;
-        line-height: 1.22;
-        margin-top: 0.55rem;
-        padding: 0.42rem 0.5rem;
+        line-height: 1.32;
+        margin-top: 0.65rem;
+        padding: 0.6rem 0.7rem;
     }
     .model-term-card .term-risk {
         background: #fff7ed;
         border-left: 4px solid #f97316;
         border-radius: 7px;
         color: #9a3412;
-        font-size: 0.74rem;
+        font-size: 0.86rem;
         font-weight: 780;
-        line-height: 1.22;
-        margin-top: 0.45rem;
-        padding: 0.4rem 0.5rem;
+        line-height: 1.3;
+        margin-top: 0.55rem;
+        padding: 0.55rem 0.7rem;
     }
     .model-term-visual {
         background: #ffffff;
         border: 1px solid #d8dee8;
         border-radius: 8px;
-        height: 8.7rem;
+        height: 12rem;
         overflow: hidden;
         position: relative;
     }
@@ -10766,8 +10854,9 @@ def render_seismic_builder_queue_panel() -> None:
 def render_cross_sector_transfer_panel(topic: dict) -> None:
     context = ML_PIPELINE_SOURCE_CONTEXT.get(topic["slug"], {})
     sectors = context.get("sector_advance", [])
+    examples = context.get("sector_examples", [])
     keywords = context.get("keywords", [])
-    if not sectors and not keywords:
+    if not sectors and not keywords and not examples:
         return
     transfer_note = {
         "ai_workflow": "same screen-trace and review-loop pattern",
@@ -10783,15 +10872,27 @@ def render_cross_sector_transfer_panel(topic: dict) -> None:
         "stock_workflow": "same dashboard, baseline, and drift pattern",
         "sem_petrography": "same image-label and expert-gate pattern",
     }.get(topic["slug"], "same reviewed AI workflow pattern")
-    sector_cards = "".join(
+    if examples:
+        sector_cards = "".join(
+            f"""
+<div class="sector-example-card">
+  <strong>{escape(example["sector"])}</strong>
+  <h4>{escape(example["example"])}</h4>
+  <p class="why"><b>Why it transfers:</b> {escape(example["why"])}</p>
+</div>
+            """
+            for example in examples[:4]
+        )
+    else:
+        sector_cards = "".join(
         f"""
 <div class="other-sector-card">
   <span class="other-sector-label">{escape(item.title())}</span>
   <span>{escape(transfer_note)}.</span>
 </div>
         """
-        for item in sectors[:4]
-    )
+            for item in sectors[:4]
+        )
     keyword_chips = "".join(
         f"<span class='manual-vocab'>{escape(item)}</span>"
         for item in keywords[:4]
@@ -10801,9 +10902,9 @@ def render_cross_sector_transfer_panel(topic: dict) -> None:
 <div class="other-sector-use-cases">
   <span class="other-sector-kicker">Transfer test</span>
   <h3>Common Other Sector Use Cases</h3>
-  <p>The concrete project stays source-backed. These larger examples show where the same AI pattern could transfer after validation.</p>
+  <p>Use these as specific discussion pivots: the model workflow stays the same, but the data source, business decision, and review gate change by sector.</p>
   <div class="manual-vocab-row">{keyword_chips}</div>
-  <div class="other-sector-grid">{sector_cards}</div>
+  <div class="sector-example-grid">{sector_cards}</div>
 </div>
         """,
         unsafe_allow_html=True,
