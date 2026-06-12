@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-11 / graph-ml-visuals-pass"
+DEPLOY_BUILD_ID = "2026-06-11 / all-topic-model-mechanics-pass"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -6971,6 +6971,233 @@ st.markdown(
         font-size: 0.8rem;
         margin-top: 0.25rem;
     }
+    .model-mechanics-panel {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .model-mechanics-head {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+    }
+    .model-mechanics-kicker {
+        color: #0f766e;
+        font-size: 0.72rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .model-mechanics-head h3 {
+        color: #0b1f3a;
+        font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+        line-height: 1.12;
+        margin: 0.14rem 0 0;
+    }
+    .model-mechanics-head p {
+        color: #475569 !important;
+        font-size: 0.88rem;
+        line-height: 1.32;
+        margin: 0;
+        max-width: 28rem;
+    }
+    .model-mechanics-board {
+        display: grid;
+        grid-template-columns: minmax(13rem, 0.8fr) minmax(19rem, 1.15fr) minmax(13rem, 0.85fr);
+        gap: 0.65rem;
+        align-items: stretch;
+    }
+    .mechanics-card {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        min-height: 12.5rem;
+        padding: 0.7rem;
+    }
+    .mechanics-card strong {
+        color: #0b1f3a;
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.07em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+    .mechanics-card p {
+        color: #475569 !important;
+        font-size: 0.78rem;
+        line-height: 1.27;
+        margin: 0.4rem 0 0;
+    }
+    .mechanics-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.28rem;
+        margin-top: 0.55rem;
+    }
+    .mechanics-chip-row span {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        color: #334155;
+        font-size: 0.68rem;
+        font-weight: 850;
+        line-height: 1.05;
+        padding: 0.24rem 0.38rem;
+    }
+    .mechanic-visual {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        height: 12.5rem;
+        overflow: hidden;
+        padding: 0.65rem;
+        position: relative;
+    }
+    .mechanic-visual-title {
+        color: #0f766e;
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 900;
+        letter-spacing: 0.07em;
+        margin-bottom: 0.45rem;
+        text-transform: uppercase;
+    }
+    .mechanic-token,
+    .mechanic-pill {
+        border-radius: 999px;
+        display: inline-flex;
+        font-size: 0.68rem;
+        font-weight: 850;
+        line-height: 1.05;
+        margin: 0.12rem;
+        padding: 0.23rem 0.36rem;
+    }
+    .mechanic-token {
+        background: #eff6ff;
+        border: 1px solid #93c5fd;
+        color: #1e3a8a;
+    }
+    .mechanic-pill {
+        background: #ecfdf5;
+        border: 1px solid #0f766e;
+        color: #134e4a;
+    }
+    .mechanic-layer-stack {
+        display: grid;
+        gap: 0.24rem;
+        margin: 0.45rem auto;
+        width: 64%;
+    }
+    .mechanic-layer-stack span {
+        background: #dbeafe;
+        border: 1px solid #2563eb;
+        border-radius: 6px;
+        height: 0.62rem;
+    }
+    .mechanic-flow-note {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 7px;
+        bottom: 0.6rem;
+        color: #475569;
+        font-size: 0.72rem;
+        left: 0.65rem;
+        line-height: 1.18;
+        padding: 0.38rem 0.45rem;
+        position: absolute;
+        right: 0.65rem;
+    }
+    .mechanic-core-node,
+    .mechanic-small-node {
+        border-radius: 50%;
+        position: absolute;
+    }
+    .mechanic-core-node {
+        background: #0f172a;
+        height: 3.2rem;
+        left: calc(50% - 1.6rem);
+        top: 4.15rem;
+        width: 3.2rem;
+        z-index: 2;
+    }
+    .mechanic-small-node {
+        background: #ffffff;
+        border: 3px solid #0f766e;
+        height: 1.45rem;
+        width: 1.45rem;
+    }
+    .mechanic-small-node.n1 { left: 12%; top: 30%; }
+    .mechanic-small-node.n2 { right: 14%; top: 26%; }
+    .mechanic-small-node.n3 { left: 18%; bottom: 22%; }
+    .mechanic-small-node.n4 { right: 18%; bottom: 24%; }
+    .mechanic-edge {
+        border-top: 3px solid #0f766e;
+        left: 26%;
+        position: absolute;
+        top: 50%;
+        width: 48%;
+    }
+    .mechanic-edge.rel-a {
+        border-color: #2563eb;
+        transform: rotate(-18deg);
+    }
+    .mechanic-edge.rel-b {
+        border-color: #d97706;
+        transform: rotate(18deg);
+    }
+    .mechanic-wave {
+        fill: none;
+        stroke: #2563eb;
+        stroke-width: 4;
+    }
+    .mechanic-barset {
+        align-items: end;
+        display: grid;
+        gap: 0.28rem;
+        grid-template-columns: repeat(8, 1fr);
+        height: 5rem;
+        margin-top: 0.35rem;
+    }
+    .mechanic-barset span {
+        background: #93c5fd;
+        border-radius: 5px 5px 0 0;
+    }
+    .mechanic-barset span:nth-child(2n) { background: #99f6e4; }
+    .mechanic-barset span:nth-child(3n) { background: #fbbf24; }
+    .mechanic-ann {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+        height: 5.8rem;
+        margin-top: 0.4rem;
+    }
+    .mechanic-ann div {
+        display: grid;
+        gap: 0.28rem;
+        place-items: center;
+    }
+    .mechanic-ann span {
+        background: #dbeafe;
+        border: 2px solid #2563eb;
+        border-radius: 50%;
+        height: 0.95rem;
+        width: 0.95rem;
+    }
+    .mechanic-gate {
+        background: #fff7ed;
+        border: 1px solid #fb923c;
+        border-left: 5px solid #ea580c;
+        border-radius: 8px;
+        color: #9a3412;
+        font-size: 0.76rem;
+        font-weight: 820;
+        line-height: 1.25;
+        margin-top: 0.6rem;
+        padding: 0.48rem 0.55rem;
+    }
     .ml-part-explainer {
         background: #ffffff;
         border: 1px solid #d8dee8;
@@ -7214,6 +7441,114 @@ st.markdown(
         display: block;
         width: 100%;
     }
+    .adobe-graph-focus {
+        display: grid;
+        grid-template-columns: minmax(13rem, 0.72fr) minmax(18rem, 1.28fr);
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    .adobe-graph-source,
+    .adobe-graph-redraw {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .adobe-graph-source {
+        background: #020617;
+        min-height: 18rem;
+        position: relative;
+    }
+    .adobe-graph-source img {
+        display: block;
+        height: 100%;
+        min-height: 18rem;
+        object-fit: cover;
+        object-position: 51% 53%;
+        opacity: 0.9;
+        width: 100%;
+    }
+    .adobe-graph-source span {
+        background: rgba(15, 23, 42, 0.86);
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        border-radius: 999px;
+        bottom: 0.7rem;
+        color: #e2e8f0;
+        font-size: 0.72rem;
+        font-weight: 850;
+        left: 0.7rem;
+        letter-spacing: 0.06em;
+        padding: 0.28rem 0.48rem;
+        position: absolute;
+        text-transform: uppercase;
+    }
+    .adobe-graph-redraw {
+        background: #ecfeff;
+        min-height: 18rem;
+        padding: 0.8rem;
+        position: relative;
+    }
+    .redraw-hub {
+        background: #0f172a;
+        border-radius: 50%;
+        color: #ffffff;
+        display: grid;
+        font-size: 0.82rem;
+        font-weight: 900;
+        height: 4.8rem;
+        left: 45%;
+        line-height: 1.05;
+        place-items: center;
+        position: absolute;
+        text-align: center;
+        top: 42%;
+        width: 4.8rem;
+        z-index: 2;
+    }
+    .redraw-node {
+        align-items: center;
+        border: 3px solid #2563eb;
+        border-radius: 999px;
+        color: #0b1f3a;
+        display: flex;
+        font-size: 0.74rem;
+        font-weight: 900;
+        justify-content: center;
+        min-height: 2.7rem;
+        padding: 0.36rem 0.5rem;
+        position: absolute;
+        text-align: center;
+        width: 6.4rem;
+        z-index: 2;
+    }
+    .redraw-node.mineral { background: #dbeafe; left: 7%; top: 16%; }
+    .redraw-node.host { background: #ccfbf1; border-color: #0f766e; right: 8%; top: 18%; }
+    .redraw-node.process { background: #fef3c7; border-color: #d97706; left: 10%; bottom: 16%; }
+    .redraw-node.evidence { background: #f5f3ff; border-color: #7c3aed; right: 10%; bottom: 16%; }
+    .redraw-edge {
+        border-top: 4px solid #0f766e;
+        height: 0;
+        position: absolute;
+        transform-origin: left center;
+        z-index: 1;
+    }
+    .redraw-edge.a { left: 25%; top: 34%; transform: rotate(24deg); width: 25%; }
+    .redraw-edge.b { left: 55%; top: 35%; transform: rotate(-26deg); width: 24%; }
+    .redraw-edge.c { left: 25%; top: 65%; transform: rotate(-23deg); width: 25%; }
+    .redraw-edge.d { left: 56%; top: 64%; transform: rotate(23deg); width: 24%; }
+    .redraw-caption {
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        bottom: 0.7rem;
+        color: #475569;
+        font-size: 0.78rem;
+        left: 0.8rem;
+        line-height: 1.25;
+        padding: 0.45rem 0.55rem;
+        position: absolute;
+        right: 0.8rem;
+        z-index: 3;
+    }
     .adobe-closeup-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -7295,6 +7630,121 @@ st.markdown(
         margin-top: 0.5rem;
         text-decoration: none;
     }
+    .graph-model-mini {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        height: 8.2rem;
+        margin-bottom: 0.55rem;
+        overflow: hidden;
+        padding: 0.5rem;
+        position: relative;
+    }
+    .bert-token-row,
+    .neighbor-row,
+    .relation-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    .bert-token-row span,
+    .neighbor-row span,
+    .relation-row span {
+        border-radius: 999px;
+        font-size: 0.66rem;
+        font-weight: 850;
+        padding: 0.22rem 0.34rem;
+    }
+    .bert-token-row span {
+        background: #eff6ff;
+        border: 1px solid #93c5fd;
+        color: #1e3a8a;
+    }
+    .bert-layers {
+        display: grid;
+        gap: 0.22rem;
+        margin: 0.45rem auto;
+        width: 74%;
+    }
+    .bert-layers span {
+        background: #dbeafe;
+        border: 1px solid #2563eb;
+        border-radius: 6px;
+        height: 0.65rem;
+    }
+    .model-output-tag {
+        border-radius: 999px;
+        bottom: 0.55rem;
+        font-size: 0.68rem;
+        font-weight: 900;
+        left: 0.55rem;
+        padding: 0.24rem 0.4rem;
+        position: absolute;
+    }
+    .model-output-tag.blue { background: #dbeafe; border: 1px solid #2563eb; color: #1e3a8a; }
+    .model-output-tag.green { background: #ccfbf1; border: 1px solid #0f766e; color: #134e4a; }
+    .graph-sage-node {
+        background: #fef3c7;
+        border: 3px solid #d97706;
+        border-radius: 50%;
+        height: 2.4rem;
+        left: calc(50% - 1.2rem);
+        position: absolute;
+        top: 2.3rem;
+        width: 2.4rem;
+        z-index: 2;
+    }
+    .graph-sage-neighbor {
+        background: #ffffff;
+        border: 2px solid #d97706;
+        border-radius: 50%;
+        height: 1.35rem;
+        position: absolute;
+        width: 1.35rem;
+    }
+    .graph-sage-neighbor.n1 { left: 1.1rem; top: 1.15rem; }
+    .graph-sage-neighbor.n2 { right: 1.1rem; top: 1.15rem; }
+    .graph-sage-neighbor.n3 { left: 1.6rem; bottom: 1.5rem; }
+    .graph-sage-neighbor.n4 { right: 1.6rem; bottom: 1.5rem; }
+    .neighbor-row {
+        bottom: 0.48rem;
+        left: 0.55rem;
+        position: absolute;
+        right: 0.55rem;
+    }
+    .neighbor-row span { background: #fffbeb; border: 1px solid #d97706; color: #92400e; }
+    .relation-node {
+        background: #ffffff;
+        border: 3px solid #7c3aed;
+        border-radius: 50%;
+        height: 2.1rem;
+        position: absolute;
+        width: 2.1rem;
+    }
+    .relation-node.r1 { left: 1.1rem; top: 2.75rem; }
+    .relation-node.r2 { right: 1.2rem; top: 1.35rem; }
+    .relation-node.r3 { right: 1.2rem; bottom: 1.25rem; }
+    .relation-line {
+        border-top: 4px solid #2563eb;
+        left: 3rem;
+        position: absolute;
+        top: 3.25rem;
+        transform: rotate(-18deg);
+        width: 6.8rem;
+    }
+    .relation-line.two {
+        border-color: #0f766e;
+        top: 4.5rem;
+        transform: rotate(18deg);
+    }
+    .relation-row {
+        bottom: 0.48rem;
+        left: 0.55rem;
+        position: absolute;
+        right: 0.55rem;
+    }
+    .relation-row span:nth-child(1) { background: #dbeafe; border: 1px solid #2563eb; color: #1e3a8a; }
+    .relation-row span:nth-child(2) { background: #ccfbf1; border: 1px solid #0f766e; color: #134e4a; }
     .ml-model-detail {
         display: grid;
         gap: 0.65rem;
@@ -7414,8 +7864,13 @@ st.markdown(
         .ml-visual-board,
         .ml-part-head,
         .thesis-graph-head,
+        .adobe-graph-focus,
+        .model-mechanics-board,
         .ml-source-map {
             grid-template-columns: 1fr;
+        }
+        .model-mechanics-head {
+            display: block;
         }
         .ml-model-stack,
         .ml-model-checks,
@@ -8589,48 +9044,81 @@ def render_thesis_graph_model_visuals() -> None:
         else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
     )
 
-    def closeup_card(title: str, path_text: str, note: str, focus_class: str) -> str:
-        uri = asset_data_uri(project_asset(path_text), max_bytes=950_000)
-        image_html = (
-            f"<img src='{uri}' alt='{escape(title)} close-up'>"
-            if uri
-            else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
-        )
-        return f"""
-<div class="adobe-closeup-card {focus_class}">
-  {image_html}
-  <div class="adobe-closeup-body">
-    <strong>{escape(title)}</strong>
-    <span>{escape(note)}</span>
+    graph_source_uri = asset_data_uri(
+        project_asset("assets/project_visuals/ree_bayan_obo_main.png"),
+        max_bytes=950_000,
+    )
+    graph_source_html = (
+        f"<img src='{graph_source_uri}' alt='Original Bayan Obo Gephi graph source'>"
+        if graph_source_uri
+        else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
+    )
+    graph_focus_html = f"""
+<div class="adobe-graph-focus">
+  <div class="adobe-graph-source">
+    {graph_source_html}
+    <span>single original graph source</span>
+  </div>
+  <div class="adobe-graph-redraw">
+    <div class="redraw-edge a"></div>
+    <div class="redraw-edge b"></div>
+    <div class="redraw-edge c"></div>
+    <div class="redraw-edge d"></div>
+    <div class="redraw-hub">Bayan<br>Obo</div>
+    <div class="redraw-node mineral">bastnasite / monazite</div>
+    <div class="redraw-node host">host rock</div>
+    <div class="redraw-node process">fluid event</div>
+    <div class="redraw-node evidence">source evidence</div>
+    <div class="redraw-caption">
+      Redraw the dense Adobe/Gephi graph into readable nodes and typed edges before asking a model to rank or infer anything.
+    </div>
   </div>
 </div>
-        """
+    """
 
-    closeups = [
-        closeup_card(
-            "Deposit-shape close-up",
-            "assets/project_visuals/ree_bayan_obo_main.png",
-            "Use the Adobe drawing as the visual source for deposit, mineral, host, and process nodes.",
-            "focus-center",
-        ),
-        closeup_card(
-            "Host-context close-up",
-            "assets/project_visuals/ree_host_context_bayan.png",
-            "Crop the diagram around host rocks and context so the graph story starts from visible geology.",
-            "focus-left",
-        ),
-        closeup_card(
-            "Mineral relationship close-up",
-            "assets/project_visuals/ree_dominant_minerals_bayan.png",
-            "Show candidate mineral labels and relationships before any AI-suggested edge is trusted.",
-            "focus-right",
-        ),
-    ]
+    def graph_model_mini_visual(kind: str) -> str:
+        if kind in {"scibert", "matscibert"}:
+            tag_class = "blue" if kind == "scibert" else "green"
+            tokens = (
+                ["paper", "deposit", "mineral", "evidence"]
+                if kind == "scibert"
+                else ["formula", "phase", "host", "REE"]
+            )
+            token_html = "".join(f"<span>{escape(token)}</span>" for token in tokens)
+            return f"""
+<div class="graph-model-mini">
+  <div class="bert-token-row">{token_html}</div>
+  <div class="bert-layers"><span></span><span></span><span></span></div>
+  <div class="model-output-tag {tag_class}">entity tags</div>
+</div>
+            """
+        if kind == "sage":
+            return """
+<div class="graph-model-mini">
+  <div class="graph-sage-neighbor n1"></div>
+  <div class="graph-sage-neighbor n2"></div>
+  <div class="graph-sage-neighbor n3"></div>
+  <div class="graph-sage-neighbor n4"></div>
+  <div class="graph-sage-node"></div>
+  <div class="neighbor-row"><span>sample neighbors</span><span>aggregate</span></div>
+</div>
+            """
+        return """
+<div class="graph-model-mini">
+  <div class="relation-node r1"></div>
+  <div class="relation-node r2"></div>
+  <div class="relation-node r3"></div>
+  <div class="relation-line"></div>
+  <div class="relation-line two"></div>
+  <div class="relation-row"><span>contains</span><span>hosted by</span></div>
+</div>
+        """
 
     model_cards = [
         {
             "class": "science",
             "name": "SciBERT",
+            "kind": "scibert",
             "body": "A BERT-style language model trained on scientific text. Use it to tag scientific terms in papers, captions, and slide notes.",
             "why": "Why here: it gives the REE graph a text reader for minerals, processes, locations, and evidence phrases.",
             "href": "https://arxiv.org/abs/1903.10676",
@@ -8638,6 +9126,7 @@ def render_thesis_graph_model_visuals() -> None:
         {
             "class": "materials",
             "name": "MatSciBERT",
+            "kind": "matscibert",
             "body": "A materials-domain language model trained on materials science literature.",
             "why": "Why here: mineral names, chemical formulas, phases, and materials jargon should be easier to tag than with a generic text model.",
             "href": "https://www.nature.com/articles/s41524-022-00784-w",
@@ -8645,6 +9134,7 @@ def render_thesis_graph_model_visuals() -> None:
         {
             "class": "sage",
             "name": "GraphSAGE",
+            "kind": "sage",
             "body": "A graph neural network approach that samples neighbors and aggregates node features.",
             "why": "Why here: a new paper, deposit, or mineral node can inherit context from nearby reviewed graph nodes.",
             "href": "https://arxiv.org/abs/1706.02216",
@@ -8652,6 +9142,7 @@ def render_thesis_graph_model_visuals() -> None:
         {
             "class": "rgcn",
             "name": "R-GCN",
+            "kind": "rgcn",
             "body": "A relational graph convolution model designed for graphs with many edge types.",
             "why": "Why here: contains, hosted-by, altered-by, and evidence-for edges should not be treated as the same relationship.",
             "href": "https://arxiv.org/abs/1703.06103",
@@ -8660,6 +9151,7 @@ def render_thesis_graph_model_visuals() -> None:
     model_html = "".join(
         f"""
 <div class="graph-model-card {escape(card['class'])}">
+  {graph_model_mini_visual(card['kind'])}
   <strong>{escape(card['name'])}</strong>
   <span>{escape(card['body'])}</span>
   <span>{escape(card['why'])}</span>
@@ -8683,7 +9175,7 @@ def render_thesis_graph_model_visuals() -> None:
     </div>
     <div class="graph-model-asset">{graph_asset_html}</div>
   </div>
-  <div class="adobe-closeup-grid">{''.join(closeups)}</div>
+  {graph_focus_html}
   <div class="graph-model-grid">{model_html}</div>
 </div>
         """,
@@ -8997,6 +9489,161 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
     <div><strong>Hydrate paper pattern</strong><span>Sgh target, log features, washout/GLOSS QC, transfer test.</span></div>
     <div><strong>Primary here</strong><span>{escape(primary_source)}</span></div>
     <div><strong>Validation notes</strong>{secondary_line}</div>
+  </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _model_mechanic_visual(mode: str) -> str:
+    if mode == "graph":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">message passing graph</span>
+  <div class="mechanic-small-node n1"></div>
+  <div class="mechanic-small-node n2"></div>
+  <div class="mechanic-small-node n3"></div>
+  <div class="mechanic-small-node n4"></div>
+  <div class="mechanic-core-node"></div>
+  <div class="mechanic-edge rel-a"></div>
+  <div class="mechanic-edge rel-b"></div>
+  <div class="mechanic-flow-note">neighbor features and relation-specific edges update a candidate node or link.</div>
+</div>
+        """
+    if mode == "waveform":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">waveform QA model</span>
+  <svg viewBox="0 0 360 126" width="100%" height="82" aria-hidden="true">
+    <path class="mechanic-wave" d="M8 70 C34 18, 54 118, 82 70 S130 22, 158 70 S206 116, 236 70 S284 24, 316 70 S344 112, 356 70"/>
+    <line x1="178" y1="18" x2="178" y2="116" stroke="#ef4444" stroke-width="4"/>
+    <rect x="162" y="24" width="32" height="86" fill="#fee2e2" opacity="0.55"/>
+  </svg>
+  <div class="mechanic-flow-note">the model proposes a pick or stability score, then the uncertainty band goes to review.</div>
+</div>
+        """
+    if mode == "ann":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">feature rows to neural layers</span>
+  <div class="mechanics-chip-row"><span>GR</span><span>Rt</span><span>Vp</span><span>Vs</span><span>porosity</span></div>
+  <div class="mechanic-ann">
+    <div><span></span><span></span><span></span></div>
+    <div><span></span><span></span><span></span><span></span></div>
+    <div><span></span><span></span></div>
+  </div>
+  <div class="mechanic-flow-note">well-log features pass through hidden layers to estimate a reviewed target.</div>
+</div>
+        """
+    if mode == "window":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">time windows to features</span>
+  <div class="mechanic-barset"><span style="height:28%"></span><span style="height:55%"></span><span style="height:34%"></span><span style="height:76%"></span><span style="height:48%"></span><span style="height:62%"></span><span style="height:40%"></span><span style="height:82%"></span></div>
+  <div class="mechanics-chip-row"><span>lag</span><span>count</span><span>depth bin</span><span>time split</span></div>
+  <div class="mechanic-flow-note">events are grouped into past-only windows before a baseline or anomaly model runs.</div>
+</div>
+        """
+    if mode == "risk":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">past-only dashboard gate</span>
+  <div class="mechanics-chip-row"><span>t-30</span><span>t-7</span><span>t-1</span><span>split</span><span>test</span></div>
+  <div class="mechanic-layer-stack"><span></span><span></span><span></span><span></span></div>
+  <div class="mechanic-gate">claim gate blocks future leakage and investment-sounding language.</div>
+</div>
+        """
+    if mode == "method":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">method lanes and conflict zone</span>
+  <div class="mechanics-chip-row"><span>gravity</span><span>ERT</span><span>TEM</span><span>seismic</span></div>
+  <div class="mechanic-barset"><span style="height:72%"></span><span style="height:46%"></span><span style="height:76%"></span><span style="height:32%"></span><span style="height:68%"></span><span style="height:36%"></span><span style="height:62%"></span><span style="height:44%"></span></div>
+  <div class="mechanic-flow-note">models rank agreement or conflict instead of pretending methods are the same.</div>
+</div>
+        """
+    if mode == "transfer":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">train region to transfer test</span>
+  <div class="mechanics-chip-row"><span>Australia train</span><span>gravity</span><span>model</span><span>USA test</span></div>
+  <div class="mechanic-layer-stack"><span></span><span></span><span></span></div>
+  <div class="mechanic-gate">residual map decides if the model transferred or just memorized geography.</div>
+</div>
+        """
+    if mode == "vision":
+        return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">image/text evidence branches</span>
+  <div class="mechanics-chip-row"><span>crop</span><span>scale</span><span>caption</span><span>sample</span></div>
+  <div class="mechanic-layer-stack"><span></span><span></span><span></span><span></span></div>
+  <div class="mechanic-flow-note">image branches propose visible labels; interpretation claims wait for expert evidence.</div>
+</div>
+        """
+    return """
+<div class="mechanic-visual">
+  <span class="mechanic-visual-title">tokens to model state</span>
+  <span class="mechanic-token">source</span><span class="mechanic-token">feature</span><span class="mechanic-token">label</span><span class="mechanic-token">review</span>
+  <div class="mechanic-layer-stack"><span></span><span></span><span></span></div>
+  <div class="mechanic-flow-note">structured evidence becomes model-ready state, then a reviewable output.</div>
+</div>
+    """
+
+
+def render_model_mechanics_panel(topic: dict) -> None:
+    slug = topic["slug"]
+    detail = ML_MODEL_DETAIL_DIAGRAMS.get(slug)
+    manual = MANUAL_VISUAL_ARCHITECTURES.get(slug)
+    if detail is None or manual is None:
+        return
+
+    mode_by_slug = {
+        "ai_workflow": "default",
+        "thesis_graph": "graph",
+        "processing_earthquake": "window",
+        "seismic": "waveform",
+        "north_slope": "ann",
+        "rock_classification": "vision",
+        "valles": "method",
+        "near_surface": "method",
+        "moho_ml": "transfer",
+        "ambient_noise": "waveform",
+        "stock_workflow": "risk",
+        "sem_petrography": "vision",
+    }
+    source_chips = "".join(
+        f"<span>{escape(item)}</span>"
+        for item in manual.get("source", [])[:4]
+    )
+    vocab_chips = "".join(
+        f"<span>{escape(item)}</span>"
+        for item in manual.get("vocab", [])[:4]
+    )
+    main = detail["main"]
+    st.markdown(
+        f"""
+<div class="model-mechanics-panel">
+  <div class="model-mechanics-head">
+    <div>
+      <div class="model-mechanics-kicker">How the model works</div>
+      <h3>{escape(topic["title"])}: {escape(main["name"])}</h3>
+    </div>
+    <p>{escape(detail["diagram"])}</p>
+  </div>
+  <div class="model-mechanics-board">
+    <div class="mechanics-card">
+      <strong>What enters the model</strong>
+      <p>{escape(main["input"])}</p>
+      <div class="mechanics-chip-row">{source_chips}</div>
+    </div>
+    {_model_mechanic_visual(mode_by_slug.get(slug, "default"))}
+    <div class="mechanics-card">
+      <strong>What comes out</strong>
+      <p>{escape(main["target"])}</p>
+      <div class="mechanics-chip-row">{vocab_chips}</div>
+      <div class="mechanic-gate">{escape(detail["gate"])}</div>
+    </div>
   </div>
 </div>
         """,
@@ -9882,6 +10529,7 @@ def _manual_flow_caption(value: str) -> str:
 
 def render_ml_pipeline_contract(topic: dict) -> None:
     render_manual_visual_architecture(topic)
+    render_model_mechanics_panel(topic)
     render_ml_visual_diagram(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
