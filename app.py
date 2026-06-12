@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-11 / all-topic-model-mechanics-pass"
+DEPLOY_BUILD_ID = "2026-06-12 / topic-2-redraw-fix"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -7407,7 +7407,7 @@ st.markdown(
     }
     .thesis-graph-head {
         display: grid;
-        grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.2fr);
+        grid-template-columns: 1fr;
         gap: 0.9rem;
         align-items: stretch;
     }
@@ -7443,7 +7443,7 @@ st.markdown(
     }
     .adobe-graph-focus {
         display: grid;
-        grid-template-columns: minmax(13rem, 0.72fr) minmax(18rem, 1.28fr);
+        grid-template-columns: minmax(14rem, 0.34fr) minmax(24rem, 0.66fr);
         gap: 0.75rem;
         margin-top: 0.75rem;
     }
@@ -7455,16 +7455,17 @@ st.markdown(
     }
     .adobe-graph-source {
         background: #020617;
-        min-height: 18rem;
+        min-height: 22rem;
         position: relative;
     }
     .adobe-graph-source img {
         display: block;
+        filter: brightness(1.45) contrast(1.22) saturate(1.55);
         height: 100%;
-        min-height: 18rem;
+        min-height: 22rem;
         object-fit: cover;
-        object-position: 51% 53%;
-        opacity: 0.9;
+        object-position: 50% 52%;
+        opacity: 0.96;
         width: 100%;
     }
     .adobe-graph-source span {
@@ -7483,9 +7484,14 @@ st.markdown(
     }
     .adobe-graph-redraw {
         background: #ecfeff;
-        min-height: 18rem;
+        min-height: 22rem;
         padding: 0.8rem;
         position: relative;
+    }
+    .readable-redraw-svg {
+        display: block;
+        height: 18rem;
+        width: 100%;
     }
     .redraw-hub {
         background: #0f172a;
@@ -7539,14 +7545,12 @@ st.markdown(
         background: rgba(255, 255, 255, 0.88);
         border: 1px solid #bae6fd;
         border-radius: 8px;
-        bottom: 0.7rem;
         color: #475569;
         font-size: 0.78rem;
-        left: 0.8rem;
         line-height: 1.25;
+        margin-top: 0.55rem;
         padding: 0.45rem 0.55rem;
-        position: absolute;
-        right: 0.8rem;
+        position: static;
         z-index: 3;
     }
     .adobe-closeup-grid {
@@ -7639,6 +7643,11 @@ st.markdown(
         overflow: hidden;
         padding: 0.5rem;
         position: relative;
+    }
+    .graph-model-mini-svg {
+        display: block;
+        height: 100%;
+        width: 100%;
     }
     .bert-token-row,
     .neighbor-row,
@@ -9060,17 +9069,43 @@ def render_thesis_graph_model_visuals() -> None:
     <span>single original graph source</span>
   </div>
   <div class="adobe-graph-redraw">
-    <div class="redraw-edge a"></div>
-    <div class="redraw-edge b"></div>
-    <div class="redraw-edge c"></div>
-    <div class="redraw-edge d"></div>
-    <div class="redraw-hub">Bayan<br>Obo</div>
-    <div class="redraw-node mineral">bastnasite / monazite</div>
-    <div class="redraw-node host">host rock</div>
-    <div class="redraw-node process">fluid event</div>
-    <div class="redraw-node evidence">source evidence</div>
+    <svg class="readable-redraw-svg" viewBox="0 0 760 360" role="img" aria-label="Readable redraw of Bayan Obo graph relationships">
+      <defs>
+        <marker id="topic2Arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#0f766e"></path>
+        </marker>
+      </defs>
+      <rect x="12" y="12" width="736" height="330" rx="18" fill="#f0fdfa" stroke="#99f6e4"></rect>
+      <circle cx="380" cy="178" r="52" fill="#0f172a"></circle>
+      <text x="380" y="171" fill="#ffffff" font-size="18" font-weight="900" text-anchor="middle">Bayan</text>
+      <text x="380" y="194" fill="#ffffff" font-size="18" font-weight="900" text-anchor="middle">Obo</text>
+      <rect x="62" y="58" width="168" height="66" rx="26" fill="#dbeafe" stroke="#2563eb" stroke-width="4"></rect>
+      <text x="146" y="86" fill="#1e3a8a" font-size="16" font-weight="900" text-anchor="middle">REE minerals</text>
+      <text x="146" y="107" fill="#1e3a8a" font-size="13" font-weight="800" text-anchor="middle">bastnasite / monazite</text>
+      <rect x="548" y="58" width="150" height="66" rx="26" fill="#ccfbf1" stroke="#0f766e" stroke-width="4"></rect>
+      <text x="623" y="96" fill="#134e4a" font-size="17" font-weight="900" text-anchor="middle">host rock</text>
+      <rect x="72" y="246" width="148" height="66" rx="26" fill="#fef3c7" stroke="#d97706" stroke-width="4"></rect>
+      <text x="146" y="274" fill="#92400e" font-size="16" font-weight="900" text-anchor="middle">fluid event</text>
+      <text x="146" y="295" fill="#92400e" font-size="13" font-weight="800" text-anchor="middle">process node</text>
+      <rect x="536" y="238" width="174" height="78" rx="26" fill="#f5f3ff" stroke="#7c3aed" stroke-width="4"></rect>
+      <text x="623" y="266" fill="#4c1d95" font-size="16" font-weight="900" text-anchor="middle">source</text>
+      <text x="623" y="287" fill="#4c1d95" font-size="16" font-weight="900" text-anchor="middle">evidence</text>
+      <text x="623" y="306" fill="#4c1d95" font-size="12" font-weight="800" text-anchor="middle">paper / caption / table</text>
+      <path d="M230 92 C286 98, 320 126, 343 150" fill="none" stroke="#2563eb" stroke-width="5" marker-end="url(#topic2Arrow)"></path>
+      <path d="M548 92 C492 101, 445 126, 416 151" fill="none" stroke="#0f766e" stroke-width="5" marker-end="url(#topic2Arrow)"></path>
+      <path d="M222 278 C286 263, 322 229, 348 206" fill="none" stroke="#d97706" stroke-width="5" marker-end="url(#topic2Arrow)"></path>
+      <path d="M536 278 C481 264, 435 229, 410 206" fill="none" stroke="#7c3aed" stroke-width="5" marker-end="url(#topic2Arrow)"></path>
+      <rect x="274" y="82" width="110" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe"></rect>
+      <text x="329" y="101" fill="#1e3a8a" font-size="12" font-weight="900" text-anchor="middle">contains</text>
+      <rect x="468" y="82" width="120" height="28" rx="14" fill="#ffffff" stroke="#99f6e4"></rect>
+      <text x="528" y="101" fill="#134e4a" font-size="12" font-weight="900" text-anchor="middle">hosted by</text>
+      <rect x="260" y="248" width="126" height="28" rx="14" fill="#ffffff" stroke="#fbbf24"></rect>
+      <text x="323" y="267" fill="#92400e" font-size="12" font-weight="900" text-anchor="middle">altered by</text>
+      <rect x="430" y="215" width="138" height="28" rx="14" fill="#ffffff" stroke="#c4b5fd"></rect>
+      <text x="499" y="234" fill="#4c1d95" font-size="12" font-weight="900" text-anchor="middle">evidence for</text>
+    </svg>
     <div class="redraw-caption">
-      Redraw the dense Adobe/Gephi graph into readable nodes and typed edges before asking a model to rank or infer anything.
+      Readable redraw: one central deposit node, four visible relationship types, and explicit evidence before any AI-suggested link becomes a claim.
     </div>
   </div>
 </div>
@@ -9095,22 +9130,35 @@ def render_thesis_graph_model_visuals() -> None:
         if kind == "sage":
             return """
 <div class="graph-model-mini">
-  <div class="graph-sage-neighbor n1"></div>
-  <div class="graph-sage-neighbor n2"></div>
-  <div class="graph-sage-neighbor n3"></div>
-  <div class="graph-sage-neighbor n4"></div>
-  <div class="graph-sage-node"></div>
-  <div class="neighbor-row"><span>sample neighbors</span><span>aggregate</span></div>
+  <svg class="graph-model-mini-svg" viewBox="0 0 260 130" aria-label="GraphSAGE neighbor aggregation">
+    <circle cx="130" cy="64" r="24" fill="#fef3c7" stroke="#d97706" stroke-width="4"></circle>
+    <circle cx="44" cy="30" r="13" fill="#ffffff" stroke="#d97706" stroke-width="3"></circle>
+    <circle cx="212" cy="30" r="13" fill="#ffffff" stroke="#d97706" stroke-width="3"></circle>
+    <circle cx="54" cy="98" r="13" fill="#ffffff" stroke="#d97706" stroke-width="3"></circle>
+    <circle cx="206" cy="98" r="13" fill="#ffffff" stroke="#d97706" stroke-width="3"></circle>
+    <path d="M58 35 L108 56 M199 36 L152 56 M68 93 L109 74 M193 93 L152 74" stroke="#92400e" stroke-width="3"></path>
+    <text x="130" y="69" fill="#92400e" font-size="12" font-weight="900" text-anchor="middle">node</text>
+    <rect x="40" y="8" width="88" height="22" rx="11" fill="#fffbeb" stroke="#fbbf24"></rect>
+    <text x="84" y="23" fill="#92400e" font-size="10" font-weight="900" text-anchor="middle">sample neighbors</text>
+    <rect x="122" y="102" width="92" height="22" rx="11" fill="#fffbeb" stroke="#fbbf24"></rect>
+    <text x="168" y="117" fill="#92400e" font-size="10" font-weight="900" text-anchor="middle">aggregate features</text>
+  </svg>
 </div>
             """
         return """
 <div class="graph-model-mini">
-  <div class="relation-node r1"></div>
-  <div class="relation-node r2"></div>
-  <div class="relation-node r3"></div>
-  <div class="relation-line"></div>
-  <div class="relation-line two"></div>
-  <div class="relation-row"><span>contains</span><span>hosted by</span></div>
+  <svg class="graph-model-mini-svg" viewBox="0 0 260 130" aria-label="R-GCN relation-specific edges">
+    <circle cx="58" cy="64" r="20" fill="#ffffff" stroke="#7c3aed" stroke-width="4"></circle>
+    <circle cx="202" cy="38" r="18" fill="#ffffff" stroke="#2563eb" stroke-width="4"></circle>
+    <circle cx="202" cy="92" r="18" fill="#ffffff" stroke="#0f766e" stroke-width="4"></circle>
+    <path d="M78 58 L184 42" stroke="#2563eb" stroke-width="5"></path>
+    <path d="M78 70 L184 88" stroke="#0f766e" stroke-width="5"></path>
+    <rect x="94" y="24" width="74" height="22" rx="11" fill="#dbeafe" stroke="#2563eb"></rect>
+    <text x="131" y="39" fill="#1e3a8a" font-size="10" font-weight="900" text-anchor="middle">contains</text>
+    <rect x="94" y="84" width="82" height="22" rx="11" fill="#ccfbf1" stroke="#0f766e"></rect>
+    <text x="135" y="99" fill="#134e4a" font-size="10" font-weight="900" text-anchor="middle">hosted by</text>
+    <text x="58" y="69" fill="#4c1d95" font-size="11" font-weight="900" text-anchor="middle">node</text>
+  </svg>
 </div>
         """
 
@@ -9173,7 +9221,6 @@ def render_thesis_graph_model_visuals() -> None:
         ideas into reviewed nodes, typed edges, and candidate links.
       </p>
     </div>
-    <div class="graph-model-asset">{graph_asset_html}</div>
   </div>
   {graph_focus_html}
   <div class="graph-model-grid">{model_html}</div>
@@ -10807,24 +10854,22 @@ def render_project_visual_stage(topic: dict) -> bool:
         )
 
     if slug == "thesis_graph":
-        drawing_uri = asset_data_uri(
-            project_asset("assets/project_visuals/ree_bayan_obo_main.png"),
-            max_bytes=500_000,
-        )
-        graph_uri = asset_data_uri(
-            project_asset("assets/project_visuals/thesis_host_context_clean.png"),
-            max_bytes=500_000,
-        )
-        if drawing_uri is None or graph_uri is None:
-            return False
         st.markdown(
-            f"""
+            """
 <div class="project-stage" style="background:#eef2f4;padding:1rem;min-height:510px;">
   <div style="display:grid;grid-template-columns:1fr 150px 1fr;gap:0.9rem;align-items:center;">
     <div style="display:grid;gap:0.7rem;">
       <div class="chain-node" style="min-height:92px;"><strong>TABLES / CSVs</strong><span>many inputs and variables</span></div>
       <div class="chain-node" style="min-height:92px;"><strong>QUESTIONS / PROJECTS</strong><span>related variables and research goals</span></div>
-      <div class="chain-node human" style="min-height:120px;"><img src="{drawing_uri}" alt="Bayan Obo drawing"><strong>DRAWINGS / IDEAS</strong><span>shapes, colors, polygons</span></div>
+      <div class="chain-node human" style="min-height:120px;">
+        <svg viewBox="0 0 220 90" role="img" aria-label="Drawing ideas become nodes" style="width:100%;height:70px;display:block;">
+          <rect x="8" y="10" width="204" height="70" rx="12" fill="#f0fdfa" stroke="#99f6e4"></rect>
+          <circle cx="72" cy="44" r="20" fill="#dbeafe" stroke="#2563eb" stroke-width="3"></circle>
+          <circle cx="144" cy="44" r="20" fill="#fef3c7" stroke="#d97706" stroke-width="3"></circle>
+          <path d="M92 44 C108 22, 126 22, 144 44" fill="none" stroke="#0f766e" stroke-width="4"></path>
+        </svg>
+        <strong>DRAWINGS / IDEAS</strong><span>shapes, colors, polygons become candidate nodes</span>
+      </div>
     </div>
     <div style="height:150px;border-radius:50%;background:#0b1f3a;color:#ffffff;display:grid;place-items:center;text-align:center;font-weight:900;border:6px solid #7ed6df;">
       <div>AI / ML<br><span style="font-size:0.78rem;color:#bfeff3;">sort + connect</span></div>
@@ -10832,7 +10877,18 @@ def render_project_visual_stage(topic: dict) -> bool:
     <div style="display:grid;gap:0.7rem;">
       <div class="chain-node" style="min-height:92px;"><strong>KNOWLEDGE GRAPH</strong><span>variables connect with evidence</span></div>
       <div class="chain-node" style="min-height:92px;"><strong>ML ARCHITECTURE</strong><span>inputs, model, validation gates</span></div>
-      <div class="chain-node" style="min-height:120px;"><img src="{graph_uri}" alt="Graph export"><strong>ADOBE / GEPHI VISUAL</strong><span>architecture people can inspect</span></div>
+      <div class="chain-node" style="min-height:120px;">
+        <svg viewBox="0 0 250 92" role="img" aria-label="Readable graph architecture" style="width:100%;height:72px;display:block;">
+          <rect x="8" y="8" width="234" height="76" rx="12" fill="#f8fafc" stroke="#cbd5e1"></rect>
+          <circle cx="124" cy="46" r="17" fill="#0f172a"></circle>
+          <circle cx="52" cy="28" r="13" fill="#dbeafe" stroke="#2563eb" stroke-width="3"></circle>
+          <circle cx="198" cy="28" r="13" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"></circle>
+          <circle cx="66" cy="68" r="13" fill="#fef3c7" stroke="#d97706" stroke-width="3"></circle>
+          <circle cx="190" cy="68" r="13" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3"></circle>
+          <path d="M65 31 L108 42 M185 31 L140 42 M79 64 L109 52 M177 64 L140 52" stroke="#0f766e" stroke-width="3"></path>
+        </svg>
+        <strong>READABLE GRAPH VISUAL</strong><span>architecture people can inspect before critique</span>
+      </div>
     </div>
   </div>
   <div class="output-branches" style="padding:1rem 0 0;">
