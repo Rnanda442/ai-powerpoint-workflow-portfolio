@@ -10634,6 +10634,159 @@ def render_ml_pipeline_contract(topic: dict) -> None:
         )
 
 
+def _tracker_value(row: pd.Series | None, column: str, default: str = "") -> str:
+    if row is None or column not in row.index:
+        return default
+    value = row.get(column, default)
+    if pd.isna(value):
+        return default
+    return str(value)
+
+
+def bottom_up_topics() -> list[dict]:
+    return list(reversed(TOPIC_ROOMS))
+
+
+def bottom_up_tracker_rows() -> pd.DataFrame:
+    rows = []
+    for order, topic in enumerate(bottom_up_topics(), start=1):
+        slug = topic["slug"]
+        tracker = ml_diagram_row(slug)
+        detail = ML_MODEL_DETAIL_DIAGRAMS.get(slug, {})
+        main_model = detail.get("main", {}).get(
+            "name",
+            ML_DIAGRAM_BLUEPRINTS.get(slug, {}).get("model", ""),
+        )
+        coverage = []
+        if slug in MANUAL_VISUAL_ARCHITECTURES:
+            coverage.append("manual visual")
+        if slug in ML_MODEL_DETAIL_DIAGRAMS:
+            coverage.append("model detail")
+        if slug in ML_DIAGRAM_BLUEPRINTS:
+            coverage.append("pipeline strip")
+        if SOURCE_BACKED_TOPIC_ASSETS.get(slug):
+            coverage.append("source images")
+        rows.append(
+            {
+                "Order": order,
+                "Topic": topic["title"],
+                "Slug": slug,
+                "Diagram": _tracker_value(tracker, "diagram_name", "Needs diagram"),
+                "Main model": main_model,
+                "Training unit": detail.get("main", {}).get("unit", ""),
+                "Split / gate": detail.get("validation", ""),
+                "Human or risk gate": detail.get("gate", ""),
+                "Primary ML source": _tracker_value(
+                    tracker,
+                    "primary_ml_source",
+                    "ML source notes",
+                ),
+                "Validation gates": _tracker_value(tracker, "validation_gates", ""),
+                "Visual coverage": " + ".join(coverage),
+                "Status": _tracker_value(tracker, "status", "planned"),
+                "Next action": _tracker_value(
+                    tracker,
+                    "next_action",
+                    "Build source-backed model visual.",
+                ),
+                "Topic link": topic_url(slug),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def render_ml_implementation_tracker_page() -> None:
+    tracker_df = bottom_up_tracker_rows()
+    visual_ready = int(
+        tracker_df["Visual coverage"].str.contains("manual visual", regex=False).sum()
+    )
+    model_ready = int(
+        tracker_df["Visual coverage"].str.contains("model detail", regex=False).sum()
+    )
+    source_ready = int(
+        tracker_df["Visual coverage"].str.contains("source images", regex=False).sum()
+    )
+    in_site = int((tracker_df["Status"] == "in_site").sum())
+
+    st.markdown(
+        """
+<div class="talk-hero">
+  <div class="talk-kicker">Build Room / ML implementation tracker</div>
+  <h2>Bottom-up pass: model visuals, source evidence, and validation gates</h2>
+  <p>
+    Start from the last topic and work upward. Each row must connect a concrete project example
+    to a named ML model, training unit, split policy, visible failure gate, and human review point.
+  </p>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    metric_cols = st.columns(4)
+    metric_cols[0].metric("Topics tracked", len(tracker_df))
+    metric_cols[1].metric("Manual visuals", visual_ready)
+    metric_cols[2].metric("Model details", model_ready)
+    metric_cols[3].metric("Source panels", source_ready, f"{in_site} in site")
+
+    st.subheader("Start from the bottom")
+    bottom_topics = bottom_up_topics()[:4]
+    bottom_cols = st.columns(4)
+    for idx, topic in enumerate(bottom_topics):
+        row = ml_diagram_row(topic["slug"])
+        detail = ML_MODEL_DETAIL_DIAGRAMS.get(topic["slug"], {})
+        with bottom_cols[idx]:
+            with st.container(border=True):
+                st.caption(f"Bottom-up #{idx + 1} · {topic['slug']}")
+                st.markdown(f"**{topic['title']}**")
+                st.write(_tracker_value(row, "diagram_name", "Model visual"))
+                st.markdown(
+                    f"**Main model:** {detail.get('main', {}).get('name', 'named model')}"
+                )
+                st.caption(detail.get("gate", "Visible validation gate"))
+                st.link_button("Open topic", topic_url(topic["slug"]))
+
+    with st.expander("Preview bottom-up model visuals", expanded=True):
+        for topic in bottom_topics:
+            st.markdown(f"**{topic['title']}**")
+            render_ml_visual_diagram(topic, compact=True)
+
+    st.subheader("Source implementation matrix")
+    st.dataframe(
+        tracker_df[
+            [
+                "Order",
+                "Topic",
+                "Diagram",
+                "Main model",
+                "Training unit",
+                "Split / gate",
+                "Visual coverage",
+                "Status",
+                "Next action",
+                "Topic link",
+            ]
+        ],
+        hide_index=True,
+        width="stretch",
+        column_config={
+            "Topic link": st.column_config.LinkColumn("Topic link"),
+        },
+    )
+
+    with st.expander("Full ML diagram tracker CSV"):
+        st.dataframe(
+            ml_diagram_tracker,
+            hide_index=True,
+            width="stretch",
+        )
+        st.download_button(
+            "Download ML diagram tracker CSV",
+            ml_diagram_tracker.to_csv(index=False),
+            file_name=ML_DIAGRAM_TRACKER_PATH.name,
+            mime="text/csv",
+        )
+
+
 def render_topic_signal(topic: dict, card: bool = False) -> str:
     if card:
         visual_path_text = CARD_VISUALS.get(topic["slug"]) or TOPIC_VISUALS.get(topic["slug"])
@@ -11301,6 +11454,7 @@ PUBLIC_TO_INTERNAL = {
 }
 BUILD_ROOM_SECTIONS = [
     "Vision Board",
+    "ML Implementation Tracker",
     "System Map",
     "Evidence Library",
     "LinkedIn Evidence",
@@ -11325,6 +11479,7 @@ PUBLIC_LABELS = {
 }
 BUILD_ROOM_LABELS = {
     "Vision Board": "Vision Board / internal tracker",
+    "ML Implementation Tracker": "ML implementation tracker",
     "System Map": "Architecture / System Map",
     "Evidence Library": "Sources and Evidence Library",
     "LinkedIn Evidence": "LinkedIn evidence",
@@ -11444,6 +11599,10 @@ if section == "Overview":
             "The portfolio keeps the evidence visible while separating working prototypes "
             "from ideas that still need expert validation."
         )
+
+
+elif section == "ML Implementation Tracker":
+    render_ml_implementation_tracker_page()
 
 
 elif section == "Vision Board":

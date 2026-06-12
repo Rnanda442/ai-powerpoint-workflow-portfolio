@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagram Review Poster</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5c6670;
+      --line: #d9e0e6;
+      --paper: #f7f8f6;
+      --panel: #ffffff;
+      --blue: #2563eb;
+      --green: #0f8a63;
+      --gold: #b7791f;
+      --red: #c24130;
+      --charcoal: #29313a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .poster {
+      width: min(1680px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 30px 0 48px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 20px;
+      padding: 18px 0 24px;
+      border-bottom: 2px solid var(--charcoal);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .dek {
+      margin: 10px 0 0;
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .stamp {
+      display: grid;
+      gap: 6px;
+      min-width: 250px;
+      padding: 12px 14px;
+      border: 1px solid var(--charcoal);
+      background: #eef4f1;
+      font-size: 13px;
+      color: var(--charcoal);
+    }
+
+    .stamp strong {
+      font-size: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin: 28px 0 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .active-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .card-head {
+      min-height: 112px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .dot.green { background: var(--green); }
+    .dot.gold { background: var(--gold); }
+    .dot.red { background: var(--red); }
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.17;
+      letter-spacing: 0;
+    }
+
+    .question {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .visual {
+      display: grid;
+      place-items: center;
+      height: 205px;
+      padding: 12px;
+      background:
+        linear-gradient(90deg, rgba(23, 32, 42, .04) 1px, transparent 1px),
+        linear-gradient(rgba(23, 32, 42, .04) 1px, transparent 1px),
+        #f8faf8;
+      background-size: 24px 24px;
+    }
+
+    .visual img {
+      max-width: 100%;
+      max-height: 181px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card-body {
+      display: grid;
+      gap: 9px;
+      padding: 12px 14px 14px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .meta-row b {
+      color: var(--charcoal);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .meta-row span {
+      color: var(--muted);
+    }
+
+    .mini-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .mini {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+      min-height: 104px;
+      border: 1px solid var(--line);
+      background: #fbfcfb;
+      padding: 8px;
+    }
+
+    .mini span {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .mini img {
+      width: 100%;
+      height: 68px;
+      object-fit: contain;
+    }
+
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .asset {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .asset-visual {
+      display: grid;
+      place-items: center;
+      height: 150px;
+      padding: 10px;
+      background: #f6f9fa;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .asset-visual img {
+      max-width: 100%;
+      max-height: 130px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .asset p {
+      min-height: 42px;
+      margin: 0;
+      padding: 10px;
+      color: var(--charcoal);
+      font-size: 12px;
+      line-height: 1.22;
+      overflow-wrap: anywhere;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .note {
+      min-height: 104px;
+      border-left: 4px solid var(--blue);
+      background: var(--panel);
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .note b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1180px) {
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      .active-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .inventory-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .notes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .poster {
+        width: min(100vw - 20px, 520px);
+        padding-top: 14px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .active-grid,
+      .inventory-grid,
+      .notes {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <header>
+      <div>
+        <h1>Diagram Review Poster</h1>
+        <p class="dek">One-page critique board for the current AI think-tank website visuals. The first grid shows the active topic-room diagram or site visual. The second grid shows every SVG currently stored in <code>assets/topic_visuals</code>.</p>
+      </div>
+      <div class="stamp">
+        <strong>Current repo state</strong>
+        <span>Generated for visual critique.</span>
+        <span>Open alongside Streamlit to compare poster assets against live page composition.</span>
+      </div>
+    </header>
+
+    <section aria-labelledby="active-topic-title">
+      <div class="section-title">
+        <h2 id="active-topic-title">Active Website Topics</h2>
+        <span>12 topic rooms / current visual mapping</span>
+      </div>
+
+      <div class="active-grid">
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot"></i>Agent Workflow</div>
+            <h3>Prompting, Rubrics, And Agent Training</h3>
+            <p class="question">Will screenshots and ChatGPT prompting be replaced by Codex?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/agent_supervised_workflows.svg" alt="Agent supervised workflows diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Prompt/rubric, screen work, review, and supervised agent-training path.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Check whether it reads as real work evidence or too much like a generic AI training concept.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Older asset</span><img src="../assets/topic_visuals/agent_training_trace.svg" alt="Agent trace diagram"></div>
+              <div class="mini"><span>Base asset</span><img src="../assets/topic_visuals/agent_training.svg" alt="Agent training diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot green"></i>Knowledge Graph</div>
+            <h3>AI Knowledge Graphs And Project Diagrams</h3>
+            <p class="question">Can AI-built graphs and diagrams explain project architecture?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/knowledge_architecture_ai.svg" alt="Knowledge architecture diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Tables, questions, drawings, AI/ML, graph, and architecture outputs.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Decide if the diagram is clear enough before showing richer REE slide evidence.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Project proof</span><img src="../assets/project_visuals/ree_bayan_obo_main.png" alt="Bayan Obo graph visual"></div>
+              <div class="mini"><span>Base asset</span><img src="../assets/topic_visuals/knowledge_graph.svg" alt="Knowledge graph diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot gold"></i>Visualization</div>
+            <h3>AI Visualization For Prediction Variables</h3>
+            <p class="question">Can AI visualize data into new variables for prediction models?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/data_variable_transform.svg" alt="Data variable transform diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>USGS events become globe marks, then region/time features before modeling.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Check if the topic says feature engineering instead of unsupported earthquake forecasting.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Project proof</span><img src="../assets/project_visuals/processing_earthquake_linkedin_poster.jpg" alt="Processing earthquake poster"></div>
+              <div class="mini"><span>Base asset</span><img src="../assets/topic_visuals/earthquake_globe_signal.svg" alt="Earthquake globe signal diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot"></i>Seismic / Cloud</div>
+            <h3>Large Data Processing Streamlined With AI</h3>
+            <p class="question">Can Codex streamline large data processing in cloud workspaces?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/cloud_data_processing.svg" alt="Cloud data processing diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Codex, GitHub, cloud compute, datasets, and reviewed outputs.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Decide if this still belongs with Pondicherry seismic or should become a separate cloud-processing page.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Project proof</span><img src="../assets/project_visuals/pondicherry_near_offset_reannotated.png" alt="Pondicherry seismic panel"></div>
+              <div class="mini"><span>Base asset</span><img src="../assets/topic_visuals/seismic_processing.svg" alt="Seismic processing diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot green"></i>North Slope</div>
+            <h3>Using AI For Web Scraping Public Energy Data</h3>
+            <p class="question">Can AI scrape public sources into one energy-data workspace?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/web_scraping_data_lake.svg" alt="Web scraping data lake diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Public web search, scraper/API organization, provenance, and review workspace.</span></div>
+            <div class="meta-row"><b>Critique</b><span>The topic diagram and card hero differ; decide which should lead the public page.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Card hero</span><img src="../assets/project_visuals/north_slope_3d_streamlit_plotly_map.png" alt="North Slope 3D map"></div>
+              <div class="mini"><span>Older asset</span><img src="../assets/topic_visuals/north_slope_decision_space.svg" alt="North Slope decision-space diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot red"></i>Rock Classification</div>
+            <h3>Rock Type Classification From Satellite Variables</h3>
+            <p class="question">Can AI classify rock types from satellite variables more accurately?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/satellite_rock_classification.svg" alt="Satellite rock classification diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Satellite variables, classifier, reviewed resource-map output, and uncertainty.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Check if satellite classification and petrography/geochemistry are getting mixed too tightly.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Project proof</span><img src="../assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png" alt="Rock raster classification map"></div>
+              <div class="mini"><span>Base asset</span><img src="../assets/topic_visuals/rock_resource_map.svg" alt="Rock resource map diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot"></i>Valles</div>
+            <h3>AI For Field Geophysics Method Comparison</h3>
+            <p class="question">How should AI compare imperfect geophysical surveys?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/field_geophysics.svg" alt="Field geophysics diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Gravity, seismic, ERT/TEM, line context, and uncertainty review.</span></div>
+            <div class="meta-row"><b>Critique</b><span>The diagram is simpler than the source maps; decide if it needs method-lane detail.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Card hero</span><img src="../assets/project_visuals/valles_bouguer.png" alt="Valles Bouguer anomaly map"></div>
+              <div class="mini"><span>Source map</span><img src="../assets/project_visuals/valles_moho.png" alt="Valles Moho map"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot green"></i>Near Surface</div>
+            <h3>AI For Near-Surface Geophysics</h3>
+            <p class="question">Can AI compare shallow methods while preserving disagreement?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/near_surface_ai.svg" alt="Near-surface AI diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Hammer seismic, ERT, TEM, possible units, and review zones.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Check if it visually separates method conflict from clean interpretation.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Related asset</span><img src="../assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_05.jpg" alt="SAGE geophysics comparison slide"></div>
+              <div class="mini"><span>ERT proof</span><img src="../assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 121033.png" alt="ERT resistivity section"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot gold"></i>Hydrate ML</div>
+            <h3>ML Architecture For Gas Hydrate Prediction</h3>
+            <p class="question">What ML architecture predicts hydrates without leakage?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/north_slope_ml_architecture.svg" alt="North Slope ML architecture diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Well-log scaffold, feature lanes, models, leakage gates, and held-out wells.</span></div>
+            <div class="meta-row"><b>Critique</b><span>This is the densest diagram; check if it is legible at card size and on mobile.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Related asset</span><img src="../assets/topic_visuals/north_slope_energy.svg" alt="North Slope energy diagram"></div>
+              <div class="mini"><span>Project proof</span><img src="../assets/project_visuals/north_slope_presentation_model_panels.png" alt="North Slope presentation model panels"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot"></i>Ambient Noise</div>
+            <h3>AI For Ambient-Noise Seismology</h3>
+            <p class="question">Which ambient-noise correlations are trustworthy enough to monitor?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/ambient_noise_processing.svg" alt="Ambient noise processing diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Continuous records, station pairs, cross-correlation, stacking, monitoring, and QA.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Decide if this needs a real NoisePy visual beside the abstract diagram.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Seismic asset</span><img src="../assets/topic_visuals/seismic_processing.svg" alt="Seismic processing diagram"></div>
+              <div class="mini"><span>Cloud asset</span><img src="../assets/topic_visuals/cloud_data_processing.svg" alt="Cloud data processing diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot red"></i>App Risk</div>
+            <h3>Current Stock Prediction App Workflow</h3>
+            <p class="question">Can the current stock app teach honest AI app building?</p>
+          </div>
+          <div class="visual"><img src="../assets/project_visuals/stock_saved_data_chart.svg" alt="Stock saved data chart"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>Streamlit charts and app workflow with leakage/model-risk framing.</span></div>
+            <div class="meta-row"><b>Critique</b><span>The chart is real proof, but decide if it visually screams finance instead of AI workflow.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Card hero</span><img src="../assets/project_visuals/stock_all_tickers_chart.svg" alt="All tickers chart"></div>
+              <div class="mini"><span>Diagram asset</span><img src="../assets/topic_visuals/app_pipeline.svg" alt="App pipeline diagram"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div class="eyebrow"><i class="dot green"></i>SEM</div>
+            <h3>AI For SEM Petrography And Climate Proxies</h3>
+            <p class="question">Can AI label SEM textures without overclaiming proxy meaning?</p>
+          </div>
+          <div class="visual"><img src="../assets/topic_visuals/sem_petrography_ai.svg" alt="SEM petrography AI diagram"></div>
+          <div class="card-body">
+            <div class="meta-row"><b>Current</b><span>SEM crop, visible label, interpretation label, literature support, and claim gate.</span></div>
+            <div class="meta-row"><b>Critique</b><span>Check if observation versus interpretation is visually obvious without reading all text.</span></div>
+            <div class="mini-strip">
+              <div class="mini"><span>Rock asset</span><img src="../assets/topic_visuals/satellite_rock_classification.svg" alt="Satellite rock classification diagram"></div>
+              <div class="mini"><span>Thin section</span><img src="../assets/project_visuals/linkedin_powerpoint_slides/rock_thin_section_slide_01.jpg" alt="Thin section classification slide"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="inventory-title">
+      <div class="section-title">
+        <h2 id="inventory-title">SVG Diagram Inventory</h2>
+        <span>24 files in assets/topic_visuals</span>
+      </div>
+
+      <div class="inventory-grid">
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/agent_supervised_workflows.svg" alt=""></div><p>agent_supervised_workflows.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/agent_training.svg" alt=""></div><p>agent_training.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/agent_training_trace.svg" alt=""></div><p>agent_training_trace.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/ambient_noise_processing.svg" alt=""></div><p>ambient_noise_processing.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/app_pipeline.svg" alt=""></div><p>app_pipeline.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/cloud_data_processing.svg" alt=""></div><p>cloud_data_processing.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/data_variable_transform.svg" alt=""></div><p>data_variable_transform.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/earthquake_globe.svg" alt=""></div><p>earthquake_globe.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/earthquake_globe_signal.svg" alt=""></div><p>earthquake_globe_signal.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/field_geophysics.svg" alt=""></div><p>field_geophysics.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/gis_moho_deck_trace.svg" alt=""></div><p>gis_moho_deck_trace.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/knowledge_architecture_ai.svg" alt=""></div><p>knowledge_architecture_ai.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/knowledge_graph.svg" alt=""></div><p>knowledge_graph.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/ml_ocr_ui_state_encoder.svg" alt=""></div><p>ml_ocr_ui_state_encoder.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/moho_transfer.svg" alt=""></div><p>moho_transfer.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/near_surface_ai.svg" alt=""></div><p>near_surface_ai.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/north_slope_decision_space.svg" alt=""></div><p>north_slope_decision_space.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/north_slope_energy.svg" alt=""></div><p>north_slope_energy.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/north_slope_ml_architecture.svg" alt=""></div><p>north_slope_ml_architecture.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/rock_resource_map.svg" alt=""></div><p>rock_resource_map.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/satellite_rock_classification.svg" alt=""></div><p>satellite_rock_classification.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/seismic_processing.svg" alt=""></div><p>seismic_processing.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/sem_petrography_ai.svg" alt=""></div><p>sem_petrography_ai.svg</p></div>
+        <div class="asset"><div class="asset-visual"><img src="../assets/topic_visuals/web_scraping_data_lake.svg" alt=""></div><p>web_scraping_data_lake.svg</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="critique-title">
+      <div class="section-title">
+        <h2 id="critique-title">Fast Critique Prompts</h2>
+        <span>Use these while reviewing the poster and live Streamlit page</span>
+      </div>
+
+      <div class="notes">
+        <div class="note"><b>First impression</b>Which three visuals look portfolio-worthy at first glance, without explaining them verbally?</div>
+        <div class="note"><b>Evidence strength</b>Which topics need real screenshots/maps beside abstract diagrams before the site feels credible?</div>
+        <div class="note"><b>Mobile risk</b>Which diagrams become too dense or text-heavy when they shrink into cards?</div>
+        <div class="note"><b>Story confusion</b>Where does a diagram mix two stories, such as geoscience evidence versus future ML architecture?</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
