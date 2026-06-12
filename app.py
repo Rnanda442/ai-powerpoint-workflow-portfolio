@@ -4869,6 +4869,64 @@ st.markdown(
         font-size: 0.84rem;
         line-height: 1.35;
     }
+    .other-sector-use-cases {
+        border: 2px solid #0f172a;
+        border-radius: 8px;
+        background:
+            linear-gradient(135deg, rgba(15, 118, 110, 0.10), rgba(37, 99, 235, 0.08)),
+            #ffffff;
+        padding: 1.05rem;
+        margin: 1rem 0 1.35rem;
+        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+    }
+    .other-sector-kicker {
+        display: block;
+        color: #0f766e;
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    .other-sector-use-cases h3 {
+        color: #0f172a;
+        font-size: 1.72rem;
+        line-height: 1.08;
+        margin: 0.28rem 0 0.48rem;
+        letter-spacing: 0;
+    }
+    .other-sector-use-cases p {
+        color: #475569;
+        line-height: 1.42;
+        margin: 0 0 0.8rem;
+        max-width: 70rem;
+    }
+    .other-sector-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.7rem;
+        margin-top: 0.85rem;
+    }
+    .other-sector-card {
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.85rem 0.8rem;
+        min-height: 6.7rem;
+    }
+    .other-sector-label {
+        display: block;
+        color: #0f172a;
+        font-size: 1.32rem;
+        font-weight: 950;
+        line-height: 1.06;
+        text-transform: uppercase;
+        margin-bottom: 0.42rem;
+    }
+    .other-sector-card span:last-child {
+        display: block;
+        color: #475569;
+        font-size: 0.84rem;
+        line-height: 1.34;
+    }
     .slide-source-strip {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -7233,7 +7291,7 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow, .talk-track-card { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .other-sector-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow, .talk-track-card { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
         .pipeline-node:not(:last-child)::after,
         .manual-flow-node:not(:last-child)::after { display: none; }
@@ -10711,11 +10769,25 @@ def render_cross_sector_transfer_panel(topic: dict) -> None:
     keywords = context.get("keywords", [])
     if not sectors and not keywords:
         return
+    transfer_note = {
+        "ai_workflow": "same screen-trace and review-loop pattern",
+        "thesis_graph": "same source-backed relationship map pattern",
+        "processing_earthquake": "same event-window and anomaly-review pattern",
+        "seismic": "same large-file QA and provenance pattern",
+        "north_slope": "same public-source screening pattern",
+        "rock_classification": "same property-to-class review pattern",
+        "valles": "same multi-method uncertainty pattern",
+        "near_surface": "same line-intersection conflict pattern",
+        "moho_ml": "same transfer-test and residual-review pattern",
+        "ambient_noise": "same continuous-signal monitoring pattern",
+        "stock_workflow": "same dashboard, baseline, and drift pattern",
+        "sem_petrography": "same image-label and expert-gate pattern",
+    }.get(topic["slug"], "same reviewed AI workflow pattern")
     sector_cards = "".join(
         f"""
-<div class="topic-update-item">
-  <strong>{escape(item.split(' ', 1)[0].title())}</strong>
-  <span>{escape(item)}</span>
+<div class="other-sector-card">
+  <span class="other-sector-label">{escape(item.title())}</span>
+  <span>{escape(transfer_note)}.</span>
 </div>
         """
         for item in sectors[:4]
@@ -10726,12 +10798,12 @@ def render_cross_sector_transfer_panel(topic: dict) -> None:
     )
     st.markdown(
         f"""
-<div class="topic-update-panel">
-  <span class="topic-update-kicker">Builder guide transfer test</span>
-  <h3>Use outside the original project</h3>
-  <p>The concrete example stays source-backed, but the reusable pattern should be legible to people outside this one geoscience case.</p>
+<div class="other-sector-use-cases">
+  <span class="other-sector-kicker">Transfer test</span>
+  <h3>Common Other Sector Use Cases</h3>
+  <p>The concrete project stays source-backed. These larger examples show where the same AI pattern could transfer after validation.</p>
   <div class="manual-vocab-row">{keyword_chips}</div>
-  <div class="topic-update-grid">{sector_cards}</div>
+  <div class="other-sector-grid">{sector_cards}</div>
 </div>
         """,
         unsafe_allow_html=True,
