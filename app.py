@@ -5,6 +5,7 @@ import base64
 from datetime import datetime, timezone
 from io import BytesIO
 import json
+import re
 import zipfile
 
 import pandas as pd
@@ -14,7 +15,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-12 / unique-topic-mechanics-visuals"
+DEPLOY_BUILD_ID = "2026-06-12 / gmail-linkedin-note-assets"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -3413,6 +3414,24 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Use this as the concrete evidence for human instructions becoming training traces.",
         },
         {
+            "title": "LinkedIn task prompt attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-20 212113.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Shows a task/rubric-style prompt as training-data evidence; caveat: it is source context, not a completed agent result.",
+        },
+        {
+            "title": "Action-trace diagram reference",
+            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_01.png",
+            "source": "Gmail AI portfolio notes, June 11",
+            "note": "Reference image for a richer action-sequence / encoder-decoder style agent-training diagram.",
+        },
+        {
+            "title": "Random forest visual reference",
+            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_02.png",
+            "source": "Gmail AI portfolio notes, June 11",
+            "note": "Reference image for explaining model-family mechanics visually instead of using low-value generic charts.",
+        },
+        {
             "title": "Agent workflow architecture",
             "path": "assets/topic_visuals/agent_supervised_workflows.svg",
             "source": "Portfolio topic visual",
@@ -3433,6 +3452,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Grounds the graph topic in actual map and geochemical-pattern evidence.",
         },
         {
+            "title": "REE system overview slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_system_overview.png",
+            "source": "Thesis Ch.1 Presentation, slide export",
+            "note": "Useful source slide for the deposit-comparison framing before the graph evidence is introduced.",
+        },
+        {
             "title": "Critical-minerals heatmaps",
             "path": "assets/gmail_updates/2026-06-10/critical_minerals_pdf_pages/critical_minerals_p08_heatmaps.png",
             "source": "Critical minerals PowerPoint PDF, page 8",
@@ -3449,6 +3474,12 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_deposit_model.png",
             "source": "Thesis Ch.1 / critical-minerals slide export",
             "note": "Supports the source-backed, AI-suggested, and human-interpreted edge split.",
+        },
+        {
+            "title": "Trace-element model slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_trace_element_model.png",
+            "source": "Thesis Ch.1 / critical-minerals slide export",
+            "note": "Keeps the spider-diagram and trace-element interpretation layer visible as graph-ready evidence.",
         },
     ],
     "processing_earthquake": [
@@ -3479,10 +3510,58 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Real seismic figure for the large-data processing and QA story.",
         },
         {
+            "title": "CMP gather geometry attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-01 124154.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Concrete processing-geometry source image for explaining CMP/gather context; caveat: use as provenance, not as a final interpretation.",
+        },
+        {
+            "title": "Seismic gather source attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-01 101358.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Trace/gather screenshot that can anchor the pick-QA workflow before future ML claims.",
+        },
+        {
             "title": "Marine stack bands",
             "path": "assets/project_visuals/pondicherry_marine_stack_bands.png",
             "source": "Exploration seismology project export",
             "note": "Use as local proof that the pipeline handles scientific image outputs.",
+        },
+        {
+            "title": "Seismic source map and table",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-12 194044.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Large map/table screenshot for station or survey-context storytelling; caveat: crop before using as a polished final panel.",
+        },
+        {
+            "title": "Seismic picking review attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-21 160808.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Useful source for the pick, confidence, and human-override build queue visual.",
+        },
+        {
+            "title": "Station text-output attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-21 160753.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Keeps file/log evidence visible beside figures so the topic does not become only a graphic design exercise.",
+        },
+        {
+            "title": "Fold maps land-data slide",
+            "path": "assets/drive_slide_candidates/seismic_slide_08_fold_maps.png",
+            "source": "Exploration Seismology Final Land Data, slide 8",
+            "note": "Shows fold variation and survey geometry effects that are useful for the seismic QA story.",
+        },
+        {
+            "title": "Fold-weighted CMP stack",
+            "path": "assets/drive_slide_candidates/seismic_slide_16_fold_weighted_stack.png",
+            "source": "Exploration Seismology Final Land Data, slide 16",
+            "note": "Adds a real stacked seismic panel for explaining multiples, fold weighting, and structure visibility.",
+        },
+        {
+            "title": "Kirchhoff migration interpretation",
+            "path": "assets/drive_slide_candidates/seismic_slide_20_kirchhoff_migration.png",
+            "source": "Exploration Seismology Final Land Data, slide 20",
+            "note": "Useful annotated slide for migration artifacts, truncated layers, and final interpretation caveats.",
         },
         {
             "title": "EarthScope slide export",
@@ -3511,6 +3590,36 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Newest deck snapshot with resistivity, NMR, sonic, density, GR, caliper, core, and PT caveats.",
         },
         {
+            "title": "Gas hydrate intro and explorer note",
+            "path": "assets/gmail_updates/2026-06-11/north_slope_powerpoint_visuals/north_slope_email_inline_04.png",
+            "source": "Gmail North Slope visual notes, June 11",
+            "note": "PowerPoint-style note slide combining hydrate concept, structural explorer context, and source caveats.",
+        },
+        {
+            "title": "Well-log scaffold parameter cards",
+            "path": "assets/gmail_updates/2026-06-11/north_slope_powerpoint_visuals/north_slope_email_inline_01.png",
+            "source": "Gmail North Slope visual notes, June 11",
+            "note": "Shows the symbols, units, caveats, and locked target fields requested for the hydrate deck.",
+        },
+        {
+            "title": "Equations become ML features",
+            "path": "assets/drive_slide_candidates/north_slope_slide_05_equations_features.png",
+            "source": "FINAL 9-slide North Slope deck, slide 5",
+            "note": "Shows the variable dictionary and feature-engineering equations behind the hydrate screening workflow.",
+        },
+        {
+            "title": "ML workflow and model ladder",
+            "path": "assets/drive_slide_candidates/north_slope_slide_06_model_ladder.png",
+            "source": "FINAL 9-slide North Slope deck, slide 6",
+            "note": "Adds the model-family progression and error modes that explain why this is an ML architecture topic.",
+        },
+        {
+            "title": "Errors and masking review",
+            "path": "assets/drive_slide_candidates/north_slope_slide_08_errors_validation.png",
+            "source": "FINAL 9-slide North Slope deck, slide 8",
+            "note": "Makes validation, masking, false positives, and leakage risk visible as source-backed evidence.",
+        },
+        {
             "title": "North Slope public map",
             "path": "assets/project_visuals/north_slope_alaska_geology_well_map.png",
             "source": "North Slope public-source visual export",
@@ -3529,6 +3638,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/rock_classification_slides/rock_raster_classification_map.png",
             "source": "ADV GIS / rock-classification slide export",
             "note": "Primary image for satellite and GIS variables becoming rock classes.",
+        },
+        {
+            "title": "ADVGIS classification raster slide",
+            "path": "assets/drive_slide_candidates/advgis_slide_17_classification_moho.png",
+            "source": "ADVGIS Final, slide 17",
+            "note": "Additional source slide showing classified formations, legend, and raster output context.",
+        },
+        {
+            "title": "Random forest classification schema",
+            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_02.png",
+            "source": "Gmail AI portfolio notes, June 11",
+            "note": "Generic classifier reference for explaining majority-vote classification; caveat: use as schema support, not as project output evidence.",
         },
         {
             "title": "Chemical classification chart",
@@ -3595,16 +3716,58 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Lead near-surface visual now comes from the SAGE PowerPoint source and shows a real resistivity profile.",
         },
         {
+            "title": "Field line-index attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-13 154603.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Recovered line-geometry source that helps the near-surface page talk about intersections, coverage, and field limits.",
+        },
+        {
             "title": "TEM east/west profile",
             "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_075_1_tem_e_w_profile.png",
             "source": "VallesCaldera_SAGE22.pptx, slide 75",
             "note": "Provides the companion profile for line-aware comparison across the Valles field area.",
         },
         {
+            "title": "Map/table source-context attachment",
+            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-12 194044.png",
+            "source": "Gmail LinkedIn/source attachment batch, June 11",
+            "note": "Source-context image for comparing field geometry with profile evidence; caveat: exact project origin should remain visible in captions.",
+        },
+        {
             "title": "MT station depth curves",
             "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
             "source": "VallesCaldera_SAGE22.pptx, slide 95",
             "note": "Adds a second method family so the topic is about comparing real geophysical evidence, not just one diagram.",
+        },
+        {
+            "title": "Aerial view of seismic lines",
+            "path": "assets/drive_slide_candidates/near_surface_slide_29_aerial_lines.png",
+            "source": "Near-Surface Dwellers Presentation, slide 29",
+            "note": "Shows the real field line layout for linking hammer seismic, terrain, and method coverage.",
+        },
+        {
+            "title": "West Fens LoupeTEM comparison",
+            "path": "assets/drive_slide_candidates/near_surface_slide_53_west_fens_loupe_tem.png",
+            "source": "Near-Surface Dwellers Presentation, slide 53",
+            "note": "Adds a compact resistivity-profile source slide for comparing TEM line evidence.",
+        },
+        {
+            "title": "X and Z inversion comparison",
+            "path": "assets/drive_slide_candidates/near_surface_slide_90_x_z_inversion.png",
+            "source": "Near-Surface Dwellers Presentation, slide 90",
+            "note": "Useful source slide for explaining component-specific TEM inversion rather than a single blended answer.",
+        },
+        {
+            "title": "ERT and TEM overlap map",
+            "path": "assets/drive_slide_candidates/near_surface_slide_103_ert_tem_overlap.png",
+            "source": "Near-Surface Dwellers Presentation, slide 103",
+            "note": "Shows where ERT lines overlap LoupeTEM lines, making the multi-method comparison explicit.",
+        },
+        {
+            "title": "Integrated interpretation slide",
+            "path": "assets/drive_slide_candidates/near_surface_slide_111_integrated_interpretation.png",
+            "source": "Near-Surface Dwellers Presentation, slide 111",
+            "note": "Best source candidate for a final near-surface interpretation panel with profiles, map context, and proposed units.",
         },
     ],
     "moho_ml": [
@@ -3613,6 +3776,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/drive_slide_thumbnails/north_slope_decision_map_slide.png",
             "source": "FINAL 9-slide North Slope deck, slide 7",
             "note": "The newest architecture image for feature store, split policy, heads, uncertainty, and leakage barrier.",
+        },
+        {
+            "title": "ADVGIS Moho classification raster",
+            "path": "assets/drive_slide_candidates/advgis_slide_17_classification_moho.png",
+            "source": "ADVGIS Final, slide 17",
+            "note": "Links the recovered Moho/formation project to actual classification rasters from the source deck.",
+        },
+        {
+            "title": "ADVGIS classified map series",
+            "path": "assets/drive_slide_candidates/advgis_slide_40_maps.png",
+            "source": "ADVGIS Final, slide 40",
+            "note": "Cleaner map-series candidate for supervised transfer and regional classification discussion.",
         },
         {
             "title": "North Slope ML architecture",
@@ -3633,6 +3808,24 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/drive_slide_thumbnails/noisepy_monitoring_slide.png",
             "source": "NoisePy Google Slides deck",
             "note": "Local snapshot showing the monitoring heatmap from the source deck.",
+        },
+        {
+            "title": "Window and cross-correlation slide",
+            "path": "assets/drive_slide_candidates/noisepy_slide_02_window_cross_correlate.png",
+            "source": "NoisePy Google Slides deck, slide 2",
+            "note": "Shows the core ambient-noise concept: station windows, cross-correlation, and compute scaling.",
+        },
+        {
+            "title": "Ambient-noise workflow slide",
+            "path": "assets/drive_slide_candidates/noisepy_slide_05_ambient_noise_workflow.png",
+            "source": "NoisePy Google Slides deck, slide 5",
+            "note": "Provides the source-deck workflow from data organization through preprocessing, correlation, and stacking.",
+        },
+        {
+            "title": "Cloud-native NoisePy workflow",
+            "path": "assets/drive_slide_candidates/noisepy_slide_07_cloud_native_workflow.png",
+            "source": "NoisePy Google Slides deck, slide 7",
+            "note": "Best source slide for the batch/cloud/Jupyter/paper-figure pipeline discussion.",
         },
         {
             "title": "Ambient-noise processing workflow",
@@ -3673,6 +3866,24 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/linkedin_powerpoint_slides/rock_thin_section_slide_01.jpg",
             "source": "SEM petrography / thin-section slide export",
             "note": "Local image evidence for visual mineral and texture labels.",
+        },
+        {
+            "title": "Detrital SEM evidence slide",
+            "path": "assets/drive_slide_candidates/sem_slide_03_detrital_evidence.png",
+            "source": "SEM petrography deck, slide 3",
+            "note": "Adds actual morphology examples for detrital-versus-authigenic classification framing.",
+        },
+        {
+            "title": "Authigenic kaolinite slide",
+            "path": "assets/drive_slide_candidates/sem_slide_04_authigenic_kaolinite.png",
+            "source": "SEM petrography deck, slide 4",
+            "note": "Useful source slide for vermicular/booklet morphology and feldspar-weathering interpretation.",
+        },
+        {
+            "title": "Kaolinite morphology caption slide",
+            "path": "assets/drive_slide_candidates/sem_slide_05_kaolinite_morphology_caption.png",
+            "source": "SEM petrography deck, slide 5",
+            "note": "Connects SEM observations to proxy caution: blocky, vermicular, and booklet-like kaolinite imply different claims.",
         },
         {
             "title": "SEM proxy workflow",
@@ -8726,6 +8937,16 @@ def valid_text(value) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def clean_inline_text(value, fallback: str = "") -> str:
+    if value is None:
+        return fallback
+    text = str(value).strip()
+    if not text or text.lower() == "nan":
+        return fallback
+    text = re.sub(r"<[^>]{1,120}>", " ", text)
+    return re.sub(r"\s+", " ", text).strip() or fallback
+
+
 def project_asset(path_text: str) -> Path:
     path = Path(path_text)
     if path.is_absolute():
@@ -10142,7 +10363,7 @@ def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None
         return
     st.subheader("Source evidence strip")
     st.markdown(
-        "<p class='source-panel-note'>The first source images stay visible before the ML diagram so the topic starts from evidence, not generic AI language.</p>",
+        "<p class='source-panel-note'>The first source images stay visible before the ML diagram so the topic starts from evidence, not generic AI language. Caveat: recovered screenshots are provenance and review evidence unless the caption names them as final validated outputs.</p>",
         unsafe_allow_html=True,
     )
 
@@ -10172,6 +10393,94 @@ def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None
             for idx, asset in enumerate(extra_assets):
                 with extra_columns[idx % len(extra_columns)]:
                     render_asset_card(asset)
+
+
+def render_seismic_builder_queue_panel() -> None:
+    trace_path = project_asset(
+        "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-01 101358.png"
+    )
+    map_path = project_asset(
+        "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-12 194044.png"
+    )
+    pick_review_path = project_asset(
+        "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-21 160808.png"
+    )
+    station_output_path = project_asset(
+        "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-21 160753.png"
+    )
+    st.subheader("Builder queue: pick, confidence, override")
+    st.caption(
+        "Prototype panel for the seismic queue item. It uses recovered email attachments as source evidence; it is not claiming a trained pick model yet."
+    )
+    pick_position = st.slider(
+        "Review pick position",
+        min_value=18,
+        max_value=82,
+        value=48,
+        step=2,
+        key="seismic_builder_pick_position",
+    )
+    pick_x = 34 + (pick_position / 100) * 292
+    confidence = max(38, min(94, 92 - abs(pick_position - 48) * 1.25))
+    band_width = max(18, 54 - confidence * 0.36)
+    status = "candidate pick" if confidence >= 72 else "human override"
+    status_color = "#0f766e" if confidence >= 72 else "#b45309"
+    panel_cols = st.columns([1.05, 1, 1.05])
+    with panel_cols[0]:
+        if trace_path.exists():
+            st.image(
+                str(trace_path),
+                caption="Recovered seismic gather source attachment",
+                use_container_width=True,
+            )
+        else:
+            st.warning("Missing recovered seismic gather attachment.")
+    with panel_cols[1]:
+        st.markdown(
+            f"""
+<div style="border:1px solid #cbd5e1;border-radius:8px;padding:0.7rem;background:#ffffff;">
+  <div style="font-size:0.78rem;font-weight:800;color:#334155;text-transform:uppercase;letter-spacing:0;">Arrival pick review</div>
+  <svg viewBox="0 0 360 212" width="100%" height="212" role="img" aria-label="Movable arrival pick with confidence band and override gate">
+    <rect x="18" y="18" width="324" height="122" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+    <path d="M28 84 C42 42, 58 124, 74 82 S108 42, 124 84 S160 124, 178 82 S214 42, 232 84 S268 124, 286 82 S320 42, 334 84" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+    <rect x="{pick_x - band_width / 2:.1f}" y="30" width="{band_width:.1f}" height="98" rx="6" fill="#fde68a" opacity="0.76"/>
+    <line x1="{pick_x:.1f}" y1="26" x2="{pick_x:.1f}" y2="132" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="{pick_x:.1f}" cy="84" r="7" fill="#ffffff" stroke="#dc2626" stroke-width="3"/>
+    <rect x="30" y="158" width="136" height="34" rx="8" fill="#ecfeff" stroke="#0f766e"/>
+    <text x="98" y="180" text-anchor="middle" fill="#134e4a" font-size="13" font-weight="900">{confidence:.0f}% confidence</text>
+    <rect x="194" y="158" width="136" height="34" rx="8" fill="#fff7ed" stroke="#f59e0b"/>
+    <text x="262" y="180" text-anchor="middle" fill="{status_color}" font-size="13" font-weight="900">{status}</text>
+  </svg>
+  <div style="font-size:0.78rem;color:#475569;line-height:1.35;margin-top:0.2rem;">Moving the slider changes the pick marker, confidence band, and review decision. The next build step is to bind this to a real waveform table.</div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with panel_cols[2]:
+        if map_path.exists():
+            st.image(
+                str(map_path),
+                caption="Recovered map/table source context for station or survey review",
+                use_container_width=True,
+            )
+        else:
+            st.warning("Missing recovered map/table attachment.")
+    with st.expander("Additional recovered seismic source attachments"):
+        attachment_cols = st.columns(2)
+        with attachment_cols[0]:
+            if pick_review_path.exists():
+                st.image(
+                    str(pick_review_path),
+                    caption="Pick/review plot source attachment",
+                    use_container_width=True,
+                )
+        with attachment_cols[1]:
+            if station_output_path.exists():
+                st.image(
+                    str(station_output_path),
+                    caption="Station or terminal output source attachment",
+                    use_container_width=True,
+                )
 
 
 def render_cross_sector_transfer_panel(topic: dict) -> None:
@@ -10229,7 +10538,11 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
     model_detail = ML_MODEL_DETAIL_DIAGRAMS.get(topic["slug"])
     row = ml_diagram_row(topic["slug"])
     tracker_validation = compact_terms(row["validation_gates"], 3) if row is not None else []
-    tracker_next = str(row["next_action"]) if row is not None else "Build source-backed diagram."
+    tracker_next = (
+        clean_inline_text(row["next_action"], "Build source-backed diagram.")
+        if row is not None
+        else "Build source-backed diagram."
+    )
     primary_source = str(row["primary_ml_source"]) if row is not None else "ML sources"
     secondary_source = str(row["secondary_ml_source"]) if row is not None else ""
     evidence_assets = SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])
@@ -13519,6 +13832,8 @@ elif section == "Think Tank Topics":
     topic_roadmap = roadmap_row(topic["project_key"])
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
     render_source_backed_asset_panel(topic)
+    if topic["slug"] == "seismic":
+        render_seismic_builder_queue_panel()
     render_model_term_explainer(topic)
     render_ml_pipeline_contract(topic)
     render_slide_source_updates(topic["slug"])
