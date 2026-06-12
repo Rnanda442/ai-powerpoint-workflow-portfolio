@@ -494,8 +494,8 @@ TOPIC_VISUALS = {
     "seismic": "assets/topic_visuals/seismic_processing.svg",
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
     "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
-    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
-    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+    "valles": "assets/topic_visuals/valles_uncertainty_talk.svg",
+    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
@@ -504,13 +504,28 @@ TOPIC_VISUALS = {
 
 CARD_VISUALS = {
     "ai_workflow": "assets/topic_visuals/agent_training_trace.svg",
-    "thesis_graph": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_system_overview.png",
+    "thesis_graph": "assets/topic_visuals/knowledge_graph.svg",
     "processing_earthquake": "assets/topic_visuals/earthquake_globe_signal.svg",
     "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
-    "rock_classification": "assets/project_visuals/critical_minerals_property_slides/critical_minerals_overlap_heatmaps.jpg",
-    "seismic": "assets/gmail_updates/2026-06-08/Screenshot 2025-07-01 101445.png",
-    "valles": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_050_1_field_acquisition.png",
-    "near_surface": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_074_1_tem_n_s_profile.png",
+    "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
+    "seismic": "assets/topic_visuals/seismic_processing.svg",
+    "valles": "assets/topic_visuals/valles_uncertainty_talk.svg",
+    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
+    "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
+    "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
+    "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
+    "sem_petrography": "assets/topic_visuals/sem_petrography_ai.svg",
+}
+
+PROCESSING_POSTER_VISUALS = {
+    "ai_workflow": "assets/topic_visuals/agent_training_trace.svg",
+    "thesis_graph": "assets/topic_visuals/knowledge_graph.svg",
+    "processing_earthquake": "assets/topic_visuals/earthquake_globe_signal.svg",
+    "seismic": "assets/topic_visuals/seismic_processing.svg",
+    "north_slope": "assets/topic_visuals/north_slope_decision_space.svg",
+    "rock_classification": "assets/topic_visuals/rock_resource_map.svg",
+    "valles": "assets/topic_visuals/valles_uncertainty_talk.svg",
+    "near_surface": "assets/topic_visuals/near_surface_ai.svg",
     "moho_ml": "assets/topic_visuals/gis_moho_deck_trace.svg",
     "ambient_noise": "assets/topic_visuals/ambient_noise_processing.svg",
     "stock_workflow": "assets/topic_visuals/app_pipeline.svg",
@@ -3415,24 +3430,6 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Use this as the concrete evidence for human instructions becoming training traces.",
         },
         {
-            "title": "LinkedIn task prompt attachment",
-            "path": "assets/gmail_updates/2026-06-11_linkedin_sources/Screenshot 2025-07-20 212113.png",
-            "source": "Gmail LinkedIn/source attachment batch, June 11",
-            "note": "Shows a task/rubric-style prompt as training-data evidence; caveat: it is source context, not a completed agent result.",
-        },
-        {
-            "title": "Action-trace diagram reference",
-            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_01.png",
-            "source": "Gmail AI portfolio notes, June 11",
-            "note": "Reference image for a richer action-sequence / encoder-decoder style agent-training diagram.",
-        },
-        {
-            "title": "Random forest visual reference",
-            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_02.png",
-            "source": "Gmail AI portfolio notes, June 11",
-            "note": "Reference image for explaining model-family mechanics visually instead of using low-value generic charts.",
-        },
-        {
             "title": "Agent workflow architecture",
             "path": "assets/topic_visuals/agent_supervised_workflows.svg",
             "source": "Portfolio topic visual",
@@ -3477,10 +3474,22 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Supports the source-backed, AI-suggested, and human-interpreted edge split.",
         },
         {
+            "title": "Bayan Obo interpretation slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_bayan_obo_interpretation.png",
+            "source": "Thesis Ch.1 / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is the REE thesis graph: interpreted deposit relationships become source-backed graph edges.",
+        },
+        {
             "title": "Trace-element model slide",
             "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_trace_element_model.png",
             "source": "Thesis Ch.1 / critical-minerals slide export",
             "note": "Keeps the spider-diagram and trace-element interpretation layer visible as graph-ready evidence.",
+        },
+        {
+            "title": "REE summary model slide",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/ree_slide_summary_model.png",
+            "source": "Thesis Ch.1 / LinkedIn PowerPoint slide export",
+            "note": "Keeps the full communication-ready mineral-system model available after the focused source strip.",
         },
     ],
     "processing_earthquake": [
@@ -3563,6 +3572,24 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/drive_slide_candidates/seismic_slide_20_kirchhoff_migration.png",
             "source": "Exploration Seismology Final Land Data, slide 20",
             "note": "Useful annotated slide for migration artifacts, truncated layers, and final interpretation caveats.",
+        },
+        {
+            "title": "EarthScope collaboration photo",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_01.jpg",
+            "source": "EarthScope / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is seismic/EarthScope training; use as context for the human training network, not as a result figure.",
+        },
+        {
+            "title": "EarthScope registrants chart",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_02.jpg",
+            "source": "EarthScope / LinkedIn PowerPoint slide export",
+            "note": "Supporting context for the global workshop audience; useful in the seismic topic only as provenance and reach.",
+        },
+        {
+            "title": "EarthScope field outcrop image",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/earthscope_deck_image_03.jpg",
+            "source": "EarthScope / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is seismic/EarthScope training because it grounds the workshop evidence in real field geology.",
         },
         {
             "title": "EarthScope slide export",
@@ -3665,12 +3692,6 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "note": "Additional source slide showing classified formations, legend, and raster output context.",
         },
         {
-            "title": "Random forest classification schema",
-            "path": "assets/gmail_updates/2026-06-11/linkedin_portfolio_notes/visual_reference_02.png",
-            "source": "Gmail AI portfolio notes, June 11",
-            "note": "Generic classifier reference for explaining majority-vote classification; caveat: use as schema support, not as project output evidence.",
-        },
-        {
             "title": "Chemical classification chart",
             "path": "assets/project_visuals/rock_classification_slides/rock_chemical_classification_chart.jpg",
             "source": "Rock-classification slide export",
@@ -3738,6 +3759,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "source": "VallesCaldera_SAGE22.pptx, slide 79",
             "note": "Adds source-deck location context for the TEM and MT interpretation figures.",
         },
+        {
+            "title": "SAGE hand-sample field context",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_02.jpg",
+            "source": "SAGE / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is Valles field geophysics as field context; keep it supporting, not as the lead technical result.",
+        },
+        {
+            "title": "SAGE field portrait context",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_03.jpg",
+            "source": "SAGE / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is Valles field geophysics / profile context; useful after the actual maps and profiles.",
+        },
     ],
     "near_surface": [
         {
@@ -3781,6 +3814,18 @@ SOURCE_BACKED_TOPIC_ASSETS = {
             "path": "assets/project_visuals/powerpoint_sources/valles_sage/valles_sage_slide_095_1_depth_m.png",
             "source": "VallesCaldera_SAGE22.pptx, slide 95",
             "note": "Adds a second method family so the topic is about comparing real geophysical evidence, not just one diagram.",
+        },
+        {
+            "title": "SAGE velocity and dispersion section",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_04.jpg",
+            "source": "SAGE / LinkedIn PowerPoint slide export",
+            "note": "Best-fit topic is near-surface geophysics: a real Vp/dispersion section supports shallow method comparison.",
+        },
+        {
+            "title": "SAGE second velocity section",
+            "path": "assets/project_visuals/linkedin_powerpoint_slides/sage_valles_deck_image_05.jpg",
+            "source": "SAGE / LinkedIn PowerPoint slide export",
+            "note": "Companion near-surface velocity/dispersion section for comparing line-specific shallow structure.",
         },
         {
             "title": "Aerial view of seismic lines",
@@ -4107,8 +4152,10 @@ def apply_email_instruction_updates() -> None:
     TOPIC_AI_LEVERS.update(EMAIL_AI_LEVER_OVERRIDES)
     TOPIC_VISUALS.update(EMAIL_VISUAL_OVERRIDES)
     CARD_VISUALS.update(EMAIL_CARD_VISUAL_OVERRIDES)
-    TOPIC_VISUALS.update(SOURCE_DIVE_VISUAL_OVERRIDES)
-    CARD_VISUALS.update(SOURCE_DIVE_VISUAL_OVERRIDES)
+    # Source-dive images belong in evidence strips and hero/source panels.
+    # The overview wall and topic poster slots stay as Processing-style sketches.
+    TOPIC_VISUALS.update(PROCESSING_POSTER_VISUALS)
+    CARD_VISUALS.update(PROCESSING_POSTER_VISUALS)
     for topic in TOPIC_ROOMS:
         source_dive_hero = SOURCE_DIVE_HERO_OVERRIDES.get(topic["slug"])
         if source_dive_hero:
@@ -11195,6 +11242,138 @@ def _model_term_visual(kind: str) -> str:
     """
 
 
+def _model_term_processing_sketch(card: dict, topic_slug: str, index: int) -> str:
+    kind = str(card.get("kind", "gate"))
+    name = str(card.get("name", f"term {index + 1}"))
+    seed_text = f"{topic_slug}|{name}|{kind}|{index}"
+    seed = sum((idx + 1) * ord(char) for idx, char in enumerate(seed_text))
+    palettes = [
+        ("#2563eb", "#0f766e", "#f97316", "#eff6ff"),
+        ("#7c3aed", "#0f766e", "#d97706", "#f5f3ff"),
+        ("#0f766e", "#2563eb", "#dc2626", "#ecfeff"),
+        ("#b45309", "#2563eb", "#7c3aed", "#fff7ed"),
+        ("#be123c", "#0f766e", "#2563eb", "#fff1f2"),
+    ]
+    primary, secondary, alert, background = palettes[seed % len(palettes)]
+    x_shift = seed % 26
+    y_shift = (seed // 7) % 18
+    dot_a = 34 + (seed % 38)
+    dot_b = 94 + ((seed // 5) % 52)
+    dot_c = 208 + ((seed // 11) % 60)
+    label = re.sub(r"[^A-Za-z0-9]+", " ", name).strip().split(" ")
+    label_text = " ".join(label[:2])[:18] or "model sketch"
+    label_html = escape(label_text)
+    sketch_id = escape(f"{topic_slug}-{index + 1}-{kind}")
+
+    if kind == "waveform_foundation":
+        motif = f"""
+    <path d="M28 {70 + y_shift} C48 {30 + y_shift}, 68 {112 - y_shift}, 90 {70 + y_shift} S134 {30 + y_shift}, 158 {70 + y_shift} S206 {114 - y_shift}, 232 {70 + y_shift} S286 {32 + y_shift}, 332 {70 + y_shift}" fill="none" stroke="{primary}" stroke-width="4" stroke-linecap="round"/>
+    <rect x="{130 + x_shift}" y="34" width="24" height="78" rx="6" fill="{alert}" opacity="0.18" stroke="{alert}"/>
+    <line x1="{142 + x_shift}" y1="28" x2="{142 + x_shift}" y2="120" stroke="{alert}" stroke-width="4"/>
+        """
+    elif kind == "transformer":
+        motif = f"""
+    <g>
+      <rect x="28" y="{36 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+      <rect x="96" y="{28 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+      <rect x="164" y="{42 + y_shift}" width="54" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+      <rect x="232" y="{34 + y_shift}" width="78" height="24" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+      <path d="M82 {48 + y_shift} H96 M150 {40 + y_shift} H164 M218 {54 + y_shift} H232" stroke="{secondary}" stroke-width="4"/>
+      <rect x="82" y="104" width="196" height="28" rx="12" fill="{primary}" opacity="0.92"/>
+    </g>
+        """
+    elif kind == "graph":
+        motif = f"""
+    <path d="M{dot_a} 52 L178 82 L{dot_c} 46 M178 82 L112 124 M178 82 L292 120" stroke="{secondary}" stroke-width="4" opacity="0.75"/>
+    <circle cx="{dot_a}" cy="52" r="17" fill="#ffffff" stroke="{primary}" stroke-width="4"/>
+    <circle cx="178" cy="82" r="24" fill="{primary}" opacity="0.95"/>
+    <circle cx="{dot_c}" cy="46" r="17" fill="#ffffff" stroke="{alert}" stroke-width="4"/>
+    <circle cx="112" cy="124" r="17" fill="#ffffff" stroke="{secondary}" stroke-width="4"/>
+    <circle cx="292" cy="120" r="17" fill="#ffffff" stroke="{primary}" stroke-width="4"/>
+        """
+    elif kind == "tree":
+        motif = f"""
+    <rect x="{126 + x_shift // 2}" y="24" width="96" height="30" rx="8" fill="{primary}"/>
+    <path d="M{174 + x_shift // 2} 54 L106 88 M{174 + x_shift // 2} 54 L256 88" stroke="{secondary}" stroke-width="4"/>
+    <rect x="62" y="88" width="88" height="26" rx="8" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
+    <rect x="216" y="88" width="88" height="26" rx="8" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+    <circle cx="88" cy="132" r="8" fill="{primary}"/><circle cx="132" cy="132" r="8" fill="{secondary}"/><circle cx="242" cy="132" r="8" fill="{alert}"/><circle cx="286" cy="132" r="8" fill="{primary}"/>
+        """
+    elif kind == "vision":
+        motif = f"""
+    <rect x="34" y="34" width="92" height="92" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <rect x="48" y="48" width="24" height="24" fill="{primary}" opacity="0.22"/><rect x="78" y="48" width="24" height="24" fill="{secondary}" opacity="0.28"/>
+    <rect x="48" y="78" width="24" height="24" fill="{alert}" opacity="0.22"/><rect x="78" y="78" width="24" height="24" fill="{primary}" opacity="0.35"/>
+    <path d="M142 80 H198" stroke="{secondary}" stroke-width="5" stroke-linecap="round"/>
+    <rect x="212" y="50" width="92" height="60" rx="14" fill="{primary}" opacity="0.94"/>
+        """
+    elif kind == "fusion":
+        motif = f"""
+    <rect x="28" y="30" width="84" height="24" rx="12" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <rect x="28" y="68" width="84" height="24" rx="12" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
+    <rect x="28" y="106" width="84" height="24" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+    <path d="M112 42 C158 42, 158 80, 206 80 M112 80 H206 M112 118 C158 118, 158 80, 206 80" fill="none" stroke="{secondary}" stroke-width="4"/>
+    <circle cx="226" cy="80" r="25" fill="{primary}"/><rect x="270" y="62" width="58" height="36" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+        """
+    elif kind == "uncertainty":
+        motif = f"""
+    <path d="M28 110 C68 {74 - y_shift}, 92 {92 + y_shift}, 132 64 S206 {44 + y_shift}, 244 82 S300 116, 334 68" fill="none" stroke="{primary}" stroke-width="4"/>
+    <path d="M28 126 C68 {90 - y_shift}, 92 {108 + y_shift}, 132 80 S206 {60 + y_shift}, 244 98 S300 132, 334 84" fill="none" stroke="{alert}" stroke-width="2" opacity="0.7"/>
+    <circle cx="{dot_b}" cy="94" r="7" fill="{secondary}"/><circle cx="{dot_c}" cy="78" r="7" fill="{alert}"/>
+    <rect x="224" y="28" width="88" height="24" rx="12" fill="#ffffff" stroke="{alert}" stroke-width="3"/>
+        """
+    elif kind == "timeline":
+        split_x = 188 + (seed % 44)
+        motif = f"""
+    <rect x="26" y="62" width="80" height="36" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <rect x="118" y="62" width="80" height="36" rx="8" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <line x1="{split_x}" y1="34" x2="{split_x}" y2="126" stroke="{alert}" stroke-width="5"/>
+    <rect x="236" y="62" width="88" height="36" rx="8" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
+    <path d="M106 80 H118 M198 80 H236" stroke="{secondary}" stroke-width="4"/>
+        """
+    elif kind == "ann":
+        motif = f"""
+    <g stroke="{primary}" stroke-width="3" fill="#ffffff">
+      <circle cx="70" cy="46" r="12"/><circle cx="70" cy="82" r="12"/><circle cx="70" cy="118" r="12"/>
+      <circle cx="178" cy="38" r="12"/><circle cx="178" cy="68" r="12"/><circle cx="178" cy="98" r="12"/><circle cx="178" cy="128" r="12"/>
+      <circle cx="292" cy="82" r="16"/>
+    </g>
+    <path d="M82 46 L166 38 M82 82 L166 68 M82 118 L166 98 M190 38 L276 82 M190 68 L276 82 M190 98 L276 82 M190 128 L276 82" stroke="{secondary}" stroke-width="2" opacity="0.8"/>
+        """
+    elif kind == "spatial":
+        motif = f"""
+    <rect x="46" y="28" width="266" height="106" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <path d="M112 28 V134 M178 28 V134 M244 28 V134 M46 63 H312 M46 98 H312" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="{46 + x_shift}" y="28" width="92" height="70" fill="{primary}" opacity="0.2"/>
+    <rect x="190" y="{72 + y_shift}" width="94" height="38" fill="{secondary}" opacity="0.28"/>
+    <circle cx="{dot_c}" cy="{58 + y_shift}" r="9" fill="{alert}"/>
+        """
+    else:
+        motif = f"""
+    <rect x="30" y="54" width="94" height="44" rx="10" fill="#ffffff" stroke="{primary}" stroke-width="3"/>
+    <rect x="146" y="28" width="30" height="104" rx="8" fill="{alert}" opacity="0.22" stroke="{alert}" stroke-width="4"/>
+    <rect x="214" y="54" width="104" height="44" rx="10" fill="#ffffff" stroke="{secondary}" stroke-width="3"/>
+    <path d="M124 76 H146 M176 76 H214" stroke="{secondary}" stroke-width="4"/>
+        """
+
+    return f"""
+<div class="model-term-visual" data-sketch-id="{sketch_id}">
+  <svg viewBox="0 0 360 160" role="img" aria-label="{escape(name)} Processing-style model term sketch">
+    <rect x="10" y="10" width="340" height="140" rx="14" fill="{background}" stroke="#cbd5e1"/>
+    <g stroke="#dbe3ee" stroke-width="1" opacity="0.72">
+      <path d="M40 20 V142 M90 20 V142 M140 20 V142 M190 20 V142 M240 20 V142 M290 20 V142"/>
+      <path d="M20 42 H340 M20 82 H340 M20 122 H340"/>
+    </g>
+    {motif}
+    <circle cx="{dot_a}" cy="{22 + y_shift}" r="5" fill="{alert}"/>
+    <circle cx="{dot_b}" cy="142" r="5" fill="{secondary}"/>
+    <text x="22" y="148" fill="#334155" font-size="10" font-weight="800">frame {index + 1}</text>
+    <text x="338" y="148" text-anchor="end" fill="#0f172a" font-size="11" font-weight="900">{label_html}</text>
+  </svg>
+</div>
+    """
+
+
 MODEL_TERM_EXPLAINERS = {
     "ai_workflow": [
         {
@@ -11547,7 +11726,7 @@ def render_model_term_explainer(topic: dict) -> None:
     if not cards:
         return
     card_html = []
-    for card in cards:
+    for idx, card in enumerate(cards):
         source_html = ""
         if card.get("source_url"):
             source_html = (
@@ -11558,7 +11737,7 @@ def render_model_term_explainer(topic: dict) -> None:
         card_html.append(
             f"""
 <div class="model-term-card">
-  {_model_term_visual(card.get("kind", "gate"))}
+  {_model_term_processing_sketch(card, topic["slug"], idx)}
   <strong>{escape(card["name"])}</strong>
   <p>{escape(card["plain"])}</p>
   <div class="term-use">{escape(card["use"])}</div>
@@ -13874,6 +14053,7 @@ elif section == "Think Tank Topics":
 
     topic_roadmap = roadmap_row(topic["project_key"])
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
+    st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
     render_source_backed_asset_panel(topic)
     if topic["slug"] == "seismic":
         render_seismic_builder_queue_panel()
@@ -13945,8 +14125,7 @@ elif section == "Think Tank Topics":
     else:
         if topic["slug"] == "thesis_graph":
             render_thesis_graph_model_visuals()
-        if not render_project_visual_stage(topic):
-            st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
+        render_project_visual_stage(topic)
         render_current_future_board(topic, topic_roadmap)
         render_topic_update_panel(topic["slug"])
     with st.expander("Presentation and workflow notes"):

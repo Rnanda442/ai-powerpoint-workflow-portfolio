@@ -44,9 +44,20 @@ Companion manifest: `docs/LINKEDIN_PORTFOLIO_EMAIL_NOTES_2026-06-11.md`.
 
 | Source thread | Main usable additions | Repo integration |
 |---|---|---|
-| `AI powerpoint updates 6/11 new` | Action-sequence diagram reference, random-forest visual reference, and ML diagram QA screenshot. | Added to `data/gmail_linkedin_source_inventory.csv`, `data/project_visuals.csv`, and the AI workflow source-backed asset strip. |
+| `AI powerpoint updates 6/11 new` | Action-sequence diagram reference, random-forest visual reference, and ML diagram QA screenshot. | Cataloged as private design/QA references in `data/gmail_linkedin_source_inventory.csv`; removed from public topic evidence after the poster/source matching review. |
 | `north slope of alaska powerpoint vizuals` | Well-log scaffold cards, full gas-hydrate intro / structural explorer slide, DOE media cue, drawing/about references, and title/about slide. | Added to the North Slope PowerPoint evidence panel, source-backed topic strip, LinkedIn evidence manifest, and profile/about visual inventory. |
-| `Rohan nanda Linkden post submission and Employee History` | DOE seal from the LinkedIn wording/media-check email. | Added as North Slope media/provenance evidence with an endorsement caveat. |
+| `Rohan nanda Linkden post submission and Employee History` | DOE seal from the LinkedIn wording/media-check email. | Kept as private media/provenance context only; not promoted as North Slope topic evidence. |
+
+## LinkedIn PowerPoint Slide Placement
+
+Companion inspection map: `docs/LINKEDIN_POWERPOINT_SLIDE_TOPIC_MAP_2026-06-12.md`.
+
+| Slide family | Placement decision |
+|---|---|
+| EarthScope images 01-04 | Best fit is the seismic / EarthScope training topic. The collaboration photo, registrants chart, field outcrop, and Jupyter badge support the training and notebook pipeline rather than Valles or generic profile pages. |
+| REE thesis slides | Best fit is the thesis graph / critical-minerals topic. The previously underused Bayan Obo interpretation and summary-model slides now appear in the source-backed strip. |
+| SAGE/Valles field photos | Best fit is Valles field geophysics as supporting field/profile context; they should not replace actual maps, TEM/MT profiles, or velocity sections. |
+| SAGE/Valles velocity sections | Best fit is near-surface geophysics because they are technical Vp/dispersion sections for shallow-structure comparison. |
 
 ## Gmail LinkedIn Attachment Intake
 
@@ -58,14 +69,14 @@ Source batch: Gmail thread `19eb4f2c59250b2b`, subject `Ai portfolio changes new
 | `Screenshot 2025-07-01 101358.png` | Seismic gather / trace evidence | Good for the pick-QA workflow, but needs crop and labeling before a polished panel. |
 | `Screenshot 2025-07-12 194044.png` | Seismic or near-surface map/table context | Large source screenshot; keep exact origin visible until matched to a project paper or deck. |
 | `Screenshot 2025-07-13 154603.png` | Near-surface line/index geometry | Useful for line intersections and coverage; still provenance evidence until origin is pinned down. |
-| `Screenshot 2025-07-20 212113.png` | Agent-training task/rubric evidence | Training-task context only; not a completed autonomous-agent result. |
+| `Screenshot 2025-07-20 212113.png` | SSW / seismology course question screenshot | Mismatched during the source dive; do not use as AI workflow or agent-training evidence. |
 | `Screenshot 2025-07-21 160753.png` | Seismic log/station-output evidence | Supporting provenance image, not a scientific result by itself. |
 | `Screenshot 2025-07-21 160808.png` | Seismic pick/review panel source | Supports the `PICK | CONFIDENCE | OVERRIDE` build queue item without claiming model accuracy. |
 | `IMG_9800.jpg` | Seismic / large-data processing workflow evidence | Field-computer/photo evidence, not a result figure. |
 
-Implementation note: the AI workflow, seismic, and near-surface source evidence strips now surface these recovered email attachments. The seismic topic also has a first builder-queue prototype for `PICK | CONFIDENCE | OVERRIDE`: a slider moves the pick marker, confidence band, and review decision beside recovered trace and map attachments. The app-level strip also states the caveat that recovered screenshots are provenance and review evidence unless a caption names them as final validated output.
+Implementation note: the seismic and near-surface source evidence strips surface the matched recovered email attachments. The AI workflow strip has been restored to QGIS/Handshake/agent-workflow assets only. The seismic topic also has a first builder-queue prototype for `PICK | CONFIDENCE | OVERRIDE`: a slider moves the pick marker, confidence band, and review decision beside recovered trace and map attachments. The app-level strip also states the caveat that recovered screenshots are provenance and review evidence unless a caption names them as final validated output.
 
-Related June 11 inline-image batch: `docs/LINKEDIN_PORTFOLIO_EMAIL_NOTES_2026-06-11.md` tracks the AI portfolio visual references and North Slope PowerPoint notes from Gmail inline images. The relevant inline sources now used in the app are the action-sequence reference, random-forest classification schema, North Slope well-log scaffold, and North Slope hydrate/structural-explorer intro slide. Unrelated logo-only or pop-culture references remain in the source folder but are not promoted into topic evidence.
+Related June 11 inline-image batch: `docs/LINKEDIN_PORTFOLIO_EMAIL_NOTES_2026-06-11.md` tracks the AI portfolio visual references and North Slope PowerPoint notes from Gmail inline images. The relevant inline sources still used in public topic evidence are the North Slope well-log scaffold and North Slope hydrate/structural-explorer intro slide. Generic action-sequence/random-forest references, logo-only images, and pop-culture references remain in the source folder but are not promoted into topic evidence.
 
 ## Drive Reads Used
 
