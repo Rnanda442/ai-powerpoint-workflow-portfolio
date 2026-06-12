@@ -7795,6 +7795,29 @@ st.markdown(
         line-height: 1.42;
         margin: -0.2rem 0 0.85rem;
     }
+    .evidence-atlas-note {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-left: 5px solid #0f766e;
+        border-radius: 8px;
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin: 0.3rem 0 0.85rem;
+        padding: 0.7rem 0.8rem;
+    }
+    .evidence-block-title {
+        color: #0b1f3a;
+        font-size: 1rem;
+        font-weight: 850;
+        margin: 0.35rem 0 0.15rem;
+    }
+    .evidence-card-note {
+        color: #64748b !important;
+        font-size: 0.82rem;
+        line-height: 1.34;
+        margin-top: 0.25rem;
+    }
     .model-mechanics-panel {
         background: #ffffff;
         border: 1px solid #d8dee8;
@@ -10558,11 +10581,9 @@ def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None
             with columns[idx % len(columns)]:
                 render_asset_card(asset)
     if extra_assets:
-        with st.expander(f"More source images ({len(extra_assets)})"):
-            extra_columns = st.columns(min(3, len(extra_assets)))
-            for idx, asset in enumerate(extra_assets):
-                with extra_columns[idx % len(extra_columns)]:
-                    render_asset_card(asset)
+        st.caption(
+            f"{len(extra_assets)} more source-backed images are organized below in the evidence atlas instead of being repeated here."
+        )
 
 
 def render_topic_opening_panel(topic: dict, topic_frame: dict) -> None:
@@ -13337,6 +13358,110 @@ def render_visual_wall(title: str, visual_rows: pd.DataFrame, limit: int = 4) ->
                 st.warning(f"Missing visual: {visual.title}")
 
 
+def _asset_key(path_value: object) -> str:
+    return str(path_value).replace("\\", "/").strip().lower()
+
+
+def topic_already_explained_paths(topic: dict) -> set[str]:
+    paths = set()
+    for candidate in [topic.get("hero"), CARD_VISUALS.get(topic["slug"])]:
+        if candidate:
+            paths.add(_asset_key(candidate))
+    for asset in SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])[:3]:
+        paths.add(_asset_key(asset.get("path", "")))
+    return paths
+
+
+def evidence_group_for_visual(visual: object) -> tuple[str, str]:
+    visual_type = str(getattr(visual, "visual_type", "")).lower()
+    title = str(getattr(visual, "title", "")).lower()
+    path = str(getattr(visual, "asset_path", "")).lower()
+    haystack = " ".join([visual_type, title, path])
+    if any(term in haystack for term in ["workflow", "architecture", "model", "ml", "equation", "decision", "processing", "sketch", "overview"]):
+        return (
+            "Model and process diagrams",
+            "Use these when explaining how raw project material becomes model inputs, review gates, or an AI workflow.",
+        )
+    if any(term in haystack for term in ["map", "gis", "seismic", "ert", "tem", "inversion", "profile", "field", "chart", "output", "plot", "raster", "heatmap"]):
+        return (
+            "Maps, plots, and scientific outputs",
+            "Use these as the concrete scientific evidence: maps, sections, fields, plots, and interpreted outputs.",
+        )
+    if any(term in haystack for term in ["powerpoint", "slide", "deck", "thumbnail", "drive"]):
+        return (
+            "Source slides and deck evidence",
+            "Use these as provenance: they show the actual deck/source material behind the topic discussion.",
+        )
+    return (
+        "Supporting context and references",
+        "Use these for background, source context, or backup proof when someone asks where the topic came from.",
+    )
+
+
+def render_topic_evidence_atlas(topic: dict, visual_rows: pd.DataFrame, skip_paths: set[str]) -> None:
+    if visual_rows.empty:
+        st.info("No visual evidence rows are attached to this topic yet.")
+        return
+
+    deduped_rows = []
+    seen = set(skip_paths)
+    for visual in visual_rows.sort_values("sort_order").itertuples(index=False):
+        key = _asset_key(visual.asset_path)
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        deduped_rows.append(visual)
+
+    if not deduped_rows:
+        st.info("All attached visual evidence has already been used in the topic introduction and explanation blocks.")
+        return
+
+    st.subheader("Evidence atlas")
+    st.markdown(
+        """
+<div class="evidence-atlas-note">
+  This is the full supporting evidence pass after the topic has been explained. Repeated opening visuals are removed here, then the remaining images are grouped by how you would use them in conversation.
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    grouped: dict[str, dict[str, object]] = {}
+    for visual in deduped_rows:
+        group, note = evidence_group_for_visual(visual)
+        if group not in grouped:
+            grouped[group] = {"note": note, "rows": []}
+        grouped[group]["rows"].append(visual)
+
+    group_order = [
+        "Model and process diagrams",
+        "Maps, plots, and scientific outputs",
+        "Source slides and deck evidence",
+        "Supporting context and references",
+    ]
+    for group in group_order:
+        if group not in grouped:
+            continue
+        rows = grouped[group]["rows"]
+        st.markdown(f"<div class='evidence-block-title'>{escape(group)}</div>", unsafe_allow_html=True)
+        st.caption(str(grouped[group]["note"]))
+        columns = st.columns(2)
+        for idx, visual in enumerate(rows):
+            with columns[idx % 2]:
+                visual_path = project_asset(visual.asset_path)
+                with st.container(border=True):
+                    st.markdown(f"**{escape(str(visual.title))}**")
+                    if visual_path.exists():
+                        st.image(str(visual_path), use_container_width=True)
+                    else:
+                        st.warning(f"Missing local image: {visual_path.name}")
+                    st.markdown(
+                        f"<p class='evidence-card-note'>{escape(str(visual.caption))}</p>",
+                        unsafe_allow_html=True,
+                    )
+                    st.caption(f"{visual.visual_type} | sort {visual.sort_order}")
+
+
 @st.cache_data
 def load_structural_surfaces() -> pd.DataFrame:
     return pd.read_parquet(
@@ -14257,31 +14382,9 @@ elif section == "Think Tank Topics":
     current_visuals = project_visuals[
         project_visuals["project_key"].fillna("") == topic["project_key"]
     ].sort_values("sort_order")
-    if topic["slug"] == "thesis_graph":
-        ree_wall = current_visuals[
-            current_visuals["visual_type"].fillna("").str.contains("Adobe|REE visualization|PowerPoint", case=False, regex=True)
-        ]
-        render_visual_wall("REE Adobe / Bayan Obo slide wall", ree_wall, limit=6)
-    elif topic["slug"] == "rock_classification":
-        rock_wall = current_visuals[
-            current_visuals["visual_type"].fillna("").str.contains("slide|PowerPoint|presentation|classification|chart", case=False, regex=True)
-        ]
-        render_visual_wall("Rock classification maps and charts", rock_wall, limit=6)
 
     if topic_roadmap is not None:
         render_node_movement(topic_roadmap, title="Inputs -> variables -> AI/ML -> output")
-        early_slide_visuals = project_visuals[
-            (project_visuals["project_key"].fillna("") == topic["project_key"])
-            & project_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
-        ].sort_values("sort_order")
-        if not early_slide_visuals.empty:
-            st.subheader("Featured slide exports")
-            early_cols = st.columns(2)
-            for idx, visual in enumerate(early_slide_visuals.head(2).itertuples(index=False)):
-                with early_cols[idx % 2]:
-                    visual_path = project_asset(visual.asset_path)
-                    if visual_path.exists():
-                        st.image(str(visual_path), caption=visual.title, use_container_width=True)
 
     hero_cols = st.columns([1.35, 1])
     with hero_cols[0]:
@@ -14418,45 +14521,11 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
         organized_folders["project_key"].fillna("") == topic["project_key"]
     ]
 
-    slide_visuals = related_visuals[
-        related_visuals["visual_type"].fillna("").str.contains("PowerPoint", case=False, regex=False)
-    ]
-    non_slide_visuals = related_visuals.drop(slide_visuals.index)
-
-    if not slide_visuals.empty:
-        st.subheader("Supporting slide evidence")
-        slide_cols = st.columns(2)
-        selected_slide_visuals = slide_visuals.head(4)
-        for idx, visual in enumerate(selected_slide_visuals.itertuples(index=False)):
-            with slide_cols[idx % 2]:
-                visual_path = project_asset(visual.asset_path)
-                with st.container(border=True):
-                    st.markdown(f"**{visual.title}**")
-                    if visual_path.exists():
-                        st.image(str(visual_path), use_container_width=True)
-                    st.caption(visual.caption)
-        if len(slide_visuals) > len(selected_slide_visuals):
-            st.caption(
-                f"{len(slide_visuals) - len(selected_slide_visuals)} additional slide images are kept in the source inventory but not repeated here."
-            )
-
-    st.subheader("Supporting visual evidence")
-    visual_cols = st.columns(3)
-    if non_slide_visuals.empty:
-        st.info("The source-backed image panel above is the primary visual evidence for this topic.")
-    selected_non_slide_visuals = non_slide_visuals.head(6)
-    for idx, visual in enumerate(selected_non_slide_visuals.itertuples(index=False)):
-        with visual_cols[idx % 3]:
-            visual_path = project_asset(visual.asset_path)
-            with st.container(border=True):
-                st.markdown(f"**{visual.title}**")
-                if visual_path.exists():
-                    st.image(str(visual_path), use_container_width=True)
-                st.caption(visual.caption)
-    if len(non_slide_visuals) > len(selected_non_slide_visuals):
-        st.caption(
-            f"{len(non_slide_visuals) - len(selected_non_slide_visuals)} additional visual assets are available in the CSV/source inventory."
-        )
+    render_topic_evidence_atlas(
+        topic,
+        related_visuals,
+        topic_already_explained_paths(topic),
+    )
 
     st.subheader("Embedded or linked evidence")
     if related_evidence.empty:
