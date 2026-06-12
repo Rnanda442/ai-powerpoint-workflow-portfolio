@@ -7748,6 +7748,53 @@ st.markdown(
         font-size: 0.8rem;
         margin-top: 0.25rem;
     }
+    .topic-opening-panel {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 0.8rem 0 1rem;
+        padding: 1rem;
+    }
+    .topic-opening-kicker {
+        color: #0f766e;
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .topic-opening-panel h3 {
+        color: #0b1f3a;
+        font-size: 1.35rem;
+        line-height: 1.15;
+        margin: 0.25rem 0 0.4rem;
+    }
+    .topic-opening-panel p {
+        color: #475569 !important;
+        font-size: 0.95rem;
+        line-height: 1.42;
+        margin: 0.35rem 0;
+    }
+    .topic-opening-list {
+        display: grid;
+        gap: 0.35rem;
+        margin-top: 0.75rem;
+    }
+    .topic-opening-list span {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 7px;
+        color: #334155;
+        display: block;
+        font-size: 0.84rem;
+        line-height: 1.28;
+        padding: 0.45rem 0.55rem;
+    }
+    .source-explainer-note {
+        color: #475569;
+        font-size: 0.92rem;
+        line-height: 1.42;
+        margin: -0.2rem 0 0.85rem;
+    }
     .model-mechanics-panel {
         background: #ffffff;
         border: 1px solid #d8dee8;
@@ -7783,8 +7830,8 @@ st.markdown(
     }
     .model-mechanics-board {
         display: grid;
-        grid-template-columns: minmax(13rem, 0.78fr) minmax(23rem, 1.35fr) minmax(13rem, 0.87fr);
-        gap: 0.65rem;
+        grid-template-columns: minmax(12rem, 0.7fr) minmax(28rem, 1.65fr) minmax(12rem, 0.78fr);
+        gap: 0.75rem;
         align-items: stretch;
     }
     .mechanics-model-column {
@@ -7833,10 +7880,14 @@ st.markdown(
         background: #ffffff;
         border: 1px solid #d8dee8;
         border-radius: 8px;
-        height: 12.5rem;
+        min-height: 18rem;
         overflow: hidden;
         padding: 0.65rem;
         position: relative;
+    }
+    .mechanic-visual svg {
+        height: 9.6rem;
+        margin-top: 0.2rem;
     }
     .mechanic-visual-title {
         color: #0f766e;
@@ -10451,13 +10502,13 @@ def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None
     assets = SOURCE_BACKED_TOPIC_ASSETS.get(topic["slug"], [])
     if not assets:
         return
-    st.subheader("Source evidence strip")
+    st.subheader("Evidence used in the explanation")
     st.markdown(
-        "<p class='source-panel-note'>The first source images stay visible before the ML diagram so the topic starts from evidence, not generic AI language. Caveat: recovered screenshots are provenance and review evidence unless the caption names them as final validated outputs.</p>",
+        "<p class='source-explainer-note'>These visuals support the topic discussion above. The first one is shown large because it should be something you can point to while explaining the model or workflow; the rest stay available as proof, not as a wall of unexplained images.</p>",
         unsafe_allow_html=True,
     )
 
-    def render_asset_card(asset: dict) -> None:
+    def render_asset_card(asset: dict, image_first: bool = True) -> None:
         with st.container(border=True):
             st.markdown(f"**{escape(asset['title'])}**")
             asset_path = project_asset(asset["path"])
@@ -10473,16 +10524,76 @@ def render_source_backed_asset_panel(topic: dict, limit: int | None = 3) -> None
 
     shown_assets = assets if limit is None else assets[:limit]
     extra_assets = [] if limit is None else assets[limit:]
-    columns = st.columns(min(3, len(shown_assets)))
-    for idx, asset in enumerate(shown_assets):
-        with columns[idx % len(columns)]:
-            render_asset_card(asset)
+    lead_asset = shown_assets[0]
+    lead_path = project_asset(lead_asset["path"])
+    lead_cols = st.columns([1.45, 0.9])
+    with lead_cols[0]:
+        if lead_path.exists():
+            st.image(
+                str(lead_path),
+                caption=f"{lead_asset['source']}: {lead_asset['note']}",
+                use_container_width=True,
+            )
+        else:
+            st.warning(f"Missing local source image: {lead_path.name}")
+    with lead_cols[1]:
+        st.markdown(
+            f"""
+<div class="topic-opening-panel">
+  <div class="topic-opening-kicker">How to talk about this visual</div>
+  <h3>{escape(lead_asset['title'])}</h3>
+  <p>{escape(lead_asset['note'])}</p>
+  <div class="topic-opening-list">
+    <span><strong>Source:</strong> {escape(str(lead_asset['source']))}</span>
+    <span><strong>Use it when asked:</strong> what the model sees, what gets reviewed, and what should not be overclaimed.</span>
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+    remaining_shown = shown_assets[1:]
+    if remaining_shown:
+        columns = st.columns(min(2, len(remaining_shown)))
+        for idx, asset in enumerate(remaining_shown):
+            with columns[idx % len(columns)]:
+                render_asset_card(asset)
     if extra_assets:
         with st.expander(f"More source images ({len(extra_assets)})"):
             extra_columns = st.columns(min(3, len(extra_assets)))
             for idx, asset in enumerate(extra_assets):
                 with extra_columns[idx % len(extra_columns)]:
                     render_asset_card(asset)
+
+
+def render_topic_opening_panel(topic: dict, topic_frame: dict) -> None:
+    visual_candidate = CARD_VISUALS.get(topic["slug"]) or topic.get("hero")
+    visual_path = project_asset(visual_candidate) if visual_candidate else None
+    opening_cols = st.columns([0.95, 1.25])
+    with opening_cols[0]:
+        st.markdown(
+            f"""
+<div class="topic-opening-panel">
+  <div class="topic-opening-kicker">Topic first</div>
+  <h3>{escape(topic['title'])}</h3>
+  <p>{escape(topic['tagline'])}</p>
+  <div class="topic-opening-list">
+    <span><strong>Core problem:</strong> {escape(topic['bottleneck'])}</span>
+    <span><strong>AI angle:</strong> {escape(topic['theme'])}</span>
+    <span><strong>Discussion question:</strong> {escape(topic_frame.get('question', topic['question']))}</span>
+  </div>
+</div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with opening_cols[1]:
+        if visual_path is not None and visual_path.exists():
+            st.image(
+                str(visual_path),
+                caption=topic_frame.get("example", topic["why_it_matters"]),
+                use_container_width=True,
+            )
+        else:
+            st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
 
 
 def render_seismic_builder_queue_panel() -> None:
@@ -14052,13 +14163,13 @@ elif section == "Think Tank Topics":
     )
 
     topic_roadmap = roadmap_row(topic["project_key"])
+    render_topic_opening_panel(topic, topic_frame)
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
-    st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
-    render_source_backed_asset_panel(topic)
     if topic["slug"] == "seismic":
         render_seismic_builder_queue_panel()
     render_model_term_explainer(topic)
     render_ml_pipeline_contract(topic)
+    render_source_backed_asset_panel(topic, limit=3)
     render_slide_source_updates(topic["slug"])
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
@@ -14313,9 +14424,10 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
     non_slide_visuals = related_visuals.drop(slide_visuals.index)
 
     if not slide_visuals.empty:
-        st.subheader("PowerPoint / LinkedIn slide evidence")
+        st.subheader("Supporting slide evidence")
         slide_cols = st.columns(2)
-        for idx, visual in enumerate(slide_visuals.itertuples(index=False)):
+        selected_slide_visuals = slide_visuals.head(4)
+        for idx, visual in enumerate(selected_slide_visuals.itertuples(index=False)):
             with slide_cols[idx % 2]:
                 visual_path = project_asset(visual.asset_path)
                 with st.container(border=True):
@@ -14323,12 +14435,17 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
                     if visual_path.exists():
                         st.image(str(visual_path), use_container_width=True)
                     st.caption(visual.caption)
+        if len(slide_visuals) > len(selected_slide_visuals):
+            st.caption(
+                f"{len(slide_visuals) - len(selected_slide_visuals)} additional slide images are kept in the source inventory but not repeated here."
+            )
 
-    st.subheader("Visual evidence")
+    st.subheader("Supporting visual evidence")
     visual_cols = st.columns(3)
     if non_slide_visuals.empty:
         st.info("The source-backed image panel above is the primary visual evidence for this topic.")
-    for idx, visual in enumerate(non_slide_visuals.itertuples(index=False)):
+    selected_non_slide_visuals = non_slide_visuals.head(6)
+    for idx, visual in enumerate(selected_non_slide_visuals.itertuples(index=False)):
         with visual_cols[idx % 3]:
             visual_path = project_asset(visual.asset_path)
             with st.container(border=True):
@@ -14336,6 +14453,10 @@ and a cleaner schema for Mountain Pass and Bayan Obo. Keep the geology reviewabl
                 if visual_path.exists():
                     st.image(str(visual_path), use_container_width=True)
                 st.caption(visual.caption)
+    if len(non_slide_visuals) > len(selected_non_slide_visuals):
+        st.caption(
+            f"{len(non_slide_visuals) - len(selected_non_slide_visuals)} additional visual assets are available in the CSV/source inventory."
+        )
 
     st.subheader("Embedded or linked evidence")
     if related_evidence.empty:
