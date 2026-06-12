@@ -10646,6 +10646,36 @@ MODEL_TERM_EXPLAINERS = {
             "risk": "It cannot replace a reviewed pick or velocity interpretation.",
         },
     ],
+    "north_slope": [
+        {
+            "name": "Ridge / ElasticNet baseline",
+            "kind": "timeline",
+            "plain": "A simple regression model that estimates hydrate saturation from well-log variables before using a neural net.",
+            "use": "It gives the hydrate workflow a sanity-check model: if complex ML cannot beat this, do not trust the complex model.",
+            "risk": "A baseline can still leak information if depth rows from the same well are split randomly.",
+        },
+        {
+            "name": "Keras ANN hydrate model",
+            "kind": "ann",
+            "plain": "A neural network made of connected layers. It learns nonlinear combinations of log curves such as gamma ray, resistivity, porosity, Vp, and Vs.",
+            "use": "This is the model people mean when they say the site could estimate Sgh or screen hydrate intervals.",
+            "risk": "It must be tested by holding out whole wells, not random rows from the same well.",
+        },
+        {
+            "name": "XGBoost / LightGBM challenger",
+            "kind": "tree",
+            "plain": "Tree-ensemble models that ask many split questions about the logs and combine the answers into a ranked estimate.",
+            "use": "Useful as a challenger because well-log tables are structured, mixed, and nonlinear.",
+            "risk": "The model can learn log-quality artifacts or formation shortcuts instead of hydrate evidence.",
+        },
+        {
+            "name": "Leave-well-out validation",
+            "kind": "spatial",
+            "plain": "Train on some wells, then test on a different well so the score measures transfer, not memorization.",
+            "use": "This is the easiest phrase to say when someone asks whether the hydrate model is trustworthy.",
+            "risk": "Random depth-row splits make the model look stronger than it really is.",
+        },
+    ],
     "rock_classification": [
         {
             "name": "EfficientNet / ResNet",
@@ -10796,6 +10826,36 @@ MODEL_TERM_EXPLAINERS = {
             "plain": "A validation gate that checks whether the data are current and whether the change matches seasonal or instrument patterns.",
             "use": "It blocks weak monitoring claims before they leave the pipeline.",
             "risk": "Late or stale data can create false confidence.",
+        },
+    ],
+    "stock_workflow": [
+        {
+            "name": "Persistence baseline",
+            "kind": "timeline",
+            "plain": "A simple rule that assumes the next value behaves like the recent past.",
+            "use": "It is the first test for a finance dashboard: a fancy model must beat a simple baseline.",
+            "risk": "If there is no baseline, model performance can sound impressive without meaning much.",
+        },
+        {
+            "name": "ElasticNet",
+            "kind": "timeline",
+            "plain": "A linear model that keeps only useful signals and shrinks weak ones.",
+            "use": "Good for a cautious first pass on ticker features before using more complex models.",
+            "risk": "It still fails if future information leaks into the training features.",
+        },
+        {
+            "name": "LightGBM challenger",
+            "kind": "tree",
+            "plain": "A tree model that can capture nonlinear market-feature interactions after the baseline is proven.",
+            "use": "Use it as a challenger, not as a promise of prediction.",
+            "risk": "Finance data shifts over time, so walk-forward testing and drift checks matter.",
+        },
+        {
+            "name": "Walk-forward validation",
+            "kind": "timeline",
+            "plain": "Train on the past, test on the next time window, then move forward and repeat.",
+            "use": "This is the finance version of proving the app did not peek into the future.",
+            "risk": "Random train/test splits can hide leakage and fake performance.",
         },
     ],
 }
@@ -11794,7 +11854,6 @@ def _manual_flow_caption(value: str) -> str:
 def render_ml_pipeline_contract(topic: dict) -> None:
     render_manual_visual_architecture(topic)
     render_model_mechanics_panel(topic)
-    render_model_term_explainer(topic)
     render_ml_visual_diagram(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
@@ -13131,6 +13190,7 @@ elif section == "Think Tank Topics":
     topic_roadmap = roadmap_row(topic["project_key"])
     st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
     render_presentation_playbook(topic)
+    render_model_term_explainer(topic)
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
         st.caption(
