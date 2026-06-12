@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-12 / topic-2-redraw-fix"
+DEPLOY_BUILD_ID = "2026-06-12 / per-topic-model-explainers"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -1269,6 +1269,312 @@ ML_MODEL_DETAIL_DIAGRAMS = {
         "diagram": "EfficientNet patch classifier -> U-Net/Mask R-CNN segmentation -> CLIP retrieval -> proxy claim gate",
     },
 }
+
+MODEL_TOPIC_SUMMARIES = {
+    "ai_workflow": "The model watches a software state, reads OCR/UI tokens, remembers prior clicks, then predicts the next reviewed action.",
+    "thesis_graph": "Scientific text models tag mineral/deposit terms, relation models score source-backed edges, and graph models rank links for expert review.",
+    "processing_earthquake": "Earthquake events become region-time feature rows. A count model sets the baseline, then a tree model ranks unusual windows.",
+    "seismic": "The model checks whether a waveform is usable, then a picker model proposes P and S arrival probabilities for human review.",
+    "north_slope": "Well-log features become depth rows. The model estimates hydrate saturation only after QC and leave-well-out validation.",
+    "rock_classification": "Image and chemistry branches propose rock or mineral labels, then an expert audit catches sample leakage and weak labels.",
+    "valles": "Each method keeps its own lane. The model ranks agreement or conflict zones instead of forcing one clean subsurface answer.",
+    "near_surface": "Line intervals from hammer seismic, ERT, and TEM become review rows. The model flags where methods agree, conflict, or need context.",
+    "moho_ml": "Gravity-derived rows predict Moho depth. The real test is whether the model transfers to a new region without memorizing geography.",
+    "ambient_noise": "Station-pair windows become CCF quality rows. The model triages stable signals, data gaps, and anomalies before interpretation.",
+    "stock_workflow": "Past-only price windows feed a baseline and challenger model. Walk-forward validation decides whether any prediction language is allowed.",
+    "sem_petrography": "Image models propose visible texture labels, but climate or reservoir interpretation must pass a separate evidence gate.",
+}
+
+
+def _model_type_visual(kind: str) -> str:
+    if kind == "boosted_trees":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Boosted decision trees">
+  <rect x="12" y="18" width="78" height="104" rx="8" class="svg-soft"/>
+  <text x="51" y="38" text-anchor="middle">features</text>
+  <path d="M34 58h34M34 78h34M34 98h34" class="svg-line"/>
+  <g class="svg-tree" transform="translate(124 24)">
+    <circle cx="28" cy="16" r="10"/><circle cx="10" cy="48" r="9"/><circle cx="46" cy="48" r="9"/>
+    <path d="M28 26L10 39M28 26l18 13"/>
+  </g>
+  <g class="svg-tree" transform="translate(180 36)">
+    <circle cx="28" cy="16" r="10"/><circle cx="10" cy="48" r="9"/><circle cx="46" cy="48" r="9"/>
+    <path d="M28 26L10 39M28 26l18 13"/>
+  </g>
+  <g class="svg-tree" transform="translate(236 48)">
+    <circle cx="28" cy="16" r="10"/><circle cx="10" cy="48" r="9"/><circle cx="46" cy="48" r="9"/>
+    <path d="M28 26L10 39M28 26l18 13"/>
+  </g>
+  <path d="M92 70h24M172 70h14M228 76h14" class="svg-arrow"/>
+  <rect x="254" y="112" width="52" height="24" rx="12" class="svg-output"/>
+  <text x="280" y="128" text-anchor="middle">score</text>
+</svg>
+        """
+    if kind == "scientific_text":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Scientific text encoder">
+  <rect x="14" y="22" width="88" height="92" rx="8" class="svg-soft"/>
+  <text x="58" y="40" text-anchor="middle">paper text</text>
+  <text x="28" y="66">REE</text><text x="28" y="88">host rock</text><text x="28" y="110">fluid</text>
+  <rect x="132" y="20" width="64" height="104" rx="10" class="svg-model"/>
+  <text x="164" y="52" text-anchor="middle">BERT</text><text x="164" y="74" text-anchor="middle">layers</text>
+  <path d="M104 72h22M198 72h22" class="svg-arrow"/>
+  <rect x="222" y="30" width="82" height="82" rx="8" class="svg-output"/>
+  <text x="263" y="54" text-anchor="middle">entity</text>
+  <text x="263" y="76" text-anchor="middle">tags</text>
+  <text x="263" y="98" text-anchor="middle">relations</text>
+</svg>
+        """
+    if kind == "graph":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Graph neural network message passing">
+  <circle cx="160" cy="74" r="24" class="svg-dark"/>
+  <circle cx="76" cy="42" r="16" class="svg-node"/><circle cx="82" cy="112" r="16" class="svg-node"/>
+  <circle cx="244" cy="42" r="16" class="svg-node"/><circle cx="238" cy="112" r="16" class="svg-node"/>
+  <path d="M91 47l46 18M97 107l43-22M183 62l46-16M183 86l40 20" class="svg-line"/>
+  <path d="M108 42h30M214 42h-30" class="svg-arrow"/>
+  <text x="160" y="79" text-anchor="middle" class="svg-dark-text">node</text>
+  <text x="160" y="132" text-anchor="middle">neighbors update the link score</text>
+</svg>
+        """
+    if kind == "waveform":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Waveform arrival picker">
+  <path d="M18 86 C42 32, 62 124, 88 82 S132 32, 160 82 S208 128, 238 82 S282 34, 304 82" class="svg-wave"/>
+  <rect x="134" y="24" width="32" height="104" rx="8" class="svg-warn"/>
+  <line x1="150" y1="22" x2="150" y2="130" class="svg-red"/>
+  <text x="150" y="142" text-anchor="middle">P/S pick probability</text>
+</svg>
+        """
+    if kind == "neural_net":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Neural network layers">
+  <g class="svg-net">
+    <circle cx="42" cy="42" r="10"/><circle cx="42" cy="74" r="10"/><circle cx="42" cy="106" r="10"/>
+    <circle cx="132" cy="32" r="10"/><circle cx="132" cy="62" r="10"/><circle cx="132" cy="92" r="10"/><circle cx="132" cy="122" r="10"/>
+    <circle cx="224" cy="50" r="10"/><circle cx="224" cy="98" r="10"/>
+    <circle cx="284" cy="74" r="12"/>
+    <path d="M52 42L122 32M52 42L122 62M52 74L122 62M52 74L122 92M52 106L122 92M52 106L122 122M142 32L214 50M142 62L214 50M142 92L214 98M142 122L214 98M234 50L272 74M234 98L272 74"/>
+  </g>
+  <text x="160" y="142" text-anchor="middle">feature rows pass through hidden layers</text>
+</svg>
+        """
+    if kind == "image_model":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Image classifier">
+  <rect x="16" y="24" width="70" height="70" rx="8" class="svg-image"/>
+  <circle cx="42" cy="50" r="12" class="svg-image-mark"/><path d="M22 84c16-24 36-22 58 0" class="svg-image-mark"/>
+  <rect x="116" y="28" width="34" height="62" rx="6" class="svg-filter"/>
+  <rect x="160" y="36" width="34" height="62" rx="6" class="svg-filter"/>
+  <rect x="204" y="44" width="34" height="62" rx="6" class="svg-filter"/>
+  <path d="M88 60h22M150 60h10M194 68h10M240 76h20" class="svg-arrow"/>
+  <rect x="262" y="58" width="46" height="34" rx="8" class="svg-output"/>
+  <text x="285" y="79" text-anchor="middle">label</text>
+  <text x="160" y="130" text-anchor="middle">filters learn texture and shape cues</text>
+</svg>
+        """
+    if kind == "segmentation":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Segmentation mask model">
+  <rect x="18" y="24" width="76" height="76" rx="8" class="svg-image"/>
+  <path d="M28 78c18-34 48-36 56-4c-12 22-42 26-56 4z" class="svg-mask"/>
+  <path d="M98 62h30M196 62h30" class="svg-arrow"/>
+  <path d="M136 30h52l-16 32l16 32h-52l16-32z" class="svg-model"/>
+  <rect x="230" y="24" width="76" height="76" rx="8" class="svg-soft"/>
+  <path d="M242 82c18-38 46-34 52-6c-12 18-38 22-52 6z" class="svg-mask"/>
+  <text x="268" y="124" text-anchor="middle">pixel mask</text>
+</svg>
+        """
+    if kind == "uncertainty":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Gaussian process uncertainty surface">
+  <path d="M18 106 C64 36, 116 120, 160 64 S244 28, 302 96" class="svg-wave"/>
+  <path d="M18 122 C64 52, 116 136, 160 80 S244 44, 302 112" class="svg-band"/>
+  <path d="M18 90 C64 20, 116 104, 160 48 S244 12, 302 80" class="svg-band"/>
+  <circle cx="58" cy="74" r="5" class="svg-red-fill"/><circle cx="138" cy="88" r="5" class="svg-red-fill"/>
+  <circle cx="224" cy="50" r="5" class="svg-red-fill"/>
+  <text x="160" y="138" text-anchor="middle">prediction plus uncertainty band</text>
+</svg>
+        """
+    if kind == "anomaly":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Anomaly model">
+  <g class="svg-points">
+    <circle cx="72" cy="52" r="5"/><circle cx="94" cy="66" r="5"/><circle cx="78" cy="88" r="5"/>
+    <circle cx="118" cy="76" r="5"/><circle cx="142" cy="54" r="5"/><circle cx="150" cy="92" r="5"/>
+    <circle cx="232" cy="38" r="7" class="svg-red-fill"/>
+  </g>
+  <path d="M48 28l142 92M58 124l156-100M36 78h186" class="svg-line muted"/>
+  <text x="232" y="64" text-anchor="middle">isolated</text>
+  <text x="160" y="136" text-anchor="middle">unusual points separate faster</text>
+</svg>
+        """
+    if kind == "linear":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Linear baseline model">
+  <path d="M38 114L286 34" class="svg-red"/>
+  <circle cx="64" cy="102" r="6" class="svg-node"/><circle cx="106" cy="86" r="6" class="svg-node"/>
+  <circle cx="148" cy="72" r="6" class="svg-node"/><circle cx="198" cy="60" r="6" class="svg-node"/>
+  <circle cx="244" cy="42" r="6" class="svg-node"/>
+  <text x="160" y="136" text-anchor="middle">simple trend to beat before complexity</text>
+</svg>
+        """
+    if kind == "timeseries":
+        return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Time series model">
+  <rect x="18" y="28" width="44" height="76" rx="6" class="svg-soft"/><rect x="72" y="40" width="44" height="76" rx="6" class="svg-soft"/>
+  <rect x="126" y="24" width="44" height="76" rx="6" class="svg-soft"/><rect x="180" y="50" width="44" height="76" rx="6" class="svg-soft"/>
+  <path d="M62 66h10M116 78h10M170 62h10M224 88h34" class="svg-arrow"/>
+  <rect x="260" y="66" width="42" height="34" rx="8" class="svg-output"/>
+  <text x="281" y="87" text-anchor="middle">next</text>
+  <text x="160" y="138" text-anchor="middle">past windows predict only future-held-out folds</text>
+</svg>
+        """
+    return """
+<svg class="model-type-svg" viewBox="0 0 320 150" role="img" aria-label="Model-ready feature flow">
+  <rect x="18" y="30" width="78" height="84" rx="8" class="svg-soft"/>
+  <text x="57" y="54" text-anchor="middle">inputs</text><text x="57" y="78" text-anchor="middle">features</text>
+  <path d="M98 72h40" class="svg-arrow"/>
+  <rect x="140" y="28" width="68" height="88" rx="10" class="svg-model"/>
+  <text x="174" y="68" text-anchor="middle">model</text><text x="174" y="90" text-anchor="middle">layer</text>
+  <path d="M210 72h38" class="svg-arrow"/>
+  <rect x="250" y="44" width="52" height="56" rx="8" class="svg-output"/>
+  <text x="276" y="76" text-anchor="middle">review</text>
+</svg>
+    """
+
+
+def _model_type_explainer(model_name: str) -> dict:
+    name = model_name.lower()
+    if any(term in name for term in ["scibert", "matscibert"]):
+        return {
+            "kind": "scientific_text",
+            "label": "Scientific language model",
+            "what": "A BERT-style model trained on scientific papers, so it understands terms like minerals, formulas, methods, and captions better than a generic text model.",
+            "why": "Use it when the topic starts with PDFs, slide text, captions, or research notes that need entity tags.",
+        }
+    if "relation cross-encoder" in name:
+        return {
+            "kind": "scientific_text",
+            "label": "Relation scorer",
+            "what": "A text-pair model that reads two entities plus the source sentence and scores what relationship is actually supported.",
+            "why": "Use it before adding graph edges so the website can separate observed links from guesses.",
+        }
+    if any(term in name for term in ["gaussian process", "gp "]):
+        return {
+            "kind": "uncertainty",
+            "label": "Uncertainty surface model",
+            "what": "A spatial/statistical model that predicts both a value and how uncertain that value is between observations.",
+            "why": "Use it when a map should show confidence bands or unresolved zones, not one overconfident answer.",
+        }
+    if any(term in name for term in ["graphsage", "r-gcn", "graph model"]):
+        return {
+            "kind": "graph",
+            "label": "Graph neural network",
+            "what": "A model where neighboring nodes pass information to each other. R-GCN also treats each edge type differently.",
+            "why": "Use it when the data is a network of deposits, minerals, rocks, processes, sources, or survey zones.",
+        }
+    if any(term in name for term in ["phasenet", "eqtransformer", "waveform", "seismic representation", "seislm"]):
+        return {
+            "kind": "waveform",
+            "label": "Waveform model",
+            "what": "A model that reads seismic traces and returns probabilities for arrivals, noise, quality, or change points.",
+            "why": "Use it when the work starts with station records instead of ordinary spreadsheet rows.",
+        }
+    if any(term in name for term in ["efficientnet", "resnet", "swin"]):
+        return {
+            "kind": "image_model",
+            "label": "Image feature model",
+            "what": "A convolution or vision-transformer model that learns texture, shape, and pattern features from images.",
+            "why": "Use it for thin sections, SEM crops, maps, and other visuals where pixels carry the evidence.",
+        }
+    if any(term in name for term in ["u-net", "mask r-cnn", "segmentation"]):
+        return {
+            "kind": "segmentation",
+            "label": "Segmentation model",
+            "what": "An image model that predicts a pixel mask, not just one label for the whole image.",
+            "why": "Use it when the question is where grains, pores, fractures, or zones are located.",
+        }
+    if any(term in name for term in ["clip", "siglip", "retrieval"]):
+        return {
+            "kind": "image_model",
+            "label": "Image-text retrieval model",
+            "what": "A model that puts images and text into the same embedding space so similar examples can be retrieved.",
+            "why": "Use it to find comparable expert-reviewed examples before trusting a new label.",
+        }
+    if "isolation forest" in name:
+        return {
+            "kind": "anomaly",
+            "label": "Anomaly triage model",
+            "what": "A tree model that isolates unusual examples quickly; easier-to-isolate rows are treated as anomalies.",
+            "why": "Use it to flag station-pair windows, data gaps, or strange monitoring behavior for review.",
+        }
+    if any(term in name for term in ["lightgbm", "xgboost", "random forest"]):
+        return {
+            "kind": "boosted_trees",
+            "label": "Boosted tree model",
+            "what": "LightGBM/XGBoost build many small decision trees. Each tree fixes errors from earlier trees, producing a strong tabular model.",
+            "why": "Use it for geology, waveform-QA, stock, or survey rows with mixed numeric features and nonlinear patterns.",
+        }
+    if any(term in name for term in ["keras", "tensorflow", "ann", "mlp", "neural", "multitask nn"]):
+        return {
+            "kind": "neural_net",
+            "label": "Neural network",
+            "what": "A layered model that transforms feature rows through hidden units to learn nonlinear relationships.",
+            "why": "Use it when feature interactions may be complex, but only after a simpler baseline is tested.",
+        }
+    if any(term in name for term in ["ridge", "elasticnet", "gam", "linear", "logistic", "svm"]):
+        return {
+            "kind": "linear",
+            "label": "Interpretable baseline",
+            "what": "A simpler model that draws a weighted boundary or trend through the features.",
+            "why": "Use it first so a complex model has to prove it actually improves the result.",
+        }
+    if any(term in name for term in ["poisson", "negative-binomial", "hawkes", "st-dbscan"]):
+        return {
+            "kind": "timeseries",
+            "label": "Event-count / sequence model",
+            "what": "A model for counts, rates, clusters, or event sequences across time and space.",
+            "why": "Use it when the target is event frequency or pattern, not a single static label.",
+        }
+    if any(term in name for term in ["arima", "sarimax", "temporal cnn", "lstm", "persistence", "moving average"]):
+        return {
+            "kind": "timeseries",
+            "label": "Time-series baseline",
+            "what": "A model that uses ordered past windows and respects time, so future data cannot leak into training.",
+            "why": "Use it for dashboards where the split and refresh date matter as much as the score.",
+        }
+    if "behavior-cloning" in name or "decision transformer" in name or "tool planner" in name:
+        return {
+            "kind": "neural_net",
+            "label": "Action-sequence model",
+            "what": "A model trained on demonstrations. It learns which software action should come next from screen state and prior steps.",
+            "why": "Use it when the evidence is a human workflow trace rather than a conventional science table.",
+        }
+    return {
+        "kind": "default",
+        "label": "Model-ready workflow",
+        "what": "A model takes structured inputs, learns a target, and produces an output that still needs validation.",
+        "why": "Use it only after the target, features, split, metric, and human review point are explicit.",
+    }
+
+
+def _model_type_explainer_html(model_name: str, compact: bool = False) -> str:
+    explainer = _model_type_explainer(model_name)
+    compact_class = " compact" if compact else ""
+    visual_html = _model_type_visual(explainer['kind']).strip()
+    why_html = "" if compact else f"<p><span>Why here</span>{escape(explainer['why'])}</p>"
+    return f"""
+<div class="model-type-explainer{compact_class}">
+  {visual_html}
+  <div class="model-type-copy">
+    <strong>{escape(explainer['label'])}</strong>
+    <p><span>What it is</span>{escape(explainer['what'])}</p>
+    {why_html}
+  </div>
+</div>
+    """.strip()
+
 
 PROJECT_TOPIC_FALLBACKS = {
     "moho_ml": "moho_ml",
@@ -7070,8 +7376,8 @@ st.markdown(
         background: #ffffff;
         border: 1px solid #d8dee8;
         border-radius: 8px;
-        min-height: 4.4rem;
-        padding: 0.55rem 0.65rem;
+        min-height: 6.4rem;
+        padding: 0.65rem 0.75rem;
     }
     .ml-source-map strong,
     .ml-source-map span {
@@ -7118,13 +7424,18 @@ st.markdown(
         font-size: 0.88rem;
         line-height: 1.32;
         margin: 0;
-        max-width: 28rem;
+        max-width: 34rem;
     }
     .model-mechanics-board {
         display: grid;
-        grid-template-columns: minmax(13rem, 0.8fr) minmax(19rem, 1.15fr) minmax(13rem, 0.85fr);
+        grid-template-columns: minmax(13rem, 0.78fr) minmax(23rem, 1.35fr) minmax(13rem, 0.87fr);
         gap: 0.65rem;
         align-items: stretch;
+    }
+    .mechanics-model-column {
+        display: grid;
+        gap: 0.55rem;
+        min-width: 0;
     }
     .mechanics-card {
         background: #f8fafc;
@@ -7313,6 +7624,110 @@ st.markdown(
         line-height: 1.25;
         margin-top: 0.6rem;
         padding: 0.48rem 0.55rem;
+    }
+    .model-term-explainer {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .model-term-head {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+    }
+    .model-term-kicker {
+        color: #0f766e;
+        font-size: 0.72rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .model-term-head h3 {
+        color: #0b1f3a;
+        font-size: clamp(1.05rem, 1.8vw, 1.42rem);
+        line-height: 1.12;
+        margin: 0.14rem 0 0;
+    }
+    .model-term-head p {
+        color: #475569 !important;
+        font-size: 0.88rem;
+        line-height: 1.32;
+        margin: 0;
+        max-width: 32rem;
+    }
+    .model-term-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.65rem;
+    }
+    .model-term-card {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        min-height: 18.5rem;
+        padding: 0.7rem;
+    }
+    .model-term-card strong {
+        color: #0b1f3a;
+        display: block;
+        font-size: 0.88rem;
+        line-height: 1.14;
+        margin-top: 0.55rem;
+    }
+    .model-term-card p {
+        color: #475569 !important;
+        font-size: 0.78rem;
+        line-height: 1.28;
+        margin: 0.38rem 0 0;
+    }
+    .model-term-card .term-use {
+        background: #ecfdf5;
+        border-left: 4px solid #0f766e;
+        border-radius: 7px;
+        color: #134e4a;
+        font-size: 0.76rem;
+        font-weight: 780;
+        line-height: 1.22;
+        margin-top: 0.55rem;
+        padding: 0.42rem 0.5rem;
+    }
+    .model-term-card .term-risk {
+        background: #fff7ed;
+        border-left: 4px solid #f97316;
+        border-radius: 7px;
+        color: #9a3412;
+        font-size: 0.74rem;
+        font-weight: 780;
+        line-height: 1.22;
+        margin-top: 0.45rem;
+        padding: 0.4rem 0.5rem;
+    }
+    .model-term-visual {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        height: 8.7rem;
+        overflow: hidden;
+        position: relative;
+    }
+    .model-term-visual svg {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+    .term-source-line {
+        color: #64748b;
+        font-size: 0.72rem;
+        line-height: 1.25;
+        margin-top: 0.58rem;
+    }
+    .term-source-line a {
+        color: #0f766e;
+        font-weight: 850;
+        text-decoration: none;
     }
     .ml-part-explainer {
         background: #ffffff;
@@ -7877,8 +8292,8 @@ st.markdown(
     }
     .ml-model-stack {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
-        gap: 0.55rem;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        gap: 0.7rem;
         align-items: stretch;
     }
     .ml-model-card {
@@ -7886,8 +8301,8 @@ st.markdown(
         border: 1px solid #d8dee8;
         border-top: 5px solid #2563eb;
         border-radius: 8px;
-        min-height: 16rem;
-        padding: 0.72rem;
+        min-height: 27rem;
+        padding: 0.82rem;
         display: flex;
         flex-direction: column;
         gap: 0.42rem;
@@ -7906,6 +8321,168 @@ st.markdown(
         font-size: 0.68rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+    }
+    .model-type-explainer {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        display: grid;
+        gap: 0.55rem;
+        margin: 0.15rem 0;
+        min-width: 0;
+        padding: 0.55rem;
+    }
+    .model-type-explainer.compact {
+        background: #ffffff;
+        margin: 0;
+    }
+    .model-type-svg {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 7px;
+        color: #0b1f3a;
+        display: block;
+        height: 8rem;
+        width: 100%;
+    }
+    .model-type-explainer.compact .model-type-svg {
+        height: 6.5rem;
+    }
+    .model-type-copy strong {
+        color: #0b1f3a;
+        display: block;
+        font-size: 0.82rem;
+        line-height: 1.15;
+    }
+    .model-type-copy p {
+        color: #334155 !important;
+        font-size: 0.76rem;
+        line-height: 1.28;
+        margin: 0.28rem 0 0;
+    }
+    .model-type-copy p span {
+        color: #0f766e;
+        display: block;
+        font-size: 0.64rem;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.08rem;
+        text-transform: uppercase;
+    }
+    .model-type-svg text {
+        fill: #0b1f3a;
+        font-size: 12px;
+        font-weight: 800;
+    }
+    .model-type-svg .svg-line {
+        fill: none;
+        stroke: #64748b;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3;
+    }
+    .model-type-svg .svg-line.muted {
+        opacity: 0.35;
+    }
+    .model-type-svg .svg-arrow {
+        fill: none;
+        stroke: #0f766e;
+        stroke-linecap: round;
+        stroke-width: 4;
+    }
+    .model-type-svg .svg-soft {
+        fill: #eef2f7;
+        stroke: #cbd5e1;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-model {
+        fill: #dbeafe;
+        stroke: #2563eb;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-output {
+        fill: #ecfdf5;
+        stroke: #0f766e;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-tree circle,
+    .model-type-svg .svg-node {
+        fill: #ffffff;
+        stroke: #0f766e;
+        stroke-width: 3;
+    }
+    .model-type-svg .svg-tree path,
+    .model-type-svg .svg-net path {
+        fill: none;
+        stroke: #64748b;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-dark {
+        fill: #0f172a;
+        stroke: #0f172a;
+    }
+    .model-type-svg .svg-dark-text {
+        fill: #ffffff;
+        font-size: 11px;
+    }
+    .model-type-svg .svg-wave {
+        fill: none;
+        stroke: #2563eb;
+        stroke-linecap: round;
+        stroke-width: 4;
+    }
+    .model-type-svg .svg-band {
+        fill: none;
+        stroke: #93c5fd;
+        stroke-linecap: round;
+        stroke-width: 3;
+        opacity: 0.7;
+    }
+    .model-type-svg .svg-warn {
+        fill: #fee2e2;
+        stroke: #fca5a5;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-red {
+        fill: none;
+        stroke: #ef4444;
+        stroke-linecap: round;
+        stroke-width: 4;
+    }
+    .model-type-svg .svg-red-fill {
+        fill: #ef4444;
+        stroke: #7f1d1d;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-net circle {
+        fill: #dbeafe;
+        stroke: #2563eb;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-image {
+        fill: #f1f5f9;
+        stroke: #94a3b8;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-image-mark {
+        fill: none;
+        stroke: #64748b;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-filter {
+        fill: #dbeafe;
+        stroke: #2563eb;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-mask {
+        fill: #99f6e4;
+        stroke: #0f766e;
+        stroke-width: 2;
+    }
+    .model-type-svg .svg-points circle {
+        fill: #dbeafe;
+        stroke: #2563eb;
+        stroke-width: 2;
     }
     .ml-model-name {
         color: #0b1f3a;
@@ -7990,6 +8567,7 @@ st.markdown(
         .ml-part-head,
         .thesis-graph-head,
         .adobe-graph-focus,
+        .model-term-grid,
         .model-mechanics-board,
         .ml-source-map {
             grid-template-columns: 1fr;
@@ -9597,6 +10175,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
         if model_detail is not None
         else blueprint["model"]
     )
+    main_explainer = _model_type_explainer(model_label)
     flow_nodes = [
         ("TARGET", blueprint["target"]),
         ("FEATURES", feature_chips),
@@ -9629,6 +10208,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
 <div class="ml-model-card {stage_key}">
   <strong>{escape(stage_label)}</strong>
   <div class="ml-model-name">{escape(stage["name"])}</div>
+  {_model_type_explainer_html(stage["name"])}
   <div class="ml-model-row"><span>Target</span><p>{escape(stage["target"])}</p></div>
   <div class="ml-model-row"><span>Inputs</span><p>{escape(stage["input"])}</p></div>
   <div class="ml-model-row"><span>Training unit</span><p>{escape(stage["unit"])}</p></div>
@@ -9645,7 +10225,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
   <div class="ml-model-row"><span>Split strategy</span><p>{escape(model_detail["validation"])}</p></div>
   <div class="ml-model-row"><span>Metrics</span><p class="ml-metric-chips">{metric_chips}</p></div>
   <div class="ml-model-row"><span>Human / risk gate</span><p>{escape(model_detail["gate"])}</p></div>
-  <div class="ml-model-row"><span>Diagram wording</span><p>{escape(model_detail["diagram"])}</p></div>
+  <div class="ml-model-row"><span>Talk-track rule</span><p>Explain the target, the features, the model family, and the review gate before making any prediction claim.</p></div>
 </div>
         """
         model_detail_html = f"""
@@ -9684,8 +10264,8 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
   </div>
   {model_detail_html}
   <div class="ml-source-map">
-    <div><strong>Hydrate paper pattern</strong><span>Sgh target, log features, washout/GLOSS QC, transfer test.</span></div>
-    <div><strong>Primary here</strong><span>{escape(primary_source)}</span></div>
+    <div><strong>Model type</strong><span>{escape(main_explainer["label"])}: {escape(main_explainer["what"])}</span></div>
+    <div><strong>Why this topic</strong><span>{escape(main_explainer["why"])}</span></div>
     <div><strong>Validation notes</strong>{secondary_line}</div>
   </div>
 </div>
@@ -9789,6 +10369,473 @@ def _model_mechanic_visual(mode: str) -> str:
     """
 
 
+def _model_term_visual(kind: str) -> str:
+    if kind == "waveform_foundation":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Waveform foundation model visual">
+    <rect x="10" y="10" width="340" height="140" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+    <path d="M22 58 C38 25, 54 92, 70 58 S102 25, 118 58 S150 93, 166 58 S198 24, 214 58 S246 91, 262 58 S300 31, 338 58" fill="none" stroke="#2563eb" stroke-width="4"/>
+    <rect x="82" y="35" width="26" height="48" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="190" y="35" width="26" height="48" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="74" y="105" width="58" height="26" rx="13" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="151" y="105" width="58" height="26" rx="13" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="228" y="105" width="58" height="26" rx="13" fill="#ccfbf1" stroke="#0f766e"/>
+    <text x="103" y="123" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">detect</text>
+    <text x="180" y="123" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">pick</text>
+    <text x="257" y="123" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">classify</text>
+  </svg>
+</div>
+        """
+    if kind == "transformer":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Transformer sequence model visual">
+    <rect x="12" y="16" width="64" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="88" y="16" width="64" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="164" y="16" width="64" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="240" y="16" width="90" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="44" y="35" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">state</text>
+    <text x="120" y="35" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">action</text>
+    <text x="196" y="35" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">error</text>
+    <text x="285" y="35" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="900">review</text>
+    <rect x="52" y="70" width="256" height="46" rx="12" fill="#0f172a"/>
+    <text x="180" y="98" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="900">sequence encoder</text>
+    <path d="M180 116 L180 140" stroke="#0f766e" stroke-width="4"/>
+    <rect x="116" y="132" width="128" height="20" rx="10" fill="#ccfbf1" stroke="#0f766e"/>
+  </svg>
+</div>
+        """
+    if kind == "graph":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Graph model visual">
+    <circle cx="180" cy="78" r="30" fill="#0f172a"/>
+    <circle cx="76" cy="40" r="20" fill="#dbeafe" stroke="#2563eb" stroke-width="4"/>
+    <circle cx="282" cy="40" r="20" fill="#ccfbf1" stroke="#0f766e" stroke-width="4"/>
+    <circle cx="92" cy="124" r="20" fill="#fef3c7" stroke="#d97706" stroke-width="4"/>
+    <circle cx="270" cy="122" r="20" fill="#f5f3ff" stroke="#7c3aed" stroke-width="4"/>
+    <path d="M95 46 L150 68 M262 47 L208 68 M111 114 L153 90 M252 113 L207 91" stroke="#64748b" stroke-width="4"/>
+    <text x="180" y="83" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="900">edge</text>
+  </svg>
+</div>
+        """
+    if kind == "tree":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Tree model visual">
+    <rect x="134" y="18" width="92" height="30" rx="8" fill="#0f172a"/>
+    <text x="180" y="38" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="900">split</text>
+    <path d="M180 48 L105 82 M180 48 L255 82" stroke="#0f766e" stroke-width="4"/>
+    <rect x="58" y="82" width="94" height="28" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="208" y="82" width="94" height="28" rx="8" fill="#fef3c7" stroke="#d97706"/>
+    <path d="M105 110 L72 136 M105 110 L138 136 M255 110 L222 136 M255 110 L288 136" stroke="#64748b" stroke-width="3"/>
+  </svg>
+</div>
+        """
+    if kind == "vision":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Image model visual">
+    <rect x="24" y="30" width="92" height="92" rx="10" fill="#e2e8f0" stroke="#64748b"/>
+    <circle cx="58" cy="62" r="14" fill="#ffffff" stroke="#94a3b8"/>
+    <circle cx="86" cy="92" r="20" fill="#cbd5e1" stroke="#64748b"/>
+    <rect x="150" y="44" width="36" height="64" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="204" y="34" width="36" height="84" rx="8" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="258" y="54" width="62" height="44" rx="12" fill="#0f172a"/>
+    <text x="289" y="81" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="900">label</text>
+  </svg>
+</div>
+        """
+    if kind == "fusion":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Fusion model visual">
+    <rect x="24" y="24" width="84" height="28" rx="14" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="24" y="66" width="84" height="28" rx="14" fill="#ccfbf1" stroke="#0f766e"/>
+    <rect x="24" y="108" width="84" height="28" rx="14" fill="#fef3c7" stroke="#d97706"/>
+    <path d="M108 38 C154 38, 154 80, 204 80 M108 80 L204 80 M108 122 C154 122, 154 80, 204 80" fill="none" stroke="#64748b" stroke-width="4"/>
+    <circle cx="222" cy="80" r="26" fill="#0f172a"/>
+    <rect x="266" y="64" width="70" height="32" rx="16" fill="#f5f3ff" stroke="#7c3aed"/>
+    <text x="222" y="85" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="900">merge</text>
+  </svg>
+</div>
+        """
+    if kind == "uncertainty":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Uncertainty model visual">
+    <rect x="22" y="20" width="316" height="116" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+    <path d="M32 112 C72 112, 78 56, 118 56 C158 56, 158 112, 198 112 C238 112, 242 42, 286 42 C316 42, 322 96, 336 96" fill="none" stroke="#2563eb" stroke-width="4"/>
+    <circle cx="92" cy="112" r="5" fill="#0f766e"/>
+    <circle cx="180" cy="112" r="5" fill="#d97706"/>
+    <circle cx="274" cy="112" r="5" fill="#dc2626"/>
+    <rect x="224" y="22" width="80" height="22" rx="11" fill="#fff7ed" stroke="#f97316"/>
+    <text x="264" y="37" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="900">wide error</text>
+  </svg>
+</div>
+        """
+    if kind == "timeline":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Chronological validation visual">
+    <rect x="24" y="58" width="92" height="36" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="128" y="58" width="92" height="36" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="244" y="58" width="92" height="36" rx="8" fill="#ccfbf1" stroke="#0f766e"/>
+    <line x1="232" y1="38" x2="232" y2="118" stroke="#dc2626" stroke-width="5"/>
+    <text x="70" y="81" text-anchor="middle" fill="#1e3a8a" font-size="12" font-weight="900">train</text>
+    <text x="174" y="81" text-anchor="middle" fill="#1e3a8a" font-size="12" font-weight="900">train</text>
+    <text x="290" y="81" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">test</text>
+  </svg>
+</div>
+        """
+    if kind == "ann":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Neural network visual">
+    <g fill="#dbeafe" stroke="#2563eb" stroke-width="4">
+      <circle cx="70" cy="44" r="13"/><circle cx="70" cy="80" r="13"/><circle cx="70" cy="116" r="13"/>
+      <circle cx="180" cy="35" r="13"/><circle cx="180" cy="65" r="13"/><circle cx="180" cy="95" r="13"/><circle cx="180" cy="125" r="13"/>
+      <circle cx="292" cy="80" r="16"/>
+    </g>
+    <g stroke="#64748b" stroke-width="2">
+      <path d="M83 44 L167 35 M83 44 L167 65 M83 80 L167 65 M83 80 L167 95 M83 116 L167 95 M83 116 L167 125"/>
+      <path d="M193 35 L276 80 M193 65 L276 80 M193 95 L276 80 M193 125 L276 80"/>
+    </g>
+  </svg>
+</div>
+        """
+    if kind == "spatial":
+        return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Spatial validation visual">
+    <rect x="48" y="24" width="264" height="112" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+    <g stroke="#cbd5e1" stroke-width="2">
+      <path d="M114 24 V136 M180 24 V136 M246 24 V136 M48 61 H312 M48 99 H312"/>
+    </g>
+    <rect x="48" y="24" width="132" height="75" fill="#dbeafe" opacity="0.85"/>
+    <rect x="180" y="99" width="132" height="37" fill="#ccfbf1" opacity="0.95"/>
+    <text x="114" y="67" text-anchor="middle" fill="#1e3a8a" font-size="12" font-weight="900">train block</text>
+    <text x="246" y="122" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">test block</text>
+  </svg>
+</div>
+        """
+    return """
+<div class="model-term-visual">
+  <svg viewBox="0 0 360 160" role="img" aria-label="Validation gate visual">
+    <rect x="24" y="40" width="94" height="44" rx="10" fill="#dbeafe" stroke="#2563eb"/>
+    <rect x="140" y="26" width="30" height="108" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="4"/>
+    <rect x="202" y="40" width="118" height="44" rx="10" fill="#ccfbf1" stroke="#0f766e"/>
+    <path d="M118 62 H140 M170 62 H202" stroke="#64748b" stroke-width="4"/>
+    <text x="72" y="67" text-anchor="middle" fill="#1e3a8a" font-size="12" font-weight="900">model</text>
+    <text x="261" y="67" text-anchor="middle" fill="#134e4a" font-size="12" font-weight="900">review</text>
+  </svg>
+</div>
+    """
+
+
+MODEL_TERM_EXPLAINERS = {
+    "ai_workflow": [
+        {
+            "name": "OCR / UI state encoder",
+            "kind": "transformer",
+            "plain": "OCR reads text on the screen. UI state means the visible buttons, panels, file tree, map layers, errors, and previous actions.",
+            "use": "This turns a screen recording into model-ready state instead of treating it as a final screenshot.",
+            "risk": "Hidden files, environment variables, or off-screen state can make the action trace incomplete.",
+        },
+        {
+            "name": "Behavior-cloning transformer",
+            "kind": "transformer",
+            "plain": "A sequence model learns from human action traces: observe the screen, choose an action, inspect the result, then decide whether to continue.",
+            "use": "The page can say exactly what an agent learns from QGIS or software demos.",
+            "risk": "It can memorize screen layout unless held-out tasks and replay tests are used.",
+        },
+        {
+            "name": "Replay simulator",
+            "kind": "gate",
+            "plain": "A test environment reruns the task so success is measured by behavior, not just a nice final image.",
+            "use": "This gives the agent topic a concrete validation step.",
+            "risk": "Unsafe file actions, uploads, or overwrites still need human approval.",
+        },
+    ],
+    "thesis_graph": [
+        {
+            "name": "SciBERT / MatSciBERT",
+            "kind": "transformer",
+            "plain": "BERT-style language models trained for scientific or materials text. They help tag minerals, processes, locations, captions, and evidence phrases.",
+            "use": "They are the text-reading layer before graph edges are created.",
+            "risk": "A tagged word is not a proven relationship; edges still need source review.",
+        },
+        {
+            "name": "Relation cross-encoder",
+            "kind": "graph",
+            "plain": "A model that looks at two candidate entities plus the source sentence and ranks what relationship, if any, is supported.",
+            "use": "This explains how a mineral-host-rock edge could be proposed from a thesis paragraph.",
+            "risk": "Unsupported or attractive-looking edges must be blocked.",
+        },
+        {
+            "name": "GraphRAG",
+            "kind": "graph",
+            "plain": "Retrieval over a graph: a question follows graph paths, then pulls the source chunks behind those nodes and edges.",
+            "use": "This makes graph answers auditable instead of just conversational.",
+            "risk": "Graph retrieval still depends on clean entities, edge types, and citations.",
+        },
+        {
+            "name": "GraphSAGE / R-GCN",
+            "kind": "graph",
+            "plain": "Graph neural networks update a node or edge using nearby nodes. R-GCN also keeps different relationship types separate.",
+            "use": "They are future edge-ranking tools, not proof of a mineral discovery.",
+            "risk": "Graph leakage can happen if labels or evidence leak through neighboring nodes.",
+        },
+    ],
+    "processing_earthquake": [
+        {
+            "name": "Poisson / negative-binomial GLM",
+            "kind": "timeline",
+            "plain": "Simple count models for events per region-time window. Negative-binomial is useful when counts vary more than a plain Poisson model expects.",
+            "use": "This keeps the earthquake globe framed as feature engineering before any complex model.",
+            "risk": "No forecast claim unless the target and future-window test are defined.",
+        },
+        {
+            "name": "LightGBM anomaly ranker",
+            "kind": "tree",
+            "plain": "A fast tree-based model that can rank unusual windows from lagged counts, magnitude bins, depth bins, and cluster features.",
+            "use": "It turns the visual globe variables into rows a model can score.",
+            "risk": "Random window splits can leak nearby time and space patterns.",
+        },
+        {
+            "name": "Hawkes process / ST-DBSCAN",
+            "kind": "spatial",
+            "plain": "A Hawkes process models event sequences that cluster after earlier events. ST-DBSCAN groups events by space and time.",
+            "use": "These are challenger ideas for clusters or event-rate changes.",
+            "risk": "Rare strong events and spatial autocorrelation can make scores look better than they are.",
+        },
+    ],
+    "seismic": [
+        {
+            "name": "SeisLM",
+            "kind": "waveform_foundation",
+            "plain": "A transformer-style foundation model for seismic waveforms. It is pretrained on large open seismic waveform collections, then fine-tuned for tasks such as event detection and phase picking.",
+            "use": "Use it as a future representation layer for waveform windows, not as an automatic interpretation machine.",
+            "risk": "A pretrained waveform model still needs task labels, station metadata, and held-out event or station validation.",
+            "source_label": "SeisLM arXiv",
+            "source_url": "https://arxiv.org/abs/2410.15765",
+        },
+        {
+            "name": "PhaseNet / EQTransformer",
+            "kind": "waveform_foundation",
+            "plain": "Neural phase-picking models that propose P-wave and S-wave arrival times from waveform windows.",
+            "use": "They explain the pick-line visual: model proposes, human reviews, uncertainty stays visible.",
+            "risk": "Weak waveforms, bad metadata, or region mismatch can create wrong picks.",
+        },
+        {
+            "name": "LightGBM waveform QA",
+            "kind": "tree",
+            "plain": "A tree model using SNR, channel, distance, missingness, and station metadata to decide whether a waveform is usable or needs review.",
+            "use": "This is the simpler first model before foundation-model language appears.",
+            "risk": "It cannot replace a reviewed pick or velocity interpretation.",
+        },
+    ],
+    "rock_classification": [
+        {
+            "name": "EfficientNet / ResNet",
+            "kind": "vision",
+            "plain": "Image classifiers that learn visual patterns from image crops, such as thin sections, map patches, or petrographic textures.",
+            "use": "They are the image branch for rock, mineral, or formation labels.",
+            "risk": "Duplicate crops from the same sample must stay out of the test set.",
+        },
+        {
+            "name": "XGBoost / LightGBM chemistry branch",
+            "kind": "tree",
+            "plain": "Tree models that learn from tabular chemistry, ratios, spider-diagram values, or formation variables.",
+            "use": "This keeps chemistry separate from image evidence until labels are audited.",
+            "risk": "Correlated variables and weak labels can make fake confidence.",
+        },
+        {
+            "name": "Late-fusion MLP",
+            "kind": "fusion",
+            "plain": "A small neural network that combines separate image, chemistry, and text/source embeddings after each branch is checked.",
+            "use": "This shows how multimodal evidence becomes one ranked label.",
+            "risk": "Fusion should wait until scale, sample id, and label provenance are visible.",
+        },
+        {
+            "name": "CLIP / SigLIP retrieval",
+            "kind": "vision",
+            "plain": "Image-text embedding models that can find visually similar expert-labeled examples instead of immediately asserting a class.",
+            "use": "Good for a review queue: show similar examples and ask the expert.",
+            "risk": "Similarity is not the same as a correct geology label.",
+        },
+    ],
+    "valles": [
+        {
+            "name": "LightGBM conflict ranker",
+            "kind": "tree",
+            "plain": "A tree model that ranks grid cells, zones, or line intersections as agreement, conflict, insufficient evidence, or needs review.",
+            "use": "It supports the disagreement board without pretending the methods agree.",
+            "risk": "Misregistered layers or acquisition artifacts can look like geologic conflict.",
+        },
+        {
+            "name": "Gaussian Process uncertainty",
+            "kind": "uncertainty",
+            "plain": "A spatial uncertainty model that estimates a surface and shows where the estimate is less certain.",
+            "use": "Useful for method-specific gravity, EM, ERT, or seismic uncertainty surfaces.",
+            "risk": "A smooth surface can hide real disagreement if conflict zones are not preserved.",
+        },
+        {
+            "name": "U-Net segmentation",
+            "kind": "vision",
+            "plain": "An image-like model that marks zones in gridded geophysical panels, but only when labeled examples exist.",
+            "use": "It is a possible future anomaly-zone tool, not the first proof.",
+            "risk": "Without labels, it can turn processing artifacts into confident shapes.",
+        },
+        {
+            "name": "Survey graph model",
+            "kind": "graph",
+            "plain": "A graph where nodes are survey zones, lines, or method intersections and edges mean adjacency or overlap.",
+            "use": "This makes method relationships explicit before AI ranks conflict.",
+            "risk": "Method physics must stay visible by lane.",
+        },
+    ],
+    "near_surface": [
+        {
+            "name": "Line geometry features",
+            "kind": "spatial",
+            "plain": "Line id, intersection id, depth, method type, and field-note completeness become the first model inputs.",
+            "use": "This prevents a clean cross-section from hiding where the methods were actually measured.",
+            "risk": "Wrong intersections create fake disagreement.",
+        },
+        {
+            "name": "LightGBM method-conflict classifier",
+            "kind": "tree",
+            "plain": "A tree model that ranks hammer seismic, ERT, and TEM intervals as agreement, conflict, missing context, or review target.",
+            "use": "It outputs review targets, not final geologic units.",
+            "risk": "Possible unit labels can drift into asserted-unit claims.",
+        },
+        {
+            "name": "Gaussian Process / Bayesian surface",
+            "kind": "uncertainty",
+            "plain": "A method-specific uncertainty surface for velocity, resistivity, or conductivity.",
+            "use": "It keeps shallow-method uncertainty visible instead of smoothing it away.",
+            "risk": "Clean overlays can overclaim shallow geology.",
+        },
+        {
+            "name": "Leave-line-out validation",
+            "kind": "timeline",
+            "plain": "Train on some survey lines and test on a different line, so the model cannot memorize one field line.",
+            "use": "This is the field-scale version of honest transfer testing.",
+            "risk": "Random intervals from the same line make performance look too good.",
+        },
+    ],
+    "moho_ml": [
+        {
+            "name": "Ridge / GAM reference",
+            "kind": "timeline",
+            "plain": "Simple models used first to prove the target and variables make sense before complex ML is trusted.",
+            "use": "They create a baseline for Moho depth before ANN or boosted trees.",
+            "risk": "A complex model is not meaningful if it cannot beat a transparent reference.",
+        },
+        {
+            "name": "LightGBM / XGBoost regressor",
+            "kind": "tree",
+            "plain": "Tree-ensemble models that predict a continuous value, here Moho depth, from gravity and regional features.",
+            "use": "They are the main candidate for residual maps and transfer tests.",
+            "risk": "Coordinate memorization and spatial leakage can fake high accuracy.",
+        },
+        {
+            "name": "Keras ANN",
+            "kind": "ann",
+            "plain": "A neural network made of connected layers. It can learn nonlinear feature combinations but is less transparent than a reference model.",
+            "use": "This connects the older class-project ANN to a modern validation story.",
+            "risk": "High familiar-region score is not enough; transfer has to work.",
+        },
+        {
+            "name": "Gaussian Process residuals",
+            "kind": "uncertainty",
+            "plain": "A spatial uncertainty layer that maps where predictions miss the target and where error may be systematic.",
+            "use": "The residual map becomes the main output, not just an accuracy number.",
+            "risk": "Residuals must be reviewed by region, not averaged away.",
+        },
+    ],
+    "ambient_noise": [
+        {
+            "name": "SeisLM-style embedding",
+            "kind": "waveform_foundation",
+            "plain": "A pretrained waveform representation can turn noisy station-pair sequences into features for quality or change-detection tasks.",
+            "use": "Use it after stable CCF labels exist, as a challenger to simpler QC features.",
+            "risk": "Foundation embeddings do not prove a subsurface change by themselves.",
+            "source_label": "SeisLM arXiv",
+            "source_url": "https://arxiv.org/abs/2410.15765",
+        },
+        {
+            "name": "LightGBM CCF-quality classifier",
+            "kind": "tree",
+            "plain": "A tree model that scores station-pair cross-correlations using stack count, peak strength, symmetry, lag stability, and metadata flags.",
+            "use": "This is the first practical monitoring QA model.",
+            "risk": "Weak correlations should go to QC, not alerts.",
+        },
+        {
+            "name": "Isolation Forest",
+            "kind": "tree",
+            "plain": "An anomaly model that isolates unusual station-pair windows without needing every bad case pre-labeled.",
+            "use": "It triages possible changes for review.",
+            "risk": "Seasonal noise, data gaps, and instrument changes can look anomalous.",
+        },
+        {
+            "name": "Freshness / seasonal gate",
+            "kind": "gate",
+            "plain": "A validation gate that checks whether the data are current and whether the change matches seasonal or instrument patterns.",
+            "use": "It blocks weak monitoring claims before they leave the pipeline.",
+            "risk": "Late or stale data can create false confidence.",
+        },
+    ],
+}
+
+
+def render_model_term_explainer(topic: dict) -> None:
+    cards = MODEL_TERM_EXPLAINERS.get(topic["slug"], [])
+    if not cards:
+        return
+    card_html = []
+    for card in cards:
+        source_html = ""
+        if card.get("source_url"):
+            source_html = (
+                "<div class='term-source-line'>"
+                f"Source: <a href='{escape(card['source_url'])}' target='_blank'>"
+                f"{escape(card.get('source_label', 'source'))}</a></div>"
+            )
+        card_html.append(
+            f"""
+<div class="model-term-card">
+  {_model_term_visual(card.get("kind", "gate"))}
+  <strong>{escape(card["name"])}</strong>
+  <p>{escape(card["plain"])}</p>
+  <div class="term-use">{escape(card["use"])}</div>
+  <div class="term-risk">{escape(card["risk"])}</div>
+  {source_html}
+</div>
+            """
+        )
+    st.markdown(
+        f"""
+<div class="model-term-explainer">
+  <div class="model-term-head">
+    <div>
+      <div class="model-term-kicker">Model terms in plain English</div>
+      <h3>What the ML names mean on this topic</h3>
+    </div>
+    <p>
+      These cards translate the model vocabulary into visible parts: what enters,
+      what the model does, what the output means, and where the claim can fail.
+    </p>
+  </div>
+  <div class="model-term-grid">{''.join(card_html)}</div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_model_mechanics_panel(topic: dict) -> None:
     slug = topic["slug"]
     detail = ML_MODEL_DETAIL_DIAGRAMS.get(slug)
@@ -9819,6 +10866,12 @@ def render_model_mechanics_panel(topic: dict) -> None:
         for item in manual.get("vocab", [])[:4]
     )
     main = detail["main"]
+    plain_summary = MODEL_TOPIC_SUMMARIES.get(
+        slug,
+        "The model turns topic evidence into features, predicts a target, and sends the result through a review gate.",
+    )
+    mechanic_visual_html = _model_mechanic_visual(mode_by_slug.get(slug, "default")).strip()
+    main_explainer_html = _model_type_explainer_html(main["name"], compact=True)
     st.markdown(
         f"""
 <div class="model-mechanics-panel">
@@ -9827,7 +10880,7 @@ def render_model_mechanics_panel(topic: dict) -> None:
       <div class="model-mechanics-kicker">How the model works</div>
       <h3>{escape(topic["title"])}: {escape(main["name"])}</h3>
     </div>
-    <p>{escape(detail["diagram"])}</p>
+    <p>{escape(plain_summary)}</p>
   </div>
   <div class="model-mechanics-board">
     <div class="mechanics-card">
@@ -9835,7 +10888,10 @@ def render_model_mechanics_panel(topic: dict) -> None:
       <p>{escape(main["input"])}</p>
       <div class="mechanics-chip-row">{source_chips}</div>
     </div>
-    {_model_mechanic_visual(mode_by_slug.get(slug, "default"))}
+    <div class="mechanics-model-column">
+{mechanic_visual_html}
+{main_explainer_html}
+    </div>
     <div class="mechanics-card">
       <strong>What comes out</strong>
       <p>{escape(main["target"])}</p>
@@ -10728,6 +11784,7 @@ def _manual_flow_caption(value: str) -> str:
 def render_ml_pipeline_contract(topic: dict) -> None:
     render_manual_visual_architecture(topic)
     render_model_mechanics_panel(topic)
+    render_model_term_explainer(topic)
     render_ml_visual_diagram(topic)
     contract = ML_PIPELINE_CONTRACTS.get(topic["slug"])
     if contract is None:
@@ -10782,159 +11839,6 @@ def render_ml_pipeline_contract(topic: dict) -> None:
 </div>
         """,
             unsafe_allow_html=True,
-        )
-
-
-def _tracker_value(row: pd.Series | None, column: str, default: str = "") -> str:
-    if row is None or column not in row.index:
-        return default
-    value = row.get(column, default)
-    if pd.isna(value):
-        return default
-    return str(value)
-
-
-def bottom_up_topics() -> list[dict]:
-    return list(reversed(TOPIC_ROOMS))
-
-
-def bottom_up_tracker_rows() -> pd.DataFrame:
-    rows = []
-    for order, topic in enumerate(bottom_up_topics(), start=1):
-        slug = topic["slug"]
-        tracker = ml_diagram_row(slug)
-        detail = ML_MODEL_DETAIL_DIAGRAMS.get(slug, {})
-        main_model = detail.get("main", {}).get(
-            "name",
-            ML_DIAGRAM_BLUEPRINTS.get(slug, {}).get("model", ""),
-        )
-        coverage = []
-        if slug in MANUAL_VISUAL_ARCHITECTURES:
-            coverage.append("manual visual")
-        if slug in ML_MODEL_DETAIL_DIAGRAMS:
-            coverage.append("model detail")
-        if slug in ML_DIAGRAM_BLUEPRINTS:
-            coverage.append("pipeline strip")
-        if SOURCE_BACKED_TOPIC_ASSETS.get(slug):
-            coverage.append("source images")
-        rows.append(
-            {
-                "Order": order,
-                "Topic": topic["title"],
-                "Slug": slug,
-                "Diagram": _tracker_value(tracker, "diagram_name", "Needs diagram"),
-                "Main model": main_model,
-                "Training unit": detail.get("main", {}).get("unit", ""),
-                "Split / gate": detail.get("validation", ""),
-                "Human or risk gate": detail.get("gate", ""),
-                "Primary ML source": _tracker_value(
-                    tracker,
-                    "primary_ml_source",
-                    "ML source notes",
-                ),
-                "Validation gates": _tracker_value(tracker, "validation_gates", ""),
-                "Visual coverage": " + ".join(coverage),
-                "Status": _tracker_value(tracker, "status", "planned"),
-                "Next action": _tracker_value(
-                    tracker,
-                    "next_action",
-                    "Build source-backed model visual.",
-                ),
-                "Topic link": topic_url(slug),
-            }
-        )
-    return pd.DataFrame(rows)
-
-
-def render_ml_implementation_tracker_page() -> None:
-    tracker_df = bottom_up_tracker_rows()
-    visual_ready = int(
-        tracker_df["Visual coverage"].str.contains("manual visual", regex=False).sum()
-    )
-    model_ready = int(
-        tracker_df["Visual coverage"].str.contains("model detail", regex=False).sum()
-    )
-    source_ready = int(
-        tracker_df["Visual coverage"].str.contains("source images", regex=False).sum()
-    )
-    in_site = int((tracker_df["Status"] == "in_site").sum())
-
-    st.markdown(
-        """
-<div class="talk-hero">
-  <div class="talk-kicker">Build Room / ML implementation tracker</div>
-  <h2>Bottom-up pass: model visuals, source evidence, and validation gates</h2>
-  <p>
-    Start from the last topic and work upward. Each row must connect a concrete project example
-    to a named ML model, training unit, split policy, visible failure gate, and human review point.
-  </p>
-</div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    metric_cols = st.columns(4)
-    metric_cols[0].metric("Topics tracked", len(tracker_df))
-    metric_cols[1].metric("Manual visuals", visual_ready)
-    metric_cols[2].metric("Model details", model_ready)
-    metric_cols[3].metric("Source panels", source_ready, f"{in_site} in site")
-
-    st.subheader("Start from the bottom")
-    bottom_topics = bottom_up_topics()[:4]
-    bottom_cols = st.columns(4)
-    for idx, topic in enumerate(bottom_topics):
-        row = ml_diagram_row(topic["slug"])
-        detail = ML_MODEL_DETAIL_DIAGRAMS.get(topic["slug"], {})
-        with bottom_cols[idx]:
-            with st.container(border=True):
-                st.caption(f"Bottom-up #{idx + 1} · {topic['slug']}")
-                st.markdown(f"**{topic['title']}**")
-                st.write(_tracker_value(row, "diagram_name", "Model visual"))
-                st.markdown(
-                    f"**Main model:** {detail.get('main', {}).get('name', 'named model')}"
-                )
-                st.caption(detail.get("gate", "Visible validation gate"))
-                st.link_button("Open topic", topic_url(topic["slug"]))
-
-    with st.expander("Preview bottom-up model visuals", expanded=True):
-        for topic in bottom_topics:
-            st.markdown(f"**{topic['title']}**")
-            render_ml_visual_diagram(topic, compact=True)
-
-    st.subheader("Source implementation matrix")
-    st.dataframe(
-        tracker_df[
-            [
-                "Order",
-                "Topic",
-                "Diagram",
-                "Main model",
-                "Training unit",
-                "Split / gate",
-                "Visual coverage",
-                "Status",
-                "Next action",
-                "Topic link",
-            ]
-        ],
-        hide_index=True,
-        width="stretch",
-        column_config={
-            "Topic link": st.column_config.LinkColumn("Topic link"),
-        },
-    )
-
-    with st.expander("Full ML diagram tracker CSV"):
-        st.dataframe(
-            ml_diagram_tracker,
-            hide_index=True,
-            width="stretch",
-        )
-        st.download_button(
-            "Download ML diagram tracker CSV",
-            ml_diagram_tracker.to_csv(index=False),
-            file_name=ML_DIAGRAM_TRACKER_PATH.name,
-            mime="text/csv",
         )
 
 
@@ -11605,7 +12509,6 @@ PUBLIC_TO_INTERNAL = {
 }
 BUILD_ROOM_SECTIONS = [
     "Vision Board",
-    "ML Implementation Tracker",
     "System Map",
     "Evidence Library",
     "LinkedIn Evidence",
@@ -11630,7 +12533,6 @@ PUBLIC_LABELS = {
 }
 BUILD_ROOM_LABELS = {
     "Vision Board": "Vision Board / internal tracker",
-    "ML Implementation Tracker": "ML implementation tracker",
     "System Map": "Architecture / System Map",
     "Evidence Library": "Sources and Evidence Library",
     "LinkedIn Evidence": "LinkedIn evidence",
@@ -11750,10 +12652,6 @@ if section == "Overview":
             "The portfolio keeps the evidence visible while separating working prototypes "
             "from ideas that still need expert validation."
         )
-
-
-elif section == "ML Implementation Tracker":
-    render_ml_implementation_tracker_page()
 
 
 elif section == "Vision Board":
@@ -12201,7 +13099,11 @@ elif section == "Structural Explorer":
 
 
 elif section == "Think Tank Topics":
-    topic_param = st.query_params.get("topic", TOPIC_ROOMS[0]["slug"])
+    raw_topic_param = st.query_params.get("topic", TOPIC_ROOMS[0]["slug"])
+    if isinstance(raw_topic_param, list):
+        topic_param = raw_topic_param[0] if raw_topic_param else TOPIC_ROOMS[0]["slug"]
+    else:
+        topic_param = str(raw_topic_param)
     topic = topic_by_slug(topic_param)
     topic_frame = TOPIC_FRAMES.get(topic["slug"], {})
 
