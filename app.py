@@ -1474,6 +1474,16 @@ def _model_type_explainer(model_name: str) -> dict:
             "what": "A model where neighboring nodes pass information to each other. R-GCN also treats each edge type differently.",
             "why": "Use it when the data is a network of deposits, minerals, rocks, processes, sources, or survey zones.",
         }
+    if (
+        any(term in name for term in ["lightgbm", "xgboost", "random forest"])
+        and not any(term in name for term in ["efficientnet", "resnet", "swin", "u-net", "mask r-cnn", "clip", "siglip"])
+    ):
+        return {
+            "kind": "boosted_trees",
+            "label": "Boosted tree model",
+            "what": "LightGBM/XGBoost build many small decision trees. Each tree fixes errors from earlier trees, producing a strong tabular model.",
+            "why": "Use it for geology, waveform-QA, stock, or survey rows with mixed numeric features and nonlinear patterns.",
+        }
     if any(term in name for term in ["phasenet", "eqtransformer", "waveform", "seismic representation", "seislm"]):
         return {
             "kind": "waveform",
@@ -1502,19 +1512,19 @@ def _model_type_explainer(model_name: str) -> dict:
             "what": "A model that puts images and text into the same embedding space so similar examples can be retrieved.",
             "why": "Use it to find comparable expert-reviewed examples before trusting a new label.",
         }
-    if "isolation forest" in name:
-        return {
-            "kind": "anomaly",
-            "label": "Anomaly triage model",
-            "what": "A tree model that isolates unusual examples quickly; easier-to-isolate rows are treated as anomalies.",
-            "why": "Use it to flag station-pair windows, data gaps, or strange monitoring behavior for review.",
-        }
     if any(term in name for term in ["lightgbm", "xgboost", "random forest"]):
         return {
             "kind": "boosted_trees",
             "label": "Boosted tree model",
             "what": "LightGBM/XGBoost build many small decision trees. Each tree fixes errors from earlier trees, producing a strong tabular model.",
             "why": "Use it for geology, waveform-QA, stock, or survey rows with mixed numeric features and nonlinear patterns.",
+        }
+    if "isolation forest" in name:
+        return {
+            "kind": "anomaly",
+            "label": "Anomaly triage model",
+            "what": "A tree model that isolates unusual examples quickly; easier-to-isolate rows are treated as anomalies.",
+            "why": "Use it to flag station-pair windows, data gaps, or strange monitoring behavior for review.",
         }
     if any(term in name for term in ["keras", "tensorflow", "ann", "mlp", "neural", "multitask nn"]):
         return {
@@ -10213,7 +10223,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
   <div class="ml-model-row"><span>Inputs</span><p>{escape(stage["input"])}</p></div>
   <div class="ml-model-row"><span>Training unit</span><p>{escape(stage["unit"])}</p></div>
 </div>
-            """
+            """.strip()
 
         metric_chips = "".join(
             f"<span>{escape(metric)}</span>"
@@ -10227,17 +10237,17 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
   <div class="ml-model-row"><span>Human / risk gate</span><p>{escape(model_detail["gate"])}</p></div>
   <div class="ml-model-row"><span>Talk-track rule</span><p>Explain the target, the features, the model family, and the review gate before making any prediction claim.</p></div>
 </div>
-        """
+        """.strip()
         model_detail_html = f"""
-  <div class="ml-model-detail">
-    <div class="ml-model-stack">
-      {model_stage_card("reference", "Reference Model")}
-      {model_stage_card("main", "Main Candidate")}
-      {model_stage_card("challenger", "Challenger / Advanced")}
-      {validation_card}
-    </div>
+<div class="ml-model-detail">
+  <div class="ml-model-stack">
+{model_stage_card("reference", "Reference Model")}
+{model_stage_card("main", "Main Candidate")}
+{model_stage_card("challenger", "Challenger / Advanced")}
+{validation_card}
   </div>
-        """
+</div>
+        """.strip()
     compact_class = " compact" if compact else ""
     st.markdown(
         f"""
@@ -10262,7 +10272,7 @@ def render_ml_visual_diagram(topic: dict, compact: bool = False) -> None:
       <small>{escape(tracker_next)}</small>
     </div>
   </div>
-  {model_detail_html}
+{model_detail_html}
   <div class="ml-source-map">
     <div><strong>Model type</strong><span>{escape(main_explainer["label"])}: {escape(main_explainer["what"])}</span></div>
     <div><strong>Why this topic</strong><span>{escape(main_explainer["why"])}</span></div>
