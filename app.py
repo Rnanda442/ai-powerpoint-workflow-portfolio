@@ -1341,6 +1341,43 @@ def workflow_icon_svg(label: str, index: int) -> str:
         f"{drawing}</svg>"
     )
 
+MIDDLE_TOPIC_SLUGS = {"seismic", "north_slope", "rock_classification", "valles"}
+
+PRESENTATION_PLAYBOOKS = {
+    "seismic": {
+        "visual": "assets/topic_visuals/seismic_talk_track.svg",
+        "claim": "AI should speed picking and QA, not hide weak signals.",
+        "say": "Notebook -> waveform -> suggested pick -> confidence -> expert override.",
+        "models": ["phase picking", "QA classifier", "uncertainty bands"],
+        "sectors": ["finance: time-series flags", "health: ECG/EEG review", "infrastructure: vibration monitoring", "jobs: scientific AI analyst"],
+        "question": "Where should automation stop?",
+    },
+    "north_slope": {
+        "visual": "assets/topic_visuals/north_slope_screening_talk.svg",
+        "claim": "Public data can become a screening queue, but provenance is the product.",
+        "say": "Maps + wells + papers + logs -> feature table -> ranked hydrate targets.",
+        "models": ["well-log classifier", "interval ranking", "physics-informed ML"],
+        "sectors": ["finance: deal screening", "marketing: segment ranking", "startups: niche data engines", "jobs: provenance analyst"],
+        "question": "Is the value faster screening or fewer bad targets?",
+    },
+    "rock_classification": {
+        "visual": "assets/topic_visuals/rock_multimodal_talk.svg",
+        "claim": "Rock ML needs images, chemistry, maps, and labels in the same example.",
+        "say": "Thin section + geochemistry + formation grid -> class probability -> review.",
+        "models": ["multimodal classifier", "spatial fusion", "GNN prospectivity"],
+        "sectors": ["marketing: multimodal customer types", "finance: company classification", "manufacturing: defect review", "jobs: dataset label auditor"],
+        "question": "What makes a label trustworthy?",
+    },
+    "valles": {
+        "visual": "assets/topic_visuals/valles_uncertainty_talk.svg",
+        "claim": "Data fusion should reveal agreement, conflict, and uncertainty.",
+        "say": "Gravity + EM + seismic + notes -> overlap/conflict map -> expert call.",
+        "models": ["data fusion", "anomaly segmentation", "uncertainty tagging"],
+        "sectors": ["finance: conflicting signals", "healthcare: multi-test diagnosis", "urban planning: layered risk maps", "jobs: model-risk reviewer"],
+        "question": "When does fusion become misleading?",
+    },
+}
+
 WORKFLOW_BLUEPRINTS = {
     "ai_workflow": {
         "title": "human demo -> agent training",
@@ -3826,6 +3863,85 @@ st.markdown(
         background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
         padding: 0.95rem;
         margin: 0.65rem 0 1rem 0;
+    }
+    .talk-track-card {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 0.85rem;
+        margin: 0.85rem 0 1rem 0;
+        display: grid;
+        grid-template-columns: minmax(280px, 0.88fr) minmax(0, 1.12fr);
+        gap: 0.9rem;
+        align-items: stretch;
+    }
+    .talk-track-visual {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: #f8fafc;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+    }
+    .talk-track-visual svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .talk-track-copy {
+        display: grid;
+        gap: 0.6rem;
+        align-content: start;
+    }
+    .talk-track-kicker {
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-transform: uppercase;
+    }
+    .talk-track-claim {
+        color: #0f172a;
+        font-size: 1.34rem;
+        line-height: 1.16;
+        font-weight: 900;
+        margin: 0;
+    }
+    .talk-track-say {
+        border-left: 4px solid #0f766e;
+        background: #f0fdfa;
+        color: #134e4a;
+        padding: 0.55rem 0.65rem;
+        font-size: 0.96rem;
+        line-height: 1.3;
+        margin: 0;
+    }
+    .talk-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.34rem;
+    }
+    .talk-chip {
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 800;
+        line-height: 1.15;
+    }
+    .talk-chip.sector {
+        border-color: #fed7aa;
+        background: #fff7ed;
+        color: #7c2d12;
+    }
+    .talk-question {
+        color: #334155;
+        font-size: 0.93rem;
+        line-height: 1.28;
+        margin: 0;
+        font-weight: 800;
     }
     .visual-flow-title {
         color: #111827;
@@ -6456,7 +6572,7 @@ st.markdown(
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.55rem;
         }
-        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow { grid-template-columns: 1fr; }
+        .ml-strip, .future-timeline, .node-lane, .storyboard-grid, .ai-case-top, .ai-evidence-grid, .think-grid, .vision-board, .blueprint-steps, .workflow-branches, .prompt-grid, .source-chip-grid, .sketch-body, .sketch-grid, .research-source-grid, .detail-grid, .story-frames, .current-future-board, .evidence-chain, .transfer-stage, .pipeline-stage, .property-stage, .source-update-panel, .source-update-grid, .source-update-grid-tight, .public-system-legend, .topic-update-grid, .north-decision-board, .feedback-card-grid, .manual-board, .manual-flow, .talk-track-card { grid-template-columns: 1fr; }
         .chain-node:not(:last-child)::after,
         .pipeline-node:not(:last-child)::after,
         .manual-flow-node:not(:last-child)::after { display: none; }
@@ -9245,6 +9361,41 @@ def render_research_sources() -> None:
     )
     st.markdown(
         f"<div class='research-source-grid'>{links}</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_presentation_playbook(topic: dict) -> None:
+    playbook = PRESENTATION_PLAYBOOKS.get(topic["slug"])
+    if playbook is None:
+        return
+    visual_path = project_asset(playbook["visual"])
+    if visual_path.exists():
+        visual_html = visual_path.read_text(encoding="utf-8", errors="ignore")
+    else:
+        visual_html = render_topic_signal(topic)
+    model_chips = "".join(
+        f"<span class='talk-chip'>{escape(item)}</span>"
+        for item in playbook["models"]
+    )
+    sector_chips = "".join(
+        f"<span class='talk-chip sector'>{escape(item)}</span>"
+        for item in playbook["sectors"]
+    )
+    st.markdown(
+        f"""
+<div class="talk-track-card">
+  <div class="talk-track-visual">{visual_html}</div>
+  <div class="talk-track-copy">
+    <div class="talk-track-kicker">Tomorrow's talk track</div>
+    <p class="talk-track-claim">{escape(playbook["claim"])}</p>
+    <p class="talk-track-say">{escape(playbook["say"])}</p>
+    <div class="talk-chip-row">{model_chips}</div>
+    <div class="talk-chip-row">{sector_chips}</div>
+    <p class="talk-question">Ask the room: {escape(playbook["question"])}</p>
+  </div>
+</div>
+        """,
         unsafe_allow_html=True,
     )
 
@@ -12066,6 +12217,8 @@ elif section == "Think Tank Topics":
     )
 
     topic_roadmap = roadmap_row(topic["project_key"])
+    st.info(topic_frame.get("raise", "Pick the angle you want to discuss."))
+    render_presentation_playbook(topic)
     if topic["slug"] == "north_slope":
         st.subheader("Working 3D structural explorer")
         st.caption(
@@ -12151,7 +12304,7 @@ elif section == "Think Tank Topics":
             with jump_cols[idx % 4]:
                 st.link_button(TOPIC_FRAMES.get(room["slug"], {}).get("question", room["title"]), topic_url(room["slug"]))
 
-    with st.expander("How AI helped in this example"):
+    with st.expander("How AI helped in this example", expanded=topic["slug"] not in MIDDLE_TOPIC_SLUGS):
         render_ai_workflow_panel(topic)
 
     with st.expander("Processing concept and research plan"):
