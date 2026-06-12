@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 
 
 ROOT = Path(__file__).resolve().parent
-DEPLOY_BUILD_ID = "2026-06-11 / ml-visual-parts-pass"
+DEPLOY_BUILD_ID = "2026-06-11 / graph-ml-visuals-pass"
 INVENTORY_PATH = ROOT / "data" / "source_inventory.csv"
 DRIVE_INVENTORY_PATH = ROOT / "data" / "google_drive_inventory.csv"
 NOTEBOOK_INVENTORY_PATH = ROOT / "data" / "notebook_inventory.csv"
@@ -11269,12 +11269,12 @@ elif section == "Think Tank Topics":
         render_ml_pipeline_contract(topic)
         render_slide_source_updates(topic["slug"])
     else:
+        if topic["slug"] == "thesis_graph":
+            render_thesis_graph_model_visuals()
         if not render_project_visual_stage(topic):
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
         render_current_future_board(topic, topic_roadmap)
         render_source_backed_asset_panel(topic)
-        if topic["slug"] == "thesis_graph":
-            render_thesis_graph_model_visuals()
         if topic["slug"] == "ai_workflow":
             render_ml_model_part_explainer(compact=True)
         render_ml_pipeline_contract(topic)
