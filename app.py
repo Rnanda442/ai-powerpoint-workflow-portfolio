@@ -1680,6 +1680,10 @@ RESEARCH_SOURCES = [
     ("USGS Earth MRI", "https://www.usgs.gov/special-topics/earth-mri"),
     ("DOE AI for Energy report", "https://www.energy.gov/sites/default/files/2024-04/AI%20EO%20Report%20Section%205.2g%28i%29_043024.pdf"),
     ("Geoscience knowledge graph pipeline", "https://www.mdpi.com/2075-163X/14/12/1296"),
+    ("SciBERT scientific text model", "https://arxiv.org/abs/1903.10676"),
+    ("MatSciBERT materials text model", "https://www.nature.com/articles/s41524-022-00784-w"),
+    ("GraphSAGE graph model", "https://arxiv.org/abs/1706.02216"),
+    ("R-GCN relational graph model", "https://arxiv.org/abs/1703.06103"),
     ("Critical minerals GraphRAG", "https://www.sciencedirect.com/science/article/pii/S0098300426000944"),
     ("GNN mineral prospectivity mapping", "https://www.sciencedirect.com/science/article/pii/S0169136824003482"),
     ("SeisLM seismic waveform foundation model", "https://arxiv.org/abs/2410.15765"),
@@ -7167,6 +7171,130 @@ st.markdown(
     .ml-part-strip strong {
         color: #0b1f3a;
     }
+    .thesis-graph-models {
+        background: #ffffff;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        margin: 1rem 0;
+        padding: 1rem;
+    }
+    .thesis-graph-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.2fr);
+        gap: 0.9rem;
+        align-items: stretch;
+    }
+    .thesis-graph-kicker {
+        color: #0f766e;
+        font-size: 0.74rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .thesis-graph-head h3 {
+        color: #0b1f3a;
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        line-height: 1.14;
+        margin: 0.15rem 0 0.45rem;
+    }
+    .thesis-graph-head p {
+        color: #475569 !important;
+        font-size: 0.92rem;
+        line-height: 1.38;
+        margin: 0;
+    }
+    .graph-model-asset {
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        background: #f8fafc;
+        padding: 0.55rem;
+    }
+    .graph-model-asset img {
+        border-radius: 6px;
+        display: block;
+        width: 100%;
+    }
+    .adobe-closeup-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin-top: 0.75rem;
+    }
+    .adobe-closeup-card {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .adobe-closeup-card img {
+        background: #020617;
+        border-bottom: 1px solid #d8dee8;
+        display: block;
+        height: 13rem;
+        object-fit: cover;
+        width: 100%;
+    }
+    .adobe-closeup-card.focus-left img { object-position: 22% 50%; }
+    .adobe-closeup-card.focus-center img { object-position: 50% 50%; }
+    .adobe-closeup-card.focus-right img { object-position: 76% 50%; }
+    .adobe-closeup-body {
+        padding: 0.65rem 0.72rem;
+    }
+    .adobe-closeup-body strong {
+        color: #0b1f3a;
+        display: block;
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+    .adobe-closeup-body span {
+        color: #475569;
+        display: block;
+        font-size: 0.82rem;
+        line-height: 1.25;
+        margin-top: 0.3rem;
+    }
+    .graph-model-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+        margin-top: 0.75rem;
+    }
+    .graph-model-card {
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-top: 5px solid #2563eb;
+        border-radius: 8px;
+        min-height: 11.5rem;
+        padding: 0.68rem;
+    }
+    .graph-model-card.materials { border-top-color: #0f766e; }
+    .graph-model-card.sage { border-top-color: #d97706; }
+    .graph-model-card.rgcn { border-top-color: #7c3aed; }
+    .graph-model-card strong,
+    .graph-model-card span,
+    .graph-model-card a {
+        display: block;
+    }
+    .graph-model-card strong {
+        color: #0b1f3a;
+        font-size: 0.9rem;
+        line-height: 1.12;
+    }
+    .graph-model-card span {
+        color: #475569;
+        font-size: 0.8rem;
+        line-height: 1.25;
+        margin-top: 0.34rem;
+    }
+    .graph-model-card a {
+        color: #0f766e;
+        font-size: 0.75rem;
+        font-weight: 850;
+        margin-top: 0.5rem;
+        text-decoration: none;
+    }
     .ml-model-detail {
         display: grid;
         gap: 0.65rem;
@@ -7285,12 +7413,15 @@ st.markdown(
         .ml-visual-head,
         .ml-visual-board,
         .ml-part-head,
+        .thesis-graph-head,
         .ml-source-map {
             grid-template-columns: 1fr;
         }
         .ml-model-stack,
         .ml-model-checks,
-        .ml-part-grid {
+        .ml-part-grid,
+        .adobe-closeup-grid,
+        .graph-model-grid {
             grid-template-columns: 1fr;
         }
         .ml-source-ribbons {
@@ -8442,6 +8573,118 @@ def render_ml_model_part_explainer(compact: bool = False) -> None:
     <strong>Website rule:</strong> when a topic says ML model, show the evidence, the variables, the model part,
     the validation gate, and the human review step in the same visual path.
   </div>
+</div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_thesis_graph_model_visuals() -> None:
+    """Use REE drawing close-ups to explain the NLP and graph-ML model choices."""
+    graph_asset_path = project_asset("assets/topic_visuals/critical_minerals_nlp_graph_ml.svg")
+    graph_asset_uri = asset_data_uri(graph_asset_path, max_bytes=950_000)
+    graph_asset_html = (
+        f"<img src='{graph_asset_uri}' alt='Critical minerals NLP to graph ML diagram'>"
+        if graph_asset_uri
+        else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
+    )
+
+    def closeup_card(title: str, path_text: str, note: str, focus_class: str) -> str:
+        uri = asset_data_uri(project_asset(path_text), max_bytes=950_000)
+        image_html = (
+            f"<img src='{uri}' alt='{escape(title)} close-up'>"
+            if uri
+            else "<div class='mini-screen'><div class='mini-window-bar'></div><div class='mini-screen-row'></div><div class='mini-screen-row short'></div></div>"
+        )
+        return f"""
+<div class="adobe-closeup-card {focus_class}">
+  {image_html}
+  <div class="adobe-closeup-body">
+    <strong>{escape(title)}</strong>
+    <span>{escape(note)}</span>
+  </div>
+</div>
+        """
+
+    closeups = [
+        closeup_card(
+            "Deposit-shape close-up",
+            "assets/project_visuals/ree_bayan_obo_main.png",
+            "Use the Adobe drawing as the visual source for deposit, mineral, host, and process nodes.",
+            "focus-center",
+        ),
+        closeup_card(
+            "Host-context close-up",
+            "assets/project_visuals/ree_host_context_bayan.png",
+            "Crop the diagram around host rocks and context so the graph story starts from visible geology.",
+            "focus-left",
+        ),
+        closeup_card(
+            "Mineral relationship close-up",
+            "assets/project_visuals/ree_dominant_minerals_bayan.png",
+            "Show candidate mineral labels and relationships before any AI-suggested edge is trusted.",
+            "focus-right",
+        ),
+    ]
+
+    model_cards = [
+        {
+            "class": "science",
+            "name": "SciBERT",
+            "body": "A BERT-style language model trained on scientific text. Use it to tag scientific terms in papers, captions, and slide notes.",
+            "why": "Why here: it gives the REE graph a text reader for minerals, processes, locations, and evidence phrases.",
+            "href": "https://arxiv.org/abs/1903.10676",
+        },
+        {
+            "class": "materials",
+            "name": "MatSciBERT",
+            "body": "A materials-domain language model trained on materials science literature.",
+            "why": "Why here: mineral names, chemical formulas, phases, and materials jargon should be easier to tag than with a generic text model.",
+            "href": "https://www.nature.com/articles/s41524-022-00784-w",
+        },
+        {
+            "class": "sage",
+            "name": "GraphSAGE",
+            "body": "A graph neural network approach that samples neighbors and aggregates node features.",
+            "why": "Why here: a new paper, deposit, or mineral node can inherit context from nearby reviewed graph nodes.",
+            "href": "https://arxiv.org/abs/1706.02216",
+        },
+        {
+            "class": "rgcn",
+            "name": "R-GCN",
+            "body": "A relational graph convolution model designed for graphs with many edge types.",
+            "why": "Why here: contains, hosted-by, altered-by, and evidence-for edges should not be treated as the same relationship.",
+            "href": "https://arxiv.org/abs/1703.06103",
+        },
+    ]
+    model_html = "".join(
+        f"""
+<div class="graph-model-card {escape(card['class'])}">
+  <strong>{escape(card['name'])}</strong>
+  <span>{escape(card['body'])}</span>
+  <span>{escape(card['why'])}</span>
+  <a href="{escape(card['href'])}" target="_blank">Source paper</a>
+</div>
+        """
+        for card in model_cards
+    )
+    st.markdown(
+        f"""
+<div class="thesis-graph-models">
+  <div class="thesis-graph-head">
+    <div>
+      <div class="thesis-graph-kicker">Second topic / drawings and ideas close-up</div>
+      <h3>Use Adobe sketches as the visible front door into graph ML</h3>
+      <p>
+        The topic should not start with abstract model names. First show close-ups of the real REE
+        sketch language, then show how text encoders and graph models would convert those visible
+        ideas into reviewed nodes, typed edges, and candidate links.
+      </p>
+    </div>
+    <div class="graph-model-asset">{graph_asset_html}</div>
+  </div>
+  <div class="adobe-closeup-grid">{''.join(closeups)}</div>
+  <div class="graph-model-grid">{model_html}</div>
 </div>
         """,
         unsafe_allow_html=True,
@@ -11030,6 +11273,8 @@ elif section == "Think Tank Topics":
             st.markdown(render_topic_signal(topic), unsafe_allow_html=True)
         render_current_future_board(topic, topic_roadmap)
         render_source_backed_asset_panel(topic)
+        if topic["slug"] == "thesis_graph":
+            render_thesis_graph_model_visuals()
         if topic["slug"] == "ai_workflow":
             render_ml_model_part_explainer(compact=True)
         render_ml_pipeline_contract(topic)
